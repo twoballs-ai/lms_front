@@ -15,8 +15,19 @@ function Header() {
       <Nav className="ms-auto">
       <Nav.Link to='/about'>Курсы</Nav.Link>
         <Nav.Link as={Link} to="/about">О нас</Nav.Link>
-        <Nav.Link as={Link} to="/user-login">Авторизация</Nav.Link>
-        <Nav.Link as={Link} to="/user-register">Регистрация</Nav.Link>
+        <NavDropdown title="Пользователь" id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link} to="/user-login">Авторизация</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/user-register">
+              Регистрация
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/user-dashboard">
+                Личный кабинет
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action5">
+                Выход
+              </NavDropdown.Item>
+            </NavDropdown>
       </Nav>
 
     </Navbar.Collapse>
