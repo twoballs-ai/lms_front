@@ -21,7 +21,7 @@ function Header() {
               Регистрация
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/user-dashboard">
+              <NavDropdown.Item as={Link} to="/profile">
                 Личный кабинет
               </NavDropdown.Item>
               <NavDropdown.Item href="#action5">
