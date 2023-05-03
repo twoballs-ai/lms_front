@@ -11,27 +11,27 @@ import SideBar from "./components/SideBar";
 import Col from 'react-bootstrap/Col';
 // import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-function ProfileSettings() {
+function ChangePassword() {
   return (
     <>
         <Card >
-      <Card.Header>Настройки профиля</Card.Header>
+      <Card.Header>Смена пароля</Card.Header>
       <Card.Body>
 
       <Form>
-      <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-        <Form.Label column sm="2">
-          Email
-        </Form.Label>
-        <Col sm="10">
-        <Form.Control type="email" defaultValue="email@example.com" placeholder="name@example.com" />
-          {/* <Form.Control plaintext defaultValue="email@example.com" /> */}
-        </Col>
-      </Form.Group>
+
 
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
         <Form.Label column sm="2">
-          Password
+          Введите пароль
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control type="password" placeholder="Password" />
+        </Col>
+      </Form.Group>
+      <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+        <Form.Label column sm="2">
+          Подтвердите пароль
         </Form.Label>
         <Col sm="10">
           <Form.Control type="password" placeholder="Password" />
@@ -48,4 +48,4 @@ function ProfileSettings() {
 
 }
 
-export default ProfileSettings
+export default ChangePassword

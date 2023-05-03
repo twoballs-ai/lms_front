@@ -13,6 +13,7 @@ import DashMain from './components/pages/ControlPanel/components/DashMain';
 import FavoriteCourses from './components/pages/ControlPanel/FavoriteCourse';
 import RecommendCourses from './components/pages/ControlPanel/RecommendCourses';
 import ProfileSettings from './components/pages/ControlPanel/ProfileSettings';
+import ChangePassword from './components/pages/ControlPanel/ChangePassword';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path='favorite-courses' element={<FavoriteCourses />} />
             <Route path='recommend-courses' element={<RecommendCourses />} />
             <Route path='profile-settings' element={<ProfileSettings />} />
+            <Route path='reset-password' element={<ChangePassword />} />
             <Route path='dashboard' element={<Dashboard />} />
           </Route>
     
