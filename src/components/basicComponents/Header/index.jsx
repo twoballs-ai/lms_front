@@ -16,12 +16,25 @@ function Header() {
       <Nav.Link to='/about'>Курсы</Nav.Link>
         <Nav.Link as={Link} to="/about">О нас</Nav.Link>
         <NavDropdown title="Пользователь" id="navbarScrollingDropdown">
-              <NavDropdown.Item as={Link} to="/user-login">Авторизация</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/user-register">
+              <NavDropdown.Item as={Link} to="/student-login">Авторизация</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/student-register">
               Регистрация
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/profile">
+              <NavDropdown.Item as={Link} to="/student-profile">
+                Личный кабинет
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action5">
+                Выход
+              </NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Преподаватель" id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link} to="/teacher-login">Авторизация</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/teacher-register">
+              Регистрация
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/teacher-profile">
                 Личный кабинет
               </NavDropdown.Item>
               <NavDropdown.Item href="#action5">

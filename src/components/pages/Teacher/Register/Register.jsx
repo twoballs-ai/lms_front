@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-function Register() { 
+function TeacherRegister() { 
     return(
         <>
         <Container>
@@ -47,4 +47,4 @@ function Register() {
 
 }
 
-export default Register
+export default TeacherRegister

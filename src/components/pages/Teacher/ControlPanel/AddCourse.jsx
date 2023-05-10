@@ -2,11 +2,11 @@ import { Link } from "react-router-dom"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
-function MyCourses() {
+function AddCourse() {
     return(
         <>
         <Card>
-        <Card.Header>Мои курсы</Card.Header>
+        <Card.Header>Избранные курсы</Card.Header>
        <Card.Body>
        <Table striped bordered hover>
       <thead>
@@ -31,4 +31,4 @@ function MyCourses() {
         </>
     )
 }
-export default MyCourses
+export default AddCourse

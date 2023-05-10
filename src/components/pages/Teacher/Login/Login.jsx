@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-function Login() { 
+function TeacherLogin() { 
     return(
         <>
         <Container>
@@ -40,4 +40,4 @@ function Login() {
 
 }
 
-export default Login
+export default TeacherLogin
