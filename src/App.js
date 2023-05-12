@@ -6,6 +6,8 @@ import Layout from './components/basicComponents/layouts';
 import About from './components/pages/About/About';
 import CourseDetail from './components/pages/Course/CourseDetail';
 import TeacherDetail from './components/pages/Course/TeacherDetail';
+import AllCourses from './components/pages/AllCourses/AllCourses';
+import PopularCourses from './components/pages/PopularCourses/PopularCourses';
 
 //student pages
 import StudentRegister from './components/pages/Student/Register/Register';
@@ -39,11 +41,12 @@ function App() {
         <Route path='student-login' element={<StudentLogin />} />
         <Route path='student-register' element={<StudentRegister />} />
         <Route path='detail/:course_id' element={<CourseDetail />} />
+        <Route path='all-courses' element={<AllCourses />} />
+        <Route path='popular-courses' element={<PopularCourses />} />
+
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
-        
           <Route path='student-profile/' element={<UserDashmain />} >
           <Route index element={<StudentDashboard />} />
-
             <Route path='my-courses' element={<StudentMyCourses />} />
             <Route path='favorite-courses' element={<StudentFavoriteCourses />} />
             <Route path='recommend-courses' element={<StudentRecommendCourses />} />
@@ -55,10 +58,8 @@ function App() {
           
           <Route path='teacher-login' element={<TeacherLogin />} />
         <Route path='teacher-register' element={<TeacherRegister />} />
-
           <Route path='teacher-profile/' element={<TeacherDashmain />} >
           <Route index element={<TeacherDashboard />} />
-
             <Route path='my-courses' element={<TeacherMyCourses />} />
             <Route path='add-course' element={<AddCourse />} />
             <Route path='my-students' element={<MyStudents />} />

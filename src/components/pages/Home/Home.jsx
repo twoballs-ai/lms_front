@@ -12,7 +12,7 @@ function Home() {
     <>
       <Container>
         <h3 className='mt-5'>
-          Новые добавленые курсы <Link className='float-end' to={''}>Посмотреть все</Link>
+          Новые добавленые курсы <Link className='float-end' to={'/all-courses'}>Посмотреть все</Link>
         </h3>
         <Row className='mt-5'>
 
@@ -24,6 +24,10 @@ function Home() {
                 <Card.Title><Link to={'detail/1'}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                <span>Рейтинг курса: 4.6 Сердечко иконка</span>
+                <span>Просмотров курса:</span>
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
@@ -33,6 +37,9 @@ function Home() {
                 <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг курса: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
@@ -42,6 +49,9 @@ function Home() {
                 <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг курса: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
@@ -51,12 +61,15 @@ function Home() {
                 <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг курса: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
         </Row >
         {/* popular courses */}
         <h3 className='mt-5'>
-          Популярные курсы <Link className='float-end' to={''}>Посмотреть все</Link>
+          Популярные курсы <Link className='float-end' to={'/popular-courses'}>Посмотреть популярные</Link>
         </h3>
         <Row className='mt-5'>
 
@@ -68,6 +81,9 @@ function Home() {
                 <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг курса: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
@@ -77,6 +93,9 @@ function Home() {
                 <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг курса: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
@@ -86,6 +105,9 @@ function Home() {
                 <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг курса: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
