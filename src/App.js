@@ -4,25 +4,31 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/pages/Home/Home';
 import Layout from './components/basicComponents/layouts';
 import About from './components/pages/About/About';
-import CourseDetail from './components/pages/Student/Course/CourseDetail';
-import StudentLogin from './components/pages/Student/Login/Login';
-import TeacherLogin from './components/pages/Teacher/Login/Login';
+import CourseDetail from './components/pages/Course/CourseDetail';
+import TeacherDetail from './components/pages/Course/TeacherDetail';
+
+//student pages
 import StudentRegister from './components/pages/Student/Register/Register';
-import TeacherRegister from './components/pages/Teacher/Register/Register';
 import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
-import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
 import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses';
-import TeacherMyCourses from './components/pages/Teacher/ControlPanel/MyCourses';
 import UserDashmain from './components/pages/Student/ControlPanel/components/DashMain';
-import TeacherDashmain from './components/pages/Teacher/ControlPanel/components/DashMain';
 import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
-import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
 import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
 import StudentProfileSettings from './components/pages/Student/ControlPanel/ProfileSettings';
 import StudentChangePassword from './components/pages/Student/ControlPanel/ChangePassword';
+
+//teacher pages
+import StudentLogin from './components/pages/Student/Login/Login';
+import TeacherLogin from './components/pages/Teacher/Login/Login';
+import TeacherRegister from './components/pages/Teacher/Register/Register';
+import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
+import TeacherMyCourses from './components/pages/Teacher/ControlPanel/MyCourses';
+import TeacherDashmain from './components/pages/Teacher/ControlPanel/components/DashMain';
+import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
 import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
 import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
 import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
+
 
 function App() {
   return (
@@ -32,6 +38,8 @@ function App() {
         <Route path='about' element={<About />} />
         <Route path='student-login' element={<StudentLogin />} />
         <Route path='student-register' element={<StudentRegister />} />
+        <Route path='detail/:course_id' element={<CourseDetail />} />
+        <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
         
           <Route path='student-profile/' element={<UserDashmain />} >
           <Route index element={<StudentDashboard />} />
@@ -57,9 +65,10 @@ function App() {
             <Route path='profile-settings' element={<TeacherProfileSettings />} />
             <Route path='reset-password' element={<TeacherChangePassword />} />
             <Route path='dashboard' element={<StudentDashboard />} />
+
           </Route>
     
-        <Route path='detail/:course_id' element={<CourseDetail />} />
+ 
         {/* <Route path='cardhouse/:id/' element={<CardhousePage />} /> */}
       </Route>
     </Routes>
