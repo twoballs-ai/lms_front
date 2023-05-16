@@ -13,7 +13,7 @@ function Header() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ms-auto">
-      <Nav.Link to='/about'>Курсы</Nav.Link>
+      <Nav.Link as={Link} to='/all-courses'>Курсы</Nav.Link>
         <Nav.Link as={Link} to="/about">О нас</Nav.Link>
         <NavDropdown title="Пользователь" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/student-login">Авторизация</NavDropdown.Item>
@@ -28,7 +28,7 @@ function Header() {
                 Выход
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Преподаватель" id="navbarScrollingDropdown">
+            <NavDropdown title="Наставник" id="navbarScrollingDropdown">
               <NavDropdown.Item as={Link} to="/teacher-login">Авторизация</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/teacher-register">
               Регистрация

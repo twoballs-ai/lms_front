@@ -20,7 +20,7 @@ function TeacherDetail() {
         <Card >
           <Card.Header>Список курсов</Card.Header>
           <ListGroup variant="flush">
-            <ListGroup.Item as={Link} to="#">Php</ListGroup.Item>
+            <ListGroup.Item as={Link} to="/courses-by-cat/php">Php</ListGroup.Item>
             <ListGroup.Item as={Link} to="#">Javascript</ListGroup.Item>
             <ListGroup.Item as={Link} to="#">Django</ListGroup.Item>
           </ListGroup>

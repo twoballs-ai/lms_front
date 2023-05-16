@@ -8,7 +8,8 @@ import CourseDetail from './components/pages/Course/CourseDetail';
 import TeacherDetail from './components/pages/Course/TeacherDetail';
 import AllCourses from './components/pages/AllCourses/AllCourses';
 import PopularCourses from './components/pages/PopularCourses/PopularCourses';
-
+import PopularTeachers from './components/pages/PopularTeachers/PopularTeachers';
+import CoursesByCat from './components/pages/CoursesByCat/CoursesByCat';
 //student pages
 import StudentRegister from './components/pages/Student/Register/Register';
 import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
@@ -43,8 +44,11 @@ function App() {
         <Route path='detail/:course_id' element={<CourseDetail />} />
         <Route path='all-courses' element={<AllCourses />} />
         <Route path='popular-courses' element={<PopularCourses />} />
-
+        <Route path='popular-teachers' element={<PopularTeachers />} />
+        <Route path='teacher-login' element={<TeacherLogin />} />
+        <Route path='teacher-register' element={<TeacherRegister />} />
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
+        <Route path='courses-by-cat/:category_slug' element={<CoursesByCat />} />  
           <Route path='student-profile/' element={<UserDashmain />} >
           <Route index element={<StudentDashboard />} />
             <Route path='my-courses' element={<StudentMyCourses />} />
@@ -56,8 +60,8 @@ function App() {
           </Route>
 
           
-          <Route path='teacher-login' element={<TeacherLogin />} />
-        <Route path='teacher-register' element={<TeacherRegister />} />
+
+          
           <Route path='teacher-profile/' element={<TeacherDashmain />} >
           <Route index element={<TeacherDashboard />} />
             <Route path='my-courses' element={<TeacherMyCourses />} />

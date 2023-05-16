@@ -121,7 +121,7 @@ function Home() {
           </Col>
         </Row>
         <h3 className='mt-5'>
-          Популярные спикеры <Link className='float-end' to={''}>Посмотреть всех</Link>
+          Популярные спикеры <Link className='float-end' to={'/popular-teachers'}>Посмотреть всех</Link>
         </h3>
         <Row className='mt-5'>
 
@@ -130,36 +130,48 @@ function Home() {
             <Card style={{ width: '18rem' }}>
               <Card.Img variant="top" src="/images/code.jpg" />
               <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+                <Card.Title><Link to={'/teacher-detail/1'}>Имя учителя</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг наставника: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
             <Card style={{ width: '18rem' }}>
               <Card.Img variant="top" src="/images/code.jpg" />
               <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+                <Card.Title><Link to={''}>Имя учителя</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг наставника: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
             <Card style={{ width: '18rem' }}>
               <Card.Img variant="top" src="/images/code.jpg" />
               <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+                <Card.Title><Link to={''}>Имя учителя</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг наставника: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
           <Col>
             <Card style={{ width: '18rem' }}>
               <Card.Img variant="top" src="/images/code.jpg" />
               <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+                <Card.Title><Link to={'/teacher-detail/1'}>Имя учителя</Link></Card.Title>
 
               </Card.Body>
+              <Card.Footer>
+                Рейтинг наставника: 4.6 Сердечко
+              </Card.Footer>
             </Card>
           </Col>
         </Row >
