@@ -5,9 +5,13 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
+import { useEffect } from 'react';
 
 
 function Home() {
+  useEffect(()=>{
+    document.title = 'Главная - intelllity code'
+  })
   return (
     <>
       <Container>

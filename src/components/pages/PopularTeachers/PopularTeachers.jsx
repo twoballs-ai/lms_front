@@ -6,8 +6,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import Pagination from 'react-bootstrap/Pagination';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
+const baseUrl = 'http://127.0.0.1:8000/api'
 function PopularTeachers(){
+    const [popularTeacher, setPopularTeacher] = useState(null)
+    useEffect(()=>{
+axios.get(baseUrl+'/teacher/').then((res) => {
+    setPopularTeacher(res.data);
+  });
+    },[])
+
     let active = 2;
 let items = [];
 for (let number = 1; number <= 5; number++) {
