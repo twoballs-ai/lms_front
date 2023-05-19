@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
 function Header() {
+  const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
     return (
   <><Navbar bg="dark" variant="dark" expand="lg">
   <Container>
@@ -26,18 +27,24 @@ function Header() {
               </NavDropdown.Item>
               <NavDropdown.Item href="#action5">
                 Выход
-              </NavDropdown.Item>
+              </NavDropdown.Item >
             </NavDropdown>
+           
             <NavDropdown title="Наставник" id="navbarScrollingDropdown">
+            {teacherLoginStatus!=='true'&&
+            <>
               <NavDropdown.Item as={Link} to="/teacher-login">Авторизация</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/teacher-register">
               Регистрация
               </NavDropdown.Item>
               <NavDropdown.Divider />
+              </>
+            } 
+              
               <NavDropdown.Item as={Link} to="/teacher-profile">
                 Личный кабинет
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action5">
+              <NavDropdown.Item as={Link} to="/teacher-logout">
                 Выход
               </NavDropdown.Item>
             </NavDropdown>

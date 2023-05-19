@@ -24,8 +24,8 @@ function TeacherRegister() {
       ...teacherRegisterData,
       [event.target.name]: event.target.value
     })
-    console.log("teacherRegisterData : ")
-  console.log(teacherRegisterData)
+  //   console.log("teacherRegisterData : ")
+  // console.log(teacherRegisterData)
   }
   
 
@@ -50,6 +50,10 @@ function TeacherRegister() {
   // useEffect(()=>{
   //   document.title = 'Регистрация наставника'
   // })
+  const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
+  if(teacherLoginStatus == 'true'){
+    window.location.href='/teacher-profile/dashboard'
+  }
   return (
     <>
       <Container>

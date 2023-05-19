@@ -11,6 +11,7 @@ import PopularCourses from './components/pages/PopularCourses/PopularCourses';
 import PopularTeachers from './components/pages/PopularTeachers/PopularTeachers';
 import CoursesByCat from './components/pages/CoursesByCat/CoursesByCat';
 //student pages
+import StudentLogin from './components/pages/Student/Login/Login';
 import StudentRegister from './components/pages/Student/Register/Register';
 import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
 import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses';
@@ -21,7 +22,7 @@ import StudentProfileSettings from './components/pages/Student/ControlPanel/Prof
 import StudentChangePassword from './components/pages/Student/ControlPanel/ChangePassword';
 
 //teacher pages
-import StudentLogin from './components/pages/Student/Login/Login';
+import TeacherLogout from './components/pages/Teacher/Logout/Logout';
 import TeacherLogin from './components/pages/Teacher/Login/Login';
 import TeacherRegister from './components/pages/Teacher/Register/Register';
 import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
@@ -46,6 +47,7 @@ function App() {
         <Route path='popular-courses' element={<PopularCourses />} />
         <Route path='popular-teachers' element={<PopularTeachers />} />
         <Route path='teacher-login' element={<TeacherLogin />} />
+        <Route path='teacher-logout' element={<TeacherLogout />} />
         <Route path='teacher-register' element={<TeacherRegister />} />
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
         <Route path='courses-by-cat/:category_slug' element={<CoursesByCat />} />  

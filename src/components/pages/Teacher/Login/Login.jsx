@@ -4,7 +4,50 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const baseUrl = 'http://127.0.0.1:8000/api/teacher-login'
 function TeacherLogin() { 
+  const [teacherLoginData, setTeacherLoginData] = useState({
+    email: "",
+    password: ""
+  })
+
+  const handleChange = (event)=>{
+    setTeacherLoginData({
+      ...teacherLoginData,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    // const teacherFormrData = new FormData()
+    // teacherFormrData.append("email", teacherLoginData.email)
+    // teacherFormrData.append("password", teacherLoginData.password)
+console.log(teacherLoginData)
+    axios
+    .post(baseUrl, teacherLoginData
+      // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+      ,{headers: { "Content-Type": "multipart/form-data" }}
+      )
+    .then(response => {
+      if(response.data.bool===true){
+localStorage.setItem('teacherLoginStatus', true)
+window.location.href='/teacher-profile/dashboard'
+
+      }
+
+      // Handle response
+
+    })
+  }
+
+  const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
+  if(teacherLoginStatus === 'true'){
+    window.location.href='/teacher-profile/dashboard'
+  }
     return(
         <>
         <Container>
@@ -15,18 +58,17 @@ function TeacherLogin() {
       <Card.Body>
       <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Имя пользователя</Form.Label>
-        <Form.Control type="text" placeholder="Введите имя пользователя" />
-      </Form.Group>
-
+                    <Form.Label>email</Form.Label>
+                    <Form.Control value={teacherLoginData.email} name="email" onChange={handleChange} type="email" placeholder="Введите ваш email" />
+                  </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Пароль</Form.Label>
-        <Form.Control type="password" placeholder="Введите пароль" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Label>password</Form.Label>
+                    <Form.Control value={teacherLoginData.password} name="password" onChange={handleChange} type="password" placeholder="Введите пароль" />
+                  </Form.Group>
+      {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Запомнить меня" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
+      </Form.Group> */}
+      <Button onClick={submitForm} variant="primary" type="submit">
         Войти
       </Button>
     </Form>
