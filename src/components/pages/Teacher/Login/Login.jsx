@@ -19,6 +19,7 @@ function TeacherLogin() {
       ...teacherLoginData,
       [event.target.name]: event.target.value
     })
+    console.log(teacherLoginData)
   }
 
   const submitForm = (e) => {
