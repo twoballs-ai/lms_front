@@ -35,7 +35,9 @@ console.log(teacherLoginData)
       )
     .then(response => {
       if(response.data.bool===true){
+        // console.log(response)
 localStorage.setItem('teacherLoginStatus', true)
+localStorage.setItem('teacherId', response.data.teacher_id)
 window.location.href='/teacher-profile/dashboard'
 
       }

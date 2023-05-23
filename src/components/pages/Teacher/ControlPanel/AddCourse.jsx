@@ -9,10 +9,11 @@ import axios from "axios";
 const baseUrl = 'http://127.0.0.1:8000/api/'
 
 function AddCourse() {
+  const teacherId= localStorage.getItem('teacherId')
   const [categories,setCategories] = useState([])
   const [courseAddData, setCourseAddData] = useState({
     category:'',
-    teacher: 1,
+    teacher: teacherId,
     title:'',
     description:'',
     course_image:'',
@@ -62,7 +63,7 @@ function AddCourse() {
       )
     .then(response => {
  
-console.log(response)
+      window.location.href='/teacher-profile/my-courses'
 
     })
   }

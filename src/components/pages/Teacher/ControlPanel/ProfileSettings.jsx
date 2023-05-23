@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table';
-import MyCourses from "./MyCourses";
+import MyCourses from "./MyTeacherCourses";
 import SideBar from "./components/SideBar";
 import Col from 'react-bootstrap/Col';
 // import Form from 'react-bootstrap/Form';

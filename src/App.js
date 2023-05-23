@@ -26,7 +26,7 @@ import TeacherLogout from './components/pages/Teacher/Logout/Logout';
 import TeacherLogin from './components/pages/Teacher/Login/Login';
 import TeacherRegister from './components/pages/Teacher/Register/Register';
 import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
-import TeacherMyCourses from './components/pages/Teacher/ControlPanel/MyCourses';
+import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherCourses';
 import TeacherDashmain from './components/pages/Teacher/ControlPanel/components/DashMain';
 import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
 import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
@@ -66,7 +66,7 @@ function App() {
           
           <Route path='teacher-profile/' element={<TeacherDashmain />} >
           <Route index element={<TeacherDashboard />} />
-            <Route path='my-courses' element={<TeacherMyCourses />} />
+            <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='add-course' element={<AddCourse />} />
             <Route path='my-students' element={<MyStudents />} />
             <Route path='profile-settings' element={<TeacherProfileSettings />} />

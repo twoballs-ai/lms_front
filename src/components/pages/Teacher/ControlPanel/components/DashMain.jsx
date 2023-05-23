@@ -6,7 +6,7 @@ import { Row, Col } from "react-bootstrap"
 import Form from 'react-bootstrap/Form'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Table from 'react-bootstrap/Table'
-import MyCourses from "../MyCourses"
+import MyCourses from "../MyTeacherCourses"
 import SideBar from "./SideBar"
 
 function DashMain() {
