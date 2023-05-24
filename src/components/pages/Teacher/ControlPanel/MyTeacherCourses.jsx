@@ -18,7 +18,7 @@ function MyTeacherCourses() {
       )
     .then(response => {
       setCourseData(response.data)
-      
+      console.log(response.data)
     })
   },[])
 console.log(courseData)
@@ -43,7 +43,7 @@ console.log(courseData)
           <td>{course.title}</td>
           <td><img src={course.course_image} width="80" className="rounded float-start" alt={course.title}/></td>
           <td><Link to='/'>{course.teacher}</Link> </td>
-          <td> <Button variant="danger">Удалить</Button>{' '}<Button variant="primary">Редактировать</Button>{' '}</td>
+          <td> <Button variant="danger">Удалить</Button>{' '}<Button as={Link} to={'/teacher-profile/add-chapter/'+ course.id} variant="primary">добавить главу</Button>{' '}</td>
         </tr>
         )}
         
