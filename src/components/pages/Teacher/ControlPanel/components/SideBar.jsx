@@ -15,7 +15,7 @@ function SideBar() {
         <ListGroup.Item as={Link} to="my-students">Мои учащиеся</ListGroup.Item>
         <ListGroup.Item as={Link} to="profile-settings">Настройки профиля</ListGroup.Item>
         <ListGroup.Item as={Link} to="reset-password">Смена пароля</ListGroup.Item>
-        <ListGroup.Item className="text-danger" as={Link} to="/user-login">Выход</ListGroup.Item>
+        <ListGroup.Item className="text-danger" as={Link} to="/teacher-login">Выход</ListGroup.Item>
       </ListGroup>
     </Card>
 

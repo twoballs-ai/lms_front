@@ -40,7 +40,7 @@ console.log(courseData)
       <tbody>
         {courseData.map((course,index)=>
         <tr key={index}>
-          <td><Link to='/teacher-profile/all-chapters/2/'>{course.title}</Link></td>
+          <td><Link to={'/teacher-profile/all-chapters/'+course.id}>{course.title}</Link></td>
           <td><img src={course.course_image} width="80" className="rounded float-start" alt={course.title}/></td>
           <td><Link to='/teacher-profile'>{course.teacher}</Link> </td>
           <td> <Button variant="danger">Удалить курс</Button>{' '}<Button as={Link} to={'/teacher-profile/add-chapter/'+ course.id} variant="primary">добавить главу в курс</Button>{' '}</td>
