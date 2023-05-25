@@ -13,7 +13,7 @@ function TeacherLogin() {
     email: "",
     password: ""
   })
-
+const [errorMsg,setErrorMsg]=useState('')
   const handleChange = (event)=>{
     setTeacherLoginData({
       ...teacherLoginData,
@@ -40,11 +40,14 @@ localStorage.setItem('teacherLoginStatus', true)
 localStorage.setItem('teacherId', response.data.teacher_id)
 window.location.href='/teacher-profile/dashboard'
 
+      }else{
+        setErrorMsg('Пользователя с такими данными не существует')
       }
 
       // Handle response
 
     })
+    .catch((error) =>{console.log(error)})
   }
 
   const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
@@ -59,6 +62,7 @@ window.location.href='/teacher-profile/dashboard'
         <Card>
       <Card.Header><h3>Авторизация</h3></Card.Header>
       <Card.Body>
+        {errorMsg && <p className="text-danger">{errorMsg}</p> }
       <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>email</Form.Label>

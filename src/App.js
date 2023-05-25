@@ -45,6 +45,7 @@ function App() {
         <Route path='student-register' element={<StudentRegister />} />
         <Route path='detail/:course_id' element={<CourseDetail />} />
         <Route path='all-courses' element={<AllCourses />} />
+        <Route path='all-chapters/:course_id' element={<AllChapters />} />
         <Route path='popular-courses' element={<PopularCourses />} />
         <Route path='popular-teachers' element={<PopularTeachers />} />
         <Route path='teacher-login' element={<TeacherLogin />} />
@@ -52,6 +53,7 @@ function App() {
         <Route path='teacher-register' element={<TeacherRegister />} />
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
         <Route path='courses-by-cat/:category_slug' element={<CoursesByCat />} />  
+          
           <Route path='student-profile/' element={<UserDashmain />} >
           <Route index element={<StudentDashboard />} />
             <Route path='my-courses' element={<StudentMyCourses />} />
@@ -61,9 +63,6 @@ function App() {
             <Route path='reset-password' element={<StudentChangePassword />} />
             <Route path='dashboard' element={<StudentDashboard />} />
           </Route>
-
-          
-
           
           <Route path='teacher-profile/' element={<TeacherDashmain />} >
           <Route index element={<TeacherDashboard />} />

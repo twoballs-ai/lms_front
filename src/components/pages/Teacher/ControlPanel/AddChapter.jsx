@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -10,9 +10,9 @@ const baseUrl = 'http://127.0.0.1:8000/api/'
 
 function AddChapter() {
   // const teacherId= localStorage.getItem('teacherId')
-  
+  const {course_id} = useParams()
   const [chapterAddData, setChapterAddData] = useState({
-    course:'',
+    course: course_id,
     title:'',
     description:'',
     video:'',
@@ -61,8 +61,9 @@ function AddChapter() {
       ,{headers: { "Content-Type": "multipart/form-data" }}
       )
     .then(response => {
+      console.log(response)
  
-      window.location.href='/teacher-profile/my-courses'
+      // window.location.href='/teacher-profile/my-courses'
 
     })
   }
@@ -81,6 +82,14 @@ function AddChapter() {
       <Form.Group className="mb-3" controlId="formBasicCategory">
         <Form.Label>Описание</Form.Label>
         <Form.Control name="description"   as="textarea" rows={3} placeholder="Описание" onChange={handleChange} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCategory">
+        <Form.Label>Видео урок</Form.Label>
+        <Form.Control name="video"   type="file" placeholder="Видео урок" onChange={handleFileChange} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCategory">
+        <Form.Label>Комментарии автора</Form.Label>
+        <Form.Control name="comment" as="textarea" rows={3} placeholder="Комментарии автора" onChange={handleChange} />
       </Form.Group>
     
       <Button onClick={formSubmit} variant="primary" type="submit">
