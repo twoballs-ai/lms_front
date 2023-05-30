@@ -5,11 +5,16 @@ import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import { useState, useEffect } from "react"
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2'
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
 
 function Coursechapter() {
     const [chapterData, setChapterData]= useState([])
+    const [totalResult, setTotalResult]= useState(0)
     const {course_id} = useParams()
 // console.log(teacherId)
   useEffect(()=>{
@@ -20,13 +25,25 @@ function Coursechapter() {
       )
     .then(response => {
         setChapterData(response.data)
+        setTotalResult(response.data.length)
       console.log(response.data)
     })
   },[]) 
+const Swal = require('sweetalert2')
+  const handleDeleteClick = ()=>{
+    Swal.fire({
+      title: 'Подтвердите действие!',
+      text: 'Вы собираетесь удалить главу, вы уверены?',
+      icon: 'info',
+      confirmButtonText: 'Все равно удалить',
+      showCancelButton: true
+      
+    })
+  }
     return(
 <>
 <Card>
-        <Card.Header>Все главы курса</Card.Header>
+        <Card.Header>Все главы курса ({totalResult})</Card.Header>
        <Card.Body>
        <Table striped bordered hover>
       <thead>
@@ -41,7 +58,7 @@ function Coursechapter() {
       <tbody>
         {chapterData.map((chapter,index)=>
         <tr key={index}>
-          <td>{chapter.title}</td>
+          <td><Link to={"/teacher-profile/edit-chapter/"+chapter.id}variant="primary">{chapter.title}</Link>{' '}</td>
           <td>
           <video width="240" height="180" controls>
   <source src={chapter.video} type="video/mp4" />
@@ -51,8 +68,8 @@ function Coursechapter() {
           </td>
           <td>{chapter.comment}</td>
           <td> 
-            <Button variant="danger">Удалить главу</Button>{' '}
-            <Button variant="primary">редактировать главу</Button>{' '}
+          <Button as={Link} to={"/teacher-profile/edit-chapter/"+chapter.id}variant="primary"><FontAwesomeIcon icon={faPenToSquare} /></Button>{' '}
+           <Button onClick={handleDeleteClick} variant="danger"><FontAwesomeIcon icon={faTrashCan} /></Button>{' '}
           </td>
         </tr>
         )}
