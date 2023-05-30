@@ -30,6 +30,7 @@ import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherC
 import TeacherDashmain from './components/pages/Teacher/ControlPanel/components/DashMain';
 import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
 import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
+import EditChapter from './components/pages/Teacher/EditChapter';
 import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
 import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
 import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
