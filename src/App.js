@@ -30,7 +30,7 @@ import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherC
 import TeacherDashmain from './components/pages/Teacher/ControlPanel/components/DashMain';
 import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
 import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
-import EditChapter from './components/pages/Teacher/EditChapter';
+import EditChapter from './components/pages/Teacher/ControlPanel/EditChapter';
 import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
 import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
 import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
@@ -71,6 +71,7 @@ function App() {
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
             <Route path='add-course' element={<AddCourse />} />
             <Route path='add-chapter/:course_id' element={<AddChapter />} />
+            <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
             <Route path='my-students' element={<MyStudents />} />
             <Route path='profile-settings' element={<TeacherProfileSettings />} />
             <Route path='reset-password' element={<TeacherChangePassword />} />
