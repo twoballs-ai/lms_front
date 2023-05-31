@@ -28,16 +28,32 @@ function Coursechapter() {
         setTotalResult(response.data.length)
       console.log(response.data)
     })
-  },[]) 
+  },[totalResult]) 
 const Swal = require('sweetalert2')
-  const handleDeleteClick = ()=>{
+  const handleDeleteClick = (chapter_id)=>{
     Swal.fire({
       title: 'Подтвердите действие!',
       text: 'Вы собираетесь удалить главу, вы уверены?',
       icon: 'info',
       confirmButtonText: 'Все равно удалить',
       showCancelButton: true
-      
+    }).then((result)=>{
+      if(result.isConfirmed){
+        try{
+            axios.delete(baseUrl+'chapter/'+chapter_id)
+            .then((response)=>{
+              
+              Swal.fire('success', 'Данные были удалены')
+              setTotalResult(response.data.length)
+            })
+            // Swal.fire('success', 'Данные были удалены')
+        }catch(error){
+          Swal.fire('error', 'Данные не были удалены')
+        }
+      }else {
+        Swal.fire('error', 'Данные не были удалены')
+      }
+
     })
   }
     return(
@@ -69,7 +85,7 @@ const Swal = require('sweetalert2')
           <td>{chapter.comment}</td>
           <td> 
           <Button as={Link} to={"/teacher-profile/edit-chapter/"+chapter.id}variant="primary"><FontAwesomeIcon icon={faPenToSquare} /></Button>{' '}
-           <Button onClick={handleDeleteClick} variant="danger"><FontAwesomeIcon icon={faTrashCan} /></Button>{' '}
+           <Button onClick={()=>handleDeleteClick(chapter.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} /></Button>{' '}
           </td>
         </tr>
         )}
