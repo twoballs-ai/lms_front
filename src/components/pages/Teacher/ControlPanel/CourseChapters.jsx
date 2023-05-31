@@ -59,7 +59,7 @@ const Swal = require('sweetalert2')
     return(
 <>
 <Card>
-        <Card.Header>Все главы курса ({totalResult})</Card.Header>
+        <Card.Header>Все главы курса ({totalResult}) <Button className="float-end" as={Link} to={"/teacher-profile/add-chapter/"+ course_id}>Добавить главу</Button> </Card.Header>
        <Card.Body>
        <Table striped bordered hover>
       <thead>

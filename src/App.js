@@ -35,6 +35,7 @@ import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
 import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
 import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
 import Coursechapter from './components/pages/Teacher/ControlPanel/CourseChapters';
+import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
             <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
             <Route path='add-course' element={<AddCourse />} />
+            <Route path='edit-course/:course_id' element={<EditCourse />} />
             <Route path='add-chapter/:course_id' element={<AddChapter />} />
             <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
             <Route path='my-students' element={<MyStudents />} />

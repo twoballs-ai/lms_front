@@ -5,13 +5,25 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
-import { useEffect } from 'react';
+import { useState, useEffect } from "react"
+import axios from "axios";
 
-
+const baseUrl = 'http://127.0.0.1:8000/api/'
 function Home() {
-  useEffect(()=>{
-    document.title = 'Главная - intelllity code'
-  })
+  const [allCourseData, setAllCourseData] = useState([])
+  const teacherId = localStorage.getItem('teacherId')
+  // console.log(teacherId)
+  useEffect(() => {
+    axios
+      .get(baseUrl + 'course/?result=4'
+        // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+        // ,{headers: { "Content-Type": "multipart/form-data" }}
+      )
+      .then(response => {
+        setAllCourseData(response.data)
+        console.log(response.data)
+      })
+  }, [])
   return (
     <>
       <Container>
@@ -21,11 +33,12 @@ function Home() {
         <Row className='mt-5'>
 
           <hr />
+          {allCourseData && allCourseData.map((course,index)=>
           <Col>
             <Card style={{ width: '18rem' }}>
-            <Link to={'detail/1'}><Card.Img variant="top" src="/images/code.jpg" /></Link>
+            <Link to={`/detail/${course.id}`}><Card.Img variant="top" src={course.course_image} /></Link>
               <Card.Body>
-                <Card.Title><Link to={'detail/1'}>Описание курса</Link></Card.Title>
+                <Card.Title><Link to={`/detail/${course.id}`}>{course.title}</Link></Card.Title>
 
               </Card.Body>
               <Card.Footer>
@@ -34,42 +47,9 @@ function Home() {
               </Card.Footer>
             </Card>
           </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+          )}
 
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг курса: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
-
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг курса: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
-
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг курса: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
+ 
         </Row >
         {/* popular courses */}
         <h3 className='mt-5'>
