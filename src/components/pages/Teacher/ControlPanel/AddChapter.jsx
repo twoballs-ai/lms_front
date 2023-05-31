@@ -56,7 +56,7 @@ function AddChapter() {
     e.preventDefault()
 
     axios
-    .post(baseUrl+'chapter/', chapterAddData
+    .post(baseUrl+'course-chapter/'+course_id, chapterAddData
       // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
       ,{headers: { "Content-Type": "multipart/form-data" }}
       )
