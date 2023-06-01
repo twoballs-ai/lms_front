@@ -6,11 +6,13 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import Swal from 'sweetalert2'
+const siteUrl = 'http://127.0.0.1:8000/'
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function CourseDetail() {
   let { course_id } = useParams()
   const [show, setShow] = useState(false);
   const [courseData, setCourseData]= useState([])
+  const [relatedCourseData, setRelatedCourseData]= useState([])
   const [teacherData, setTeacherData]= useState([])
   const [chapterData, setChapterData]= useState([])
   const handleClose = () => setShow(false);
@@ -25,9 +27,11 @@ function CourseDetail() {
       setCourseData(response.data)
       setTeacherData(response.data.teacher)
       setChapterData(response.data.course_chapters)
+      setRelatedCourseData(JSON.parse(response.data.related_videos))
       console.log(response.data)
     })
   },[]) 
+  console.log(relatedCourseData)
   return (
     <>
     
@@ -39,7 +43,7 @@ function CourseDetail() {
             <h3>Курс: {courseData.title}</h3>
             <h5>Описание:</h5>
             <p>{courseData.description}</p>
-            <p>Автор курса: <Link to='/teacher-detail/1'>{teacherData.full_name}</Link></p>
+            <p>Автор курса: <Link to={`/teacher-detail/${teacherData.id}`}>{teacherData.full_name}</Link></p>
             <p>Длительность курса:</p>
             <p>Количество учащихся:</p>
             <p>Оценка курса: например 5 или 4.9</p>
@@ -64,6 +68,22 @@ function CourseDetail() {
           )}
           </ListGroup>
         </Card>
+        <Row className='mt-5'>
+
+<hr />
+<h3>Схожие курсы:</h3>
+{relatedCourseData.map((related,index)=>
+<Col>
+  <Card style={{ width: '10rem' }}>
+  <Link target="_blank"  to={`/detail/${related.pk}`}><Card.Img variant="top" src={`${siteUrl}media/${related.fields.course_image}`} /></Link>
+    <Card.Body>
+      <Card.Title><Link target="_blank" to={`/detail/${related.pk}`}>{related.fields.title}</Link></Card.Title>
+
+    </Card.Body>
+  </Card>
+</Col>
+)}
+</Row >
       </Container>
     </>
   )
