@@ -5,10 +5,11 @@ import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import { useState, useEffect } from "react"
 import axios from "axios";
+import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
 
