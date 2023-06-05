@@ -18,16 +18,16 @@ function TeacherRegister() {
     skills: "",
     status: ""
   })
-  
+
   const handleChange = (event) => {
     setTeacherRegisterData({
       ...teacherRegisterData,
       [event.target.name]: event.target.value
     })
-  //   console.log("teacherRegisterData : ")
-  // console.log(teacherRegisterData)
+    //   console.log("teacherRegisterData : ")
+    // console.log(teacherRegisterData)
   }
-  
+
 
 
 
@@ -36,23 +36,37 @@ function TeacherRegister() {
     // const teacherFormRegisterData = new FormData()
     // console.log(userData)
     // console.log(teacherRegisterData)
-    axios
-    .post(baseUrl, teacherRegisterData
-      // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-      )
-    .then(response => {
-      console.log(response)
+    try {
+      axios
+        .post(baseUrl, teacherRegisterData
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+        )
+        .then(response => {
+          console.log(response)
+          setTeacherRegisterData({
+            full_name: "",
+            email: "",
+            password: "",
+            qualification: "",
+            phone: "",
+            skills: "",
+            status: "success"
+          })
+          // Handle response
 
-      // Handle response
+        });
+    } catch (error) {
+      console.log(error)
+      setTeacherRegisterData({ "status": "error" })
+    }
 
-    });
   }
   // useEffect(()=>{
   //   document.title = 'Регистрация наставника'
   // })
-  const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
-  if(teacherLoginStatus == 'true'){
-    window.location.href='/teacher-profile/dashboard'
+  const teacherLoginStatus = localStorage.getItem('teacherLoginStatus')
+  if (teacherLoginStatus == 'true') {
+    window.location.href = '/teacher-profile/dashboard'
   }
   return (
     <>

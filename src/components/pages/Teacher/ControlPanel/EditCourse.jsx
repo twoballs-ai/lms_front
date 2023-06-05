@@ -82,7 +82,7 @@ function EditCourse() {
     if(courseEditData.course_image !==''){
       _formData.append('course_image',courseEditData.course_image,courseEditData.course_image.name)
      }
-    _formData.append('comment',courseEditData.comment)
+    _formData.append('technologicals',courseEditData.technologicals)
     console.log(courseEditData)
 
     axios
@@ -92,7 +92,7 @@ function EditCourse() {
       )
     .then(response => {
  
-      if(response.status==200){
+      if(response.status===200){
         Swal.fire({
           position: 'top-end',
           icon: 'success',

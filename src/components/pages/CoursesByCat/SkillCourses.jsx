@@ -19,7 +19,7 @@ function SkillCourses(){
   // console.log(teacherId)
   useEffect(() => {
     axios
-      .get(baseUrl + 'course/?skill_name='+skill_slug+'&teacher='+teacher_id
+      .get(baseUrl + 'course/?skill_slug='+skill_slug+'&teacher='+teacher_id
         // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
         // ,{headers: { "Content-Type": "multipart/form-data" }}
       )
