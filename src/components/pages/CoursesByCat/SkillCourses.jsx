@@ -11,15 +11,15 @@ import { useState, useEffect } from "react"
 import axios from "axios";
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
-function CoursesByCat(){
+function SkillCourses(){
   const [courseByCatData, setCourseByCatData] = useState([])
-  let { category_slug } = useParams()
+  let { skill_slug,teacher_id } = useParams()
 
   // const teacherId = localStorage.getItem('teacherId')
   // console.log(teacherId)
   useEffect(() => {
     axios
-      .get(baseUrl + 'course/?category='+category_slug
+      .get(baseUrl + 'course/?skill_name='+skill_slug+'&teacher='+teacher_id
         // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
         // ,{headers: { "Content-Type": "multipart/form-data" }}
       )
@@ -27,7 +27,7 @@ function CoursesByCat(){
         setCourseByCatData(response.data)
         console.log(response.data)
       })
-  }, [category_slug])
+  }, [skill_slug])
 
     let active = 2;
 let items = [];
@@ -48,7 +48,7 @@ const paginationBasic = (
         <>
          <Container>
         <h3 className='mt-5'>
-          Курсы по категории: {category_slug}
+          Курсы по категории: {skill_slug}
         </h3>
         <Row className='mt-5'>
 
@@ -70,4 +70,4 @@ const paginationBasic = (
         </>
     )
 }
-export default CoursesByCat
+export default SkillCourses

@@ -6,13 +6,14 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import Swal from 'sweetalert2'
+import Badge from 'react-bootstrap/Badge';
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function TeacherDetail() {
     let { teacher_id } = useParams()
 
     const [courseData, setCourseData]= useState([])
-
+    const [skillListData, setSkillListData]= useState([])
     const [teacherData, setTeacherData]= useState([])
     useEffect(()=>{
         axios
@@ -23,7 +24,7 @@ function TeacherDetail() {
         .then(response => {
           setCourseData(response.data.teacher_courses)
           setTeacherData(response.data)
-
+          setSkillListData(response.data.skill_list)
           console.log(response.data)
         })
       },[]) 
@@ -36,7 +37,13 @@ function TeacherDetail() {
             <Col md={8}>
                 <h3>{teacherData.full_name}</h3>
                 <p>{teacherData.detail}</p>
-                <p>Мои скиллы: <Link to="/courses-by-cat/php">Python</Link>, <Link to='#'>JavaScript</Link>, <Link to='#'>Dart</Link></p>
+                <p>Мои скиллы:&nbsp;
+            {skillListData.map((skill,index)=>
+             <Badge as={Link} to={`/courses-by-skills/${skill.trim()}/${teacherData.id}`} pill bg="success">
+           {skill.trim()}
+          </Badge>
+            )}
+            </p>
                 <p>Последние добавленные курсы: <Link to='#'>React + Django курс</Link></p>
                 <p>Количество учащихся: 600 учеников</p>
             </Col>

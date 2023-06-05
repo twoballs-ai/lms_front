@@ -36,6 +36,7 @@ import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/Prof
 import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
 import Coursechapter from './components/pages/Teacher/ControlPanel/CourseChapters';
 import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
+import SkillCourses from './components/pages/CoursesByCat/SkillCourses';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
         <Route path='teacher-register' element={<TeacherRegister />} />
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
         <Route path='courses-by-cat/:category_slug' element={<CoursesByCat />} />  
+        <Route path='courses-by-skills/:skill_slug/:teacher_id' element={<SkillCourses />} />  
           
           <Route path='student-profile/' element={<UserDashmain />} >
           <Route index element={<StudentDashboard />} />

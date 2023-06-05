@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import Swal from 'sweetalert2'
+import Badge from 'react-bootstrap/Badge';
 const siteUrl = 'http://127.0.0.1:8000/'
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function CourseDetail() {
@@ -13,6 +14,7 @@ function CourseDetail() {
   const [show, setShow] = useState(false);
   const [courseData, setCourseData]= useState([])
   const [relatedCourseData, setRelatedCourseData]= useState([])
+  const [technologicalListData, setTechnologicalListData]= useState([])
   const [teacherData, setTeacherData]= useState([])
   const [chapterData, setChapterData]= useState([])
   const handleClose = () => setShow(false);
@@ -27,11 +29,13 @@ function CourseDetail() {
       setCourseData(response.data)
       setTeacherData(response.data.teacher)
       setChapterData(response.data.course_chapters)
-      setRelatedCourseData(JSON.parse(response.data.related_videos))
+      setRelatedCourseData(JSON.parse(response.data.related_courses))
+      setTechnologicalListData(response.data.technological_list)
+      
       console.log(response.data)
     })
-  },[]) 
-  console.log(relatedCourseData)
+  },[course_id]) 
+  console.log(technologicalListData)
   return (
     <>
     
@@ -44,6 +48,14 @@ function CourseDetail() {
             <h5>Описание:</h5>
             <p>{courseData.description}</p>
             <p>Автор курса: <Link to={`/teacher-detail/${teacherData.id}`}>{teacherData.full_name}</Link></p>
+            <p>Технологии:&nbsp;
+            {technologicalListData.map((tech,index)=>
+             <Badge as={Link} to={`/courses-by-cat/${tech.trim()}`} pill bg="success">
+           {tech.trim()}
+          </Badge>
+            )}
+            </p>
+            
             <p>Длительность курса:</p>
             <p>Количество учащихся:</p>
             <p>Оценка курса: например 5 или 4.9</p>
