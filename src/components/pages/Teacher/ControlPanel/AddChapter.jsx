@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import { useState, useEffect } from "react"
 import axios from "axios";
-
+import Swal from 'sweetalert2'
 const baseUrl = 'http://127.0.0.1:8000/api/'
 
 function AddChapter() {
@@ -61,7 +61,18 @@ function AddChapter() {
       ,{headers: { "Content-Type": "multipart/form-data" }}
       )
     .then(response => {
-      console.log(response)
+      if(response.status===200||response.status===201){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Ваши данные обновлены',
+          toast:true,
+          timerProgressBar:true,
+          showConfirmButton: false,
+          timer: 30
+        })
+        window.location.reload()
+      }
  
       // window.location.href='/teacher-profile/my-courses'
 

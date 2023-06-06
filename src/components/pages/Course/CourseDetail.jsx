@@ -7,6 +7,9 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import Swal from 'sweetalert2'
 import Badge from 'react-bootstrap/Badge';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 const siteUrl = 'http://127.0.0.1:8000/'
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function CourseDetail() {
@@ -35,7 +38,36 @@ function CourseDetail() {
       console.log(response.data)
     })
   },[course_id]) 
-  console.log(technologicalListData)
+ const enrollCourse = () => {
+  
+  try{
+    const studentId= localStorage.getItem('studentId')
+    axios
+    .post(baseUrl+'student-course-enroll/', {
+      student: studentId,
+      course: course_id
+    }
+      // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+      ,{headers: { "Content-Type": "multipart/form-data" }}
+      )
+    .then(response => {
+      if(response.status===200||response.status===201){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'вы подписались на курс',
+          toast:true,
+          timerProgressBar:true,
+          showConfirmButton: false,
+          timer: 3000
+        })
+        // window.location.reload()
+      }
+    })
+  } catch(error){
+    console.log(error)
+  }
+ }
   return (
     <>
     
@@ -59,9 +91,11 @@ function CourseDetail() {
             <p>Длительность курса:</p>
             <p>Количество учащихся:</p>
             <p>Оценка курса: например 5 или 4.9</p>
+            <Button as={Link} to={"#"} onClick={enrollCourse} variant="primary">Подписаться на курс <FontAwesomeIcon icon={faCirclePlus} /></Button>{' '}
+
           </Col>
         </Row>
-        <Card >
+        <Card className="m-2">
           <Card.Header>главы курса</Card.Header>
           <ListGroup variant="flush">
           {chapterData.map((chapter,index)=>

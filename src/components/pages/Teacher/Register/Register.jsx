@@ -65,7 +65,7 @@ function TeacherRegister() {
   //   document.title = 'Регистрация наставника'
   // })
   const teacherLoginStatus = localStorage.getItem('teacherLoginStatus')
-  if (teacherLoginStatus == 'true') {
+  if (teacherLoginStatus === 'true') {
     window.location.href = '/teacher-profile/dashboard'
   }
   return (
@@ -73,6 +73,8 @@ function TeacherRegister() {
       <Container>
         <Row>
           <Col>
+          {teacherRegisterData.status==='success' && <p className="text-success">регистрация прошла успешно</p>}
+          {teacherRegisterData.status==='error' && <p className="text-danger">Во время регистрации произошла ошибка</p>}
             <Card>
               <Card.Header><h3>Регистрация нового пользователя</h3></Card.Header>
               <Card.Body>

@@ -7,6 +7,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
 function Header() {
   const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
+  const studentLoginStatus= localStorage.getItem('studentLoginStatus')
+ 
     return (
   <><Navbar bg="dark" variant="dark" expand="lg">
   <Container>
@@ -17,17 +19,24 @@ function Header() {
       <Nav.Link as={Link} to='/all-courses'>Курсы</Nav.Link>
         <Nav.Link as={Link} to="/about">О нас</Nav.Link>
         <NavDropdown title="Пользователь" id="navbarScrollingDropdown">
+        {studentLoginStatus!=='true'&&
+        <>
               <NavDropdown.Item as={Link} to="/student-login">Авторизация</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/student-register">
               Регистрация
               </NavDropdown.Item>
-              <NavDropdown.Divider />
+              </>
+    }
+      {studentLoginStatus==='true'&&
+        <>
               <NavDropdown.Item as={Link} to="/student-profile">
                 Личный кабинет
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action5">
+              <NavDropdown.Item as={Link} to="/student-logout">
                 Выход
               </NavDropdown.Item >
+               </>
+              }
             </NavDropdown>
            
             <NavDropdown title="Наставник" id="navbarScrollingDropdown">
@@ -37,16 +46,18 @@ function Header() {
               <NavDropdown.Item as={Link} to="/teacher-register">
               Регистрация
               </NavDropdown.Item>
-              <NavDropdown.Divider />
               </>
             } 
-              
+               {teacherLoginStatus==='true'&&
+            <>
               <NavDropdown.Item as={Link} to="/teacher-profile">
                 Личный кабинет
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/teacher-logout">
                 Выход
               </NavDropdown.Item>
+                </>
+              } 
             </NavDropdown>
       </Nav>
 

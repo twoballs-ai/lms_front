@@ -14,7 +14,7 @@ function StudentRegister() {
     email: "",
     password: "",
     username: "",
-    interests: "",
+    interested_categories: "",
     status: ""
   })
 
@@ -31,7 +31,7 @@ function StudentRegister() {
     // console.log(teacherRegisterData)
     try {
       axios
-        .post(baseUrl, studentRegisterData
+        .post(baseUrl+'student/', studentRegisterData
           // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
         )
         .then(response => {
@@ -41,7 +41,7 @@ function StudentRegister() {
             email: "",
             password: "",
             username: "",
-            interests: "",
+            interested_categories: "",
             status: "success"
           })
           // Handle response
@@ -58,29 +58,31 @@ function StudentRegister() {
       <Container>
         <Row>
           <Col>
+          {studentRegisterData.status==='success' && <p className="text-success">регистрация прошла успешно</p>}
+          {studentRegisterData.status==='error' && <p className="text-danger">Во время регистрации произошла ошибка</p>}
             <Card>
               <Card.Header><h3>Регистрация нового пользователя</h3></Card.Header>
               <Card.Body>
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicfull_name">
                     <Form.Label>ФИО</Form.Label>
-                    <Form.Control name="full_name" onChange={handleChange} type="text" placeholder="Введите ваше ФИО" />
+                    <Form.Control value={studentRegisterData.full_name}  name="full_name" onChange={handleChange} type="text" placeholder="Введите ваше ФИО" />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>email</Form.Label>
-                    <Form.Control name="email" onChange={handleChange} type="email" placeholder="Введите ваш email" />
+                    <Form.Control value={studentRegisterData.email}  name="email" onChange={handleChange} type="email" placeholder="Введите ваш email" />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Имя пользователя</Form.Label>
-                    <Form.Control name="username" onChange={handleChange} type="text" placeholder="Введите имя пользователя" />
+                    <Form.Control value={studentRegisterData.username} name="username" onChange={handleChange} type="text" placeholder="Введите имя пользователя" />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Интересы</Form.Label>
-                    <Form.Control name="interested_categories" onChange={handleChange} type="text" placeholder="Например: php, laravel, javascript" />
+                    <Form.Control value={studentRegisterData.interested_categories} name="interested_categories" onChange={handleChange} type="text" placeholder="Например: php, laravel, javascript" />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Пароль</Form.Label>
-                    <Form.Control name="password" onChange={handleChange} type="password" placeholder="Введите пароль" />
+                    <Form.Control value={studentRegisterData.password} name="password" onChange={handleChange} type="password" placeholder="Введите пароль" />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Запомнить меня" />
