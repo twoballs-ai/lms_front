@@ -38,6 +38,7 @@ import Coursechapter from './components/pages/Teacher/ControlPanel/CourseChapter
 import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
 import SkillCourses from './components/pages/CoursesByCat/SkillCourses';
 import StudentLogout from './components/pages/Student/Logout/Logout';
+import EnrolledStudents from './components/pages/Teacher/ControlPanel/EnrolledStudents';
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
             <Route path='profile-settings' element={<TeacherProfileSettings />} />
             <Route path='reset-password' element={<TeacherChangePassword />} />
             <Route path='dashboard' element={<StudentDashboard />} />
+            <Route path='enrolled-students/:course_id' element={<EnrolledStudents/>} />
 
           </Route>
     
