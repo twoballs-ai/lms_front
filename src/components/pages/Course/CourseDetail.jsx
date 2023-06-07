@@ -10,11 +10,14 @@ import Badge from 'react-bootstrap/Badge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import Form from 'react-bootstrap/Form';
+
 const siteUrl = 'http://127.0.0.1:8000/'
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function CourseDetail() {
   let { course_id } = useParams()
   const [show, setShow] = useState(false);
+  const [showRate, setShowRate] = useState(false);
   const [courseData, setCourseData] = useState([])
   const [relatedCourseData, setRelatedCourseData] = useState([])
   const [technologicalListData, setTechnologicalListData] = useState([])
@@ -24,6 +27,8 @@ function CourseDetail() {
   const [enrollStatus, setEnrollStatus] = useState("")
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleCloseRate = () => setShowRate(false);
+  const handleShowRate = () => setShowRate(true);
   const studentId = localStorage.getItem('studentId')
   useEffect(() => {
     try {
@@ -120,8 +125,75 @@ function CourseDetail() {
             </p>
 
             <p>Длительность курса:</p>
-            <p>Всего подписавшихся пользователей: <Badge  bg="success">{courseData.total_enrolled_students}</Badge></p>
-            <p>Оценка курса: например 5 или 4.9</p>
+            <p>Всего подписавшихся пользователей: <Badge bg="success">{courseData.total_enrolled_students}</Badge></p>
+            <p>
+              Оценка курса: например 5 или 4.9
+              {enrollStatus === 'success' && userLoggedStatus === 'success' &&
+                <>
+                  <Button onClick={handleShowRate} variant="primary">Рейтинг <FontAwesomeIcon icon={faCirclePlus} /></Button>
+                  <Modal show={showRate} onHide={handleCloseRate}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Оценить курс: {courseData.title}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                          <Form.Label>Рейтинг</Form.Label>
+                          {['radio'].map((type) => (
+                            <div key={`inline-${type}`} className="mb-3">
+                              <Form.Check
+                                inline
+                                label="1"
+                                name="rating"
+                                type={type}
+                                id={`inline-${type}-1`}
+                              />
+                              <Form.Check
+                                inline
+                                label="2"
+                                name="rating"
+                                type={type}
+                                id={`inline-${type}-2`}
+                              />
+                              <Form.Check
+                                inline
+                                label="3"
+                                name="rating"
+                                type={type}
+                                id={`inline-${type}-3`}
+                              />
+                              <Form.Check
+                                inline
+                                label="4"
+                                name="rating"
+                                type={type}
+                                id={`inline-${type}-4`}
+                              />
+                              <Form.Check
+                                inline
+                                label="5"
+                                name="rating"
+                                type={type}
+                                id={`inline-${type}-5`}
+                              />
+                            </div>
+                          ))}
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                          <Form.Label>написать отзыв</Form.Label>
+                          <Form.Control as="textarea" rows={3} name="review" placeholder="review" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                          Submit
+                        </Button>
+                      </Form>
+                    </Modal.Body>
+
+                  </Modal>
+                </>
+              }
+            </p>
             {enrollStatus === 'success' && userLoggedStatus === 'success' &&
               <p><span>Вы уже подписаны на курс</span></p>
             }
