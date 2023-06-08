@@ -25,11 +25,17 @@ function CourseDetail() {
   const [chapterData, setChapterData] = useState([])
   const [userLoggedStatus, setUserLoggedStatus] = useState("")
   const [enrollStatus, setEnrollStatus] = useState("")
+  const [ratingStatus, setRatingStatus] = useState("")
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleCloseRate = () => setShowRate(false);
   const handleShowRate = () => setShowRate(true);
   const studentId = localStorage.getItem('studentId')
+  const [ratingData, setRatingData] = useState({
+    rating:'1',
+    review:''
+  })
+  
   useEffect(() => {
     try {
       axios
@@ -68,6 +74,25 @@ function CourseDetail() {
       console.log(error)
     }
 
+    try {
+      axios
+        .get(baseUrl + 'get-rating-status/' + studentId + '/' + course_id
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          // ,{headers: { "Content-Type": "multipart/form-data" }}
+        )
+        .then(response => {
+          if (response.data.bool == true) {
+            setRatingStatus('success')
+            console.log(response.data)
+          }
+
+
+          console.log(response.data)
+        })
+    } catch (error) {
+      console.log(error)
+    }
+
     const studentLoginStatus = localStorage.getItem('studentLoginStatus')
     if (studentLoginStatus === 'true') {
       setUserLoggedStatus("success")
@@ -97,12 +122,83 @@ function CourseDetail() {
               timer: 3000
             })
             setEnrollStatus('success')
+            
             // window.location.reload()
           }
         })
     } catch (error) {
       console.log(error)
     }
+  }
+
+  // функция рейтинг
+    const handleChange=(event)=>{
+    setRatingData({
+      ...ratingData,
+      [event.target.name]: event.target.value
+    })
+    console.log(ratingData)
+  }
+
+  const ratingSubmit=(e)=>{
+    e.preventDefault()
+
+
+      try {
+  
+        axios
+          .post(baseUrl + 'course-rating/'+course_id, {
+            rating: ratingData.rating,
+            review: ratingData.review,
+            student: studentId,
+            course: course_id
+          }
+            // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+            , { headers: { "Content-Type": "multipart/form-data" } }
+          )
+          .then(response => {
+            if (response.status === 200 || response.status === 201) {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'вы подписались на курс',
+                toast: true,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                timer: 3000
+              })
+              console.log(response.data)
+              // setShow(false)
+              // setEnrollStatus('success')
+              // window.location.reload()
+            }
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    
+    // axios
+    // .post(baseUrl+'course-chapter/'+course_id, chapterAddData
+    //   // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+    //   ,{headers: { "Content-Type": "multipart/form-data" }}
+    //   )
+    // .then(response => {
+    //   if(response.status===200||response.status===201){
+    //     Swal.fire({
+    //       position: 'top-end',
+    //       icon: 'success',
+    //       title: 'Ваши данные обновлены',
+    //       toast:true,
+    //       timerProgressBar:true,
+    //       showConfirmButton: false,
+    //       timer: 30
+    //     })
+    //     window.location.reload()
+    //   }
+ 
+    //   // window.location.href='/teacher-profile/my-courses'
+
+    // })
   }
   return (
     <>
@@ -128,9 +224,14 @@ function CourseDetail() {
             <p>Всего подписавшихся пользователей: <Badge bg="success">{courseData.total_enrolled_students}</Badge></p>
             <p>
               Оценка курса: например 5 или 4.9
-              {enrollStatus === 'success' && userLoggedStatus === 'success' &&
+              {enrollStatus === 'success' && userLoggedStatus === 'success' && 
                 <>
-                  <Button onClick={handleShowRate} variant="primary">Рейтинг <FontAwesomeIcon icon={faCirclePlus} /></Button>
+                {ratingStatus !== 'success' &&
+                                  <Button onClick={handleShowRate} variant="primary">Рейтинг <FontAwesomeIcon icon={faCirclePlus} /></Button>
+                }
+                                {ratingStatus === 'success' &&
+                                <Badge bg="warning">Вы уже оценили этот курс</Badge>         
+ }
                   <Modal show={showRate} onHide={handleCloseRate}>
                     <Modal.Header closeButton>
                       <Modal.Title>Оценить курс: {courseData.title}</Modal.Title>
@@ -140,38 +241,48 @@ function CourseDetail() {
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>Рейтинг</Form.Label>
                           {['radio'].map((type) => (
-                            <div key={`inline-${type}`} className="mb-3">
+                            <div key={`inline-${type}`}  className="mb-3">
                               <Form.Check
                                 inline
+                                value="1"
                                 label="1"
+                                onChange={handleChange}
                                 name="rating"
                                 type={type}
                                 id={`inline-${type}-1`}
                               />
                               <Form.Check
                                 inline
+                                value="2"
                                 label="2"
+                                onChange={handleChange}
                                 name="rating"
                                 type={type}
                                 id={`inline-${type}-2`}
                               />
                               <Form.Check
                                 inline
+                                value="3"
                                 label="3"
+                                onChange={handleChange}
                                 name="rating"
                                 type={type}
                                 id={`inline-${type}-3`}
                               />
                               <Form.Check
                                 inline
+                                value="4"
                                 label="4"
+                                onChange={handleChange}
                                 name="rating"
                                 type={type}
                                 id={`inline-${type}-4`}
                               />
                               <Form.Check
                                 inline
+                                value="5"
                                 label="5"
+                                onChange={handleChange}
                                 name="rating"
                                 type={type}
                                 id={`inline-${type}-5`}
@@ -182,9 +293,9 @@ function CourseDetail() {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                           <Form.Label>написать отзыв</Form.Label>
-                          <Form.Control as="textarea" rows={3} name="review" placeholder="review" />
+                          <Form.Control onChange={handleChange} as="textarea" rows={3} name="review" placeholder="review" />
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button onClick={ratingSubmit} variant="primary" type="submit">
                           Submit
                         </Button>
                       </Form>

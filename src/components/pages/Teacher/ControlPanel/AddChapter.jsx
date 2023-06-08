@@ -19,17 +19,7 @@ function AddChapter() {
     comment:''
   })
 
-  // useEffect(()=>{
-  //   axios
-  //   .get(baseUrl+'category/'
-  //     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-  //     // ,{headers: { "Content-Type": "multipart/form-data" }}
-  //     )
-  //   .then(response => {
-     
-  //       setCategories(response.data)
-  //   })
-  // },[])
+
 
   const handleChange=(event)=>{
     setChapterAddData({
@@ -38,13 +28,6 @@ function AddChapter() {
     })
     console.log(chapterAddData)
   }
-  // const handleChange = (event)=>{
-  //   setTeacherLoginData({
-  //     ...teacherLoginData,
-  //     [event.target.name]:event.target.value
-  //   })
-  //   console.log(teacherLoginData)
-  // }
 
   const handleFileChange=(event)=>{
     setChapterAddData({

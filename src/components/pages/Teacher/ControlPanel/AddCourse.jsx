@@ -12,7 +12,7 @@ function AddCourse() {
   const teacherId= localStorage.getItem('teacherId')
   const [categories,setCategories] = useState([])
   const [courseAddData, setCourseAddData] = useState({
-    category:'',
+    category:1,
     teacher: teacherId,
     title:'',
     description:'',
@@ -24,7 +24,7 @@ function AddCourse() {
     axios
     .get(baseUrl+'category/'
       // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-      // ,{headers: { "Content-Type": "multipart/form-data" }}
+      ,{headers: { "Content-Type": "multipart/form-data" }}
       )
     .then(response => {
      
