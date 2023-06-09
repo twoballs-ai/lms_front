@@ -26,6 +26,7 @@ function CourseDetail() {
   const [userLoggedStatus, setUserLoggedStatus] = useState("")
   const [enrollStatus, setEnrollStatus] = useState("")
   const [ratingStatus, setRatingStatus] = useState("")
+  const [avgRatingStatus, setAvgRatingStatus] = useState("")
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleCloseRate = () => setShowRate(false);
@@ -49,7 +50,10 @@ function CourseDetail() {
           setChapterData(response.data.course_chapters)
           setRelatedCourseData(JSON.parse(response.data.related_courses))
           setTechnologicalListData(response.data.technological_list)
-
+          if(response.data.course_rating !=='' && response.data.course_rating !== null){
+            setAvgRatingStatus(response.data.course_rating)
+          }
+          
           console.log(response.data)
         })
     } catch (error) {
@@ -170,35 +174,13 @@ function CourseDetail() {
               console.log(response.data)
               // setShow(false)
               // setEnrollStatus('success')
-              // window.location.reload()
+              window.location.reload()
             }
           })
       } catch (error) {
         console.log(error)
       }
     
-    // axios
-    // .post(baseUrl+'course-chapter/'+course_id, chapterAddData
-    //   // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-    //   ,{headers: { "Content-Type": "multipart/form-data" }}
-    //   )
-    // .then(response => {
-    //   if(response.status===200||response.status===201){
-    //     Swal.fire({
-    //       position: 'top-end',
-    //       icon: 'success',
-    //       title: 'Ваши данные обновлены',
-    //       toast:true,
-    //       timerProgressBar:true,
-    //       showConfirmButton: false,
-    //       timer: 30
-    //     })
-    //     window.location.reload()
-    //   }
- 
-    //   // window.location.href='/teacher-profile/my-courses'
-
-    // })
   }
   return (
     <>
@@ -223,14 +205,14 @@ function CourseDetail() {
             <p>Длительность курса:</p>
             <p>Всего подписавшихся пользователей: <Badge bg="success">{courseData.total_enrolled_students}</Badge></p>
             <p>
-              Оценка курса: например 5 или 4.9
+              Оценка курса: {avgRatingStatus}/5
               {enrollStatus === 'success' && userLoggedStatus === 'success' && 
                 <>
                 {ratingStatus !== 'success' &&
-                                  <Button onClick={handleShowRate} variant="primary">Рейтинг <FontAwesomeIcon icon={faCirclePlus} /></Button>
+                                  <Button onClick={handleShowRate} variant="primary"> Рейтинг <FontAwesomeIcon icon={faCirclePlus} /></Button>
                 }
                                 {ratingStatus === 'success' &&
-                                <Badge bg="warning">Вы уже оценили этот курс</Badge>         
+                                <Badge bg="warning"> Вы уже оценили этот курс</Badge>         
  }
                   <Modal show={showRate} onHide={handleCloseRate}>
                     <Modal.Header closeButton>

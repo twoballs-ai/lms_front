@@ -34,18 +34,16 @@ function EnrolledStudents() {
                 <th>Имя</th>
                 <th>Почта</th>
                 <th>Имя пользователя(никнейм)</th>
-                <th>Действия</th>
+                <th>Интересы</th>
               </tr>
             </thead>
             <tbody>
               {studentData.map((student, index) =>
                 <tr key={index}>
-                  <td><Link to={'/view-student' + student.student.id}>{student.student.full_name}</Link></td>
+                  <td>{student.student.full_name}</td>
                   <td>{student.student.email}</td>
                   <td>{student.student.username}</td>
-                  <td>
-                    <Button as={Link} to={'/view-student/' + student.student.id} variant="info">Просомтреть профиль</Button>{' '}
-                  </td>
+                  <td>{student.student.interested_categories}</td>
                 </tr>
               )}
 
