@@ -22,7 +22,7 @@ function TeacherDetail() {
           // ,{headers: { "Content-Type": "multipart/form-data" }}
           )
         .then(response => {
-          setCourseData(response.data.teacher_courses)
+          setCourseData(response.data.teacher_course)
           setTeacherData(response.data)
           setSkillListData(response.data.skill_list)
           console.log(response.data)

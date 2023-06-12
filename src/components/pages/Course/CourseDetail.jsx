@@ -182,6 +182,9 @@ function CourseDetail() {
       }
     
   }
+  const addToFavorite = ()=> {
+    
+  }
   return (
     <>
 
@@ -293,6 +296,9 @@ function CourseDetail() {
             {userLoggedStatus === "success" && enrollStatus !== 'success' &&
               <Button as={Link} to={"#"} onClick={enrollCourse} variant="primary">Подписаться на курс <FontAwesomeIcon icon={faCirclePlus} /></Button>
             }
+            {userLoggedStatus === "success" && 
+              <Button as={Link} title="В избранное" to={"#"} onClick={addToFavorite} variant="danger">Добавить в избранные курсы</Button>
+            }            
             {userLoggedStatus !== "success" &&
               <p className="text-danger">Авторизуйтесь что бы записаться на курс<Button className="m-2" as={Link} to={"/student-login"} variant="primary">Авторизация <FontAwesomeIcon icon={faCirclePlus} /></Button></p>
             }
