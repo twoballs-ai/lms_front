@@ -12,7 +12,7 @@ import SideBar from "./components/SideBar";
 function StudentDashboard() {
   return (
     <>
-<p>xsvd</p>
+<p>xsvdыы</p>
     </>
   )
 

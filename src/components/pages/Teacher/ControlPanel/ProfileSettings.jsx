@@ -19,11 +19,14 @@ function ProfileSettings() {
     qualification: "",
     phone: "",
     skills: "",
-    status: ""
+    status: "",
+    previous_teacher_image: "",
+    teacher_image:"",
+
   })
   useEffect(()=>{
     axios
-        .get(baseUrl+'teacher-courses-detail/'+teacherId
+        .get(baseUrl+'teacher/'+teacherId
           // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
           // ,{headers: { "Content-Type": "multipart/form-data" }}
           )
@@ -34,7 +37,7 @@ function ProfileSettings() {
               qualification: response.data.qualification,
               phone: response.data.phone,
               skills: response.data.skills,
-              previous_teacher_image:'',
+              previous_teacher_image: response.data.teacher_image,
               teacher_image:'',
             })
           console.log(response.data)
@@ -51,38 +54,45 @@ function ProfileSettings() {
   }
 
 
-
+  const handleFileChange=(event)=>{
+    setTeacherData({
+      ...teacherData,
+      [event.target.name]:event.target.files[0]
+    })
+  }
 
   const submitForm = (e) => {
     e.preventDefault();
     const _formData = new FormData()
-    _formData.append('category',teacherData.category)
-    _formData.append('teacher',teacherId)
-    _formData.append('title',teacherData.title)
-    _formData.append('description',teacherData.description)
-    if(teacherData.course_image !==''){
-      _formData.append('course_image',teacherData.course_image,teacherData.course_image.name)
+    _formData.append('full_name',teacherData.full_name)
+    _formData.append('email',teacherData.email)
+    _formData.append('qualification',teacherData.qualification)
+    _formData.append('phone',teacherData.phone)
+    _formData.append('skills',teacherData.skills)
+    if(teacherData.teacher_image !==''){
+      _formData.append('teacher_image',teacherData.teacher_image,teacherData.teacher_image.name)
      }
-    _formData.append('technologicals',teacherData.technologicals)
     console.log(teacherData)
     try {
       axios
-        .post(baseUrl, teacherData
+        .put(baseUrl+ 'teacher/'+ teacherId+'/', _formData
           // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          ,{headers: { "Content-Type": "multipart/form-data" }}
         )
         .then(response => {
           console.log(response)
-          setTeacherData({
-            full_name: "",
-            email: "",
-            qualification: "",
-            phone: "",
-            skills: "",
-            previous_course_image:'',
-            course_image:'',
-            status: "success"
-            
-          })
+          if(response.status===200){
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Ваши данные обновлены',
+              toast:true,
+              timerProgressBar:true,
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
+          // window.location.href='/teacher-profile/my-courses'
           // Handle response
 
         });
@@ -99,7 +109,7 @@ function ProfileSettings() {
   return (
     <>
         <Card>
-              <Card.Header><h3>Регистрация нового пользователя</h3></Card.Header>
+              <Card.Header><h3>Изменение настроек профиля</h3></Card.Header>
               <Card.Body>
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicfull_name">
@@ -107,9 +117,13 @@ function ProfileSettings() {
                     <Form.Control value={teacherData.full_name} name="full_name" onChange={handleChange} type="text" placeholder="Введите ваше ФИО" />
                   </Form.Group>
                   <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Фотография профиля</Form.Label>
-        <Form.Control value={teacherData.full_name} type="file" />
+        <Form.Label>Добавить заглавную картинку курса</Form.Label>
+        <Form.Control name="teacher_image" type="file" onChange={handleFileChange} />
       </Form.Group>
+      {teacherData.previous_teacher_image && 
+      <Image src={teacherData.previous_teacher_image} rounded width="400" />
+    // <img src={courseEditData.previous_course_image} width="400" />
+      }
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>email</Form.Label>
                     <Form.Control value={teacherData.email} name="email" onChange={handleChange} type="email" placeholder="Введите ваш email" />
@@ -127,11 +141,11 @@ function ProfileSettings() {
                     <Form.Control value={teacherData.skills} name="skills" onChange={handleChange} as="textarea" placeholder="Введите имя пользователя" />
                   </Form.Group>
       
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check name="checkbox" onChange={handleChange} type="checkbox" label="Запомнить меня" />
-                  </Form.Group>
+                  </Form.Group> */}
                   <Button onClick={submitForm} variant="primary" type="submit">
-                    Регистрация
+                    Обновить профиль
                   </Button>
                 </Form>
               </Card.Body>

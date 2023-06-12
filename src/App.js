@@ -82,7 +82,7 @@ function App() {
             <Route path='my-students' element={<MyStudents />} />
             <Route path='profile-settings' element={<TeacherProfileSettings />} />
             <Route path='reset-password' element={<TeacherChangePassword />} />
-            <Route path='dashboard' element={<StudentDashboard />} />
+            <Route path='dashboard' element={<TeacherDashboard />} />
             <Route path='enrolled-students/:course_id' element={<EnrolledStudents/>} />
 
           </Route>
