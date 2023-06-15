@@ -31,6 +31,7 @@ function CourseDetail() {
   const handleShow = () => setShow(true);
   const handleCloseRate = () => setShowRate(false);
   const handleShowRate = () => setShowRate(true);
+  const [favoriteStatus, setFavoriteStatus] = useState("")
   const studentId = localStorage.getItem('studentId')
   const [ratingData, setRatingData] = useState({
     rating:'1',
@@ -96,7 +97,25 @@ function CourseDetail() {
     } catch (error) {
       console.log(error)
     }
+    try {
+      axios
+        .get(baseUrl + 'get-favorite-status/' + studentId + '/' + course_id
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          // ,{headers: { "Content-Type": "multipart/form-data" }}
+        )
+        .then(response => {
+          if (response.data.bool == true) {
+            setFavoriteStatus('success')
+          }else{
+            setFavoriteStatus('')
+          }
 
+
+          console.log(response.data)
+        })
+    } catch (error) {
+      console.log(error)
+    }
     const studentLoginStatus = localStorage.getItem('studentLoginStatus')
     if (studentLoginStatus === 'true') {
       setUserLoggedStatus("success")
@@ -183,8 +202,70 @@ function CourseDetail() {
     
   }
   const addToFavorite = ()=> {
+    try {
+  
+      axios
+        .post(baseUrl + 'add-favorite-courses/', {
+          student: studentId,
+          course: course_id,
+          is_favorite: true
+        }
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          , { headers: { "Content-Type": "multipart/form-data" } }
+        )
+        .then(response => {
+          if (response.status === 200 || response.status === 201) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'данные обновлены',
+              toast: true,
+              timerProgressBar: true,
+              showConfirmButton: false,
+              timer: 3000
+            })
+            console.log(response.data)
+            // setShow(false)
+            // setEnrollStatus('success')
+            setFavoriteStatus('success')
+          }
+        })
+    } catch (error) {
+      console.log(error)
+    }
     
   }
+  const removeFromFavorite = ()=> {
+    try {
+  
+      axios
+        .get(baseUrl + 'remove-favorite-courses/'+ studentId + '/' + course_id
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          , { headers: { "Content-Type": "multipart/form-data" } }
+        )
+        .then(response => {
+          if (response.status === 200 || response.status === 201) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'данные обновлены',
+              toast: true,
+              timerProgressBar: true,
+              showConfirmButton: false,
+              timer: 3000
+            })
+            console.log(response.data)
+            // setShow(false)
+            // setEnrollStatus('success')
+            setFavoriteStatus('')
+          }
+        })
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
   return (
     <>
 
@@ -296,9 +377,12 @@ function CourseDetail() {
             {userLoggedStatus === "success" && enrollStatus !== 'success' &&
               <Button as={Link} to={"#"} onClick={enrollCourse} variant="primary">Подписаться на курс <FontAwesomeIcon icon={faCirclePlus} /></Button>
             }
-            {userLoggedStatus === "success" && 
+            {userLoggedStatus === "success" &&  favoriteStatus !== "success" &&
               <Button as={Link} title="В избранное" to={"#"} onClick={addToFavorite} variant="danger">Добавить в избранные курсы</Button>
-            }            
+            }    
+            {userLoggedStatus === "success" &&  favoriteStatus === "success" &&
+              <Button as={Link} title="В избранное" to={"#"} onClick={removeFromFavorite} variant="primary">удалить из избранного</Button>
+            }              
             {userLoggedStatus !== "success" &&
               <p className="text-danger">Авторизуйтесь что бы записаться на курс<Button className="m-2" as={Link} to={"/student-login"} variant="primary">Авторизация <FontAwesomeIcon icon={faCirclePlus} /></Button></p>
             }

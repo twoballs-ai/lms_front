@@ -20,6 +20,7 @@ import StudentFavoriteCourses from './components/pages/Student/ControlPanel/Favo
 import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
 import StudentProfileSettings from './components/pages/Student/ControlPanel/ProfileSettings';
 import StudentChangePassword from './components/pages/Student/ControlPanel/ChangePassword';
+import StudentIncomingTask from './components/pages/Student/ControlPanel/StudentTask';
 
 //teacher pages
 import TeacherLogout from './components/pages/Teacher/Logout/Logout';
@@ -39,6 +40,8 @@ import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
 import SkillCourses from './components/pages/CoursesByCat/SkillCourses';
 import StudentLogout from './components/pages/Student/Logout/Logout';
 import EnrolledStudents from './components/pages/Teacher/ControlPanel/EnrolledStudents';
+import AddTask from './components/pages/Teacher/ControlPanel/AddTask';
+import ViewTask from './components/pages/Teacher/ControlPanel/ViewTask';
 
 function App() {
   return (
@@ -66,6 +69,7 @@ function App() {
             <Route path='my-courses' element={<StudentMyCourses />} />
             <Route path='favorite-courses' element={<StudentFavoriteCourses />} />
             <Route path='recommend-courses' element={<StudentRecommendCourses />} />
+            <Route path='incoming-task' element={<StudentIncomingTask />} />
             <Route path='profile-settings' element={<StudentProfileSettings />} />
             <Route path='reset-password' element={<StudentChangePassword />} />
             <Route path='dashboard' element={<StudentDashboard />} />
@@ -84,7 +88,8 @@ function App() {
             <Route path='reset-password' element={<TeacherChangePassword />} />
             <Route path='dashboard' element={<TeacherDashboard />} />
             <Route path='enrolled-students/:course_id' element={<EnrolledStudents/>} />
-
+            <Route path='add-tasks/:course_id' element={<AddTask/>} />
+            <Route path='view-tasks/:course_id' element={<ViewTask/>} />
           </Route>
     
  

@@ -13,6 +13,7 @@ function SideBar() {
         <ListGroup.Item as={Link} to="my-courses">Мои курсы</ListGroup.Item>
         <ListGroup.Item as={Link} to="favorite-courses">Избранные курсы</ListGroup.Item>
         <ListGroup.Item as={Link} to="recommend-courses">Рекомендованные курсы</ListGroup.Item>
+        <ListGroup.Item as={Link} to="incoming-task">Задачи с курсов</ListGroup.Item>
         <ListGroup.Item as={Link} to="profile-settings">Настройки профиля</ListGroup.Item>
         <ListGroup.Item as={Link} to="reset-password">Смена пароля</ListGroup.Item>
         <ListGroup.Item className="text-danger" as={Link} to="/user-login">Выход</ListGroup.Item>

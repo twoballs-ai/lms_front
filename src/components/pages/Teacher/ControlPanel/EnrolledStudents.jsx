@@ -9,6 +9,7 @@ const baseUrl = 'http://127.0.0.1:8000/api/'
 function EnrolledStudents() {
   const [studentData, setStudentData] = useState([])
   let { course_id } = useParams()
+  const teacherId = localStorage.getItem('teacherId')
   // console.log(teacherId)
   useEffect(() => {
     axios
@@ -27,8 +28,12 @@ function EnrolledStudents() {
       <Card>
         <Card.Header>Список подписавшихся на курс</Card.Header>
         <Card.Body>
+        <Button as={Link} to={`/teacher-profile/view-tasks/${course_id}/`} className="ms-2"variant="warning">Заданиe</Button>
+                  <Button as={Link} to={`/teacher-profile/add-tasks/${course_id}/`} className="ms-2"variant="success">Заданиe</Button>
           <Table striped bordered hover>
+            
             <thead>
+              
               <tr>
 
                 <th>Имя</th>
@@ -44,6 +49,7 @@ function EnrolledStudents() {
                   <td>{student.student.email}</td>
                   <td>{student.student.username}</td>
                   <td>{student.student.interested_categories}</td>
+
                 </tr>
               )}
 

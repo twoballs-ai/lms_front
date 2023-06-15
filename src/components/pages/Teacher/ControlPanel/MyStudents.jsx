@@ -35,6 +35,7 @@ function MyStudents() {
                 <th>Почта</th>
                 <th>Имя пользователя(никнейм)</th>
                 <th>Интересы</th>
+
               </tr>
             </thead>
             <tbody>
