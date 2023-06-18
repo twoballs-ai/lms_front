@@ -18,8 +18,8 @@ import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses'
 import UserDashmain from './components/pages/Student/ControlPanel/components/DashMain';
 import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
 import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
-import StudentProfileSettings from './components/pages/Student/ControlPanel/ProfileSettings';
-import StudentChangePassword from './components/pages/Student/ControlPanel/ChangePassword';
+import StudentProfileSettings from './components/pages/Student/ControlPanel/StudentProfileSettings';
+import StudentChangePassword from './components/pages/Student/ControlPanel/StudentChangePassword';
 import StudentIncomingTask from './components/pages/Student/ControlPanel/StudentTask';
 
 //teacher pages
