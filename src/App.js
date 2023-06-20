@@ -22,6 +22,9 @@ import StudentProfileSettings from './components/pages/Student/ControlPanel/Stud
 import StudentChangePassword from './components/pages/Student/ControlPanel/StudentChangePassword';
 import StudentIncomingTask from './components/pages/Student/ControlPanel/StudentTask';
 
+// quiz pages
+import AddQuiz from './components/pages/Teacher/ControlPanel/AddQuiz';
+
 //teacher pages
 import TeacherLogout from './components/pages/Teacher/Logout/Logout';
 import TeacherLogin from './components/pages/Teacher/Login/Login';
@@ -80,6 +83,7 @@ function App() {
             <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
             <Route path='add-course' element={<AddCourse />} />
+            <Route path='add-quiz' element={<AddQuiz />} />
             <Route path='edit-course/:course_id' element={<EditCourse />} />
             <Route path='add-chapter/:course_id' element={<AddChapter />} />
             <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
