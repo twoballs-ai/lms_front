@@ -45,6 +45,7 @@ import StudentLogout from './components/pages/Student/Logout/Logout';
 import EnrolledStudents from './components/pages/Teacher/ControlPanel/EnrolledStudents';
 import AddTask from './components/pages/Teacher/ControlPanel/AddTask';
 import ViewTask from './components/pages/Teacher/ControlPanel/ViewTask';
+import MyTeacherQuizes from './components/pages/Teacher/ControlPanel/TeacherQuizes';
 
 function App() {
   return (

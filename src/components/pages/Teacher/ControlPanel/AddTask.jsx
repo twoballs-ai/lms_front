@@ -65,8 +65,30 @@ function AddTask() {
     }
 
     Promise.all(responses)
-    .then(response =>
-        console.log('File has been successfully deleted!')
+    .then(async response =>{
+      const responsesnotif = [];
+      for (let i = 0; i < studentData.length; i++) {
+        responsesnotif.push(await axios.post(baseUrl+'teacher/save-notify',{
+          teacher: teacherId,
+          notification_for: 'student',
+          notification_subject: 'task',
+          student: studentData[i].student.id
+        }
+        ,{headers: { "Content-Type": "multipart/form-data" }}
+        // { params: {
+        //     fileID: studentData.fileID,
+        //     deletedBy: studentData.deletedBy
+        // }}
+        )
+        )
+    }
+    Promise.all(responsesnotif)
+    .then(async response =>{
+      console.log('true')
+    })
+    window.location.reload()
+    }
+       
     )
     .catch(err => console.error(err))
 };

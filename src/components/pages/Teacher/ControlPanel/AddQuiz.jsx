@@ -39,13 +39,13 @@ function AddQuiz() {
     e.preventDefault()
 
     axios
-    .post(baseUrl+'quiz/', courseAddData
+    .post(baseUrl+'quiz/', quizData
       // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
       ,{headers: { "Content-Type": "multipart/form-data" }}
       )
     .then(response => {
  
-      window.location.href='/add-quiz'
+      window.location.href='/teacher-profile/add-quiz'
 
     })
   }
@@ -59,12 +59,12 @@ function AddQuiz() {
 
       <Form.Group className="mb-3" controlId="formBasicCategory">
         <Form.Label>Название</Form.Label>
-        <Form.Control name="title" value={categories.title} type="text" placeholder="категория" onChange={handleChange} />
+        <Form.Control name="title"  type="text" placeholder="категория" onChange={handleChange} />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicCategory">
         <Form.Label>Детали</Form.Label>
-        <Form.Control name="detail" value={categories.detail}  as="textarea" rows={3} placeholder="Детали" onChange={handleChange} />
+        <Form.Control name="detail"  as="textarea" rows={3} placeholder="Детали" onChange={handleChange} />
       </Form.Group>
       
       <Button onClick={formSubmit} variant="primary" type="submit">
