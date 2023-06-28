@@ -84,6 +84,7 @@ function App() {
             <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
             <Route path='add-course' element={<AddCourse />} />
+            <Route path='teacher-quizes' element={<MyTeacherQuizes />} />
             <Route path='add-quiz' element={<AddQuiz />} />
             <Route path='edit-course/:course_id' element={<EditCourse />} />
             <Route path='add-chapter/:course_id' element={<AddChapter />} />
