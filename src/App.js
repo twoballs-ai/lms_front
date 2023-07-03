@@ -46,6 +46,7 @@ import EnrolledStudents from './components/pages/Teacher/ControlPanel/EnrolledSt
 import AddTask from './components/pages/Teacher/ControlPanel/AddTask';
 import ViewTask from './components/pages/Teacher/ControlPanel/ViewTask';
 import MyTeacherQuizes from './components/pages/Teacher/ControlPanel/TeacherQuizes';
+import EditQuiz from './components/pages/Teacher/ControlPanel/EditQuiz';
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
             <Route path='teacher-quizes' element={<MyTeacherQuizes />} />
             <Route path='add-quiz' element={<AddQuiz />} />
             <Route path='edit-course/:course_id' element={<EditCourse />} />
+            <Route path='edit-quiz/:quiz_id' element={<EditQuiz />} />
             <Route path='add-chapter/:course_id' element={<AddChapter />} />
             <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
             <Route path='my-students' element={<MyStudents />} />

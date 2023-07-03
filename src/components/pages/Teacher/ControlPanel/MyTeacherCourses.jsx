@@ -4,10 +4,15 @@ import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import { useState, useEffect } from "react"
 import axios from "axios";
+import Swal from 'sweetalert2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function MyTeacherCourses() {
   const [courseData, setCourseData] = useState([])
+  const [totalResult, setTotalResult]= useState(0)
   const teacherId = localStorage.getItem('teacherId')
   // const [avgRatingStatus, setAvgRatingStatus] = useState("")
   // console.log(teacherId)
@@ -19,11 +24,39 @@ function MyTeacherCourses() {
       )
       .then(response => {
         setCourseData(response.data)
-        console.log(response.data)
+        setTotalResult(response.data.length)
+        console.log(response.data.length)
         // setAvgRatingStatus
       })
-  }, [])
-  console.log(courseData)
+  }, [totalResult])
+  const Swal = require('sweetalert2')
+  const handleDeleteClick = (course_id)=>{
+    Swal.fire({
+      title: 'Подтвердите действие!',
+      text: 'Вы собираетесь удалить квиз, вы уверены?',
+      icon: 'info',
+      confirmButtonText: 'Все равно удалить',
+      showCancelButton: true
+    }).then((result)=>{
+      if(result.isConfirmed){
+        try{
+            axios.delete(baseUrl+'teacher-courses-detail/'+course_id)
+            .then((response)=>{
+              
+              Swal.fire('success', 'Данные были удалены')
+              setTotalResult(response.data.length)
+              console.log(response.data.length)
+            })
+            // Swal.fire('success', 'Данные были удалены')
+        }catch(error){
+          Swal.fire('error', 'Данные не были удалены')
+        }
+      }else {
+        Swal.fire('error', 'Данные не были удалены')
+      }
+
+    })
+  }
   return (
     <>
       <Card>
@@ -57,7 +90,7 @@ function MyTeacherCourses() {
                   <td>
                     <Button as={Link} to={'/teacher-profile/edit-course/' + course.id} variant="info">Редактировать <br/> данные курса</Button>{' '}
                     <Button as={Link} to={'/teacher-profile/add-chapter/' + course.id} variant="primary">добавить главу <br/> в курс</Button>{' '}
-                    <Button variant="danger">Удалить <br/> курс</Button>{' '}
+                    <Button onClick={()=>handleDeleteClick(course.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} />Удалить квиз</Button>{' '}
                   </td>
                 </tr>
               )}

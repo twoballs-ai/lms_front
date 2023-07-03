@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table'
 import { useState, useEffect } from "react"
 import axios from "axios";
 
-const baseUrl = 'http://127.0.0.1:8000/api/'
+const baseUrl = 'http://127.0.0.1:8000/api-quiz/'
 
 function AddQuiz() {
   const teacherId= localStorage.getItem('teacherId')
