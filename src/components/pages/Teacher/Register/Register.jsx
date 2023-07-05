@@ -14,6 +14,8 @@ function TeacherRegister() {
     email: "",
     password: "",
     qualification: "",
+    // 'пофиксить:'
+    teacher_course:[],
     phone: "",
     skills: "",
     status: ""
