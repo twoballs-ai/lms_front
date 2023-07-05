@@ -64,16 +64,11 @@ function CourseDetail() {
     try {
       axios
         .get(baseUrl + 'enroll-course-status/' + studentId + '/' + course_id
-          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-          // ,{headers: { "Content-Type": "multipart/form-data" }}
         )
         .then(response => {
           if (response.data.bool == true) {
             setEnrollStatus('success')
           }
-
-
-          console.log(response.data)
         })
     } catch (error) {
       console.log(error)
