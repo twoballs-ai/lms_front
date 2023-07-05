@@ -47,6 +47,9 @@ import AddTask from './components/pages/Teacher/ControlPanel/AddTask';
 import ViewTask from './components/pages/Teacher/ControlPanel/ViewTask';
 import MyTeacherQuizes from './components/pages/Teacher/ControlPanel/TeacherQuizes';
 import EditQuiz from './components/pages/Teacher/ControlPanel/EditQuiz';
+import QuizQuestion from './components/pages/Teacher/ControlPanel/QuizQuestion';
+import AddQuizQuestion from './components/pages/Teacher/ControlPanel/AddQuizQuestion';
+import AssignQuiz from './components/pages/Teacher/ControlPanel/AssignQuizToCourse';
 
 function App() {
   return (
@@ -85,10 +88,15 @@ function App() {
             <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
             <Route path='add-course' element={<AddCourse />} />
+            
             <Route path='teacher-quizes' element={<MyTeacherQuizes />} />
             <Route path='add-quiz' element={<AddQuiz />} />
             <Route path='edit-course/:course_id' element={<EditCourse />} />
             <Route path='edit-quiz/:quiz_id' element={<EditQuiz />} />
+            <Route path='all-question/:quiz_id' element={<QuizQuestion />} />
+            <Route path='add-quiz-question/:quiz_id' element={<AddQuizQuestion />} />
+            <Route path='assign-quiz/:course_id' element={<AssignQuiz />} />
+
             <Route path='add-chapter/:course_id' element={<AddChapter />} />
             <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
             <Route path='my-students' element={<MyStudents />} />

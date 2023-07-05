@@ -90,7 +90,8 @@ function MyTeacherCourses() {
                   <td>
                     <Button as={Link} to={'/teacher-profile/edit-course/' + course.id} variant="info">Редактировать <br/> данные курса</Button>{' '}
                     <Button as={Link} to={'/teacher-profile/add-chapter/' + course.id} variant="primary">добавить главу <br/> в курс</Button>{' '}
-                    <Button onClick={()=>handleDeleteClick(course.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} />Удалить квиз</Button>{' '}
+                    <Button as={Link} to={'/teacher-profile/assign-quiz/' + course.id} variant="warning">привязать <br/> квиз</Button>{' '}
+                    <Button onClick={()=>handleDeleteClick(course.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} />Удалить курс</Button>{' '}
                   </td>
                 </tr>
               )}

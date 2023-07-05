@@ -13,7 +13,7 @@ function AddQuizQuestion() {
   const {quiz_id} = useParams()
   const [questionAddData, setQuestionAddData] = useState({
     quiz: quiz_id,
-    question:'',
+    questions:'',
     answer1:'',
     answer2:'',
     answer3:'',
@@ -35,7 +35,7 @@ function AddQuizQuestion() {
     e.preventDefault()
 
     axios
-    .post(baseUrl+'quiz-question/'+quiz_id, questionAddData
+    .post(baseUrl+'quiz-questions/'+quiz_id, questionAddData
       // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
       ,{headers: { "Content-Type": "multipart/form-data" }}
       )
@@ -66,7 +66,7 @@ function AddQuizQuestion() {
 
       <Form.Group className="mb-3" controlId="formBasicCategory">
         <Form.Label>Вопрос</Form.Label>
-        <Form.Control name="title"  type="text" placeholder="категория" onChange={handleChange} />
+        <Form.Control name="questions"  type="text" placeholder="категория" onChange={handleChange} />
       </Form.Group>
       
       <Form.Group className="mb-3" controlId="formBasicCategory">

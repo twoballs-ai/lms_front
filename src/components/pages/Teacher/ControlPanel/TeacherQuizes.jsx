@@ -83,7 +83,7 @@ function MyTeacherQuizes() {
                     </td>
                   <td>
                     <Button as={Link} to={'/teacher-profile/edit-quiz/' + quiz.id} variant="info">Редактировать <br/> данные квиза</Button>
-                    <Button as={Link} to={'/teacher-profile/add-chapter/' + quiz.id} variant="primary">добавить главу <br/> в курс</Button>
+                    <Button as={Link} to={'/teacher-profile/add-quiz-question/' + quiz.id} variant="primary">добавить вопрос <br/>в квиз</Button>
                     <Button onClick={()=>handleDeleteClick(quiz.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} />Удалить квиз</Button>{' '}
                   </td>
                 </tr>
