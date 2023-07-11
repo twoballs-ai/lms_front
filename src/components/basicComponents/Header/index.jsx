@@ -59,7 +59,15 @@ function Header() {
                 </>
               } 
             </NavDropdown>
-      </Nav>
+      </Nav>                <Form className="d-flex">
+                  <Form.Control
+                    type="search"
+                    placeholder="Поиск курсов по названию"
+                    className="me-2"
+                    aria-label="Search"
+                  />
+                  <Button variant="outline-secondary">Поиск</Button>
+                </Form>
 
     </Navbar.Collapse>
   </Container>

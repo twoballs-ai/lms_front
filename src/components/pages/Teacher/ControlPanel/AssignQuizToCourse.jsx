@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
+import CheckQuizInCourse from "./CheckQuizInCourse"
 import { useState, useEffect } from "react"
 import axios from "axios";
 import Swal from 'sweetalert2'
@@ -19,6 +20,7 @@ function AssignQuiz() {
   // const [avgRatingStatus, setAvgRatingStatus] = useState("")
   // console.log(teacherId)
   useEffect(() => {
+    try {
     axios
       .get(baseUrlQuiz + 'teacher-quiz/' + teacherId
         // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
@@ -26,10 +28,11 @@ function AssignQuiz() {
       )
       .then(response => {
         setQuizData(response.data)
-
         console.log(response.data)
-        // setAvgRatingStatus
       })
+    } catch (error) {
+      console.log(error)
+    }
       try {
         axios
           .get(baseUrl + 'course/' + course_id
@@ -43,40 +46,9 @@ function AssignQuiz() {
       } catch (error) {
         console.log(error)
       }
+      
   }, [])
-  // console.log(courseData)
-  const Swal = require('sweetalert2')
-  const handleAssignQuiz = (quiz_id) => {
 
-    try {
-
-      axios
-        .post(baseUrl + 'quiz-assign-course/', {
-          quiz: quiz_id,
-          course: course_id
-        }
-          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-          , { headers: { "Content-Type": "multipart/form-data" } }
-        )
-        .then(response => {
-          if (response.status === 200 || response.status === 201) {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Квиз успешно добавлен в квиз',
-              toast: true,
-              timerProgressBar: true,
-              showConfirmButton: false,
-              timer: 3000
-            })
-            
-            // window.location.reload()
-          }
-        })
-    } catch (error) {
-      console.log(error)
-    }
-  }
   return (
     <>
       <Card>
@@ -97,11 +69,7 @@ function AssignQuiz() {
                   <td>
                     <Link to={'/teacher-profile/all-question/' + quiz.id}>{quiz.title}</Link>
                     </td>
-                  <td>
-                  {quiz.assign_status === 0 &&
-                      <Button onClick={()=>handleAssignQuiz(quiz.id)} variant="success">Привязать квиз</Button>
-                    }
-                      </td>
+<CheckQuizInCourse quiz = {quiz.id} course= {course_id} />
                   
                 </tr>
               
