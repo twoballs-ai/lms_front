@@ -5,24 +5,44 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
-import Pagination from 'react-bootstrap/Pagination';
-
+import { useState, useEffect } from "react"
+import axios from "axios";
+const baseUrl = 'http://127.0.0.1:8000/api/'
 function PopularCourses(){
-    let active = 2;
+    // let active = 2;
 let items = [];
-for (let number = 1; number <= 5; number++) {
-  items.push(
-    <Pagination.Item key={number} active={number === active}>
-      {number}
-    </Pagination.Item>,
-  );
-}
+const [popularCourseData, setPopularCourseData] = useState([])
+useEffect(() => {
 
-const paginationBasic = (
-    <div>
-      <Pagination className='mt-5 justify-content-center'>{items}</Pagination>
-    </div>
-  );
+      try{
+        axios
+        .get(baseUrl + 'popular-courses/?popular=1'
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          // ,{headers: { "Content-Type": "multipart/form-data" }}
+        )
+        .then(response => {
+          setPopularCourseData(response.data)
+          console.log(response.data)
+        })
+      }catch(error){
+        console.log(error)
+      }
+
+  }, [])
+
+// for (let number = 1; number <= 5; number++) {
+//   items.push(
+//     <Pagination.Item key={number} active={number === active}>
+//       {number}
+//     </Pagination.Item>,
+//   );
+// }
+
+// const paginationBasic = (
+//     <div>
+//       <Pagination className='mt-5 justify-content-center'>{items}</Pagination>
+//     </div>
+//   );
     return (
         <>
          <Container>
@@ -30,49 +50,25 @@ const paginationBasic = (
           Самые популярные курсы
         </h3>
         <Row className='mt-5'>
-
           <hr />
-          <Col>
-            <Card style={{ width: '18rem' }}>
-            <Link to={'detail/1'}><Card.Img variant="top" src="/images/code.jpg" /></Link>
-              <Card.Body>
-                <Card.Title><Link to={'detail/1'}>Описание курса</Link></Card.Title>
+{popularCourseData && popularCourseData.map((course,index)=>
 
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг курса: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
           <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+          <Card style={{ width: '18rem' }}>
+          <Link to={`/detail/${course.course.id}`}><Card.Img variant="top" src={course.course.course_image} /></Link>
+            <Card.Body>
+              <Card.Title><Link to={`/detail/${course.course.id}`}>{course.course.title}</Link></Card.Title>
 
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
-
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
-
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row >
-        {paginationBasic}
+            </Card.Body>
+            <Card.Footer>
+              <span>Рейтинг курса: {course.rating}</span>
+              <span>Просмотров курса:</span>
+            </Card.Footer>
+          </Card>
+        </Col>
+)}
+        </Row>
+        {/* {paginationBasic} */}
         </Container>
         </>
     )

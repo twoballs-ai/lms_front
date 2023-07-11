@@ -37,7 +37,9 @@ function Home() {
       }catch(error){
         console.log(error)
       }
+
   }, [])
+  console.log(popularCourseData)
   return (
     <>
       <Container>
@@ -59,7 +61,7 @@ function Home() {
 
               </Card.Body>
               <Card.Footer>
-                <span>Рейтинг курса: 4.6 Сердечко иконка</span>
+                <span>Рейтинг курса: {course.rating} Сердечко иконка</span>
                 <span>Просмотров курса:</span>
               </Card.Footer>
             </Card>
@@ -77,16 +79,18 @@ function Home() {
         </h3>
         <Row className='mt-5'>
           <hr />
-{popularCourseData && popularCourseData.map((row,index)=>
+{popularCourseData && popularCourseData.map((course,index)=>
+
           <Col>
           <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="/images/code.jpg" />
+          <Link to={`/detail/${course.course.id}`}><Card.Img variant="top" src={course.course.course_image} /></Link>
             <Card.Body>
-              <Card.Title><Link to={''}>Описание курса</Link></Card.Title>
+              <Card.Title><Link to={`/detail/${course.course.id}`}>{course.course.title}</Link></Card.Title>
 
             </Card.Body>
             <Card.Footer>
-              Рейтинг курса: 4.6 Сердечко
+              <span>Рейтинг курса: {course.rating}</span>
+              <span>Просмотров курса:</span>
             </Card.Footer>
           </Card>
         </Col>
@@ -101,18 +105,7 @@ function Home() {
         <Row className='mt-5'>
 
           <hr />
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={'/teacher-detail/1'}>Имя учителя</Link></Card.Title>
 
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг наставника: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
           <Col>
             <Card style={{ width: '18rem' }}>
               <Card.Img variant="top" src="/images/code.jpg" />
