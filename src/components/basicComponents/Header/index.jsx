@@ -5,10 +5,27 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react"
 function Header() {
+  const [searchData, setSearchData] = useState({
+    search: ''
+  })
   const teacherLoginStatus= localStorage.getItem('teacherLoginStatus')
   const studentLoginStatus= localStorage.getItem('studentLoginStatus')
+  const handleChange=(event)=>{
+    setSearchData({
+      ...searchData,
+      [event.target.name]: event.target.value
+    })
+    console.log(searchData)
+  }
  
+  const searchByCourse = () => {
+  if (searchData.search !=='') (
+    window.location.href ='/search/'+searchData.search
+  )
+  
+ }
     return (
   <><Navbar bg="dark" variant="dark" expand="lg">
   <Container>
@@ -59,14 +76,17 @@ function Header() {
                 </>
               } 
             </NavDropdown>
-      </Nav>                <Form className="d-flex">
+      </Nav>                
+      <Form className="d-flex">
                   <Form.Control
                     type="search"
+                    name='search'
+                    onChange={handleChange}
                     placeholder="Поиск курсов по названию"
                     className="me-2"
                     aria-label="Search"
                   />
-                  <Button variant="outline-secondary">Поиск</Button>
+                  <Button onClick={searchByCourse} variant="outline-secondary">Поиск</Button>
                 </Form>
 
     </Navbar.Collapse>

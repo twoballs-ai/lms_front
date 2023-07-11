@@ -50,6 +50,10 @@ import EditQuiz from './components/pages/Teacher/ControlPanel/EditQuiz';
 import QuizQuestion from './components/pages/Teacher/ControlPanel/QuizQuestion';
 import AddQuizQuestion from './components/pages/Teacher/ControlPanel/AddQuizQuestion';
 import AssignQuiz from './components/pages/Teacher/ControlPanel/AssignQuizToCourse';
+import SearchByCourse from './components/pages/Search/Search';
+import StudyMaterials from './components/pages/Teacher/ControlPanel/StudyMaterials';
+import AddStudyMaterial from './components/pages/Teacher/ControlPanel/AddStudyMaterial';
+import StudentStudyMaterials from './components/pages/Student/ControlPanel/StudyMaterials';
 
 function App() {
   return (
@@ -61,6 +65,7 @@ function App() {
         <Route path='student-register' element={<StudentRegister />} />
         <Route path='student-logout' element={<StudentLogout/>} />
         <Route path='detail/:course_id' element={<CourseDetail />} />
+        <Route path='search/:searchString' element={<SearchByCourse />} />
         <Route path='all-courses' element={<AllCourses />} />
         
         <Route path='popular-courses' element={<PopularCourses />} />
@@ -81,6 +86,7 @@ function App() {
             <Route path='profile-settings' element={<StudentProfileSettings />} />
             <Route path='reset-password' element={<StudentChangePassword />} />
             <Route path='dashboard' element={<StudentDashboard />} />
+            <Route path='study-materials/:course_id' element={<StudentStudyMaterials />} />
           </Route>
           
           <Route path='teacher-profile/' element={<TeacherDashmain />} >
@@ -88,6 +94,10 @@ function App() {
             <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
             <Route path='add-course' element={<AddCourse />} />
+            <Route path='study-materials/:course_id' element={<StudyMaterials />} />
+            {/* <Route path='edit-study-material/:study_id' element={<EditChapter />} /> */}
+            <Route path='add-study-material/:course_id' element={<AddStudyMaterial />} />
+
             
             <Route path='teacher-quizes' element={<MyTeacherQuizes />} />
             <Route path='add-quiz' element={<AddQuiz />} />

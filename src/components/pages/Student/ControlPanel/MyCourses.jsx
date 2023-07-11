@@ -38,6 +38,8 @@ function StudentMyCourses() {
         <tr key={index}>
           <td><Link to= {`/detail/${courses.course.id}`}>{courses.course.title}</Link></td>
           <td><Link to={`/teacher-detail/${courses.course.teacher.id}`}>{courses.course.teacher.full_name}</Link> </td>
+          <td><Button as={Link} to={'/student-profile/study-materials/' + courses.course.id} variant="success">Учебный<br/> материал</Button></td>
+
         </tr>
  )}
       </tbody>
