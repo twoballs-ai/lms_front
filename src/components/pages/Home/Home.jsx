@@ -7,11 +7,18 @@ import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react"
 import axios from "axios";
+import Carousel from 'react-bootstrap/Carousel';
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function Home() {
   const [allCourseData, setAllCourseData] = useState([])
   const [popularCourseData, setPopularCourseData] = useState([])
+  const [popularTeacherData, setPopularTeacherData] = useState([])
+  const [studentTestimonialData, setStudentTestimonialData] = useState([])
+  const [index, setIndex] = useState(0);
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
   const teacherId = localStorage.getItem('teacherId')
   // console.log(teacherId)
   useEffect(() => {
@@ -37,7 +44,32 @@ function Home() {
       }catch(error){
         console.log(error)
       }
-
+      try{
+        axios
+        .get(baseUrl + 'popular-teachers/?popular=1'
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          // ,{headers: { "Content-Type": "multipart/form-data" }}
+        )
+        .then(response => {
+          setPopularTeacherData(response.data)
+          console.log(response.data)
+        })
+      }catch(error){
+        console.log(error)
+      }
+      try{
+        axios
+        .get(baseUrl + 'student-testimonial/'
+          // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+          // ,{headers: { "Content-Type": "multipart/form-data" }}
+        )
+        .then(response => {
+          setStudentTestimonialData(response.data)
+          console.log(response.data)
+        })
+      }catch(error){
+        console.log(error)
+      }
   }, [])
   console.log(popularCourseData)
   return (
@@ -61,8 +93,8 @@ function Home() {
 
               </Card.Body>
               <Card.Footer>
-                <span>Рейтинг курса: {course.rating} Сердечко иконка</span>
-                <span>Просмотров курса:</span>
+                <span>Рейтинг курса: {course.course_rating}</span><br />
+                <span>Просмотров курса: {course.course_views}</span>
               </Card.Footer>
             </Card>
           </Col>
@@ -89,8 +121,8 @@ function Home() {
 
             </Card.Body>
             <Card.Footer>
-              <span>Рейтинг курса: {course.rating}</span>
-              <span>Просмотров курса:</span>
+              <span>Рейтинг курса: {course.rating}</span><br />
+              <span>Просмотров курса: {course.course.course_views}</span>
             </Card.Footer>
           </Card>
         </Col>
@@ -105,44 +137,45 @@ function Home() {
         <Row className='mt-5'>
 
           <hr />
-
+          {popularTeacherData && popularTeacherData.map((teacher,index)=>
           <Col>
             <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
+            <Link to={`teacher-detail/${teacher.id}`}><Card.Img variant="top" src={teacher.teacher_image} /></Link>
               <Card.Body>
-                <Card.Title><Link to={''}>Имя учителя</Link></Card.Title>
+                <Card.Title><Link to={`teacher-detail/${teacher.id}`}>{teacher.full_name}</Link></Card.Title>
 
               </Card.Body>
               <Card.Footer>
-                Рейтинг наставника: 4.6 Сердечко
+                Курсов добавлено: {teacher.total_teacher_courses}
               </Card.Footer>
             </Card>
           </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={''}>Имя учителя</Link></Card.Title>
-
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг наставника: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="/images/code.jpg" />
-              <Card.Body>
-                <Card.Title><Link to={'/teacher-detail/1'}>Имя учителя</Link></Card.Title>
-
-              </Card.Body>
-              <Card.Footer>
-                Рейтинг наставника: 4.6 Сердечко
-              </Card.Footer>
-            </Card>
-          </Col>
+          )}
         </Row >
+        <h3 className='mt-5'>Отзывы студентов о курсах</h3>
+        <hr />
+        
+        <Carousel className='bg-dark text-white py-5' activeIndex={index} onSelect={handleSelect}>
+   
+        {studentTestimonialData && studentTestimonialData.map((row,index)=>
+      
+      <Carousel.Item>
+        <blockquote className="blockquote mb-0 text-center">
+          <p>
+          {row.review}
+          </p>
+          <footer className="blockquote-footer">
+          название курса: {row.course.title}<cite title="Source Title"><br />Студент: {row.student.full_name}</cite>
+          </footer>
+        </blockquote>
+
+        <Carousel.Caption>
+      
+        </Carousel.Caption>
+      </Carousel.Item>
+         )}
+    </Carousel>
+ 
       </Container>
     </>
   );

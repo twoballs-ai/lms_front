@@ -62,7 +62,7 @@ useEffect(() => {
             </Card.Body>
             <Card.Footer>
               <span>Рейтинг курса: {course.rating}</span>
-              <span>Просмотров курса:</span>
+              <span>  Просмотров курса:</span>
             </Card.Footer>
           </Card>
         </Col>
