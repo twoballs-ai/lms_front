@@ -28,7 +28,7 @@ function Home() {
         // ,{headers: { "Content-Type": "multipart/form-data" }}
       )
       .then(response => {
-        setAllCourseData(response.data)
+        setAllCourseData(response.data.results)
         console.log(response.data)
       })
       try{

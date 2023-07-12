@@ -24,7 +24,7 @@ function SkillCourses(){
         // ,{headers: { "Content-Type": "multipart/form-data" }}
       )
       .then(response => {
-        setCourseByCatData(response.data)
+        setCourseByCatData(response.data.results)
         console.log(response.data)
       })
   }, [skill_slug])
