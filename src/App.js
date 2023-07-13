@@ -54,6 +54,7 @@ import SearchByCourse from './components/pages/Search/Search';
 import StudyMaterials from './components/pages/Teacher/ControlPanel/StudyMaterials';
 import AddStudyMaterial from './components/pages/Teacher/ControlPanel/AddStudyMaterial';
 import StudentStudyMaterials from './components/pages/Student/ControlPanel/StudyMaterials';
+import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 
 function App() {
   return (
@@ -67,6 +68,8 @@ function App() {
         <Route path='detail/:course_id' element={<CourseDetail />} />
         <Route path='search/:searchString' element={<SearchByCourse />} />
         <Route path='all-courses' element={<AllCourses />} />
+        <Route path='category' element={<CategoryPage />} />
+
         
         <Route path='popular-courses' element={<PopularCourses />} />
         <Route path='popular-teachers' element={<PopularTeachers />} />
@@ -74,7 +77,7 @@ function App() {
         <Route path='teacher-logout' element={<TeacherLogout />} />
         <Route path='teacher-register' element={<TeacherRegister />} />
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
-        <Route path='courses-by-cat/:category_slug' element={<CoursesByCat />} />  
+        <Route path='courses-by-cat/:category_id/:category_slug' element={<CoursesByCat />} />  
         <Route path='courses-by-skills/:skill_slug/:teacher_id' element={<SkillCourses />} />  
           
           <Route path='student-profile/' element={<UserDashmain />} >

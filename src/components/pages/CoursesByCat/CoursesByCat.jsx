@@ -13,21 +13,17 @@ import axios from "axios";
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function CoursesByCat(){
   const [courseByCatData, setCourseByCatData] = useState([])
+  let { category_id } = useParams()
   let { category_slug } = useParams()
+  const [nextUrl, setNextUrl] = useState()
+  const [prevUrl, setPrevUrl] = useState()
 
   // const teacherId = localStorage.getItem('teacherId')
   // console.log(teacherId)
   useEffect(() => {
-    axios
-      .get(baseUrl + 'course/?category='+category_slug
-        // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-        // ,{headers: { "Content-Type": "multipart/form-data" }}
-      )
-      .then(response => {
-        setCourseByCatData(response.data.results)
-        console.log(response.data)
-      })
-  }, [category_slug])
+    fetchData(baseUrl + 'course/?category='+category_id)
+    
+  }, [])
 
     let active = 2;
 let items = [];
@@ -39,11 +35,38 @@ for (let number = 1; number <= 5; number++) {
   );
 }
 
+const paginationHandler = (url) => {
+  fetchData(url)
+}
+function fetchData(url){
+  axios
+  .get(url
+    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+    // ,{headers: { "Content-Type": "multipart/form-data" }}
+  )
+  .then(response => {
+    setCourseByCatData(response.data.results)
+    setNextUrl(response.data.next)
+    setPrevUrl(response.data.previous)
+    console.log(response.data)
+  })
+}
 const paginationBasic = (
-    <div>
-      <Pagination className='mt-5 justify-content-center'>{items}</Pagination>
-    </div>
-  );
+  <div className='mt-5 d-flex justify-content-center'>
+    <Pagination>
+{prevUrl &&
+      <Pagination.Prev onClick={() => paginationHandler(prevUrl)}>Пред</Pagination.Prev>
+
+}
+{nextUrl &&
+      <Pagination.Next onClick={() => paginationHandler(nextUrl)}>След</Pagination.Next>
+
+}
+
+
+    </Pagination>
+  </div>
+);
     return (
         <>
          <Container>

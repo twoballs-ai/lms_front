@@ -121,6 +121,7 @@ function CourseDetail() {
       setUserLoggedStatus("success")
     }
   }, [course_id])
+  document.title=`Курс - ${courseData.title}`
   const enrollCourse = () => {
 
     try {
@@ -279,8 +280,11 @@ function CourseDetail() {
             <p>{courseData.description}</p>
             <p>Автор курса: <Link to={`/teacher-detail/${teacherData.id}`}>{teacherData.full_name}</Link></p>
             <p>Технологии:&nbsp;
+              {/* пофиксить: */}
               {technologicalListData.map((tech, index) =>
-                <Badge as={Link} to={`/courses-by-cat/${tech.trim()}`} pill bg="success">
+                <Badge 
+                // as={Link} to={`/courses-by-cat/${tech.trim()}`} 
+                pill bg="success">
                   {tech.trim()}
                 </Badge>
               )}

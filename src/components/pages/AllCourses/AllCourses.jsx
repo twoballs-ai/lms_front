@@ -49,7 +49,7 @@ function AllCourses() {
       })
   }
   const paginationBasic = (
-    <div>
+    <div className='mt-5'>
       <Pagination>
 {prevUrl &&
         <Pagination.Prev onClick={() => paginationHandler(prevUrl)}>Пред</Pagination.Prev>
