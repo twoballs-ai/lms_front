@@ -7,19 +7,18 @@ import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const baseUrl = 'http://127.0.0.1:8000/api/teacher-login'
-function TeacherLogin() {
-  const [teacherLoginData, setTeacherLoginData] = useState({
-    email: "",
-    password: ""
+const baseUrl = 'http://127.0.0.1:8000/api'
+function VerifyOTPTeacher() {
+  const [teacherData, setTeacherData] = useState({
+    otp_digit: ""
   })
   const [errorMsg, setErrorMsg] = useState('')
   const handleChange = (event) => {
-    setTeacherLoginData({
-      ...teacherLoginData,
+    setTeacherData({
+      ...teacherData,
       [event.target.name]: event.target.value
     })
-    console.log(teacherLoginData)
+    console.log(teacherData)
   }
 
   const submitForm = (e) => {
@@ -27,9 +26,9 @@ function TeacherLogin() {
     // const teacherFormrData = new FormData()
     // teacherFormrData.append("email", teacherLoginData.email)
     // teacherFormrData.append("password", teacherLoginData.password)
-    console.log(teacherLoginData)
+    console.log(teacherData)
     axios
-      .post(baseUrl, teacherLoginData
+      .post(baseUrl+'/verify-teacher', teacherData
         // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
         , { headers: { "Content-Type": "multipart/form-data" } }
       )
@@ -60,23 +59,16 @@ function TeacherLogin() {
         <Row>
           <Col>
             <Card>
-              <Card.Header><h3>Авторизация</h3></Card.Header>
+              <Card.Header><h3>Ввод 6 значного пин кода</h3></Card.Header>
               <Card.Body>
                 {errorMsg && <p className="text-danger">{errorMsg}</p>}
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>email</Form.Label>
-                    <Form.Control value={teacherLoginData.email} name="email" onChange={handleChange} type="email" placeholder="Введите ваш email" />
+                    <Form.Label>OTP</Form.Label>
+                    <Form.Control value={teacherData.otp_digit} name="otp_digit" onChange={handleChange} type="number" placeholder="Введите ваш otp" />
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>password</Form.Label>
-                    <Form.Control value={teacherLoginData.password} name="password" onChange={handleChange} type="password" placeholder="Введите пароль" />
-                  </Form.Group>
-                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Запомнить меня" />
-      </Form.Group> */}
                   <Button onClick={submitForm} variant="primary" type="submit">
-                    Войти
+                    Верификация
                   </Button>
                 </Form>
               </Card.Body>
@@ -89,4 +81,4 @@ function TeacherLogin() {
 
 }
 
-export default TeacherLogin
+export default VerifyOTPTeacher

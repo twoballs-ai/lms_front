@@ -10,7 +10,7 @@ function Footer() {
   <>
   <footer className='px-5 py-5'>
     <Container className='border-top'>
-        <p>Подвал будущего сайта.</p>
+        <p>Intellity code 2023</p>
         </Container>
   </footer>
   </>

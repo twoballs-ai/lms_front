@@ -44,18 +44,8 @@ function TeacherRegister() {
           // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
         )
         .then(response => {
-          console.log(response)
-          setTeacherRegisterData({
-            full_name: "",
-            email: "",
-            password: "",
-            qualification: "",
-            phone: "",
-            skills: "",
-            status: "success"
-          })
-          // Handle response
 
+          window.location.href = '/teacher-profile/verify-teacher/'+response.id
         });
     } catch (error) {
       console.log(error)
@@ -66,10 +56,7 @@ function TeacherRegister() {
   // useEffect(()=>{
   //   document.title = 'Регистрация наставника'
   // })
-  const teacherLoginStatus = localStorage.getItem('teacherLoginStatus')
-  if (teacherLoginStatus === 'true') {
-    window.location.href = '/teacher-profile/dashboard'
-  }
+
   return (
     <>
       <Container>
