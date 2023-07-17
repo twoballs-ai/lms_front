@@ -45,7 +45,7 @@ function TeacherRegister() {
         )
         .then(response => {
 
-          window.location.href = '/teacher-profile/verify-teacher/'+response.id
+          window.location.href = '/teacher-profile/verify-teacher/'+response.data.id
         });
     } catch (error) {
       console.log(error)
