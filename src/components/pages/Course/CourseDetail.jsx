@@ -377,7 +377,11 @@ function CourseDetail() {
             </p>
             <p>Просмотры курса:  <Badge bg="success">{courseViews}</Badge></p>
             {enrollStatus === 'success' && userLoggedStatus === 'success' &&
-              <p><span>Вы уже подписаны на курс</span></p>
+              <p><span>Вы уже подписаны на курс</span>
+            <br /><Button as={Link} title="Проходить курс" to={"/course-study/"+course_id} variant="primary">Проходить курс</Button>
+
+              </p>
+             
             }
             {userLoggedStatus === "success" && enrollStatus !== 'success' &&
               <Button as={Link} to={"#"} onClick={enrollCourse} variant="primary">Подписаться на курс <FontAwesomeIcon icon={faCirclePlus} /></Button>

@@ -56,6 +56,7 @@ import AddStudyMaterial from './components/pages/Teacher/ControlPanel/AddStudyMa
 import StudentStudyMaterials from './components/pages/Student/ControlPanel/StudyMaterials';
 import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 import VerifyOTPTeacher from './components/pages/Teacher/ControlPanel/VerifyTeacher';
+import CourseStudy from './components/pages/Course/CourseStudy';
 
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
         <Route path='student-register' element={<StudentRegister />} />
         <Route path='student-logout' element={<StudentLogout/>} />
         <Route path='detail/:course_id' element={<CourseDetail />} />
+        <Route path='course-study/:course_id' element={<CourseStudy />} />
         <Route path='search/:searchString' element={<SearchByCourse />} />
         <Route path='all-courses' element={<AllCourses />} />
         <Route path='category' element={<CategoryPage />} />
