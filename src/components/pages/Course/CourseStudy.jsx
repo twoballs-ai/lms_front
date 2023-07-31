@@ -9,112 +9,124 @@ import Swal from 'sweetalert2'
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
 import './Course.css';
+import Form from 'react-bootstrap/Form';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
 function CourseStudy() {
     // let { teacher_id } = useParams()
-
-    // const [courseData, setCourseData]= useState([])
+    let { course_id } = useParams()
+    const [courseData, setCourseData] = useState([])
+    const [chapterData, setChapterData] = useState([])
+    // const [moduleData, setModuleData]= useState([])
     // const [skillListData, setSkillListData]= useState([])
     // const [teacherData, setTeacherData]= useState([])
-    // useEffect(()=>{
-    //     axios
-    //     .get(baseUrl+'teacher/'+teacher_id
-    //       // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-    //       // ,{headers: { "Content-Type": "multipart/form-data" }}
-    //       )
-    //     .then(response => {
-    //       setCourseData(response.data.teacher_course)
-    //       setTeacherData(response.data)
-    //       setSkillListData(response.data.skill_list)
-    //       console.log(response.data)
-    //     })
-    //   },[]) 
+    useEffect(() => {
+        try {
+            axios
+                .get(baseUrl + 'course/' + course_id
+                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                    // ,{headers: { "Content-Type": "multipart/form-data" }}
+                )
+                .then(response => {
+                    setCourseData(response.data)
+
+                    // setTeacherData(response.data.teacher)
+                    // setChapterData(response.data.course_chapters)
+                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
+                    // setTechnologicalListData(response.data.technological_list)
+                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
+                    //   setAvgRatingStatus(response.data.course_rating)
+                    // }
+
+                    console.log(response.data)
+                })
+        } catch (error) {
+            console.log(error)
+        }
+        try {
+            axios
+                .get(baseUrl + 'course-chapter/' + course_id
+                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                    // ,{headers: { "Content-Type": "multipart/form-data" }}
+                )
+                .then(response => {
+                    // setCourseData(response.data)
+                    setChapterData(response.data)
+
+
+                    // setTeacherData(response.data.teacher)
+                    // setChapterData(response.data.course_chapters)
+                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
+                    // setTechnologicalListData(response.data.technological_list)
+                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
+                    //   setAvgRatingStatus(response.data.course_rating)
+                    // }
+
+                    console.log(response.data)
+                })
+        } catch (error) {
+            console.log(error)
+        }
+
+    }, [])
+    //   console.log(moduleData)
+    //   console.log(chapterData)
     return (
         <>
+            <Navbar bg="dark" variant="dark" expand="lg">
+                <Container>
+                    <Navbar.Brand href="/">Intellity code</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="#link">Link</Nav.Link>
+                            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.2">
+                                    Another action
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="#action/3.4">
+                                    Separated link
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
             <Container fluid className="g-0">
                 <Row>
                     <Col xs={2}>
-                        <div className="leftsidebar">
-                            <p className="text-light">Название курса</p>
-                            <h5 className="text-light">1 Введение</h5>
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-                            <h5 className="text-light">2 Переменные</h5>
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-                            <h5 className="text-light">3 Функции</h5>
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-                            <h5 className="text-light">4 ООП</h5>
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-                            <h5 className="text-light">5 Практика</h5>
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
+                        <div className="leftsidebar ps-2" >
+                            <p className="text-light">{courseData.title}</p>
+                            <hr className="text-light me-2" />
+                            {/* пофиксить: */}
+                            {chapterData.map((tech, index) =>
+                                <>
+                                    <h5 className="text-light h6">{tech.title}</h5>
+
+                                    {tech.chapter_modules.map((modules, index) =>
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item ">
+                                                <a className="nav-link text-light" href="#">{modules.title}</a>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </>
+                            )}
+
+
+
                         </div>
                     </Col>
-                    <Col>2 of 2</Col>
+                    <Col>
+                        <h3>1 Введение</h3>
+                        <hr />
+                    </Col>
                 </Row>
 
 
