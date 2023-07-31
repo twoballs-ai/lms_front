@@ -17,10 +17,7 @@ function EditChapter() {
     const [chapterEditData, setChapterEditData] = useState({
       course: '',
       title:'',
-      description:'',
-      prev_video:'',
-      video:'',
-      comment:''
+      description:''
     })
 console.log(chapterEditData)
     useEffect(()=>{
@@ -51,12 +48,6 @@ console.log(chapterEditData)
         console.log(chapterEditData)
       }
 
-      const handleFileChange=(event)=>{
-        setChapterEditData({
-          ...chapterEditData,
-          [event.target.name]:event.target.files[0]
-        })
-      }
 
       const formSubmit=(e)=>{
         e.preventDefault()
@@ -109,22 +100,6 @@ console.log(chapterEditData)
         <Form.Label>Описание</Form.Label>
         <Form.Control name="description"  value={chapterEditData.description}  as="textarea" rows={3} placeholder="Описание" onChange={handleChange} />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCategory">
-        <Form.Label>Видео урок</Form.Label>
-        <Form.Control name="video"  type="file" placeholder="Видео урок" onChange={handleFileChange} />
-      </Form.Group>
-      {chapterEditData.prev_video && 
-      <video width="100%"  controls>
-        <source src={chapterEditData.prev_video} type="video/mp4" />
-  {/* <source src={chapterEditData.prev_video} type="video/ogg" /> */}
-  Your browser does not support the video tag.
-</video >
-}
-      <Form.Group className="mb-3" controlId="formBasicCategory">
-        <Form.Label>Комментарии автора</Form.Label>
-        <Form.Control name="comment" value={chapterEditData.comment} as="textarea" rows={3} placeholder="Комментарии автора" onChange={handleChange} />
-      </Form.Group>
-    
       <Button onClick={formSubmit} variant="primary" type="submit">
         Submit
       </Button>

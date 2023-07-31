@@ -57,11 +57,16 @@ import StudentStudyMaterials from './components/pages/Student/ControlPanel/Study
 import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 import VerifyOTPTeacher from './components/pages/Teacher/ControlPanel/VerifyTeacher';
 import CourseStudy from './components/pages/Course/CourseStudy';
+import EditCourseFullData from './components/pages/Teacher/FullCourseEdit/EditCourseFull';
+import EditorPageInfo from './components/pages/Teacher/FullCourseEdit/EditorPageInfo';
+import AddModule from './components/pages/Teacher/FullCourseEdit/AddModule';
+import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
 
 function App() {
   return (
     <Routes>
       <Route path='course-study/:course_id' element={<CourseStudy />} />
+      
       <Route path='/' element={<Layout />} >
         <Route index element={<Home />} />
         <Route path='about' element={<About />} />
@@ -98,9 +103,10 @@ function App() {
           </Route>
           
           <Route path='teacher-profile/' element={<TeacherDashmain />} >
-          <Route index element={<TeacherDashboard />} />
+            <Route index element={<TeacherDashboard />} />
             <Route path='my-courses' element={<MyTeacherCourses />} />
             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
+            <Route path='edit-course-full/:course_id' element={<EditCourseFullData />} />
             <Route path='add-course' element={<AddCourse />} />
             <Route path='study-materials/:course_id' element={<StudyMaterials />} />
             {/* <Route path='edit-study-material/:study_id' element={<EditChapter />} /> */}
@@ -125,9 +131,16 @@ function App() {
             <Route path='add-tasks/:course_id' element={<AddTask/>} />
             <Route path='view-tasks/:course_id' element={<ViewTask/>} />
           </Route>
-    
+          
  
         {/* <Route path='cardhouse/:id/' element={<CardhousePage />} /> */}
+      </Route>
+
+      <Route path='edit-course-full/' element={<EditCourseFullData/>} >
+        <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
+        <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
+        <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
+        <Route path='edit-module/:course_id/:module_id' element={<EditModule />} />
       </Route>
     </Routes>
   );

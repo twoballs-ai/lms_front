@@ -67,8 +67,7 @@ const Swal = require('sweetalert2')
         <tr>
     
           <th>Название</th>
-          <th>видео урок</th>
-          <th>комментарии</th>
+          <th>Описание</th>
           <th>Действия</th>
         </tr>
       </thead>
@@ -76,14 +75,7 @@ const Swal = require('sweetalert2')
         {chapterData.map((chapter,index)=>
         <tr key={index}>
           <td><Link to={"/teacher-profile/edit-chapter/"+chapter.id}variant="primary">{chapter.title}</Link>{' '}</td>
-          <td>
-          <video width="240" height="180" controls>
-  <source src={chapter.video} type="video/mp4" />
-  <source src="movie.ogg" type="video/ogg" />
-  Your browser does not support the video tag.
-</video >
-          </td>
-          <td>{chapter.comment}</td>
+          <td>{chapter.description}</td>
           <td> 
           <Button as={Link} to={"/teacher-profile/edit-chapter/"+chapter.id}variant="primary"><FontAwesomeIcon icon={faPenToSquare} /></Button>{' '}
            <Button onClick={()=>handleDeleteClick(chapter.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} /></Button>{' '}

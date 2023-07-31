@@ -8,17 +8,22 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 const baseUrl = 'http://127.0.0.1:8000/api/'
 
-function AddChapter() {
+function AddModule() {
   // const teacherId= localStorage.getItem('teacherId')
-  const {course_id} = useParams()
+  const {chapter_id} = useParams()
   const [chapterAddData, setChapterAddData] = useState({
-    course: course_id,
+    chapter: chapter_id,
     title:'',
     description:''
   })
+  useEffect(() => {
+    setChapterAddData({
+        ...chapterAddData,
+        chapter: chapter_id
+      })
+  }, [chapter_id])
 
-
-
+console.log(chapter_id)
   const handleChange=(event)=>{
     setChapterAddData({
       ...chapterAddData,
@@ -27,17 +32,11 @@ function AddChapter() {
     console.log(chapterAddData)
   }
 
-  // const handleFileChange=(event)=>{
-  //   setChapterAddData({
-  //     ...chapterAddData,
-  //     [event.target.name]:event.target.files[0]
-  //   })
-  // }
   const formSubmit=(e)=>{
     e.preventDefault()
 
     axios
-    .post(baseUrl+'course-chapter/'+course_id, chapterAddData
+    .post(baseUrl+'chapter-module/'+chapter_id, chapterAddData
       // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
       ,{headers: { "Content-Type": "multipart/form-data" }}
       )
@@ -62,7 +61,7 @@ function AddChapter() {
     return(
         <>
         <Card>
-        <Card.Header>Добавление главы</Card.Header>
+        <Card.Header>Добавление модуля для главы: </Card.Header>
        <Card.Body>
        <Form>
 
@@ -84,4 +83,4 @@ function AddChapter() {
         </>
     )
 }
-export default AddChapter
+export default AddModule

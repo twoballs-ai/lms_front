@@ -92,6 +92,7 @@ function MyTeacherCourses() {
                     <Button as={Link} to={'/teacher-profile/study-materials/' + course.id} variant="success">Добавить учебный<br/> материал</Button>{' '}
                     <Button as={Link} to={'/teacher-profile/add-chapter/' + course.id} variant="primary">добавить главу <br/> в курс</Button>{' '}
                     <Button as={Link} to={'/teacher-profile/assign-quiz/' + course.id} variant="warning">привязать <br/> квиз</Button>{' '}
+                    <Button as={Link} to={'/edit-course-full/editor-info/' + course.id} variant="secondary">перейти в <br/> редактор курса</Button>{' '}
                     <Button onClick={()=>handleDeleteClick(course.id)} variant="danger"><FontAwesomeIcon icon={faTrashCan} />Удалить <br/>курс</Button>{' '}
                   </td>
                 </tr>
