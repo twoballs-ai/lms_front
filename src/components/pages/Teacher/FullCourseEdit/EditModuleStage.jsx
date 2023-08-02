@@ -12,13 +12,11 @@ import Swal from 'sweetalert2'
 import './style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
-
 const baseUrl = 'http://127.0.0.1:8000/api/'
+ 
 
-
-function EditModule() {
-
+function EditModuleStage() {
+   
     let { module_id } = useParams()
     let { course_id } = useParams()
     const [moduleData, setModuleData] = useState([])
@@ -78,4 +76,4 @@ function EditModule() {
         </>
     )
 }
-export default EditModule
+export default EditModuleStage
