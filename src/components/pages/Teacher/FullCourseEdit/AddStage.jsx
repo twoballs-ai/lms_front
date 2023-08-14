@@ -60,20 +60,22 @@ function AddStage() {
             {/* <h3></h3> */}
             <Row>
                 <Col>
+               
                     <Card border="info" style={{ width: '18rem' }}>
-                        <Card.Body>
+                        <Card.Body >
                             <Card.Title>Классический урок</Card.Title>
-                            <Card.Text>
+                            <Card.Text as={Link} to={`/`}>
                                 Классический урок позволяет добавлять текст, картинки, ссылки, текст может быть сложно форматируемым.
                             </Card.Text>
                         </Card.Body>
                     </Card>
+                    
                 </Col>
                 <Col>
                     <Card border="info" style={{ width: '18rem' }}>
                         <Card.Body>
                             <Card.Title>Видео урок</Card.Title>
-                            <Card.Text>
+                            <Card.Text as={Link} to={`/`}>
                                 В видео уроке вам доступны название урока, описание и ссылка на ваш видеоурок
                             </Card.Text>
                         </Card.Body>
@@ -83,7 +85,7 @@ function AddStage() {
                     <Card border="info" style={{ width: '18rem' }}>
                         <Card.Body>
                             <Card.Title>Квиз</Card.Title>
-                            <Card.Text>
+                            <Card.Text as={Link} to={`/`}>
                                 Квиз позволит выбрать один ответ или несколько в зависимости от выбранного вами типа квиза.
                             </Card.Text>
                         </Card.Body>
@@ -93,7 +95,7 @@ function AddStage() {
                     <Card border="info" style={{ width: '18rem' }}>
                         <Card.Body>
                             <Card.Title>Написание программы или ее части</Card.Title>
-                            <Card.Text>
+                            <Card.Text as={Link} to={`/`}>
                                 Практический урок который позволит отточить ваши навыки программирования.
                             </Card.Text>
                         </Card.Body>
