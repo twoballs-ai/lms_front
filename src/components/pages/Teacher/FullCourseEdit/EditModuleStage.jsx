@@ -13,10 +13,10 @@ import './style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 const baseUrl = 'http://127.0.0.1:8000/api/'
- 
+
 
 function EditModuleStage() {
-   
+
     let { module_id } = useParams()
     let { course_id } = useParams()
     const [moduleData, setModuleData] = useState([])
@@ -43,7 +43,9 @@ function EditModuleStage() {
         } catch (error) {
             console.log(error)
         }
+
     }, [module_id])
+ 
     return (
         <>
 
@@ -51,12 +53,23 @@ function EditModuleStage() {
                 <Col>
                     <div className="ms-3">
                         {moduleData.map((tech, index) =>
-                                      <Link to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.id}`}>
-                                      <div className="dot ms-3" >
-                                          <div className="mt-1">
-                                          </div>
-                                      </div>
-                                  </Link>
+                            <Link to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.id}`}>
+                                <div className="dot ms-3" >
+                                    {tech.type !== null &&
+                                        <>
+                                            {tech.type.is_classic === true &&
+                                                <p>classic</p>
+                                            }
+                                            {tech.type.is_quiz === true &&
+                                                <p>quiz</p>
+                                            }
+                                        </>
+                                    }
+                                    {tech.type === null &&
+                                        <p>пустой урок</p>
+                                    }
+                                </div>
+                            </Link>
 
                         )}
 
@@ -69,7 +82,10 @@ function EditModuleStage() {
                         </Link>
                     </div>
 
-
+                </Col>
+            </Row>
+            <Row>
+                <Col>
 
                 </Col>
             </Row>

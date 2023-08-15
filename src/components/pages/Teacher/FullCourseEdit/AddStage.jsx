@@ -11,8 +11,68 @@ import Swal from 'sweetalert2'
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const baseUrl = 'http://127.0.0.1:8000/api/'
+const typeUrl = 'http://127.0.0.1:8000/api-types/'
+
 
 function AddStage() {
+
+    let { module_id } = useParams()
+    const [stageData, setStageData] = useState([])
+    const addClassicLesson = () => {
+        try {
+            axios
+            .post(baseUrl + 'module-stage/' + module_id, {
+                title: '8',
+              module: module_id,
+              description: 'sdsdsd'
+            }
+              // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+              , { headers: { "Content-Type": "multipart/form-data" } }
+            )
+                .then(response => {
+                    
+                    if (response.status === 200 || response.status === 201) {
+                        setStageData(response.data)
+                        try {
+                            axios
+                              .post(typeUrl + 'classic-lesson/'+stageData.id, {
+                                student: 'studentId',
+                                course: 'course_id',
+                                is_favorite: true
+                              }
+                                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                                , { headers: { "Content-Type": "multipart/form-data" } }
+                              )
+                              .then(response => {
+                                if (response.status === 200 || response.status === 201) {
+                                 
+                                  console.log(response.data)
+                                  // setShow(false)
+                                  // setEnrollStatus('success')
+                             
+                                }
+                              })
+                          } catch (error) {
+                            console.log(error)
+                          }
+
+                    }
+                    // setModuleData(response.data)
+
+                    // setTeacherData(response.data.teacher)
+                    // setChapterData(response.data.course_chapters)
+                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
+                    // setTechnologicalListData(response.data.technological_list)
+                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
+                    //   setAvgRatingStatus(response.data.course_rating)
+                    // }
+
+                    console.log(response)
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     // const teacherId= localStorage.getItem('teacherId')
 
     //   useEffect(() => {
@@ -54,6 +114,7 @@ function AddStage() {
 
     //     })
     //   }
+    console.log(stageData)
     return (
         <>
             <p>Добавление нового этапа</p>
@@ -64,7 +125,7 @@ function AddStage() {
                     <Card border="info" style={{ width: '18rem' }}>
                         <Card.Body >
                             <Card.Title>Классический урок</Card.Title>
-                            <Card.Text as={Link} to={`/`}>
+                            <Card.Text as={Link} to={`#`} onClick={addClassicLesson}>
                                 Классический урок позволяет добавлять текст, картинки, ссылки, текст может быть сложно форматируемым.
                             </Card.Text>
                         </Card.Body>

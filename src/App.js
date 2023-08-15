@@ -60,7 +60,7 @@ import CourseStudy from './components/pages/Course/CourseStudy';
 import EditCourseFullData from './components/pages/Teacher/FullCourseEdit/EditCourseFull';
 import EditorPageInfo from './components/pages/Teacher/FullCourseEdit/EditorPageInfo';
 import AddModule from './components/pages/Teacher/FullCourseEdit/AddModule';
-import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
+// import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
 import EditModuleStage from './components/pages/Teacher/FullCourseEdit/EditModuleStage';
 import AddStage from './components/pages/Teacher/FullCourseEdit/AddStage';
 
@@ -142,7 +142,7 @@ function App() {
         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
-        <Route path='edit-module/:course_id/:module_id' element={<EditModule />} />
+        <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
         <Route path='edit-module/:course_id/:module_id/stage/new' element={<AddStage />} />
       </Route>
