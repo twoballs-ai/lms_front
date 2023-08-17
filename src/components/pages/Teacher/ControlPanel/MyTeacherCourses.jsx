@@ -30,7 +30,7 @@ function MyTeacherCourses() {
                 // setAvgRatingStatus
             });
     }, [totalResult]);
-    const Swal = require("sweetalert2");
+    // const Swal = require("sweetalert2");
     const handleDeleteClick = (course_id) => {
         Swal.fire({
             title: "Подтвердите действие!",

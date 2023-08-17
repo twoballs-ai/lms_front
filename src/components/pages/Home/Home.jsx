@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import Container from "react-bootstrap/Container";
-import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";

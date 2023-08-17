@@ -31,7 +31,7 @@ function MyTeacherQuizes() {
             });
     }, [totalResult]);
     // console.log(courseData)
-    const Swal = require("sweetalert2");
+
     const handleDeleteClick = (quiz_id) => {
         Swal.fire({
             title: "Подтвердите действие!",
