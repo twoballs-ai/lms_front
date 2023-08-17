@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import CheckQuizInCourse from "./CheckQuizInCourse";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

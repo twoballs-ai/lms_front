@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { teacherLoginApiUrl } from "../../../../shared/config";
 

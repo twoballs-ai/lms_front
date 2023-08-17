@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react"
 import Container from "react-bootstrap/Container";
 import React from "react";
 import Button from "react-bootstrap/Button";
@@ -5,7 +6,6 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import { apiUrl } from "../../../shared/config";

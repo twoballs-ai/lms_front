@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react"
 import Container from "react-bootstrap/Container";
 import React from "react";
 import Button from "react-bootstrap/Button";
@@ -7,7 +8,6 @@ import Col from "react-bootstrap/Col";
 import { Link, useParams } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
 import Table from "react-bootstrap/Table";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiUrl } from "../../../shared/config";
 

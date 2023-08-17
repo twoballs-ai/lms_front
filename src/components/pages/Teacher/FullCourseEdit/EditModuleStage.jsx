@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
-import { useState, useEffect } from "react"
 import Figure from 'react-bootstrap/Figure';
 import axios from "axios";
 import Swal from "sweetalert2";
