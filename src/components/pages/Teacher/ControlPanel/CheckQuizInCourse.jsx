@@ -1,78 +1,79 @@
-import { Link, useParams } from "react-router-dom"
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import Table from 'react-bootstrap/Table'
-import { useState, useEffect } from "react"
+import { Link, useParams } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import Swal from 'sweetalert2'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { quizApiUrl } from "../../../../shared/config";
 
-const baseUrl = 'http://127.0.0.1:8000/api/'
-const baseUrlQuiz = 'http://127.0.0.1:8000/api-quiz/'
 function CheckQuizInCourse(props) {
-    const [quizData, setQuizData] = useState([])
-    const [courseData, setCourseData] = useState([])
-    const teacherId = localStorage.getItem('teacherId')
+    const [quizData, setQuizData] = useState([]);
+    const [courseData, setCourseData] = useState([]);
+    const teacherId = localStorage.getItem("teacherId");
 
     // const [avgRatingStatus, setAvgRatingStatus] = useState("")
     // console.log(teacherId)
     useEffect(() => {
         try {
             axios
-                .get(`${baseUrlQuiz}get-quiz-assign-status/${props.quiz}/${props.course}`)
-                .then(response => {
-                    setQuizData(response.data)
-                    console.log(response.data)
+                .get(
+                    `${quizApiUrl}get-quiz-assign-status/${props.quiz}/${props.course}`
+                )
+                .then((response) => {
+                    setQuizData(response.data);
+                    console.log(response.data);
 
                     // setAvgRatingStatus
-                })
+                });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-
-    }, [])
-    console.log(quizData)
+    }, []);
+    console.log(quizData);
 
     const handleAssignQuiz = (quiz_id) => {
         try {
             axios
-                .post(baseUrlQuiz + 'quiz-assign-course/', {
-                    teacher: teacherId,
-                    quiz: props.quiz,
-                    course: props.course
-                }
+                .post(
+                    quizApiUrl + "quiz-assign-course/",
+                    {
+                        teacher: teacherId,
+                        quiz: props.quiz,
+                        course: props.course,
+                    },
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    , { headers: { "Content-Type": "multipart/form-data" } }
+                    { headers: { "Content-Type": "multipart/form-data" } }
                 )
-                .then(response => {
+                .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-            
-                        window.location.reload()
+                        window.location.reload();
                     }
-                })
+                });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
     return (
         <>
-
             <td>
-                {quizData.bool == false &&
-                      <Button onClick={()=>handleAssignQuiz(props.quiz)} variant="primary" type="submit">
-                     привязать квиз к курсу
+                {quizData.bool == false && (
+                    <Button
+                        onClick={() => handleAssignQuiz(props.quiz)}
+                        variant="primary"
+                        type="submit"
+                    >
+                        привязать квиз к курсу
                     </Button>
-                   
-                }
-                {quizData.bool == true &&
-<span className="text-success">
-квиз добавлен
-</span>                }
+                )}
+                {quizData.bool == true && (
+                    <span className="text-success">квиз добавлен</span>
+                )}
             </td>
-
         </>
-    )
+    );
 }
-export default CheckQuizInCourse
+export default CheckQuizInCourse;
