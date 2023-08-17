@@ -6,37 +6,37 @@ import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import { useState, useEffect } from "react"
 import axios from "axios";
-import Swal from 'sweetalert2'
-import Image from 'react-bootstrap/Image';
-import Col from 'react-bootstrap/Col';
+import Swal from "sweetalert2";
+import Image from "react-bootstrap/Image";
+import Col from "react-bootstrap/Col";
 // import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-const baseUrl = 'http://127.0.0.1:8000/api/'
+import Row from "react-bootstrap/Row";
+import { apiUrl } from "../../../../shared/config";
+
 function EditorPageInfo() {
-  const [dashboardData, setDashboardData] = useState([])
-//   const teacherId = localStorage.getItem('teacherId')
+    const [dashboardData, setDashboardData] = useState([]);
+    //   const teacherId = localStorage.getItem('teacherId')
 
-  useEffect(() => {
-    // try{
-    //   axios
-    //   .get(baseUrl + 'teacher/dashboard/' +teacherId
-    //     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-    //     // ,{headers: { "Content-Type": "multipart/form-data" }}
-    //   )
-    //   .then(response => {
-    //     setDashboardData(response.data)
-    //     console.log(response.data)
-    //   })
-    // } catch(e){
-    //   console.log(e)
-    // }
+    useEffect(() => {
+        // try{
+        //   axios
+        //   .get(apiUrl + 'teacher/dashboard/' +teacherId
+        //     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+        //     // ,{headers: { "Content-Type": "multipart/form-data" }}
+        //   )
+        //   .then(response => {
+        //     setDashboardData(response.data)
+        //     console.log(response.data)
+        //   })
+        // } catch(e){
+        //   console.log(e)
+        // }
+    }, []);
 
-  }, [])
-
-  return (
-    <>
-    <p>Вы посетили страницу редактирования</p>
-    {/* <div className="row">
+    return (
+        <>
+            <p>Вы посетили страницу редактирования</p>
+            {/* <div className="row">
       <div className="col-4"><Card border="primary" style={{ width: '18rem' }}>
       <Card.Header>Всего курсов</Card.Header>
         <Card.Body>
@@ -66,11 +66,8 @@ function EditorPageInfo() {
         </Card.Body>
       </Card></div>
     </div> */}
-      
-
-    </>
-  )
-
+        </>
+    );
 }
 
-export default EditorPageInfo
+export default EditorPageInfo;
