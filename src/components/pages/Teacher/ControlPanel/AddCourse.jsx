@@ -28,6 +28,7 @@ function AddCourse() {
             )
             .then((response) => {
                 setCategories(response.data);
+                console.log(response.data);
             });
     }, []);
 

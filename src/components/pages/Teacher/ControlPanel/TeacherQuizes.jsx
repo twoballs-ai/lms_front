@@ -4,7 +4,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -33,30 +32,19 @@ function MyTeacherQuizes() {
     // console.log(courseData)
 
     const handleDeleteClick = (quiz_id) => {
-        Swal.fire({
-            title: "Подтвердите действие!",
-            text: "Вы собираетесь удалить квиз, вы уверены?",
-            icon: "info",
-            confirmButtonText: "Все равно удалить",
-            showCancelButton: true,
-        }).then((result) => {
-            if (result.isConfirmed) {
+
                 try {
                     axios
                         .delete(quizApiUrl + "quiz/" + quiz_id)
                         .then((response) => {
-                            Swal.fire("success", "Данные были удалены");
+                      
                             setTotalResult(response.data.length);
                             console.log(response.data.length);
                         });
-                    // Swal.fire('success', 'Данные были удалены')
+     
                 } catch (error) {
-                    Swal.fire("error", "Данные не были удалены");
                 }
-            } else {
-                Swal.fire("error", "Данные не были удалены");
-            }
-        });
+
     };
     return (
         <>

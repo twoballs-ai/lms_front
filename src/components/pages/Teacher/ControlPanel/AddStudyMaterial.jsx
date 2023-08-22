@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { apiUrl } from "../../../../shared/config";
 
 function AddStudyMaterial() {
@@ -45,15 +44,7 @@ function AddStudyMaterial() {
             )
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Ваши данные обновлены",
-                        toast: true,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        timer: 30,
-                    });
+             
                     window.location.reload();
                 }
 

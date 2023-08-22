@@ -62,7 +62,7 @@ import EditorPageInfo from './components/pages/Teacher/FullCourseEdit/EditorPage
 import AddModule from './components/pages/Teacher/FullCourseEdit/AddModule';
 // import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
 import EditModuleStage from './components/pages/Teacher/FullCourseEdit/EditModuleStage';
-import AddStage from './components/pages/Teacher/FullCourseEdit/AddStage';
+import AddStageLesson from './components/pages/Teacher/FullCourseEdit/AddStageLesson';
 
 function App() {
   return (
@@ -144,7 +144,7 @@ function App() {
         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
         <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
-        <Route path='edit-module/:course_id/:module_id/stage/new' element={<AddStage />} />
+        <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
       </Route>
     </Routes>
   );

@@ -5,7 +5,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import Swal from "sweetalert2";
+
 import Badge from "react-bootstrap/Badge";
 import { apiUrl } from "../../../shared/config";
 

@@ -5,10 +5,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import Swal from "sweetalert2";
 import Badge from "react-bootstrap/Badge";
 import { apiUrl } from "../../../../shared/config";
-// import Swal from 'sweetalert2'
+
 
 function ViewTask() {
     const [taskData, setTaskData] = useState([]);
@@ -29,7 +28,7 @@ function ViewTask() {
                 console.log(response.data);
             });
     }, [totalResult]);
-    const Swal = require("sweetalert2");
+
 
     return (
         <>

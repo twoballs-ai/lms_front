@@ -5,7 +5,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import Swal from "sweetalert2";
 import Badge from "react-bootstrap/Badge";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -149,15 +148,7 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "вы подписались на курс",
-                            toast: true,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
+      
                         setEnrollStatus("success");
 
                         // window.location.reload()
@@ -195,15 +186,7 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "вы подписались на курс",
-                            toast: true,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
+
                         console.log(response.data);
                         // setShow(false)
                         // setEnrollStatus('success')
@@ -229,15 +212,7 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "данные обновлены",
-                            toast: true,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
+           
                         console.log(response.data);
                         // setShow(false)
                         // setEnrollStatus('success')
@@ -262,15 +237,7 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "данные обновлены",
-                            toast: true,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
+               
                         console.log(response.data);
                         // setShow(false)
                         // setEnrollStatus('success')

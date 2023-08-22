@@ -4,7 +4,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import Swal from "sweetalert2";
 import Badge from "react-bootstrap/Badge";
 import { apiUrl } from "../../../../shared/config";
 
@@ -41,15 +40,7 @@ function StudentIncomingTask() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "вы подписались на курс",
-                            toast: true,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
+                
                         //   setStatusTaskData('success')
 
                         window.location.reload();

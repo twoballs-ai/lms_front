@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import Swal from "sweetalert2";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 // import Form from 'react-bootstrap/Form';
@@ -88,15 +87,7 @@ function ProfileSettings() {
                 .then((response) => {
                     console.log(response);
                     if (response.status === 200) {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Ваши данные обновлены",
-                            toast: true,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
+           
                     }
                     // window.location.href='/teacher-profile/my-courses'
                     // Handle response

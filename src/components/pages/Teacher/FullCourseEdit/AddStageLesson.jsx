@@ -7,77 +7,51 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import axios from "axios";
-import Swal from "sweetalert2";
 import ListGroup from "react-bootstrap/ListGroup";
 import { apiUrl, typesApiUrl } from "../../../../shared/config";
-
-function AddStage() {
+import { useLocation, useNavigate } from 'react-router-dom';
+function AddStageLesson() {
     let { module_id } = useParams();
+    let { course_id } = useParams();
+    let { stage_id } = useParams();
     const [stageData, setStageData] = useState([]);
+    const navigate = useNavigate();
     const addClassicLesson = () => {
-        try {
-            axios
-                .post(
-                    apiUrl + "module-stage/" + module_id,
-                    {
-                        title: "8",
-                        module: module_id,
-                        description: "sdsdsd",
-                    },
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    { headers: { "Content-Type": "multipart/form-data" } }
-                )
-                .then((response) => {
-                    if (response.status === 200 || response.status === 201) {
-                        setStageData(response.data);
-                        try {
-                            axios
-                                .post(
-                                    typesApiUrl +
-                                        "classic-lesson/" +
-                                        stageData.id,
-                                    {
-                                        student: "studentId",
-                                        course: "course_id",
-                                        is_favorite: true,
-                                    },
-                                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                                    {
-                                        headers: {
-                                            "Content-Type":
-                                                "multipart/form-data",
-                                        },
-                                    }
-                                )
-                                .then((response) => {
-                                    if (
-                                        response.status === 200 ||
-                                        response.status === 201
-                                    ) {
-                                        console.log(response.data);
-                                        // setShow(false)
-                                        // setEnrollStatus('success')
-                                    }
-                                });
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }
-                    // setModuleData(response.data)
-
-                    // setTeacherData(response.data.teacher)
-                    // setChapterData(response.data.course_chapters)
-                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
-                    // setTechnologicalListData(response.data.technological_list)
-                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
-                    //   setAvgRatingStatus(response.data.course_rating)
-                    // }
-
-                    console.log(response);
-                });
-        } catch (error) {
-            console.log(error);
-        }
+        console.log('hi')
+        
+        navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'classicLesson' } });
+        // try {
+        //     axios
+        //         .post(
+        //             typesApiUrl +
+        //                 "classic-lesson/" +
+        //                 response.data.i,
+        //             {
+        //                 student: "studentId",
+        //                 course: "course_id",
+        //                 is_favorite: true,
+        //             },
+        //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+        //             {
+        //                 headers: {
+        //                     "Content-Type":
+        //                         "multipart/form-data",
+        //                 },
+        //             }
+        //         )
+        //         .then((response) => {
+        //             if (
+        //                 response.status === 200 ||
+        //                 response.status === 201
+        //             ) {
+        //                 console.log(response.data);
+        //                 // setShow(false)
+        //                 // setEnrollStatus('success')
+        //             }
+        //         });
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
     // const teacherId= localStorage.getItem('teacherId')
 
@@ -104,15 +78,7 @@ function AddStage() {
     //       )
     //     .then(response => {
     //       if(response.status===200||response.status===201){
-    //         Swal.fire({
-    //           position: 'top-end',
-    //           icon: 'success',
-    //           title: 'Ваши данные обновлены',
-    //           toast:true,
-    //           timerProgressBar:true,
-    //           showConfirmButton: false,
-    //           timer: 30
-    //         })
+
     //         window.location.reload()
     //       }
 
@@ -127,18 +93,21 @@ function AddStage() {
             {/* <h3></h3> */}
             <Row>
                 <Col>
-                    <Card border="info" style={{ width: "18rem" }}>
+                    <Card border="info" style={{ width: "18rem" }}  >
                         <Card.Body>
                             <Card.Title>Классический урок</Card.Title>
                             <Card.Text
-                                as={Link}
-                                to={`#`}
-                                onClick={addClassicLesson}
                             >
                                 Классический урок позволяет добавлять текст,
                                 картинки, ссылки, текст может быть сложно
                                 форматируемым.
                             </Card.Text>
+                            <Button
+                            onClick={addClassicLesson}
+                            variant="primary"
+                        >
+                            Выбрать
+                        </Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -181,4 +150,4 @@ function AddStage() {
         </>
     );
 }
-export default AddStage;
+export default AddStageLesson;
