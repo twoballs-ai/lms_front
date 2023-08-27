@@ -114,7 +114,7 @@ function MyTeacherCourses() {
                                         >
                                             Редактировать <br /> данные курса
                                         </Button>{" "}
-                                        <Button
+                                        {/* <Button
                                             as={Link}
                                             to={
                                                 "/teacher-profile/study-materials/" +
@@ -124,8 +124,8 @@ function MyTeacherCourses() {
                                         >
                                             Добавить учебный
                                             <br /> материал
-                                        </Button>{" "}
-                                        <Button
+                                        </Button>{" "} */}
+                                        {/* <Button
                                             as={Link}
                                             to={
                                                 "/teacher-profile/add-chapter/" +
@@ -134,8 +134,8 @@ function MyTeacherCourses() {
                                             variant="primary"
                                         >
                                             добавить главу <br /> в курс
-                                        </Button>{" "}
-                                        <Button
+                                        </Button>{" "} */}
+                                        {/* <Button
                                             as={Link}
                                             to={
                                                 "/teacher-profile/assign-quiz/" +
@@ -144,7 +144,7 @@ function MyTeacherCourses() {
                                             variant="warning"
                                         >
                                             привязать <br /> квиз
-                                        </Button>{" "}
+                                        </Button>{" "} */}
                                         <Button
                                             as={Link}
                                             to={
