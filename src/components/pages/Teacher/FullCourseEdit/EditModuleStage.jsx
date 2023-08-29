@@ -18,6 +18,9 @@ import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
 import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
 import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
 import AddingCodeLesson from "./TypeLessonForm/CodeLesson";
+import EditClassicLesson from "./TypeLessonForm/Edit/ClassicLessonEdit";
+import EditQuizLesson from "./TypeLessonForm/Edit/QuizLessonEdit";
+import EditVideoLesson from "./TypeLessonForm/Edit/VideoLessonEdit";
 function EditModuleStage() {
     let { module_id } = useParams();
     let { course_id } = useParams();
@@ -140,26 +143,46 @@ function EditModuleStage() {
                 <Col>
                     Вы находитесь на странице редактирования этапа обучения
                 </Col>
-                
-                {/* {AddingLesson()} */}
-                {location.state === null && typeStageData === null  ? (
-                 
-                        <>
-                            <p>Вы еще не заполнили ваш урок. </p>
-                            <div className="mb-2">
-                                <Button
-                                    as={Link}
-                                    to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}/new`}
-                                    variant="outline-success"
-                                >
-                                    добавить урок
-                                </Button>
-                            </div>
-                        </>
-                 
+                {typeStageData === null ? (
+                    <>
+                        <p>Вы еще не заполнили ваш урок. </p>
+                        <div className="mb-2">
+                            <Button
+                                as={Link}
+                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}/new`}
+                                variant="outline-success"
+                            >
+                                добавить урок
+                            </Button>
+                        </div>
+                    </>
                 ) : (
                     <>
-                        {location.state.type === "classicLesson"  ? (
+                        {typeStageData.is_classic === true ? (
+                            <EditClassicLesson stage_id={stage_id} />
+                        ) : (
+                            <>
+                            {typeStageData.is_quiz === true ? (
+                                <EditQuizLesson stage_id={stage_id} />
+                            ) : (
+                                <>
+                                {typeStageData.is_video === true ? (
+                                    <EditVideoLesson stage_id={stage_id} />
+                                ) : (
+                                    <p></p>
+                                )}
+                            </>
+                            )}
+                        </>
+                        )}
+                    </>
+                )}
+                {/* {AddingLesson()} */}
+                {location.state === null ? (
+                    <></>
+                ) : (
+                    <>
+                        {location.state.type === "classicLesson" ? (
                             <>
                                 <AddingClassicLesson stage_id={stage_id} />
                             </>
@@ -185,7 +208,13 @@ function EditModuleStage() {
                                                         stage_id={stage_id}
                                                     />
                                                 ) : (
-                                                    <><p>Для добавления урока нажмите добавить урок</p></>
+                                                    <>
+                                                        <p>
+                                                            Для добавления урока
+                                                            нажмите добавить
+                                                            урок
+                                                        </p>
+                                                    </>
                                                 )}
                                             </>
                                         )}
