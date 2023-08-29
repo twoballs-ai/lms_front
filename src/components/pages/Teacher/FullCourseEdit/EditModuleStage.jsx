@@ -47,7 +47,7 @@ function EditModuleStage() {
                     //   setAvgRatingStatus(response.data.course_rating)
                     // }
 
-                    console.log(response.data);
+                    // console.log(response.data);
                 });
         } catch (error) {
             console.log(error);
@@ -60,7 +60,7 @@ function EditModuleStage() {
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
                 .then((response) => {
-                    setTypeStageData(response.data);
+                    setTypeStageData(response.data.type);
                     console.log(response.data);
                 });
         } catch (error) {
@@ -93,7 +93,7 @@ function EditModuleStage() {
         }
     };
     console.log(location);
-
+    console.log(typeStageData);
     return (
         <>
             <Row>
@@ -140,27 +140,26 @@ function EditModuleStage() {
                 <Col>
                     Вы находитесь на странице редактирования этапа обучения
                 </Col>
-                {typeStageData.type === null && (
-                    <>
-                        <p>Вы еще не заполнили ваш урок. </p>
-
-                        <div className="mb-2">
-                            <Button
-                                as={Link}
-                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${typeStageData.id}/new`}
-                                variant="outline-success"
-                            >
-                                добавить урок
-                            </Button>
-                        </div>
-                    </>
-                )}
+                
                 {/* {AddingLesson()} */}
-                {location.state == null ? (
-                    <p>Для добавления урока нажмите добавить урок</p>
+                {location.state === null && typeStageData === null  ? (
+                 
+                        <>
+                            <p>Вы еще не заполнили ваш урок. </p>
+                            <div className="mb-2">
+                                <Button
+                                    as={Link}
+                                    to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}/new`}
+                                    variant="outline-success"
+                                >
+                                    добавить урок
+                                </Button>
+                            </div>
+                        </>
+                 
                 ) : (
                     <>
-                        {location.state.type === "classicLesson" ? (
+                        {location.state.type === "classicLesson"  ? (
                             <>
                                 <AddingClassicLesson stage_id={stage_id} />
                             </>
@@ -186,7 +185,7 @@ function EditModuleStage() {
                                                         stage_id={stage_id}
                                                     />
                                                 ) : (
-                                                    <></>
+                                                    <><p>Для добавления урока нажмите добавить урок</p></>
                                                 )}
                                             </>
                                         )}
