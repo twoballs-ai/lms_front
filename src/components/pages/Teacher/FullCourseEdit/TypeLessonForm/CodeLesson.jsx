@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
+import Editor from "../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingCodeLesson(props) {
     let stage_id = props.stage_id
@@ -54,6 +55,7 @@ function AddingCodeLesson(props) {
                         Добавление урока на программирование
                     </Card.Header>
                     <Card.Body>
+                    <Editor  />
                         <Form>
                     
    

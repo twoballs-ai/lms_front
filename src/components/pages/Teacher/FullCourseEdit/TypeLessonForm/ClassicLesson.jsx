@@ -8,8 +8,10 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
+import Editor from "../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingClassicLesson(props) {
+    const [setData, useSetData] = useState([]);
     let stage_id = props.stage_id
     const location = useLocation();
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ function AddingClassicLesson(props) {
     });
 
     console.log(location.state);
- 
+    console.log()
     const handleChange = (event) => {
         setClassicLessonData({
             ...classicLessonData,
@@ -55,11 +57,17 @@ function AddingClassicLesson(props) {
     return (
         <div>
             {location.state.type === "classicLesson" && (
+                
                 <Card>
                     <Card.Header>
                         Добавление классического урока
                     </Card.Header>
                     <Card.Body>
+                    <div className="App">
+
+<Editor  />
+
+    </div>
                         <Form>
                             <Form.Group
                                 className="mb-3"
