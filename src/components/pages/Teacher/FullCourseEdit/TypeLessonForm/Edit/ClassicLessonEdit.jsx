@@ -8,43 +8,33 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
+import Editor from "../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
 function EditClassicLesson(props) {
+    const [valueEditor, setValueEditor] = useState('')
+    const handleChange2 = (valueEditor) => {
+        setValueEditor(valueEditor)
+    }
+
     let stage_id = props.stage_id
+    let contentData = props.contentData
     const location = useLocation();
     const navigate = useNavigate();
-    const [classicLessonData, setClassicLessonData] = useState({
-        stage: stage_id,
-        is_classic: true,
-        image: "",
-        content: "",
-        file: "",
-        video_link: "",
-        url_link: "",
-    });
-
-    console.log(location.state);
  
-    const handleChange = (event) => {
-        setClassicLessonData({
-            ...classicLessonData,
-            [event.target.name]: event.target.value,
-        });
-        console.log(classicLessonData);
-    };
-    const handleFileChange = (event) => {
-        setClassicLessonData({
-            ...classicLessonData,
-            [event.target.name]: event.target.files[0],
-        });
-    };
+    console.log(contentData)
+
     const formSubmit = (e) => {
         e.preventDefault();
 
         axios
-            .post(
+            .put(
                 typesApiUrl + "classic-lesson/" + stage_id,
-                classicLessonData,
+                {
+                    stage: stage_id,
+                    is_classic: true,
+                    content: JSON.stringify(valueEditor)
+            
+                },
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
@@ -54,77 +44,19 @@ function EditClassicLesson(props) {
     };
     return (
         <div>
-    
+
+                
                 <Card>
                     <Card.Header>
                         Добавление классического урока
                     </Card.Header>
                     <Card.Body>
-                        <Form>
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formBasicCategory"
-                            >
-                                <Form.Label>Добавление картинки</Form.Label>
-                                <Form.Control
-                                    name="image"
-                                    type="file"
-                                    onChange={handleFileChange}
-                                />
-                            </Form.Group>
+                    <div className="App">
 
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formBasicCategory"
-                            >
-                                <Form.Label>Содержание урока</Form.Label>
-                                <Form.Control
-                                    name="content"
-                                    as="textarea"
-                                    rows={3}
-                                    placeholder="Описание"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formBasicCategory"
-                            >
-                                <Form.Label>Добавление файла</Form.Label>
-                                <Form.Control
-                                    name="file"
-                                    type="file"
-                                    onChange={handleFileChange}
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formBasicCategory"
-                            >
-                                <Form.Label>
-                                    Добавление ссылки на видео
-                                </Form.Label>
-                                <Form.Control
-                                    name="video_link"
-                                    type="text"
-                                    placeholder="Добавление ссылки"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formBasicCategory"
-                            >
-                                <Form.Label>
-                                    Добавление ссылки на сторонний ресурс
-                                </Form.Label>
-                                <Form.Control
-                                    name="url_link"
-                                    type="text"
-                                    placeholder="Добавление ссылки"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
+<Editor onChange={handleChange2} data ={contentData} />
+
+    </div>
+                   
                             <Button
                                 onClick={formSubmit}
                                 variant="primary"
@@ -132,10 +64,10 @@ function EditClassicLesson(props) {
                             >
                                 Submit
                             </Button>
-                        </Form>
+                   
                     </Card.Body>
                 </Card>
-      
+
         </div>
     );
 }

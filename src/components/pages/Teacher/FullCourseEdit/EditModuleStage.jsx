@@ -26,6 +26,7 @@ function EditModuleStage() {
     let { course_id } = useParams();
     let { stage_id } = useParams();
     const [moduleData, setModuleData] = useState([]);
+    const [contentData, setContentData] = useState([]);
     const [typeStageData, setTypeStageData] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
@@ -64,7 +65,8 @@ function EditModuleStage() {
                 )
                 .then((response) => {
                     setTypeStageData(response.data.type);
-                    console.log(response.data);
+                    setContentData(response.data.type.content);
+
                 });
         } catch (error) {
             console.log(error);
@@ -95,8 +97,8 @@ function EditModuleStage() {
             console.log(error);
         }
     };
-    console.log(location);
-    console.log(typeStageData);
+    // console.log(location);
+    // console.log(typeStageData);
     return (
         <>
             <Row>
@@ -159,21 +161,26 @@ function EditModuleStage() {
                 ) : (
                     <>
                         {typeStageData.is_classic === true ? (
-                            <EditClassicLesson stage_id={stage_id} />
+                            <EditClassicLesson
+                                stage_id={stage_id}
+                                contentData={contentData}
+                            />
                         ) : (
                             <>
-                            {typeStageData.is_quiz === true ? (
-                                <EditQuizLesson stage_id={stage_id} />
-                            ) : (
-                                <>
-                                {typeStageData.is_video === true ? (
-                                    <EditVideoLesson stage_id={stage_id} />
+                                {typeStageData.is_quiz === true ? (
+                                    <EditQuizLesson stage_id={stage_id} />
                                 ) : (
-                                    <p></p>
+                                    <>
+                                        {typeStageData.is_video === true ? (
+                                            <EditVideoLesson
+                                                stage_id={stage_id}
+                                            />
+                                        ) : (
+                                            <p></p>
+                                        )}
+                                    </>
                                 )}
                             </>
-                            )}
-                        </>
                         )}
                     </>
                 )}

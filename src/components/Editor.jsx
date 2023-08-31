@@ -4,25 +4,27 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 class Editor extends Component {
     render() {
+        console.log(this.props.data)
         return (
             <div className="App">
-                <h2>Using CKEditor&nbsp;5 build in React</h2>
+                <h5>Начните заполнять этот блок для добавления основной информации об уроке.</h5>
                 <CKEditor
                     editor={ ClassicEditor }
-                    data="<p>Hello from CKEditor&nbsp;5!</p>"
+                    data={this.props.data}
                     onReady={ editor => {
                         // You can store the "editor" and use when it is needed.
                         console.log( 'Editor is ready to use!', editor );
                     } }
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        console.log( { event, editor, data } );
+                        this.props.onChange(data);
+                        // console.log( data);
                     } }
                     onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', editor );
+                        // console.log( 'Blur.', editor );
                     } }
                     onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', editor );
+                        // console.log( 'Focus.', editor );
                     } }
                 />
             </div>
