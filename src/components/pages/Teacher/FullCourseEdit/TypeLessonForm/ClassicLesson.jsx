@@ -12,14 +12,15 @@ import Editor from "../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingClassicLesson(props) {
     const [valueEditor, setValueEditor] = useState('')
-    const handleChange2 = (valueEditor) => {
+    const handleChange = (valueEditor) => {
         setValueEditor(valueEditor)
+        console.log(valueEditor)
     }
 
     let stage_id = props.stage_id
     const location = useLocation();
     const navigate = useNavigate();
- 
+
 
 
     const formSubmit = (e) => {
@@ -32,7 +33,7 @@ function AddingClassicLesson(props) {
                     stage: stage_id,
                     is_classic: true,
                     content: JSON.stringify(valueEditor)
-            
+
                 },
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
@@ -41,30 +42,30 @@ function AddingClassicLesson(props) {
                 navigate(-2);
             });
     };
-    
+
     return (
         <div>
             {location.state.type === "classicLesson" && (
-                
+
                 <Card>
                     <Card.Header>
                         Добавление классического урока
                     </Card.Header>
                     <Card.Body>
-                    <div className="App">
+                        <div className="App">
 
-<Editor onChange={handleChange2} />
+                            <Editor onChange={handleChange2} />
 
-    </div>
-                   
-                            <Button
-                                onClick={formSubmit}
-                                variant="primary"
-                                type="submit"
-                            >
-                                Submit
-                            </Button>
-                   
+                        </div>
+
+                        <Button
+                            onClick={formSubmit}
+                            variant="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+
                     </Card.Body>
                 </Card>
             )}
