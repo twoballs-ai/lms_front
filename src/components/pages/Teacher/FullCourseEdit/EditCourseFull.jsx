@@ -1,7 +1,7 @@
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
@@ -12,12 +12,14 @@ import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { apiUrl } from "../../../../shared/config";
-
+import { useLocation, useNavigate } from "react-router-dom";
 function EditCourseFullData() {
     // let { teacher_id } = useParams()
     let { course_id } = useParams();
+    const navigate = useNavigate();
     const [courseData, setCourseData] = useState([]);
     const [chapterData, setChapterData] = useState([]);
+
     // const [moduleData, setModuleData]= useState([])
     // const [skillListData, setSkillListData]= useState([])
     // const [teacherData, setTeacherData]= useState([])
@@ -31,50 +33,20 @@ function EditCourseFullData() {
                 )
                 .then((response) => {
                     setCourseData(response.data);
-
-                    // setTeacherData(response.data.teacher)
-                    // setChapterData(response.data.course_chapters)
-                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
-                    // setTechnologicalListData(response.data.technological_list)
-                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
-                    //   setAvgRatingStatus(response.data.course_rating)
-                    // }
-
-                    console.log(response.data);
                 });
         } catch (error) {
             console.log(error);
         }
         try {
             axios
-                .get(
-                    apiUrl + "course-chapter/" + course_id
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    // ,{headers: { "Content-Type": "multipart/form-data" }}
-                )
+                .get(apiUrl + "course-chapter/" + course_id)
                 .then((response) => {
                     // setCourseData(response.data)
                     setChapterData(response.data);
-
-                    // setTeacherData(response.data.teacher)
-                    // setChapterData(response.data.course_chapters)
-                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
-                    // setTechnologicalListData(response.data.technological_list)
-                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
-                    //   setAvgRatingStatus(response.data.course_rating)
-                    // }
-
-                    console.log(response.data);
                 });
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
-    const handleAddModuleClick = (chapter_id) => {
-        console.log(chapter_id);
-    };
-    //   console.log(moduleData)
-    //   console.log(chapterData)
+        } catch (error) {}
+    }, [navigate]);
+
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="lg">
@@ -121,15 +93,16 @@ function EditCourseFullData() {
                                     </h5>
                                     {tech.chapter_modules.map(
                                         (modules, index) => (
-                                            <ul class="nav flex-column">
-                                                <li class="nav-item ">
+                                            <ul className="nav flex-column">
+                                                <li className="nav-item ">
                                                     <Link
                                                         className="nav-link text-light"
                                                         to={
                                                             "/edit-course-full/edit-module/" +
                                                             course_id +
                                                             "/" +
-                                                            modules.id
+                                                            modules.id +
+                                                            "/stage/1" 
                                                         }
                                                     >
                                                         {modules.title}

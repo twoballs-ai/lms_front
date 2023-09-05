@@ -142,7 +142,7 @@ function App() {
         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
-        <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
+        {/* <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} /> */}
         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
       </Route>

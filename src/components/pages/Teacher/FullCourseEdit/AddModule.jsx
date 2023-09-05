@@ -6,10 +6,12 @@ import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import axios from "axios";
 import { apiUrl } from "../../../../shared/config";
-
+import { useLocation, useNavigate } from 'react-router-dom';
 function AddModule() {
     // const teacherId= localStorage.getItem('teacherId')
     const { chapter_id } = useParams();
+    let { course_id } = useParams();
+    const navigate = useNavigate();
     const [chapterAddData, setChapterAddData] = useState({
         chapter: chapter_id,
         title: "",
@@ -20,15 +22,15 @@ function AddModule() {
             ...chapterAddData,
             chapter: chapter_id,
         });
-    }, [chapter_id]);
+    }, [chapter_id,navigate]);
 
-    console.log(chapter_id);
+    // console.log(chapter_id);
     const handleChange = (event) => {
         setChapterAddData({
             ...chapterAddData,
             [event.target.name]: event.target.value,
         });
-        console.log(chapterAddData);
+        // console.log(chapterAddData);
     };
 
     const formSubmit = (e) => {
@@ -43,13 +45,35 @@ function AddModule() {
             )
             .then((response) => {
                 if (response.status === 200 || response.status === 201) {
-          
-                    window.location.reload();
+                    
+                    try {
+                        axios
+                            .post(
+                                apiUrl + "module-stage/" + response.data.id,
+                                {
+                                    module: response.data.id,
+                                    stage_numbers:1
+                                },
+                                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                                { headers: { "Content-Type": "multipart/form-data" } }
+                            )
+                            .then((response) => {
+                                if (response.status === 200 || response.status === 201) {
+                                  
+                                    navigate(
+                                        `/edit-course-full/edit-module/${course_id}/${response.data.module}/stage/1`
+                                    );
+                                }
+                            });
+                    } catch (error) {
+                        console.log(error);
+                    }
                 }
 
                 // window.location.href='/teacher-profile/my-courses'
             });
     };
+
     return (
         <>
             <Card>

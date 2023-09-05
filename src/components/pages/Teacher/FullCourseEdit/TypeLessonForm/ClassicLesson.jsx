@@ -17,7 +17,7 @@ function AddingClassicLesson(props) {
         console.log(valueEditor)
     }
 
-    let stage_id = props.stage_id
+    let stagePk = props.stagePk
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -28,9 +28,9 @@ function AddingClassicLesson(props) {
 
         axios
             .post(
-                typesApiUrl + "classic-lesson/" + stage_id,
+                typesApiUrl + "classic-lesson/" + stagePk,
                 {
-                    stage: stage_id,
+                    stage: stagePk,
                     is_classic: true,
                     content: JSON.stringify(valueEditor)
 
@@ -54,7 +54,7 @@ function AddingClassicLesson(props) {
                     <Card.Body>
                         <div className="App">
 
-                            <Editor onChange={handleChange2} />
+                            <Editor onChange={handleChange} />
 
                         </div>
 

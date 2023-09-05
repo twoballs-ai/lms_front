@@ -26,6 +26,7 @@ function EditModuleStage() {
     let { course_id } = useParams();
     let { stage_id } = useParams();
     const [moduleData, setModuleData] = useState([]);
+    const [stagePk, setStagePk] = useState("");
     const [contentData, setContentData] = useState([]);
     const [typeStageData, setTypeStageData] = useState([]);
     const location = useLocation();
@@ -41,17 +42,9 @@ function EditModuleStage() {
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
                 .then((response) => {
+                    console.log(response.data);
                     setModuleData(response.data);
 
-                    // setTeacherData(response.data.teacher)
-                    // setChapterData(response.data.course_chapters)
-                    // setRelatedCourseData(JSON.parse(response.data.related_courses))
-                    // setTechnologicalListData(response.data.technological_list)
-                    // if (response.data.course_rating !== '' && response.data.course_rating !== null) {
-                    //   setAvgRatingStatus(response.data.course_rating)
-                    // }
-
-                    // console.log(response.data);
                 });
         } catch (error) {
             console.log(error);
@@ -59,14 +52,14 @@ function EditModuleStage() {
         try {
             axios
                 .get(
-                    apiUrl + "module-stage-detail/" + stage_id
+                    apiUrl + `module-stage-detail/${module_id}/${stage_id}`
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
                 .then((response) => {
+                    console.log(response)
                     setTypeStageData(response.data.type);
-                    setContentData(response.data.type.content);
-
+                    setStagePk(response.data.id)
                 });
         } catch (error) {
             console.log(error);
@@ -78,18 +71,17 @@ function EditModuleStage() {
                 .post(
                     apiUrl + "module-stage/" + module_id,
                     {
-                        title: "8",
                         module: module_id,
-                        description: "sdsdsd",
+                        stage_numbers: moduleData.length + 1,
                     },
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     { headers: { "Content-Type": "multipart/form-data" } }
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        console.log(response.data.id);
+                        console.log(response.data);
                         navigate(
-                            `/edit-course-full/edit-module/${course_id}/${module_id}/stage/${response.data.id}`
+                            `/edit-course-full/edit-module/${course_id}/${module_id}/stage/${response.data.stage_numbers}`
                         );
                     }
                 });
@@ -98,7 +90,7 @@ function EditModuleStage() {
         }
     };
     // console.log(location);
-    // console.log(typeStageData);
+    console.log(typeStageData);
     return (
         <>
             <Row>
@@ -107,7 +99,7 @@ function EditModuleStage() {
                     <div className="ms-3">
                         {moduleData.map((tech, index) => (
                             <Link
-                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.id}`}
+                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.stage_numbers}`}
                             >
                                 <div className="dot ms-3">
                                     {tech.type !== null && (
@@ -127,17 +119,18 @@ function EditModuleStage() {
                                 </div>
                             </Link>
                         ))}
-
-                        <Link onClick={addStage}>
-                            <div className="dot ms-3">
-                                <div className="mt-1">
-                                    <FontAwesomeIcon
-                                        icon={faPlus}
-                                        transform="down-6 grow-3"
-                                    />
+                        {moduleData.length < 20 && (
+                            <Link onClick={addStage}>
+                                <div className="dot ms-3">
+                                    <div className="mt-1">
+                                        <FontAwesomeIcon
+                                            icon={faPlus}
+                                            transform="down-6 grow-3"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
+                            </Link>
+                        )}
                     </div>
                 </Col>
             </Row>
@@ -191,20 +184,20 @@ function EditModuleStage() {
                     <>
                         {location.state.type === "classicLesson" ? (
                             <>
-                                <AddingClassicLesson stage_id={stage_id} />
+                                <AddingClassicLesson stagePk={stagePk} />
                             </>
                         ) : (
                             <>
                                 {" "}
                                 {location.state.type === "quizLesson" ? (
-                                    <AddingQuizLesson stage_id={stage_id} />
+                                    <AddingQuizLesson stagePk={stagePk} />
                                 ) : (
                                     <>
                                         {" "}
                                         {location.state.type ===
                                         "videoLesson" ? (
                                             <AddingVideoLesson
-                                                stage_id={stage_id}
+                                            stagePk={stagePk}
                                             />
                                         ) : (
                                             <>
@@ -212,7 +205,7 @@ function EditModuleStage() {
                                                 {location.state.type ===
                                                 "codingLesson" ? (
                                                     <AddingCodeLesson
-                                                        stage_id={stage_id}
+                                                    stagePk={stagePk}
                                                     />
                                                 ) : (
                                                     <>

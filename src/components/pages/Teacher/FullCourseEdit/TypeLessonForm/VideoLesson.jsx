@@ -10,15 +10,13 @@ import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingVideoLesson(props) {
-    let stage_id = props.stage_id
+    let stagePk = props.stagePk
     const location = useLocation();
     const navigate = useNavigate();
     const [videoLessonData, setVideoLessonData] = useState({
-        stage: stage_id,
+        stage: stagePk,
         is_video: true,
         video_lesson: "",
-        description: ""
- 
     });
 
     console.log(location.state);
@@ -36,7 +34,7 @@ function AddingVideoLesson(props) {
 
         axios
             .post(
-                typesApiUrl + "video-lesson/" + stage_id,
+                typesApiUrl + "video-lesson/" + stagePk,
                 videoLessonData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
@@ -68,28 +66,13 @@ function AddingVideoLesson(props) {
                                     placeholder="Добавление ссылки"
                                     onChange={handleChange}
                                 />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formBasicCategory"
-                            >
-                                <Form.Label>
-                                    Напишите сюда описание видеоурока
-                                </Form.Label>
-                                <Form.Control
-                                    name="description"
-                                    type="text"
-                                    placeholder="описание видеоурока"
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-   
+                            </Form.Group>   
                             <Button
                                 onClick={formSubmit}
                                 variant="primary"
                                 type="submit"
                             >
-                                Submit
+                                Добавить видеоурок
                             </Button>
                         </Form>
                     </Card.Body>
