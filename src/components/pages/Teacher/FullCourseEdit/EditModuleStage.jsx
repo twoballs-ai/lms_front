@@ -57,7 +57,7 @@ function EditModuleStage() {
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
                 .then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     setTypeStageData(response.data.type);
                     setStagePk(response.data.id)
                 });
@@ -89,8 +89,8 @@ function EditModuleStage() {
             console.log(error);
         }
     };
-    console.log(location);
-    console.log(typeStageData);
+    // console.log(location);
+    // console.log(typeStageData);
     return (
         <>
             <Row>

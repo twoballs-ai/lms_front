@@ -8,15 +8,15 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
+import Editor from "../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingQuizLesson(props) {
-    let stage_id = props.stage_id
+    let stagePk = props.stagePk
     const location = useLocation();
     const navigate = useNavigate();
     const [quizLessonData, setQuizLessonData] = useState({
-        stage: stage_id,
+        stage: "",
         is_quiz: true,
-        questions: "",
         answer1: "",
         answer2: "",
         answer3: "",
@@ -24,7 +24,11 @@ function AddingQuizLesson(props) {
         true_answer: "",
     });
 
-    console.log(location.state);
+    const [valueEditor, setValueEditor] = useState('')
+    const handleChangeContent = (valueEditor) => {
+        setValueEditor(valueEditor)
+        console.log(valueEditor)
+    }
  
     const handleChange = (event) => {
         setQuizLessonData({
@@ -36,11 +40,19 @@ function AddingQuizLesson(props) {
 
     const formSubmit = (e) => {
         e.preventDefault();
-
+       const _formData = new FormData();
+        _formData.append("stage", stagePk);
+        _formData.append("content", JSON.stringify(valueEditor));
+        _formData.append("is_quiz", quizLessonData.is_quiz);
+        _formData.append("answer1", quizLessonData.answer1);
+        _formData.append("answer2", quizLessonData.answer2);
+        _formData.append("answer3", quizLessonData.answer3);
+        _formData.append("answer4", quizLessonData.answer4);
+        _formData.append("true_answer", quizLessonData.true_answer);
         axios
             .post(
-                typesApiUrl + "quiz-lesson/" + stage_id,
-                quizLessonData,
+                typesApiUrl + "quiz-lesson/" + stagePk,
+                _formData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
@@ -64,12 +76,7 @@ function AddingQuizLesson(props) {
                                 <Form.Label>
                                     Напишите сюда ваш вопрос
                                 </Form.Label>
-                                <Form.Control
-                                    name="questions"
-                                    type="text"
-                                    placeholder="Ваш вопрос"
-                                    onChange={handleChange}
-                                />
+                                <Editor onChange={handleChangeContent} />
                             </Form.Group>
                             <Form.Group
                                 className="mb-3"
