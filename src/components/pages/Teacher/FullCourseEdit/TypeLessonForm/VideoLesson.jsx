@@ -11,16 +11,15 @@ import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingVideoLesson(props) {
     let stagePk = props.stagePk
+
     const location = useLocation();
     const navigate = useNavigate();
     const [videoLessonData, setVideoLessonData] = useState({
-        stage: stagePk,
         is_video: true,
         video_lesson: "",
+        stage: "",
     });
 
-    console.log(location.state);
- 
     const handleChange = (event) => {
         setVideoLessonData({
             ...videoLessonData,
@@ -31,11 +30,14 @@ function AddingVideoLesson(props) {
 
     const formSubmit = (e) => {
         e.preventDefault();
-
+        const _formData = new FormData();
+        _formData.append("stage", stagePk);
+        _formData.append("is_video", videoLessonData.is_video);
+        _formData.append("video_lesson", videoLessonData.video_lesson);
         axios
             .post(
                 typesApiUrl + "video-lesson/" + stagePk,
-                videoLessonData,
+                _formData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )

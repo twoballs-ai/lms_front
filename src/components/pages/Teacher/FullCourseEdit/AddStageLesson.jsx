@@ -14,7 +14,7 @@ function AddStageLesson() {
     let { module_id } = useParams();
     let { course_id } = useParams();
     let { stage_id } = useParams();
-    const [stageData, setStageData] = useState([]);
+    // const [stageData, setStageData] = useState([]);
     const navigate = useNavigate();
     const addClassicLesson = () => {
         console.log('hi')  
@@ -32,7 +32,7 @@ function AddStageLesson() {
         console.log('hi')  
         navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'codingLesson' } });
     };
-    console.log(stageData);
+    // console.log(stageData);
     return (
         <>
             <p>Добавление нового этапа</p>

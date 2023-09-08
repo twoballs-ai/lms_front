@@ -89,7 +89,7 @@ function EditModuleStage() {
             console.log(error);
         }
     };
-    // console.log(location);
+    console.log(location);
     console.log(typeStageData);
     return (
         <>
@@ -138,9 +138,9 @@ function EditModuleStage() {
                 <Col>
                     Вы находитесь на странице редактирования этапа обучения
                 </Col>
-                {typeStageData === null ? (
+                {location.state === null ? (
                     <>
-                        <p>Вы еще не заполнили ваш урок. </p>
+                                       <p>Вы еще не заполнили ваш урок. </p>
                         <div className="mb-2">
                             <Button
                                 as={Link}
@@ -149,37 +149,7 @@ function EditModuleStage() {
                             >
                                 добавить урок
                             </Button>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        {typeStageData.is_classic === true ? (
-                            <EditClassicLesson
-                                stage_id={stage_id}
-                                contentData={contentData}
-                            />
-                        ) : (
-                            <>
-                                {typeStageData.is_quiz === true ? (
-                                    <EditQuizLesson stage_id={stage_id} />
-                                ) : (
-                                    <>
-                                        {typeStageData.is_video === true ? (
-                                            <EditVideoLesson
-                                                stage_id={stage_id}
-                                            />
-                                        ) : (
-                                            <p></p>
-                                        )}
-                                    </>
-                                )}
-                            </>
-                        )}
-                    </>
-                )}
-                {/* {AddingLesson()} */}
-                {location.state === null ? (
-                    <></>
+                        </div></>
                 ) : (
                     <>
                         {location.state.type === "classicLesson" ? (
@@ -224,9 +194,37 @@ function EditModuleStage() {
                         )}
                     </>
                 )}
-
-                {/* {location.state != null && (<>{location.state.type === "classicLesson" &&(<p>Для добавлен на кнопку добавить урок </p>)}</>)} */}
-            </Row>
+                {typeStageData === null ? (
+                    <>
+      
+                    </>
+                ) : (
+                    <>
+                        {typeStageData.is_classic === true ? (
+                            <EditClassicLesson
+                                stage_id={stage_id}
+                                contentData={contentData}
+                            />
+                        ) : (
+                            <>
+                                {typeStageData.is_quiz === true ? (
+                                    <EditQuizLesson stage_id={stage_id} />
+                                ) : (
+                                    <>
+                                        {typeStageData.is_video === true ? (
+                                            <EditVideoLesson
+                                                stage_id={stage_id}
+                                            />
+                                        ) : (
+                                            <p></p>
+                                        )}
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </>
+                )}
+                  </Row>
         </>
     );
 }
