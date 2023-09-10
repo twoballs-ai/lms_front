@@ -65,7 +65,7 @@ function AddingQuizLesson(props) {
             {location.state.type === "quizLesson" && (
                 <Card>
                     <Card.Header>
-                        Добавление квиза
+                    Вы находитесь на этапе добавления квиза(теста)
                     </Card.Header>
                     <Card.Body>
                         <Form>
