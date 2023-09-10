@@ -10,18 +10,27 @@ import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import Editor from "../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
+import CodeEditor from "../../../../CodeEditor";
 function AddingCodeLesson(props) {
-    let stage_id = props.stage_id
+    let stagePk = props.stagePk
     const location = useLocation();
     const navigate = useNavigate();
     const [programmingLessonData, setProgrammingLessonData] = useState({
-        stage: stage_id,
+        stage: stagePk,
         is_video: true,
         video_lesson: "",
         description: ""
- 
     });
-
+    const [valueEditor, setValueEditor] = useState('')
+    const handleChangeContent = (valueEditor) => {
+        setValueEditor(valueEditor)
+        console.log(valueEditor)
+    }
+    const [valueCodeEditor, setValueCodeEditor] = useState('')
+    const handleChangeCodeContent = (valueEditor) => {
+        setValueCodeEditor(valueCodeEditor)
+        console.log(valueCodeEditor)
+    }
     console.log(location.state);
  
     const handleChange = (event) => {
@@ -47,6 +56,7 @@ function AddingCodeLesson(props) {
                 navigate(-2);
             });
     };
+    console.log(props)
     return (
         <div>
             {location.state.type === "codingLesson" && (
@@ -55,9 +65,11 @@ function AddingCodeLesson(props) {
                         Добавление урока на программирование
                     </Card.Header>
                     <Card.Body>
-                    <Editor  />
+                    <Editor  onChange={handleChangeContent}/>
                         <Form>
-                    
+                    <div className="mt-5">
+                        <CodeEditor onChange={handleChangeCodeContent}/>
+                    </div>
    
                             <Button
                                 onClick={formSubmit}

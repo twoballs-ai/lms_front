@@ -91,7 +91,7 @@ function AddStageLesson() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col>
+                {/* <Col>
                     <Card border="info" style={{ width: "18rem" }}>
                         <Card.Body>
                             <Card.Title>
@@ -110,7 +110,7 @@ function AddStageLesson() {
                             
                         </Card.Body>
                     </Card>
-                </Col>
+                </Col> */}
             </Row>
         </>
     );

@@ -44,7 +44,6 @@ function EditModuleStage() {
                 .then((response) => {
                     console.log(response.data);
                     setModuleData(response.data);
-
                 });
         } catch (error) {
             console.log(error);
@@ -57,9 +56,9 @@ function EditModuleStage() {
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
                 .then((response) => {
-                    // console.log(response)
+                    console.log(response);
                     setTypeStageData(response.data.type);
-                    setStagePk(response.data.id)
+                    setStagePk(response.data.id);
                 });
         } catch (error) {
             console.log(error);
@@ -138,9 +137,9 @@ function EditModuleStage() {
                 <Col>
                     Вы находитесь на странице редактирования этапа обучения
                 </Col>
-                {location.state === null ? (
+                {location.state === null && typeStageData === null && (
                     <>
-                                       <p>Вы еще не заполнили ваш урок. </p>
+                        <p>Вы еще не заполнили ваш урок. </p>
                         <div className="mb-2">
                             <Button
                                 as={Link}
@@ -149,7 +148,24 @@ function EditModuleStage() {
                             >
                                 добавить урок
                             </Button>
-                        </div></>
+                        </div>
+                    </>
+                )}
+
+                {location.state === null ? (
+                    <>
+                        {/* <p>Вы еще не заполнили ваш урок. </p>
+                        <div className="mb-2">
+                            <Button
+                                as={Link}
+                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}/new`}
+                                variant="outline-success"
+                            >
+                                добавить урок
+                            </Button>
+                        </div>
+                         */}
+                    </>
                 ) : (
                     <>
                         {location.state.type === "classicLesson" ? (
@@ -167,11 +183,11 @@ function EditModuleStage() {
                                         {location.state.type ===
                                         "videoLesson" ? (
                                             <AddingVideoLesson
-                                            stagePk={stagePk}
+                                                stagePk={stagePk}
                                             />
                                         ) : (
                                             <>
-                                                {" "}
+                                                {/* {" "}
                                                 {location.state.type ===
                                                 "codingLesson" ? (
                                                     <AddingCodeLesson
@@ -185,7 +201,7 @@ function EditModuleStage() {
                                                             урок
                                                         </p>
                                                     </>
-                                                )}
+                                                )} */}
                                             </>
                                         )}
                                     </>
@@ -195,15 +211,13 @@ function EditModuleStage() {
                     </>
                 )}
                 {typeStageData === null ? (
-                    <>
-      
-                    </>
+                    <></>
                 ) : (
                     <>
                         {typeStageData.is_classic === true ? (
                             <EditClassicLesson
                                 stage_id={stage_id}
-                                contentData={contentData}
+                                contentData={typeStageData.content}
                             />
                         ) : (
                             <>
@@ -224,7 +238,7 @@ function EditModuleStage() {
                         )}
                     </>
                 )}
-                  </Row>
+            </Row>
         </>
     );
 }
