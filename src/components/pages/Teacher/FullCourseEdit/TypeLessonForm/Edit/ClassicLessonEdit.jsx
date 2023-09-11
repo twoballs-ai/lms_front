@@ -17,11 +17,11 @@ function EditClassicLesson(props) {
     }
 
     let stage_id = props.stage_id
-    let contentData = props.contentData
+    let contentData = props.contentData.content
     const location = useLocation();
     const navigate = useNavigate();
  
-    console.log(contentData)
+    // console.log(props)
 
     const formSubmit = (e) => {
         e.preventDefault();
@@ -48,7 +48,7 @@ function EditClassicLesson(props) {
                 
                 <Card>
                     <Card.Header>
-                        Добавление классического урока
+                    Вы находитесь на этапе редактирования классического урока с видео, фото, текстом
                     </Card.Header>
                     <Card.Body>
                     <div className="App">

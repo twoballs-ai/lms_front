@@ -51,7 +51,7 @@ function AddingVideoLesson(props) {
             {location.state.type === "videoLesson" && (
                 <Card>
                     <Card.Header>
-                        Добавление видео урока
+                    Вы находитесь на этапе добавления видеоурока
                     </Card.Header>
                     <Card.Body>
                         <Form>

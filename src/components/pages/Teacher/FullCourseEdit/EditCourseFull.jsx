@@ -46,7 +46,7 @@ function EditCourseFullData() {
                 });
         } catch (error) {}
     }, [navigate]);
-
+    // console.log(chapterData)
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="lg">
@@ -86,46 +86,53 @@ function EditCourseFullData() {
                             <p className="text-light">{courseData.title}</p>
                             <hr className="text-light me-2" />
                             {/* пофиксить: */}
-                            {chapterData.map((tech, index) => (
-                                <>
-                                    <h5 className="text-light h6">
-                                        {tech.title}
-                                    </h5>
-                                    {tech.chapter_modules.map(
-                                        (modules, index) => (
-                                            <ul className="nav flex-column">
-                                                <li className="nav-item ">
-                                                    <Link
-                                                        className="nav-link text-light"
-                                                        to={
-                                                            "/edit-course-full/edit-module/" +
-                                                            course_id +
-                                                            "/" +
-                                                            modules.id +
-                                                            "/stage/1" 
-                                                        }
-                                                    >
-                                                        {modules.title}
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        )
-                                    )}
-                                    <Button
-                                        className="ms-5"
-                                        as={Link}
-                                        to={
-                                            "/edit-course-full/add-module/" +
-                                            course_id +
-                                            "/" +
-                                            tech.id
-                                        }
-                                        variant="success"
-                                    >
-                                        + модуль
-                                    </Button>{" "}
-                                </>
-                            ))}
+                            {chapterData.map((tech) => {
+                                console.log(tech.id);
+                                return (
+                                    <>
+                                        <div key={tech.id}>
+                                            <h5 className="text-light h6">
+                                                {tech.title}
+                                            </h5>
+                                            {tech.chapter_modules.map(
+                                                (modules, index) => {
+                                                    console.log(modules.id)
+                                                    return(      <ul className="nav flex-column">
+                                                    <li className="nav-item \" key={modules.id}>
+                                                        <Link
+                                                            className="nav-link text-light"
+                                                            to={
+                                                                "/edit-course-full/edit-module/" +
+                                                                course_id +
+                                                                "/" +
+                                                                modules.id +
+                                                                "/stage/1"
+                                                            }
+                                                        >
+                                                            {modules.title}
+                                                        </Link>
+                                                    </li>
+                                                </ul>)
+                                              
+                                                }
+                                            )}
+                                            <Button
+                                                className="ms-5"
+                                                as={Link}
+                                                to={
+                                                    "/edit-course-full/add-module/" +
+                                                    course_id +
+                                                    "/" +
+                                                    tech.id
+                                                }
+                                                variant="success"
+                                            >
+                                                + модуль
+                                            </Button>{" "}
+                                        </div>
+                                    </>
+                                );
+                            })}
                             <hr />
                             <Button
                                 as={Link}

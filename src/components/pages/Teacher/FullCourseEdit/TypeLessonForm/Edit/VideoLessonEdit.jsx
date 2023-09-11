@@ -8,9 +8,14 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
+import ReactPlayer from 'react-player'
+
+
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
 function EditVideoLesson(props) {
     let stage_id = props.stage_id
+    let contentData = props.contentData.video_lesson
+
     const location = useLocation();
     const navigate = useNavigate();
     const [videoLessonData, setVideoLessonData] = useState({
@@ -22,7 +27,7 @@ function EditVideoLesson(props) {
     });
 
     console.log(location.state);
- 
+
     const handleChange = (event) => {
         setVideoLessonData({
             ...videoLessonData,
@@ -51,7 +56,7 @@ function EditVideoLesson(props) {
         
                 <Card>
                     <Card.Header>
-                        Добавление видео урока
+                    Вы находитесь на этапе редактирования видеоурока
                     </Card.Header>
                     <Card.Body>
                         <Form>
@@ -60,14 +65,9 @@ function EditVideoLesson(props) {
                                 controlId="formBasicCategory"
                             >
                                 <Form.Label>
-                                    Добавление ссылки на видео
+                                    Ваше ранее загруженное для этого урока видео.
                                 </Form.Label>
-                                <Form.Control
-                                    name="video_lesson"
-                                    type="text"
-                                    placeholder="Добавление ссылки"
-                                    onChange={handleChange}
-                                />
+                                <ReactPlayer url={contentData} controls ="true"/>
                             </Form.Group>
                             <Form.Group
                                 className="mb-3"

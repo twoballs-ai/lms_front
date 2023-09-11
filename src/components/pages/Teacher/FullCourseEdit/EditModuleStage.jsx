@@ -12,6 +12,10 @@ import axios from "axios";
 import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faGhost } from "@fortawesome/free-solid-svg-icons";
+import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
+import { faFilm } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { apiUrl, typesApiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
@@ -97,26 +101,31 @@ function EditModuleStage() {
                 <Col>
                     <div className="ms-3">
                         {moduleData.map((tech, index) => (
-                            <Link
+                           <>
+                           {/* <p>{index}</p> */}
+                           <Link 
                                 to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.stage_numbers}`}
                             >
                                 <div className="dot ms-3">
                                     {tech.type !== null && (
                                         <>
                                             {tech.type.is_classic === true && (
-                                                <p>classic</p>
+                                                <div className="mt-1"><FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3"/></div>
                                             )}
                                             {tech.type.is_quiz === true && (
-                                                <p>quiz</p>
+                                                <div className="mt-1"><FontAwesomeIcon icon={faSquareCheck}  transform="down-6 grow-3"/></div>
+                                            
                                             )}
                                             {tech.type.is_video === true && (
-                                                <p>video</p>
+                                                <div className="mt-1"><FontAwesomeIcon icon={faFilm} transform="down-6 grow-3"/></div>
                                             )}
                                         </>
                                     )}
-                                    {tech.type === null && <p>пустой урок</p>}
+                                    {tech.type === null && <div className="mt-1"><FontAwesomeIcon icon={faGhost} transform="down-6 grow-3"/></div>
+                                               }
                                 </div>
                             </Link>
+                           </> 
                         ))}
                         {moduleData.length < 20 && (
                             <Link onClick={addStage}>
@@ -134,9 +143,7 @@ function EditModuleStage() {
                 </Col>
             </Row>
             <Row>
-                <Col>
-                    Вы находитесь на странице редактирования этапа обучения
-                </Col>
+
                 {location.state === null && typeStageData === null && (
                     <>
                         <p>Вы еще не заполнили ваш урок. </p>
@@ -154,6 +161,7 @@ function EditModuleStage() {
 
                 {location.state === null ? (
                     <>
+           
                         {/* <p>Вы еще не заполнили ваш урок. </p>
                         <div className="mb-2">
                             <Button
@@ -217,17 +225,21 @@ function EditModuleStage() {
                         {typeStageData.is_classic === true ? (
                             <EditClassicLesson
                                 stage_id={stage_id}
-                                contentData={typeStageData.content}
+                                contentData={typeStageData}
                             />
                         ) : (
                             <>
                                 {typeStageData.is_quiz === true ? (
-                                    <EditQuizLesson stage_id={stage_id} />
+                                    <EditQuizLesson 
+                                    stage_id={stage_id}
+                                    contentData={typeStageData}
+                                    />
                                 ) : (
                                     <>
                                         {typeStageData.is_video === true ? (
                                             <EditVideoLesson
                                                 stage_id={stage_id}
+                                                contentData={typeStageData}
                                             />
                                         ) : (
                                             <p></p>

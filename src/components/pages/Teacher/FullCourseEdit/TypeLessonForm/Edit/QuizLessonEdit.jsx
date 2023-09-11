@@ -7,10 +7,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
+import Editor from "../../../../../Editor";
 import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
 function EditQuizLesson(props) {
     let stage_id = props.stage_id
+    let contentData = props.contentData.content
     const location = useLocation();
     const navigate = useNavigate();
     const [quizLessonData, setQuizLessonData] = useState({
@@ -24,7 +26,12 @@ function EditQuizLesson(props) {
         true_answer: "",
     });
 
-    console.log(location.state);
+    const [valueEditor, setValueEditor] = useState('')
+    const handleChangeContent = (valueEditor) => {
+        setValueEditor(valueEditor)
+        console.log(valueEditor)
+    }
+  console.log(props)
  
     const handleChange = (event) => {
         setQuizLessonData({
@@ -51,9 +58,9 @@ function EditQuizLesson(props) {
     return (
         <div>
           
-                <Card>
+          <Card>
                     <Card.Header>
-                        Добавление квиза
+                    Вы находитесь на этапе редактирования квиза(теста)
                     </Card.Header>
                     <Card.Body>
                         <Form>
@@ -64,12 +71,7 @@ function EditQuizLesson(props) {
                                 <Form.Label>
                                     Напишите сюда ваш вопрос
                                 </Form.Label>
-                                <Form.Control
-                                    name="questions"
-                                    type="text"
-                                    placeholder="Ваш вопрос"
-                                    onChange={handleChange}
-                                />
+                                <Editor onChange={handleChangeContent} data ={contentData} />
                             </Form.Group>
                             <Form.Group
                                 className="mb-3"

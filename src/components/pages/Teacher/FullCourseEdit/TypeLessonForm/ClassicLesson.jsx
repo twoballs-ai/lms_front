@@ -49,7 +49,7 @@ function AddingClassicLesson(props) {
 
                 <Card>
                     <Card.Header>
-                        Добавление классического урока
+                        Вы находитесь на этапе добавления классического урока с видео, фото, текстом
                     </Card.Header>
                     <Card.Body>
                         <div className="App">
