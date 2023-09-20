@@ -11,7 +11,7 @@ import Editor from "../../../../../Editor";
 import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
 function EditQuizLesson(props) {
-    let stage_id = props.stage_id
+    let stage_id = props.contentData.stage
     let contentData = props.contentData.content
     const location = useLocation();
     const navigate = useNavigate();
@@ -45,8 +45,8 @@ function EditQuizLesson(props) {
         e.preventDefault();
 
         axios
-            .post(
-                typesApiUrl + "quiz-lesson/" + stage_id,
+            .put(
+                typesApiUrl + "quiz-lesson-detail/" + props.contentData.id,
                 quizLessonData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
@@ -83,6 +83,7 @@ function EditQuizLesson(props) {
                                 <Form.Control
                                     name="answer1"
                                     type="text"
+                                    defaultValue={props.contentData.answer1}
                                     placeholder="вариант1"
                                     onChange={handleChange}
                                 />
@@ -97,6 +98,7 @@ function EditQuizLesson(props) {
                                 <Form.Control
                                     name="answer2"
                                     type="text"
+                                    defaultValue={props.contentData.answer2}
                                     placeholder="вариант2"
                                     onChange={handleChange}
                                 />
@@ -111,6 +113,7 @@ function EditQuizLesson(props) {
                                 <Form.Control
                                     name="answer3"
                                     type="text"
+                                    defaultValue={props.contentData.answer3}
                                     placeholder="вариант3"
                                     onChange={handleChange}
                                 />
@@ -125,6 +128,7 @@ function EditQuizLesson(props) {
                                 <Form.Control
                                     name="answer4"
                                     type="text"
+                                    defaultValue={props.contentData.answer4}
                                     placeholder="вариант4"
                                     onChange={handleChange}
                                 />
@@ -139,6 +143,7 @@ function EditQuizLesson(props) {
                                 <Form.Control
                                     name="true_answer"
                                     type="text"
+                                    defaultValue={props.contentData.true_answer}
                                     placeholder="правильный ответ"
                                     onChange={handleChange}
                                 />

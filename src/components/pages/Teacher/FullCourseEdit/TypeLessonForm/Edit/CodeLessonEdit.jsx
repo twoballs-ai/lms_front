@@ -43,7 +43,7 @@ function EditCodeLesson(props) {
             )
             .then((response) => {
                 console.log(response.status)
-                navigate(-2);
+                window.location.reload();
             });
     };
     return (

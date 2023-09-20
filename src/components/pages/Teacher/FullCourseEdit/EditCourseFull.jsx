@@ -87,33 +87,37 @@ function EditCourseFullData() {
                             <hr className="text-light me-2" />
                             {/* пофиксить: */}
                             {chapterData.map((tech) => {
-                                console.log(tech.id);
                                 return (
-                                    <>
+                                    
                                         <div key={tech.id}>
                                             <h5 className="text-light h6">
                                                 {tech.title}
                                             </h5>
                                             {tech.chapter_modules.map(
                                                 (modules, index) => {
-                                                    console.log(modules.id)
-                                                    return(      <ul className="nav flex-column">
-                                                    <li className="nav-item \" key={modules.id}>
-                                                        <Link
-                                                            className="nav-link text-light"
-                                                            to={
-                                                                "/edit-course-full/edit-module/" +
-                                                                course_id +
-                                                                "/" +
-                                                                modules.id +
-                                                                "/stage/1"
-                                                            }
-                                                        >
-                                                            {modules.title}
-                                                        </Link>
-                                                    </li>
-                                                </ul>)
-                                              
+                                                    return (
+                                                        <ul className="nav flex-column" key={modules.id}>
+                                                            <li
+                                                                className="nav-item \"
+                                                                
+                                                            >
+                                                                <Link
+                                                                    className="nav-link text-light"
+                                                                    to={
+                                                                        "/edit-course-full/edit-module/" +
+                                                                        course_id +
+                                                                        "/" +
+                                                                        modules.id +
+                                                                        "/stage/1"
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        modules.title
+                                                                    }
+                                                                </Link>
+                                                            </li>
+                                                        </ul>
+                                                    );
                                                 }
                                             )}
                                             <Button
@@ -130,7 +134,7 @@ function EditCourseFullData() {
                                                 + модуль
                                             </Button>{" "}
                                         </div>
-                                    </>
+                                    
                                 );
                             })}
                             <hr />

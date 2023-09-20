@@ -16,19 +16,19 @@ function EditClassicLesson(props) {
         setValueEditor(valueEditor)
     }
 
-    let stage_id = props.stage_id
+    let stage_id = props.contentData.stage
     let contentData = props.contentData.content
     const location = useLocation();
     const navigate = useNavigate();
  
-    // console.log(props)
+    console.log(props)
 
     const formSubmit = (e) => {
         e.preventDefault();
 
         axios
             .put(
-                typesApiUrl + "classic-lesson/" + stage_id,
+                typesApiUrl + "classic-lesson-detail/" + props.contentData.id,
                 {
                     stage: stage_id,
                     is_classic: true,
@@ -39,7 +39,8 @@ function EditClassicLesson(props) {
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
             .then((response) => {
-                navigate(-2);
+                // navigate(-2);
+                window.location.reload();
             });
     };
     return (

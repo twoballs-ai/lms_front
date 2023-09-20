@@ -101,31 +101,55 @@ function EditModuleStage() {
                 <Col>
                     <div className="ms-3">
                         {moduleData.map((tech, index) => (
-                           <>
-                           {/* <p>{index}</p> */}
-                           <Link 
-                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.stage_numbers}`}
-                            >
-                                <div className="dot ms-3">
-                                    {tech.type !== null && (
-                                        <>
-                                            {tech.type.is_classic === true && (
-                                                <div className="mt-1"><FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3"/></div>
-                                            )}
-                                            {tech.type.is_quiz === true && (
-                                                <div className="mt-1"><FontAwesomeIcon icon={faSquareCheck}  transform="down-6 grow-3"/></div>
-                                            
-                                            )}
-                                            {tech.type.is_video === true && (
-                                                <div className="mt-1"><FontAwesomeIcon icon={faFilm} transform="down-6 grow-3"/></div>
-                                            )}
-                                        </>
-                                    )}
-                                    {tech.type === null && <div className="mt-1"><FontAwesomeIcon icon={faGhost} transform="down-6 grow-3"/></div>
-                                               }
-                                </div>
-                            </Link>
-                           </> 
+                            
+                                
+                                <Link
+                                    to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${tech.stage_numbers}`} key={tech.id}
+                                >
+                                    <div className="dot ms-3">
+                                        {tech.type !== null && (
+                                            <>
+                                                {tech.type.is_classic ===
+                                                    true && (
+                                                    <div className="mt-1">
+                                                        <FontAwesomeIcon
+                                                            icon={
+                                                                faChalkboardUser
+                                                            }
+                                                            transform="down-6 grow-3"
+                                                        />
+                                                    </div>
+                                                )}
+                                                {tech.type.is_quiz === true && (
+                                                    <div className="mt-1">
+                                                        <FontAwesomeIcon
+                                                            icon={faSquareCheck}
+                                                            transform="down-6 grow-3"
+                                                        />
+                                                    </div>
+                                                )}
+                                                {tech.type.is_video ===
+                                                    true && (
+                                                    <div className="mt-1">
+                                                        <FontAwesomeIcon
+                                                            icon={faFilm}
+                                                            transform="down-6 grow-3"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
+                                        {tech.type === null && (
+                                            <div className="mt-1">
+                                                <FontAwesomeIcon
+                                                    icon={faGhost}
+                                                    transform="down-6 grow-3"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </Link>
+                            
                         ))}
                         {moduleData.length < 20 && (
                             <Link onClick={addStage}>
@@ -143,7 +167,6 @@ function EditModuleStage() {
                 </Col>
             </Row>
             <Row>
-
                 {location.state === null && typeStageData === null && (
                     <>
                         <p>Вы еще не заполнили ваш урок. </p>
@@ -161,7 +184,6 @@ function EditModuleStage() {
 
                 {location.state === null ? (
                     <>
-           
                         {/* <p>Вы еще не заполнили ваш урок. </p>
                         <div className="mb-2">
                             <Button
@@ -230,9 +252,9 @@ function EditModuleStage() {
                         ) : (
                             <>
                                 {typeStageData.is_quiz === true ? (
-                                    <EditQuizLesson 
-                                    stage_id={stage_id}
-                                    contentData={typeStageData}
+                                    <EditQuizLesson
+                                        stage_id={stage_id}
+                                        contentData={typeStageData}
                                     />
                                 ) : (
                                     <>
