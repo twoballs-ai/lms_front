@@ -20,14 +20,11 @@ function CourseDetail() {
     const [relatedCourseData, setRelatedCourseData] = useState([]);
     const [technologicalListData, setTechnologicalListData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
-    const [chapterData, setChapterData] = useState([]);
     const [userLoggedStatus, setUserLoggedStatus] = useState("");
     const [enrollStatus, setEnrollStatus] = useState("");
     const [courseViews, setCourseViews] = useState(0);
     const [ratingStatus, setRatingStatus] = useState("");
     const [avgRatingStatus, setAvgRatingStatus] = useState("");
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     const handleCloseRate = () => setShowRate(false);
     const handleShowRate = () => setShowRate(true);
     const [favoriteStatus, setFavoriteStatus] = useState("");
@@ -48,7 +45,6 @@ function CourseDetail() {
                 .then((response) => {
                     setCourseData(response.data);
                     setTeacherData(response.data.teacher);
-                    setChapterData(response.data.course_chapters);
                     setRelatedCourseData(
                         JSON.parse(response.data.related_courses)
                     );
@@ -510,45 +506,6 @@ function CourseDetail() {
                         )}
                     </Col>
                 </Row>
-                {enrollStatus === "success" &&
-                    userLoggedStatus === "success" && (
-                        <Card className="m-2">
-                            <Card.Header>главы курса</Card.Header>
-                            <ListGroup variant="flush">
-                                {chapterData.map((chapter, index) => (
-                                    <ListGroup.Item key={index}>
-                                        Глава {index + 1}: {chapter.title}{" "}
-                                        <Button
-                                            variant="primary"
-                                            onClick={handleShow}
-                                        >
-                                            посомтреть видео
-                                        </Button>
-                                        <Modal
-                                            size="xl"
-                                            show={show}
-                                            onHide={handleClose}
-                                        >
-                                            <Modal.Header closeButton>
-                                                <Modal.Title>
-                                                    Modal heading
-                                                </Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <iframe
-                                                    width="1024"
-                                                    height="768"
-                                                    src={chapter.video}
-                                                    title={chapter.title}
-                                                    allowFullScreen
-                                                ></iframe>
-                                            </Modal.Body>
-                                        </Modal>
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        </Card>
-                    )}
                 <Row className="mt-5">
                     <hr />
                     <h3>Схожие курсы:</h3>

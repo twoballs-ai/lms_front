@@ -63,11 +63,12 @@ import AddModule from './components/pages/Teacher/FullCourseEdit/AddModule';
 // import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
 import EditModuleStage from './components/pages/Teacher/FullCourseEdit/EditModuleStage';
 import AddStageLesson from './components/pages/Teacher/FullCourseEdit/AddStageLesson';
+import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
 
 function App() {
   return (
     <Routes>
-      <Route path='course-study/:course_id' element={<CourseStudy />} />
+      {/* <Route path='course-study/:course_id' element={<CourseStudy />} /> */}
       
       <Route path='/' element={<Layout />} >
         <Route index element={<Home />} />
@@ -137,7 +138,7 @@ function App() {
  
         {/* <Route path='cardhouse/:id/' element={<CardhousePage />} /> */}
       </Route>
-
+{/* редактирование курсов */}
       <Route path='edit-course-full/' element={<EditCourseFullData/>} >
         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
@@ -146,7 +147,11 @@ function App() {
         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
       </Route>
-    </Routes>
+  {/* прохождение курсов  */}
+  <Route path='course-study/' element={<CourseStudy/>} >
+        <Route path='course/:course_id/:module_id/stage/:stage_id' index element={<StudentCourseLearn />} />
+      </Route>
+    </Routes>  
   );
 }
 

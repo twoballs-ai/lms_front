@@ -60,10 +60,11 @@ function AddingQuizLesson(props) {
                 navigate(-2);
             });
     };
+    
     return (
         <div>
             {location.state.type === "quizLesson" && (
-                <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                     Вы находитесь на этапе добавления квиза(теста)
                     </Card.Header>

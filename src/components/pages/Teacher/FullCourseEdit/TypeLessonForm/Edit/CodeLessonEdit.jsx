@@ -48,8 +48,7 @@ function EditCodeLesson(props) {
     };
     return (
         <div>
-        
-                <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                         Добавление урока на программирование
                     </Card.Header>

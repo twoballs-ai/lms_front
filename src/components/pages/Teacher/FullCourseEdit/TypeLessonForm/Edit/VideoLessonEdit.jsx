@@ -57,8 +57,7 @@ function EditVideoLesson(props) {
     };
     return (
         <div>
-        
-                <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                     Вы находитесь на этапе редактирования видеоурока
                     </Card.Header>

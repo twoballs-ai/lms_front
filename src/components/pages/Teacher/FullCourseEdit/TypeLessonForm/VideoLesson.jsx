@@ -49,7 +49,7 @@ function AddingVideoLesson(props) {
     return (
         <div>
             {location.state.type === "videoLesson" && (
-                <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                     Вы находитесь на этапе добавления видеоурока
                     </Card.Header>

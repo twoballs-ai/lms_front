@@ -19,11 +19,11 @@ function EditQuizLesson(props) {
         stage: stage_id,
         is_quiz: true,
         questions: "",
-        answer1: "",
-        answer2: "",
-        answer3: "",
-        answer4: "",
-        true_answer: "",
+        answer1: props.contentData.answer1,
+        answer2: props.contentData.answer2,
+        answer3: props.contentData.answer3,
+        answer4: props.contentData.answer4,
+        true_answer: props.contentData.true_answer,
     });
 
     const [valueEditor, setValueEditor] = useState('')
@@ -52,13 +52,12 @@ function EditQuizLesson(props) {
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
             .then((response) => {
-                navigate(-2);
+                window.location.reload();
             });
     };
     return (
         <div>
-          
-          <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                     Вы находитесь на этапе редактирования квиза(теста)
                     </Card.Header>

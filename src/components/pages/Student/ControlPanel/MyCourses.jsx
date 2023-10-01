@@ -8,6 +8,7 @@ import { apiUrl } from "../../../../shared/config";
 
 function StudentMyCourses() {
     const [courseData, setCourseData] = useState([]);
+    // const [moduleCourseData, setModuleCourseData] = useState({});
     const studentId = localStorage.getItem("studentId");
     useEffect(() => {
         axios
@@ -18,6 +19,7 @@ function StudentMyCourses() {
             )
             .then((response) => {
                 setCourseData(response.data);
+                // setModuleCourseData(response.data.)
                 console.log(response.data);
             });
     }, []);
@@ -54,13 +56,12 @@ function StudentMyCourses() {
                                         <Button
                                             as={Link}
                                             to={
-                                                "/student-profile/study-materials/" +
-                                                courses.course.id
+                                                `/course-study/course/${courses.course.id}/${courses.student_course_first_module.first_module_pk}/stage/1`
                                             }
                                             variant="success"
                                         >
-                                            Учебный
-                                            <br /> материал
+                                            Проходить
+                                            <br /> курс
                                         </Button>
                                     </td>
                                 </tr>

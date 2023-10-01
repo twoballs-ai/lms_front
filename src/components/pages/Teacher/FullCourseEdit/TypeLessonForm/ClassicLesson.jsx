@@ -17,11 +17,13 @@ function AddingClassicLesson(props) {
         console.log(valueEditor)
     }
 
-    let stagePk = props.stagePk
+    let stagePk = props.data
     const location = useLocation();
     const navigate = useNavigate();
 
+    console.log(stagePk)
 
+    
 
     const formSubmit = (e) => {
         e.preventDefault();
@@ -46,8 +48,7 @@ function AddingClassicLesson(props) {
     return (
         <div>
             {location.state.type === "classicLesson" && (
-
-                <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                         Вы находитесь на этапе добавления классического урока с видео, фото, текстом
                     </Card.Header>

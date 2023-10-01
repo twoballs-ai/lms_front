@@ -60,7 +60,7 @@ function AddingCodeLesson(props) {
     return (
         <div>
             {location.state.type === "codingLesson" && (
-                <Card>
+            <Card className="mt-3 mx-3">
                     <Card.Header>
                         Добавление урока на программирование
                     </Card.Header>
