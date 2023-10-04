@@ -64,7 +64,7 @@ function CourseStudy() {
         } catch (error) {}
     }, [navigate, location, course_id, module_id]);
 
-    const addToFavorite = () => {
+    const setScore = () => {
         // try {
         //     axios
         //         .post(
@@ -171,7 +171,7 @@ function CourseStudy() {
                                 <button
                                     type="button"
                                     className="btn btn-secondary"
-                                    onClick={addToFavorite}
+                                    onClick={setScore}
                                 >
                                     Продолжить
                                 </button>

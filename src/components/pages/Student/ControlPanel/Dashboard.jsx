@@ -36,6 +36,8 @@ function StudentDashboard() {
     return (
         <>
             <div className="row">
+                <span>Общее количество баллов за прохождение курсов: {dashboardData.total_student_score}</span>
+                <span>Общее количество энергии: {dashboardData.total_student_energy}</span>
                 <div className="col-4">
                     <Card border="primary" style={{ width: "18rem" }}>
                         <Card.Header>Мои курсы</Card.Header>

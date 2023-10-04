@@ -124,7 +124,7 @@ function EditModuleStage() {
                                     to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${index+1}`} 
                                 >
                                     <div className="dot ms-2">
-                                        {tech.type !== null && (
+                                        {tech.type !== "не назначен" && (
                                             <>
                                                 {tech.type.is_classic ===
                                                     true && (
@@ -156,7 +156,7 @@ function EditModuleStage() {
                                                 )}
                                             </>
                                         )}
-                                        {tech.type === null && (
+                                        {tech.type === "не назначен" && (
                                             <div className="mt-1">
                                                 <FontAwesomeIcon
                                                     icon={faGhost}
@@ -191,7 +191,7 @@ function EditModuleStage() {
                             </button>
                 </Col>
            
-                {location.state === null && moduleData[stage_id-1] && moduleData[stage_id-1]["type"]===null && (
+                {location.state === null && moduleData[stage_id-1] && moduleData[stage_id-1]["type"]==="не назначен" && (
                     <>
                         <p>Вы еще не заполнили ваш урок. </p>
                         <div className="mb-2">
@@ -264,7 +264,7 @@ function EditModuleStage() {
                         )}
                     </>
                 )}
-                {moduleData[stage_id-1] && moduleData[stage_id-1]["type"]===null ? (
+                {moduleData[stage_id-1] && moduleData[stage_id-1]["type"]==="не назначен" ? (
                     <></>
                 ) : (
                     <>

@@ -11,7 +11,7 @@ import axios from "axios";
 import Editor from "../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingQuizLesson(props) {
-    let stagePk = props.stagePk
+    let stagePk = props.data
     const location = useLocation();
     const navigate = useNavigate();
     const [quizLessonData, setQuizLessonData] = useState({

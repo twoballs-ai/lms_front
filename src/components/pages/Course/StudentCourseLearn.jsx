@@ -20,6 +20,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ClassicLessonView from "./TypelessonViews/ClassicLessonView";
 import QuizLessonView from "./TypelessonViews/QuizLessonView";
 import VideoLessonView from "./TypelessonViews/VideoLessonView";
+import "./Course.css";
 // import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
 // import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
 // import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
@@ -33,7 +34,9 @@ function StudentCourseLearn() {
     let { stage_id } = useParams();
     const [moduleData, setModuleData] = useState([]);
     const [stagePkData, setStagePkData] = useState("");
+    const [stagePassData, setStagePassData] = useState("");
     const [typeStageData, setTypeStageData] = useState(null);
+    const studentId = localStorage.getItem("studentId");
     const location = useLocation();
     const navigate = useNavigate();
     const styleIndex = {
@@ -47,13 +50,14 @@ function StudentCourseLearn() {
         try {
             axios
                 .get(
-                    apiUrl + "module-stage/" + module_id
+                    apiUrl + `student-module-stage-list/${module_id}/${studentId}`
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
                 .then((response) => {
-                    console.log(response.data);
+                    console.log(response.data[parseInt(stage_id)-1] && response.data[parseInt(stage_id)-1]["pass_items"][0]);
                     setModuleData(response.data);
+                    setStagePassData(response.data[parseInt(stage_id)-1] && response.data[parseInt(stage_id)-1]["pass_items"][0])
                     // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
                     setStagePkData(response.data[parseInt(stage_id)-1] && response.data[parseInt(stage_id)-1]["id"])
                     // setTypeStageData()
@@ -68,7 +72,63 @@ function StudentCourseLearn() {
 
     console.log(moduleData[stage_id-1] && moduleData[stage_id-1]["type"]);
 
-  
+  const Dots = () =>{
+
+    return(
+        <div className="ms-3 mt-3">
+                        {moduleData.map((tech, index) => (
+                            
+                                <div className="d-inline-block position-relative" key={tech.id}>
+                                <Link
+                                
+                                    to={
+                                        `/course-study/course/${course_id}/${module_id}/stage/${index+1}`} 
+                                >
+                                    
+                                    {tech.type !== "не назначен" && (
+                                     
+                                    <div className={`dotUser ms-2`}>
+                                           
+                                         
+                                                {tech.type.is_classic ===
+                                                    true && (
+                                                    <div className="mt-1">
+                                                        <FontAwesomeIcon
+                                                            icon={
+                                                                faChalkboardUser
+                                                            }
+                                                            transform="down-6 grow-3"
+                                                        />
+                                                    </div>
+                                                )}
+                                                {tech.type.is_quiz === true && (
+                                                    <div className="mt-1">
+                                                        <FontAwesomeIcon
+                                                            icon={faSquareCheck}
+                                                            transform="down-6 grow-3"
+                                                        />
+                                                    </div>
+                                                )}
+                                                {tech.type.is_video ===
+                                                    true && (
+                                                    <div className="mt-1">
+                                                        <FontAwesomeIcon
+                                                            icon={faFilm}
+                                                            transform="down-6 grow-3"
+                                                        />
+                                                    </div>
+                                                )}
+                                         
+                                     
+                                    </div>
+                                       )}
+                                </Link>
+                                </div>
+                            
+                        ))}
+                    </div>
+    )
+  }
     return (
         <>
       
@@ -82,9 +142,11 @@ function StudentCourseLearn() {
                                     to={
                                         `/course-study/course/${course_id}/${module_id}/stage/${index+1}`} 
                                 >
-                                    {tech.type !== null && (
-                                    <div className="dot ms-2">
-                                        
+                                    
+                                    {tech.type !== "не назначен" && (
+                                     
+                                    <div className={`dotUser ms-2`}>
+                                           
                                          
                                                 {tech.type.is_classic ===
                                                     true && (

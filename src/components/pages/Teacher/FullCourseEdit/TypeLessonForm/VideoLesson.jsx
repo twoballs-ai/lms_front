@@ -10,7 +10,7 @@ import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 function AddingVideoLesson(props) {
-    let stagePk = props.stagePk
+    let stagePk = props.data
 
     const location = useLocation();
     const navigate = useNavigate();
