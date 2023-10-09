@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -67,8 +67,8 @@ function CoursesByCat() {
         </div>
     );
     return (
-        <>
-            <Container>
+        <div className="mx-3">
+            <div className="shadow rounded p-3 mt-3 mb-5">
                 <h3 className="mt-5">Курсы по категории: {category_slug}</h3>
                 <Row className="mt-5">
                     <hr />
@@ -94,8 +94,8 @@ function CoursesByCat() {
                         ))}
                 </Row>
                 {paginationBasic}
-            </Container>
-        </>
+            </div>
+        </div>
     );
 }
 export default CoursesByCat;

@@ -13,7 +13,7 @@ import SideBar from "./SideBar"
 function DashMain() {
   return (
     <>
-      <Container>
+      <div>
         <Row>
 
           <aside className="col-md-3">
@@ -25,7 +25,7 @@ function DashMain() {
           </section>
 
         </Row>
-      </Container>
+      </div>
     </>
   )
 

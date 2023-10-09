@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -46,8 +46,8 @@ function CategoryPage() {
         </div>
     );
     return (
-        <>
-            <Container>
+        <div className="mx-3">
+                    <div className="shadow rounded p-3 mt-3 mb-5">
                 <h3 className="mt-5">Все категории</h3>
                 <Row className="mt-5">
                     <hr />
@@ -58,10 +58,11 @@ function CategoryPage() {
                                     <Card.Body>
                                         <Card.Title>
                                             <Link
+                                                className="text-decoration-none text-info"
                                                 to={`/courses-by-cat/${row.id}/${row.title}`}
                                             >
-                                                {row.title} ({row.total_courses}
-                                                )
+                                                Категория {row.title}. кол-во
+                                                курсов: ({row.total_courses})
                                             </Link>
                                         </Card.Title>
                                         <Card.Text>{row.description}</Card.Text>
@@ -70,9 +71,9 @@ function CategoryPage() {
                             </Col>
                         ))}
                 </Row>
-                {paginationBasic}
-            </Container>
-        </>
+                {/* {paginationBasic} */}
+            </div>
+        </div>
     );
 }
 export default CategoryPage;

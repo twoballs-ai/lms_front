@@ -36,7 +36,7 @@ function PopularTeachers() {
     );
     return (
         <>
-            <Container>
+            <div>
                 <h3 className="mt-5">Рейтинг популярных преподавателей</h3>
                 <Row className="mt-5">
                     <hr />
@@ -107,7 +107,7 @@ function PopularTeachers() {
                     </Col>
                 </Row>
                 {paginationBasic}
-            </Container>
+            </div>
         </>
     );
 }

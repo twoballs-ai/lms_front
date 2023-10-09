@@ -95,7 +95,7 @@ function EditCourseFullData() {
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="lg">
-                <Container>
+                <div>
                     <Navbar.Brand href="/">Intellity code</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -122,9 +122,9 @@ function EditCourseFullData() {
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
-                </Container>
+                </div>
             </Navbar>
-            <Container fluid className="g-0">
+            <div fluid className="g-0">
                 <Row className="gx-0">
                     <Col xs={2}>
                         <div className="leftsidebar ps-2">
@@ -198,7 +198,7 @@ function EditCourseFullData() {
                         className="w-100 position-fixed bottom-0"
                     >
                         {" "}
-                        <div className="container-fluid">
+                        <div>
                             <button
                                 type="button"
                                 className="btn btn-secondary end-0"
@@ -211,7 +211,7 @@ function EditCourseFullData() {
                     </Col>
 
                 </Row>
-            </Container>
+            </div>
         </>
     );
 }

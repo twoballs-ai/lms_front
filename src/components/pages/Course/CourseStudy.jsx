@@ -17,28 +17,46 @@ function CourseStudy() {
     // let { teacher_id } = useParams()
     let { course_id } = useParams();
     let { module_id } = useParams();
+    let { stage_id } = useParams();
     const navigate = useNavigate();
     const [courseData, setCourseData] = useState([]);
     const [chapterData, setChapterData] = useState([]);
-    const [stepsData, setStepsData] = useState([]);
-    // const [moduleData, setModuleData]= useState([])
+    // const [stepsData, setStepsData] = useState([]);
+    const [stagePassData, setStagePassData] = useState("");
+    const studentId = localStorage.getItem("studentId");
+    const [moduleData, setModuleData] = useState([]);
+    const [stagePkData, setStagePkData] = useState("");
     // const [skillListData, setSkillListData]= useState([])
     // const [teacherData, setTeacherData]= useState([])
     useEffect(() => {
-        // try {
-        //     axios
-        //         .get(
-        //             apiUrl + "module-stage/" + module_id
-        //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-        //             // ,{headers: { "Content-Type": "multipart/form-data" }}
-        //         )
-        //         .then((response) => {
-        //             console.log(response.data);
-        //             setStepsData(response.data);
-        //         });
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            axios
+                .get(
+                    apiUrl +
+                        `student-module-stage-list/${module_id}/${studentId}`
+                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                    // ,{headers: { "Content-Type": "multipart/form-data" }}
+                )
+                .then((response) => {
+                    console.log(response.data);
+                    setModuleData(response.data);
+                    setStagePassData(
+                        response.data[parseInt(stage_id) - 1] &&
+                            response.data[parseInt(stage_id) - 1][
+                                "pass_items"
+                            ][0].id
+                    );
+                    // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
+                    // setStagePkData(
+                    //     response.data[parseInt(stage_id) - 1] &&
+                    //         response.data[parseInt(stage_id) - 1]["id"]
+                    // );
+                    // setTypeStageData()
+                    // setStagePk(response.data.id);
+                });
+        } catch (error) {
+            console.log(error);
+        }
         try {
             axios
                 .get(
@@ -64,36 +82,37 @@ function CourseStudy() {
         } catch (error) {}
     }, [navigate, location, course_id, module_id]);
 
-    const setScore = () => {
-        // try {
-        //     axios
-        //         .post(
-        //             apiUrl + "add-favorite-courses/",
-        //             {
-        //                 student: studentId,
-        //                 course: course_id,
-        //                 is_favorite: true,
-        //             },
-        //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-        //             { headers: { "Content-Type": "multipart/form-data" } }
-        //         )
-        //         .then((response) => {
-        //             if (response.status === 200 || response.status === 201) {
-        //                 console.log(response.data);
-        //                 // setShow(false)
-        //                 // setEnrollStatus('success')
-        //                 setFavoriteStatus("success");
-        //             }
-        //         });
-        // } catch (error) {
-        //     console.log(error);
-        // }
+    const setPass = () => {
+        try {
+            axios
+                .patch(
+                    apiUrl + "student-stage-pass/" + stagePassData,
+                    {
+                        is_passed: "true",
+                    },
+                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                    { headers: { "Content-Type": "multipart/form-data" } }
+                )
+                .then((response) => {
+                    if (response.status === 200 || response.status === 201) {
+                        console.log(response.data);
+                        // window.location.reload();
+                        navigate(
+                            `/course-study/course/${course_id}/${module_id}/stage/${
+                                parseInt(stage_id) + 1
+                            }`
+                        );
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
-    // console.log(stepsData)
+    console.log(stage_id);
     return (
         <>
             <Navbar bg="dark" variant="dark" expand="lg">
-                <Container>
+                <div>
                     <Navbar.Brand href="/">Intellity code</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -120,9 +139,9 @@ function CourseStudy() {
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
-                </Container>
+                </div>
             </Navbar>
-            <Container fluid className="g-0">
+            <div fluid className="g-0">
                 <Row className="gx-0">
                     <Col xs={2} className="sticky-top overflow-y-auto">
                         <div className="sticky-top leftsidebar ps-2">
@@ -161,17 +180,17 @@ function CourseStudy() {
                         </div>
                     </Col>
                     <Col className="mb-2 sticky-top overflow-y-auto">
-                        <Outlet />
+                        <Outlet context={[moduleData, setModuleData]} />
                         <div
                             style={{ backgroundColor: "#DCDCDC" }}
                             className="w-100 h-25 position-sticky mt-3"
                         >
                             {" "}
-                            <div className="container-fluid">
+                            <div>
                                 <button
                                     type="button"
-                                    className="btn btn-secondary"
-                                    onClick={setScore}
+                                    className="btn btn-secondary mt-2 float-end"
+                                    onClick={setPass}
                                 >
                                     Продолжить
                                 </button>
@@ -179,7 +198,7 @@ function CourseStudy() {
                         </div>
                     </Col>
                 </Row>
-            </Container>
+            </div>
         </>
     );
 }

@@ -247,7 +247,7 @@ function CourseDetail() {
 
     return (
         <>
-            <Container>
+            <div>
                 <Row className="mt-5">
                     <Col md={4}>
                         <Image
@@ -535,7 +535,7 @@ function CourseDetail() {
                         </Col>
                     ))}
                 </Row>
-            </Container>
+            </div>
         </>
     );
 }

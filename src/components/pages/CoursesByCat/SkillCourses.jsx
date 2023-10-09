@@ -52,7 +52,7 @@ function SkillCourses() {
     );
     return (
         <>
-            <Container>
+            <div>
                 <h3 className="mt-5">Курсы по категории: {skill_slug}</h3>
                 <Row className="mt-5">
                     <hr />
@@ -78,7 +78,7 @@ function SkillCourses() {
                         ))}
                 </Row>
                 {paginationBasic}
-            </Container>
+            </div>
         </>
     );
 }

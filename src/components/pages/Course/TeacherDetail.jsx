@@ -31,7 +31,7 @@ function TeacherDetail() {
     }, []);
     return (
         <>
-            <Container>
+            <div>
                 <Row className="mt-5">
                     <Col md={4}>
                         <Image variant="top" src="/images/code.jpg" thumbnail />
@@ -74,7 +74,7 @@ function TeacherDetail() {
                         ))}
                     </ListGroup>
                 </Card>
-            </Container>
+            </div>
         </>
     );
 }

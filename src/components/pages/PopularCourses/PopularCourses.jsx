@@ -44,7 +44,7 @@ function PopularCourses() {
     //   );
     return (
         <>
-            <Container>
+            <div>
                 <h3 className="mt-5">Самые популярные курсы</h3>
                 <Row className="mt-5">
                     <hr />
@@ -78,7 +78,7 @@ function PopularCourses() {
                         ))}
                 </Row>
                 {/* {paginationBasic} */}
-            </Container>
+            </div>
         </>
     );
 }

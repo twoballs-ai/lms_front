@@ -57,7 +57,7 @@ function VerifyOTPTeacher() {
     }
     return (
         <>
-            <Container>
+            <div>
                 <Row>
                     <Col>
                         <Card>
@@ -94,7 +94,7 @@ function VerifyOTPTeacher() {
                         </Card>
                     </Col>
                 </Row>
-            </Container>
+            </div>
         </>
     );
 }

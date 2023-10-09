@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -8,16 +8,18 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import { apiUrl } from "../../../shared/config";
+import NewAddedCourse from "./HomeComponents/NewAddedCourse";
+
+import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
+import HomePopularCourses from "./HomeComponents/HomePopularCourses";
+import StudentTestimonials from "./HomeComponents/StudentTestiomonials";
 
 function Home() {
     const [allCourseData, setAllCourseData] = useState([]);
     const [popularCourseData, setPopularCourseData] = useState([]);
     const [popularTeacherData, setPopularTeacherData] = useState([]);
     const [studentTestimonialData, setStudentTestimonialData] = useState([]);
-    const [index, setIndex] = useState(0);
-    const handleSelect = (selectedIndex) => {
-        setIndex(selectedIndex);
-    };
+
     const teacherId = localStorage.getItem("teacherId");
     // console.log(teacherId)
     useEffect(() => {
@@ -74,171 +76,16 @@ function Home() {
             console.log(error);
         }
     }, []);
-    console.log(popularCourseData);
+
     return (
         <>
-            <Container>
-                <h3 className="mt-5">
-                    Новые добавленые курсы
-                    <Button
-                        className="float-end"
-                        as={Link}
-                        to={"/all-courses"}
-                        variant="success"
-                    >
-                        Посмотреть все
-                    </Button>{" "}
-                    {/* Новые добавленые курсы <Link className='float-end' to={'/all-courses'}>Посмотреть все</Link> */}
-                </h3>
-                <Row className="mt-5">
-                    <hr />
-                    {allCourseData &&
-                        allCourseData.map((course, index) => (
-                            <Col>
-                                <Card style={{ width: "18rem" }}>
-                                    <Link to={`/detail/${course.id}`}>
-                                        <Card.Img
-                                            variant="top"
-                                            src={course.course_image}
-                                        />
-                                    </Link>
-                                    <Card.Body>
-                                        <Card.Title>
-                                            <Link to={`/detail/${course.id}`}>
-                                                {course.title}
-                                            </Link>
-                                        </Card.Title>
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        <span>
-                                            Рейтинг курса:{" "}
-                                            {course.course_rating}
-                                        </span>
-                                        <br />
-                                        <span>
-                                            Просмотров курса:{" "}
-                                            {course.course_views}
-                                        </span>
-                                    </Card.Footer>
-                                </Card>
-                            </Col>
-                        ))}
-                </Row>
+            <div className="mx-3">
+                <NewAddedCourse allCourseData={allCourseData} />
                 {/* popular courses */}
-                <h3 className="mt-5">
-                    Популярные курсы
-                    <Button
-                        className="float-end"
-                        as={Link}
-                        to={"/popular-courses"}
-                        variant="success"
-                    >
-                        Посмотреть популярные
-                    </Button>{" "}
-                </h3>
-                <Row className="mt-5">
-                    <hr />
-                    {popularCourseData &&
-                        popularCourseData.map((course, index) => (
-                            <Col>
-                                <Card style={{ width: "18rem" }}>
-                                    <Link to={`/detail/${course.course.id}`}>
-                                        <Card.Img
-                                            variant="top"
-                                            src={course.course.course_image}
-                                        />
-                                    </Link>
-                                    <Card.Body>
-                                        <Card.Title>
-                                            <Link
-                                                to={`/detail/${course.course.id}`}
-                                            >
-                                                {course.course.title}
-                                            </Link>
-                                        </Card.Title>
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        <span>
-                                            Рейтинг курса: {course.rating}
-                                        </span>
-                                        <br />
-                                        <span>
-                                            Просмотров курса:{" "}
-                                            {course.course.course_views}
-                                        </span>
-                                    </Card.Footer>
-                                </Card>
-                            </Col>
-                        ))}
-                </Row>
-                <h3 className="mt-5">
-                    Популярные наставники
-                    <Button
-                        className="float-end"
-                        as={Link}
-                        to={"/popular-teachers"}
-                        variant="success"
-                    >
-                        Посмотреть всех
-                    </Button>{" "}
-                    {/* Популярные наставники <Link className='float-end' to={'/popular-teachers'}>Посмотреть всех</Link> */}
-                </h3>
-                <Row className="mt-5">
-                    <hr />
-                    {popularTeacherData &&
-                        popularTeacherData.map((teacher, index) => (
-                            <Col>
-                                <Card style={{ width: "18rem" }}>
-                                    <Link to={`teacher-detail/${teacher.id}`}>
-                                        <Card.Img
-                                            variant="top"
-                                            src={teacher.teacher_image}
-                                        />
-                                    </Link>
-                                    <Card.Body>
-                                        <Card.Title>
-                                            <Link
-                                                to={`teacher-detail/${teacher.id}`}
-                                            >
-                                                {teacher.full_name}
-                                            </Link>
-                                        </Card.Title>
-                                    </Card.Body>
-                                    <Card.Footer>
-                                        Курсов добавлено:{" "}
-                                        {teacher.total_teacher_courses}
-                                    </Card.Footer>
-                                </Card>
-                            </Col>
-                        ))}
-                </Row>
-                <h3 className="mt-5">Отзывы студентов о курсах</h3>
-                <hr />
-
-                <Carousel
-                    className="bg-dark text-white py-5"
-                    activeIndex={index}
-                    onSelect={handleSelect}
-                >
-                    {studentTestimonialData &&
-                        studentTestimonialData.map((row, index) => (
-                            <Carousel.Item>
-                                <blockquote className="blockquote mb-0 text-center">
-                                    <p>{row.review}</p>
-                                    <footer className="blockquote-footer">
-                                        название курса: {row.course.title}
-                                        <cite title="Source Title">
-                                            <br />
-                                            Студент: {row.student.full_name}
-                                        </cite>
-                                    </footer>
-                                </blockquote>
-
-                                <Carousel.Caption></Carousel.Caption>
-                            </Carousel.Item>
-                        ))}
-                </Carousel>
-            </Container>
+                <HomePopularCourses popularCourseData={popularCourseData} />
+                <HomeTeacherPopular popularTeacherData={popularTeacherData} />
+               <StudentTestimonials studentTestimonialData={studentTestimonialData} />
+            </div>
         </>
     );
 }

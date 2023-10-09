@@ -46,7 +46,7 @@ function SearchByCourse() {
     );
     return (
         <>
-            <Container>
+            <div>
                 <h3 className="mt-5">
                     Поиск курса по названию{" "}
                     <span className="text-success">{searchString} </span>
@@ -75,7 +75,7 @@ function SearchByCourse() {
                         ))}
                 </Row>
                 {paginationBasic}
-            </Container>
+            </div>
         </>
     );
 }

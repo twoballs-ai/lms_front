@@ -66,7 +66,7 @@ function AllCourses() {
     );
     return (
         <>
-            <Container>
+            <div>
                 <h3 className="mt-5">Все курсы</h3>
                 <Row className="mt-5">
                     <hr />
@@ -92,7 +92,7 @@ function AllCourses() {
                         ))}
                 </Row>
                 {paginationBasic}
-            </Container>
+            </div>
         </>
     );
 }
