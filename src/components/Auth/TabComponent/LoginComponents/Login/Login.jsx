@@ -5,21 +5,23 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
-import { teacherLoginApiUrl } from "../../../../shared/config";
+import { restAuthApiUrl } from "../../../../../shared/config";
 
-function TeacherLogin() {
-    const [teacherLoginData, setTeacherLoginData] = useState({
+
+function AllProfilesLogin() {
+    const [allProfilesLoginData, setAllProfilesLoginData] = useState({
         email: "",
         password: "",
     });
     const [errorMsg, setErrorMsg] = useState("");
     const handleChange = (event) => {
-        setTeacherLoginData({
-            ...teacherLoginData,
+        setAllProfilesLoginData({
+            ...allProfilesLoginData,
             [event.target.name]: event.target.value,
         });
-        console.log(teacherLoginData);
+        console.log(allProfilesLoginData);
     };
 
     const submitForm = (e) => {
@@ -27,11 +29,11 @@ function TeacherLogin() {
         // const teacherFormrData = new FormData()
         // teacherFormrData.append("email", teacherLoginData.email)
         // teacherFormrData.append("password", teacherLoginData.password)
-        console.log(teacherLoginData);
+        console.log(allProfilesLoginData);
         axios
             .post(
-                teacherLoginApiUrl,
-                teacherLoginData,
+                restAuthApiUrl + "login/",
+                allProfilesLoginData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
@@ -58,47 +60,43 @@ function TeacherLogin() {
     }
     return (
         <div className="mx-3">
-            <div className="shadow rounded p-3 mt-3 mb-5">
+
                 <Row className="justify-content-md-center">
                     <Col md={4}>
-                        <Card>
-                            <Card.Header>
-                                <h3>Авторизация</h3>
-                            </Card.Header>
-                            <Card.Body>
+
                                 {errorMsg && (
                                     <p className="text-danger">{errorMsg}</p>
                                 )}
                                 <Form>
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicEmail"
-                                    >
-                                        <Form.Label>email</Form.Label>
-                                        <Form.Control
-                                            value={teacherLoginData.email}
-                                            name="email"
-                                            onChange={handleChange}
-                                            type="email"
-                                            placeholder="Введите ваш email"
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicPassword"
-                                    >
-                                        <Form.Label>password</Form.Label>
-                                        <Form.Control
-                                            value={teacherLoginData.password}
-                                            name="password"
-                                            onChange={handleChange}
-                                            type="password"
-                                            placeholder="Введите пароль"
-                                        />
-                                    </Form.Group>
                                     {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Запомнить меня" />
       </Form.Group> */}
+                          <FloatingLabel
+                        controlId="email"
+                        label="Введите ваш email"
+                        className="mb-3 text-secondary text-label-size"
+                    >
+                        <Form.Control
+                             value={allProfilesLoginData.email}
+                             name="email"
+                             onChange={handleChange}
+                             type="email"
+                             placeholder="Введите ваш email"
+                        />
+                    </FloatingLabel>
+                    <FloatingLabel
+                        controlId="password"
+                        label="Введите пароль"
+                        className="mb-3 text-secondary text-label-size"
+                    >
+                        <Form.Control
+                                value={allProfilesLoginData.password}
+                                name="password"
+                                onChange={handleChange}
+                                type="password"
+                                placeholder="Введите пароль"
+                        />
+                    </FloatingLabel>
                                     <Button
                                         onClick={submitForm}
                                         variant="primary"
@@ -107,13 +105,11 @@ function TeacherLogin() {
                                         Войти
                                     </Button>
                                 </Form>
-                            </Card.Body>
-                        </Card>
                     </Col>
                 </Row>
-            </div>
+
         </div>
     );
 }
 
-export default TeacherLogin;
+export default AllProfilesLogin;

@@ -76,7 +76,7 @@ function CoursesByCat() {
                         courseByCatData.map((course, index) => (
                             <Col>
                                 <Card style={{ width: "18rem" }}>
-                                    <Link to={`/detail/${course.id}`}>
+                                    <Link  to={`/detail/${course.id}`}>
                                         <Card.Img
                                             variant="top"
                                             src={course.course_image}
@@ -84,7 +84,7 @@ function CoursesByCat() {
                                     </Link>
                                     <Card.Body>
                                         <Card.Title>
-                                            <Link to={`/detail/${course.id}`}>
+                                            <Link className="text-decoration-none text-info" to={`/detail/${course.id}`}>
                                                 {course.title}
                                             </Link>
                                         </Card.Title>

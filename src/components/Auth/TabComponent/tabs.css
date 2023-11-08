@@ -1,0 +1,116 @@
+.Tabs {
+    width: 90%;
+    height: auto;
+    min-height: 550px;
+    background: #0078c3;
+    margin: 0.5rem auto 1.5rem;
+    padding: 2rem 1rem;
+    color: #E8F0F2;
+    box-shadow: 80px 40px rgb(51, 0, 128);
+    border-radius: 2rem;
+    @media (max-width: 769px) {
+     padding: 2rem 0;
+    }
+   }
+
+   ul.nav {
+    width: 60%;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #39A2DB;
+    border-radius: 2rem;
+    padding-left: 0px;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+  }
+  ul.nav li {
+    width: 50%;
+    padding: 1rem;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+  ul.nav li:nth-child(2) {
+    border-radius: 0;
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+  ul.nav li:hover {
+    background: rgba(50, 224, 196, 0.15);
+  }
+  ul.nav li.active {
+    background: #39A2DB;
+  }
+
+
+  /* First and Second Tab Styles */
+.LoginTab p,
+.RegisterTab p {
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* registertabs */
+
+.react-tabs {
+    -webkit-tap-highlight-color: transparent;
+  }
+   
+  .react-tabs__tab-list {
+    width: 40%;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 1px solid #db39d8;
+    border-radius: 2rem; */
+    padding-left: 0px;
+  }
+   
+  .react-tabs__tab {
+    width: 50%;
+    padding: 0.5rem;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s;
+  }
+   
+  .react-tabs__tab--selected {
+    background: #39A2DB;
+  }
+   
+  .react-tabs__tab--disabled {
+    color: GrayText;
+    cursor: default;
+  }
+   
+  .react-tabs__tab:hover {
+    background: rgba(50, 224, 196, 0.15);
+  }
+   
+  .react-tabs__tab:first-child {
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+   
+  .react-tabs__tab:last-child {
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+   
+  .react-tabs__tab-panel {
+    display: none;
+  }
+   
+  .react-tabs__tab-panel--selected {
+    display: block;
+    font-size: 2rem;
+    text-align: center;
+  }

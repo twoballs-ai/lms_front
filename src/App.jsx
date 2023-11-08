@@ -12,7 +12,7 @@ import PopularTeachers from './components/pages/PopularTeachers/PopularTeachers'
 import CoursesByCat from './components/pages/CoursesByCat/CoursesByCat';
 //student pages
 import StudentLogin from './components/pages/Student/Login/Login';
-import StudentRegister from './components/pages/Student/Register/Register';
+
 import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
 import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses';
 import UserDashmain from './components/pages/Student/ControlPanel/components/DashMain';
@@ -28,7 +28,7 @@ import AddQuiz from './components/pages/Teacher/ControlPanel/AddQuiz';
 //teacher pages
 import TeacherLogout from './components/pages/Teacher/Logout/Logout';
 import TeacherLogin from './components/pages/Teacher/Login/Login';
-import TeacherRegister from './components/pages/Teacher/Register/Register';
+
 import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
 import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherCourses';
 import TeacherDashmain from './components/pages/Teacher/ControlPanel/components/DashMain';
@@ -64,6 +64,8 @@ import AddModule from './components/pages/Teacher/FullCourseEdit/AddModule';
 import EditModuleStage from './components/pages/Teacher/FullCourseEdit/EditModuleStage';
 import AddStageLesson from './components/pages/Teacher/FullCourseEdit/AddStageLesson';
 import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
+import StudentRegister from './components/Auth/TabComponent/RegisterComponents/StudentRegister/Register';
+import TeacherRegister from './components/Auth/TabComponent/RegisterComponents/TeacherRegister/Register';
 
 function App() {
   return (
@@ -87,7 +89,7 @@ function App() {
         <Route path='popular-teachers' element={<PopularTeachers />} />
         <Route path='teacher-login' element={<TeacherLogin />} />
         <Route path='teacher-logout' element={<TeacherLogout />} />
-        <Route path='teacher-register' element={<TeacherRegister />} />
+        <Route path='teacher-register' element={<TeacherRegister/>} />
         <Route path='verify-teacher/:teacher_id' element={<VerifyOTPTeacher />} />
         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
         <Route path='courses-by-cat/:category_id/:category_slug' element={<CoursesByCat />} />  

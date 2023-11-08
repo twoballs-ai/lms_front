@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import { apiUrl } from "../../../shared/config";
+import { apiLmsUrl } from "../../../shared/config";
 
 function AllCourses() {
     const [allCourseData, setAllCourseData] = useState([]);
@@ -18,7 +18,7 @@ function AllCourses() {
     const [prevUrl, setPrevUrl] = useState();
     // console.log(teacherId)
     useEffect(() => {
-        fetchData(apiUrl + "course/");
+        fetchData(apiLmsUrl + "course/");
     }, []);
 
     let active = 1;
@@ -65,8 +65,8 @@ function AllCourses() {
         </div>
     );
     return (
-        <>
-            <div>
+        <div className="mx-3">
+            <div className="shadow rounded p-3 mt-3 mb-5">
                 <h3 className="mt-5">Все курсы</h3>
                 <Row className="mt-5">
                     <hr />
@@ -82,7 +82,10 @@ function AllCourses() {
                                     </Link>
                                     <Card.Body>
                                         <Card.Title>
-                                            <Link to={`/detail/${course.id}`}>
+                                            <Link
+                                                className="text-decoration-none text-info"
+                                                to={`/detail/${course.id}`}
+                                            >
                                                 {course.title}
                                             </Link>
                                         </Card.Title>
@@ -93,7 +96,7 @@ function AllCourses() {
                 </Row>
                 {paginationBasic}
             </div>
-        </>
+        </div>
     );
 }
 export default AllCourses;

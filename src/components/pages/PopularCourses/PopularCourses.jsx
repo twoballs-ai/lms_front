@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { apiUrl } from "../../../shared/config";
+import { apiLmsUrl } from "../../../shared/config";
 
 function PopularCourses() {
     // let active = 2;
@@ -16,7 +16,7 @@ function PopularCourses() {
         try {
             axios
                 .get(
-                    apiUrl + "popular-courses/?popular=1"
+                    apiLmsUrl + "popular-courses/?popular=1"
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
@@ -43,8 +43,8 @@ function PopularCourses() {
     //     </div>
     //   );
     return (
-        <>
-            <div>
+        <div className="mx-3">
+            <div className="shadow rounded p-3 mt-3 mb-5">
                 <h3 className="mt-5">Самые популярные курсы</h3>
                 <Row className="mt-5">
                     <hr />
@@ -61,6 +61,7 @@ function PopularCourses() {
                                     <Card.Body>
                                         <Card.Title>
                                             <Link
+                                                className="text-decoration-none text-info"
                                                 to={`/detail/${course.course.id}`}
                                             >
                                                 {course.course.title}
@@ -79,7 +80,7 @@ function PopularCourses() {
                 </Row>
                 {/* {paginationBasic} */}
             </div>
-        </>
+        </div>
     );
 }
 export default PopularCourses;

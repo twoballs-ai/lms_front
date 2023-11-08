@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -17,9 +17,11 @@ function CourseDetail() {
     const [show, setShow] = useState(false);
     const [showRate, setShowRate] = useState(false);
     const [courseData, setCourseData] = useState([]);
+    const [firstModuleData, setFirstModuleData] = useState([]);
     const [relatedCourseData, setRelatedCourseData] = useState([]);
     const [technologicalListData, setTechnologicalListData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
+    const [chapterData, setChapterData] = useState([]);
     const [userLoggedStatus, setUserLoggedStatus] = useState("");
     const [enrollStatus, setEnrollStatus] = useState("");
     const [courseViews, setCourseViews] = useState(0);
@@ -45,6 +47,7 @@ function CourseDetail() {
                 .then((response) => {
                     setCourseData(response.data);
                     setTeacherData(response.data.teacher);
+                    setChapterData(response.data.course_chapters);
                     setRelatedCourseData(
                         JSON.parse(response.data.related_courses)
                     );
@@ -57,10 +60,25 @@ function CourseDetail() {
                     }
 
                     console.log(response.data);
+                    try {
+                        axios
+                            .get( 
+                                apiUrl + "chapter/" + response.data.course_chapters[0]["id"]
+                                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                                // ,{headers: { "Content-Type": "multipart/form-data" }}
+                            )
+                            .then((response) => {
+                                setFirstModuleData(response.data.chapter_modules)
+                              console.log(response.data.chapter_modules);
+                            });
+                    } catch (error) {
+                        console.log(error);
+                    }
                 });
         } catch (error) {
             console.log(error);
         }
+
         axios.get(apiUrl + "update-view/" + course_id).then((res) => {
             setCourseViews(res.data.views);
         });
@@ -82,7 +100,6 @@ function CourseDetail() {
         } catch (error) {
             console.log(error);
         }
-
         try {
             axios
                 .get(
@@ -144,7 +161,6 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-      
                         setEnrollStatus("success");
 
                         // window.location.reload()
@@ -182,7 +198,6 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-
                         console.log(response.data);
                         // setShow(false)
                         // setEnrollStatus('success')
@@ -208,7 +223,6 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-           
                         console.log(response.data);
                         // setShow(false)
                         // setEnrollStatus('success')
@@ -233,7 +247,6 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-               
                         console.log(response.data);
                         // setShow(false)
                         // setEnrollStatus('success')
@@ -244,10 +257,10 @@ function CourseDetail() {
             console.log(error);
         }
     };
-
+console.log(chapterData[0])
     return (
-        <>
-            <div>
+        <div className="mx-3">
+            <div className="shadow rounded p-3 mt-3 mb-5">
                 <Row className="mt-5">
                     <Col md={4}>
                         <Image
@@ -447,7 +460,8 @@ function CourseDetail() {
                                     <Button
                                         as={Link}
                                         title="Проходить курс"
-                                        to={"/course-study/" + course_id}
+                                                                                        
+                                        to={`/course-study/course/${course_id}/${firstModuleData[0] && firstModuleData[0].id}/stage/1`}
                                         variant="primary"
                                     >
                                         Проходить курс
@@ -506,6 +520,45 @@ function CourseDetail() {
                         )}
                     </Col>
                 </Row>
+                {/* {enrollStatus === "success" &&
+                    userLoggedStatus === "success" && (
+                        <Card className="m-2">
+                            <Card.Header>главы курса</Card.Header>
+                            <ListGroup variant="flush">
+                                {chapterData.map((chapter, index) => (
+                                    <ListGroup.Item key={index}>
+                                        Глава {index + 1}: {chapter.title}{" "}
+                                        <Button
+                                            variant="primary"
+                                            onClick={handleShow}
+                                        >
+                                            посомтреть видео
+                                        </Button>
+                                        <Modal
+                                            size="xl"
+                                            show={show}
+                                            onHide={handleClose}
+                                        >
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>
+                                                    Modal heading
+                                                </Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <iframe
+                                                    width="1024"
+                                                    height="768"
+                                                    src={chapter.video}
+                                                    title={chapter.title}
+                                                    allowFullScreen
+                                                ></iframe>
+                                            </Modal.Body>
+                                        </Modal>
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </Card>
+                    )} */}
                 <Row className="mt-5">
                     <hr />
                     <h3>Схожие курсы:</h3>
@@ -536,7 +589,7 @@ function CourseDetail() {
                     ))}
                 </Row>
             </div>
-        </>
+        </div>
     );
 }
 export default CourseDetail;

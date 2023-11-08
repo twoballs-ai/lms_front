@@ -7,7 +7,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
-import { apiUrl } from "../../../shared/config";
+import { apiLmsUrl } from "../../../shared/config";
 function Footer() {
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
@@ -15,7 +15,7 @@ function Footer() {
     try {
         axios
             .get(
-                apiUrl + "category/"
+                apiLmsUrl + "category/"
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 // ,{headers: { "Content-Type": "multipart/form-data" }}
             )
@@ -48,7 +48,7 @@ function Footer() {
                             </span>
                         </span>
                     </Col>
-                    <Col><div>Категори курсов:</div>
+                    <Col><div>Категории курсов:</div>
                     {categoryData &&
                         categoryData.map((category, index) => (
                           <>

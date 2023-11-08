@@ -7,7 +7,9 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
-import { apiUrl } from "../../../shared/config";
+import { apiLmsUrl } from "../../../shared/config";
+import { apiUserUrl } from "../../../shared/config";
+
 import NewAddedCourse from "./HomeComponents/NewAddedCourse";
 
 import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
@@ -25,7 +27,7 @@ function Home() {
     useEffect(() => {
         axios
             .get(
-                apiUrl + "course/?result=4"
+                apiLmsUrl + "course/?result=4"
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 // ,{headers: { "Content-Type": "multipart/form-data" }}
             )
@@ -36,7 +38,7 @@ function Home() {
         try {
             axios
                 .get(
-                    apiUrl + "popular-courses/?popular=1"
+                    apiLmsUrl + "popular-courses/?popular=1"
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
@@ -50,7 +52,7 @@ function Home() {
         try {
             axios
                 .get(
-                    apiUrl + "popular-teachers/?popular=1"
+                    apiUserUrl + "popular-teachers/?popular=1"
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
@@ -83,7 +85,7 @@ function Home() {
                 <NewAddedCourse allCourseData={allCourseData} />
                 {/* popular courses */}
                 <HomePopularCourses popularCourseData={popularCourseData} />
-                <HomeTeacherPopular popularTeacherData={popularTeacherData} />
+                {/* <HomeTeacherPopular popularTeacherData={popularTeacherData} /> */}
                <StudentTestimonials studentTestimonialData={studentTestimonialData} />
             </div>
         </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -30,8 +30,8 @@ function TeacherDetail() {
             });
     }, []);
     return (
-        <>
-            <div>
+        <div className="mx-3">
+            <div className="shadow rounded p-3 mt-3 mb-5">
                 <Row className="mt-5">
                     <Col md={4}>
                         <Image variant="top" src="/images/code.jpg" thumbnail />
@@ -75,7 +75,7 @@ function TeacherDetail() {
                     </ListGroup>
                 </Card>
             </div>
-        </>
+        </div>
     );
 }
 export default TeacherDetail;

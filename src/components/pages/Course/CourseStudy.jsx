@@ -111,94 +111,88 @@ function CourseStudy() {
     console.log(stage_id);
     return (
         <>
-            <Navbar bg="dark" variant="dark" expand="lg">
-                <div>
-                    <Navbar.Brand href="/">Intellity code</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                            <NavDropdown
-                                title="Dropdown"
-                                id="basic-nav-dropdown"
-                            >
-                                <NavDropdown.Item href="#action/3.1">
-                                    Action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">
-                                    Another action
-                                </NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">
-                                    Something
-                                </NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">
-                                    Separated link
-                                </NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                    </Navbar.Collapse>
-                </div>
+            <Container fluid className="p-0 bg-light">
+            <Navbar bg="info" data-bs-theme="dark" expand="lg" className="shadow">
+                <Navbar.Brand className="ms-3" href="/">
+                    Intellity code
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                {/* <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="ms-auto">
+                        <Nav.Link as={Link} to="/category">
+                            Категории
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/all-courses">
+                            Курсы
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/about">
+                            О нас
+                        </Nav.Link>
+
+                    </Nav>
+                </Navbar.Collapse> */}
             </Navbar>
-            <div fluid className="g-0">
-                <Row className="gx-0">
-                    <Col xs={2} className="sticky-top overflow-y-auto">
-                        <div className="sticky-top leftsidebar ps-2">
-                            <p className="text-light">{courseData.title}</p>
-                            <hr className="text-light me-2" />
-                            {/* пофиксить: */}
-                            {chapterData.map((tech) => {
-                                return (
-                                    <div key={tech.id}>
-                                        <h5 className="text-light h6">
-                                            {tech.title}
-                                        </h5>
-                                        {tech.chapter_modules.map(
-                                            (modules, index) => {
-                                                return (
-                                                    <ul
-                                                        className="nav flex-column"
-                                                        key={modules.id}
-                                                    >
-                                                        <li className="nav-item \">
-                                                            <Link
-                                                                className="nav-link text-light"
-                                                                to={`/course-study/course/${course_id}/${modules.id}/stage/1`}
-                                                            >
-                                                                {modules.title}
-                                                            </Link>
-                                                        </li>
-                                                    </ul>
-                                                );
-                                            }
-                                        )}
-                                    </div>
-                                );
-                            })}
-                            <hr />
-                        </div>
-                    </Col>
-                    <Col className="mb-2 sticky-top overflow-y-auto">
-                        <Outlet context={[moduleData, setModuleData]} />
-                        <div
-                            style={{ backgroundColor: "#DCDCDC" }}
-                            className="w-100 h-25 position-sticky mt-3"
-                        >
-                            {" "}
-                            <div>
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary mt-2 float-end"
-                                    onClick={setPass}
-                                >
-                                    Продолжить
-                                </button>
+                <div fluid className="g-0">
+                    <Row className="gx-0">
+                        <Col xs={2} className="sticky-top overflow-y-auto">
+                            <div className="sticky-top leftsidebar ps-2">
+                                <p className="text-light">{courseData.title}</p>
+                                <hr className="text-light me-2" />
+                                {/* пофиксить: */}
+                                {chapterData.map((tech) => {
+                                    return (
+                                        <div key={tech.id}>
+                                            <h5 className="text-light h6">
+                                                {tech.title}
+                                            </h5>
+                                            {tech.chapter_modules.map(
+                                                (modules, index) => {
+                                                    return (
+                                                        <ul
+                                                            className="nav flex-column"
+                                                            key={modules.id}
+                                                        >
+                                                            <li className="nav-item \">
+                                                                <Link
+                                                                    className="nav-link text-light"
+                                                                    to={`/course-study/course/${course_id}/${modules.id}/stage/1`}
+                                                                >
+                                                                    {
+                                                                        modules.title
+                                                                    }
+                                                                </Link>
+                                                            </li>
+                                                        </ul>
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                                <hr />
                             </div>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+                        </Col>
+                        <Col className="mb-2 sticky-top overflow-y-auto">
+                            <Outlet context={[moduleData, setModuleData]} />
+                            <div
+                                style={{ backgroundColor: "#DCDCDC" }}
+                                className="w-100 h-25 position-sticky mt-3"
+                            >
+                                {" "}
+                                <div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary mt-2 float-end"
+                                        onClick={setPass}
+                                    >
+                                        Продолжить
+                                    </button>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </Container>
         </>
     );
 }

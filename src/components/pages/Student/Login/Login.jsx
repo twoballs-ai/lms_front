@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -57,10 +57,10 @@ function StudentLogin() {
         window.location.href = "/student-profile/dashboard";
     }
     return (
-        <>
-            <Container>
-                <Row>
-                    <Col>
+        <div className="mx-3">
+            <div className="shadow rounded p-3 mt-3 mb-5">
+                <Row className="justify-content-md-center">
+                    <Col md={4}>
                         <Card>
                             <Card.Header>
                                 <h3>Авторизация</h3>
@@ -111,8 +111,8 @@ function StudentLogin() {
                         </Card>
                     </Col>
                 </Row>
-            </Container>
-        </>
+            </div>
+        </div>
     );
 }
 
