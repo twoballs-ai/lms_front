@@ -16,17 +16,11 @@ function ModalRegisterLogin() {
         setShow(true);
         setAuthState(auth)
     }
+
+
     return (
         <>
-            <Nav.Link
-                className="text-primary fw-bold"
-                onClick={() => handleShow(true,"register")}
-            >
-                Регистрация
-            </Nav.Link>
-            <Button variant="info" onClick={() => handleShow(true,"login")}>
-                Войти
-            </Button>
+
             <Modal
                 show={show}
                 fullscreen={fullscreen}
@@ -46,6 +40,15 @@ function ModalRegisterLogin() {
                 </div>
 
             </Modal>
+            <Nav.Link
+                className="text-primary fw-bold"
+                onClick={() => handleShow(true,"register")}
+            >
+                Регистрация
+            </Nav.Link>
+            <Button variant="info" onClick={() => handleShow(true,"login")}>
+                Войти
+            </Button>
         </>
     );
 }

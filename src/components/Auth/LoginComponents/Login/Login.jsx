@@ -7,7 +7,7 @@ import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
-import { restAuthApiUrl } from "../../../../../shared/config";
+import { restAuthApiUrl } from "../../../../shared/config";
 
 
 function AllProfilesLogin() {
@@ -38,11 +38,22 @@ function AllProfilesLogin() {
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
             .then((response) => {
-                if (response.data.bool === true) {
-                    // console.log(response)
-                    localStorage.setItem("teacherLoginStatus", true);
-                    localStorage.setItem("teacherId", response.data.teacher_id);
-                    window.location.href = "/teacher-profile/dashboard";
+                if (response.status === 200 || response.status === 201) {
+                    console.log(response)
+                    localStorage.clear();
+                    localStorage.setItem('access_token', response?.data?.access);
+                    localStorage.setItem('refresh_token', response?.data?.refresh);
+                    localStorage.setItem("user", response?.data?.user?.id);
+                    if (response?.data?.user?.is_teacher===true){
+                        localStorage.setItem("is_teacher", response?.data?.user?.is_teacher);
+                        window.location.href = "/teacher-profile/dashboard";
+                    }
+                    if (response?.data?.user?.is_user===true){
+                        localStorage.setItem("is_user", response?.data?.user?.is_user);
+                        window.location.href = "/student-profile/dashboard";
+                    }
+                    
+                    // window.location.href = "/teacher-profile/dashboard";
                 } else {
                     setErrorMsg(response.data.message);
                 }
@@ -99,7 +110,7 @@ function AllProfilesLogin() {
                     </FloatingLabel>
                                     <Button
                                         onClick={submitForm}
-                                        variant="primary"
+                                        variant="secondary"
                                         type="submit"
                                     >
                                         Войти

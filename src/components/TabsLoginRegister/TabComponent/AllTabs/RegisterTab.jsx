@@ -1,7 +1,8 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import StudentRegister from "../RegisterComponents/StudentRegister/Register";
-import TeacherRegister from "../RegisterComponents/TeacherRegister/Register";
+import StudentRegister from "../../../Auth/RegisterComponents/StudentRegister/Register";
+import TeacherRegister from "../../../Auth/RegisterComponents/TeacherRegister/Register";
+
 // import "react-tabs/style/react-tabs.css";
 const RegisterTab = () => {
     return (

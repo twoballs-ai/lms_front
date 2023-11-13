@@ -8,14 +8,14 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ModalRegisterLogin from "../../Auth/HeaderComponents/ModalRegistrationLogin";
+import ModalRegisterLogin from "../../TabsLoginRegister/HeaderComponents/ModalRegistrationLogin";
 
 function Header() {
     const [searchData, setSearchData] = useState({
         search: "",
     });
-    const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
-    const studentLoginStatus = localStorage.getItem("studentLoginStatus");
+    const is_teacher = localStorage.getItem("is_teacher");
+    const is_student = localStorage.getItem("is_student");
     const handleChange = (event) => {
         setSearchData({
             ...searchData,
@@ -28,6 +28,14 @@ function Header() {
         if (searchData.search !== "")
             window.location.href = "/search/" + searchData.search;
     };
+
+    const [isAuth, setIsAuth] = useState(false);
+    useEffect(() => {
+      if (localStorage.getItem('access_token') !== null) {
+         setIsAuth(true); 
+       }
+     }, [isAuth]);
+
 
     return (
         <>
@@ -68,11 +76,12 @@ function Header() {
                         <Nav.Link as={Link} to="/about">
                             О нас
                         </Nav.Link>
-                        <NavDropdown
+                   
+                        {isAuth ?  <NavDropdown
                             title="Профиль"
                             id="navbarScrollingDropdown"
                         >
-                            {teacherLoginStatus === "true" && (
+                            {is_teacher === "true" && (
                                 <>
                                     <NavDropdown.Item
                                         as={Link}
@@ -81,15 +90,10 @@ function Header() {
                                         Личный кабинет учителя
                                     </NavDropdown.Item>
 
-                                    <NavDropdown.Item
-                                        as={Link}
-                                        to="/teacher-logout"
-                                    >
-                                        Выход
-                                    </NavDropdown.Item>
+                          
                                 </>
                             )}
-                            {studentLoginStatus === "true" && (
+                            {is_student === "true" && (
                                 <>
                                     <NavDropdown.Item
                                         as={Link}
@@ -97,16 +101,18 @@ function Header() {
                                     >
                                         Личный кабинет ученика
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item
+                       
+                                </>
+                            )}
+                                      <NavDropdown.Item
                                         as={Link}
-                                        to="/student-logout"
+                                        to="/logout"
                                     >
                                         Выход
                                     </NavDropdown.Item>
-                                </>
-                            )}
-                        </NavDropdown>
-                        <ModalRegisterLogin />
+                        </NavDropdown> :  
+                    <ModalRegisterLogin />}
+                        
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

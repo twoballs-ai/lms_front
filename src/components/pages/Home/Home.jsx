@@ -66,7 +66,7 @@ function Home() {
         try {
             axios
                 .get(
-                    apiUrl + "student-testimonial/"
+                    apiLmsUrl + "student-testimonial/"
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )

@@ -7,11 +7,18 @@ import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Alert from 'react-bootstrap/Alert';
 // import { teacherApiUrl } from "../../../../../shared/config";
-import { apiUrl } from "../../../../../shared/config";
+
 import "../registerComponents.css";
+import { apiUrl } from "../../../../shared/config";
 
 function TeacherRegister() {
+
+      const [showDangerAlert, setshowDangerAlert] = useState(false); 
+
+      const [textDangerAlert, setTextDangerAlert] = useState({}); 
+
     const [teacherRegisterData, setTeacherRegisterData] = useState({
         email: "",
         password1: "",
@@ -28,7 +35,7 @@ function TeacherRegister() {
         // console.log(teacherRegisterData)
     };
 
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
         const _formData = new FormData();
         _formData.append("email", teacherRegisterData.email);
@@ -38,15 +45,33 @@ function TeacherRegister() {
         // console.log(userData)
         // console.log(teacherRegisterData)
         try {
-            axios
+            const response = await  axios
                 .post(apiUrl + "user/teacher-register/",
                     _formData
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 )
-                .then((response) => {
-                    window.location.href =
-                        "/teacher-profile/verify-teacher/" + response.data.id;
-                });
+                console.log(response);
+                // console.log(JSON.stringify(response?.data));
+                // .then((response) => {
+                    if (response.status === 200 || response.status === 201) {
+                        setTeacherRegisterData({
+                            email: "",
+                            password1: "",
+                            password2: "",
+                            status: "success",
+                        });
+                //         console.log(response);
+                    }
+                   
+                //     // window.location.href = "/teacher-profile/verify-teacher/" + response.data.id;
+                // })
+                // .catch((err) => {
+                //     console.log(err.response);
+           
+                //         setshowDangerAlert(true)
+                //         setTextDangerAlert(err.response.data)
+       
+                //   })
         } catch (error) {
             console.log(error);
             setTeacherRegisterData({ status: "error" });
@@ -99,16 +124,23 @@ function TeacherRegister() {
                     </FloatingLabel>
                         <Button
                             onClick={submitForm}
-                            variant="primary"
+                            variant="secondary"
                             type="submit"
                         >
                             Регистрация
                         </Button>
+                        
                     </Form>
                 </Col>
                 <Col md={4} className="auth_reg_text">
                     <span>Выберите этот вариант если вы хотите создавать курсы на нашей платформе. В будущем вы сможете на них зарабатывать.</span>
                 </Col>
+                <Alert show={showDangerAlert}
+        variant="danger"
+        // className="w-25 mt-3 ml-3 "
+        onClose={() => setshowDangerAlert(false)} dismissible>
+{JSON.stringify(textDangerAlert)}
+        </Alert>
             </Row>
         </div>
     );

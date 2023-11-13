@@ -7,8 +7,9 @@ import { Row, Col } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import { apiUrl } from "../../../../../shared/config";
+
 import "../registerComponents.css";
+import { apiUrl } from "../../../../shared/config";
 
 function StudentRegister() {
     const [studentRegisterData, setStudentRegisterData] = useState({
@@ -59,6 +60,7 @@ function StudentRegister() {
         <div className="mx-3">
             <Row className="justify-content-md-center">
                 <Col md={3}>
+            
                     {studentRegisterData.status === "success" && (
                         <p className="text-success">
                             регистрация прошла успешно
@@ -98,7 +100,7 @@ function StudentRegister() {
                     </FloatingLabel>
                         <Button
                             onClick={submitForm}
-                            variant="primary"
+                            variant="secondary"
                             type="submit"
                         >
                             Регистрация
