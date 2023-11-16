@@ -10,6 +10,7 @@ import axios from "axios";
 
 import "../registerComponents.css";
 import { apiUrl } from "../../../../shared/config";
+import AuthService from "../../../../services/auth.service";
 
 function StudentRegister() {
     const [studentRegisterData, setStudentRegisterData] = useState({
@@ -25,7 +26,7 @@ function StudentRegister() {
             [event.target.name]: event.target.value,
         });
     };
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
         const _formData = new FormData();
         _formData.append("email", studentRegisterData.email);
@@ -34,27 +35,18 @@ function StudentRegister() {
         // const teacherFormRegisterData = new FormData()
         // console.log(userData)
         // console.log(teacherRegisterData)
-        try {
-            axios
-                .post(
-                    apiUrl + "user/student-register/",
-                    _formData
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                )
-                .then((response) => {
-                    console.log(response);
+
+            await AuthService.studentRegister(_formData).then((response) => {
+                if (response.status === 200 || response.status === 201) {
                     setStudentRegisterData({
                         email: "",
                         password1: "",
                         password2: "",
-                        status: "",
+                        status: "success",
                     });
-                    // Handle response
-                });
-        } catch (error) {
-            console.log(error);
-            setStudentRegisterData({ status: "error" });
-        }
+                    console.log(response);
+                }
+            });
     };
     return (
         <div className="mx-3">

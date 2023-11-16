@@ -51,9 +51,7 @@ function Footer() {
                     <Col><div>Категории курсов:</div>
                     {categoryData &&
                         categoryData.map((category, index) => (
-                          <>
-                          <p>{category.title}. кол-во курсов: {category.total_courses}</p>
-                          </>
+                          <p key = {category.id}>{category.title}. кол-во курсов: {category.total_courses}</p>
                         ))}
                     </Col>
                     <div className="border-top">

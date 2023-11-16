@@ -16,7 +16,7 @@ function ChangePassword() {
         password: "",
     });
 
-    const teacherId = localStorage.getItem("teacherId");
+    const teacherId = localStorage.getItem("user");
 
     const handleChange = (event) => {
         setTeacherData({

@@ -7,18 +7,18 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl } from "../../../../shared/config";
+import { apiLmsUrl } from "../../../../shared/config";
 
 function MyTeacherCourses() {
     const [courseData, setCourseData] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
-    const teacherId = localStorage.getItem("teacherId");
+    const teacherId = localStorage.getItem("user");
     // const [avgRatingStatus, setAvgRatingStatus] = useState("")
     // console.log(teacherId)
     useEffect(() => {
         axios
             .get(
-                apiUrl + "teacher-courses/" + teacherId
+                apiLmsUrl + "teacher-courses/" + teacherId
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 // ,{headers: { "Content-Type": "multipart/form-data" }}
             )
@@ -33,7 +33,7 @@ function MyTeacherCourses() {
 
                 try {
                     axios
-                        .delete(apiUrl + "teacher-courses-detail/" + course_id)
+                        .delete(apiLmsUrl + "teacher-courses-detail/" + course_id)
                         .then((response) => {
                            
                             setTotalResult(response.data.length);

@@ -9,10 +9,10 @@ import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 // import Form from 'react-bootstrap/Form';
 import Row from "react-bootstrap/Row";
-import { apiUrl } from "../../../../shared/config";
+import { apiUserUrl } from "../../../../shared/config";
 
 function ProfileSettings() {
-    const teacherId = localStorage.getItem("teacherId");
+    const teacherId = localStorage.getItem("user");
     const [teacherData, setTeacherData] = useState({
         full_name: "",
         email: "",
@@ -26,7 +26,7 @@ function ProfileSettings() {
     useEffect(() => {
         axios
             .get(
-                apiUrl + "teacher/" + teacherId
+                apiUserUrl + "teacher/" + teacherId
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 // ,{headers: { "Content-Type": "multipart/form-data" }}
             )
@@ -79,7 +79,7 @@ function ProfileSettings() {
         try {
             axios
                 .put(
-                    apiUrl + "teacher/" + teacherId + "/",
+                    apiUserUrl + "teacher/" + teacherId + "/",
                     _formData,
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     { headers: { "Content-Type": "multipart/form-data" } }
@@ -97,10 +97,10 @@ function ProfileSettings() {
             setTeacherData({ status: "error" });
         }
     };
-    const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
-    if (teacherLoginStatus !== "true") {
-        window.location.href = "/teacher-login";
-    }
+    // const teacherLoginStatus = localStorage.getItem("teacherLoginStatus");
+    // if (teacherLoginStatus !== "true") {
+    //     window.location.href = "/teacher-login";
+    // }
     return (
         <>
             <Card>

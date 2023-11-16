@@ -4,16 +4,16 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import { apiUrl } from "../../../../shared/config";
+import { apiLmsUrl } from "../../../../shared/config";
 
 function MyStudents() {
     const [studentData, setStudentData] = useState([]);
-    const teacherId = localStorage.getItem("teacherId");
+    const teacherId = localStorage.getItem("user");
     // console.log(teacherId)
     useEffect(() => {
         axios
             .get(
-                apiUrl + "teacher-students/" + teacherId
+                apiLmsUrl + "teacher-students/" + teacherId
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 // ,{headers: { "Content-Type": "multipart/form-data" }}
             )

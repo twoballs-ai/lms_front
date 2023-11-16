@@ -6,7 +6,7 @@ const LoginTab = () => {
     return (
         <div className="LoginTab">
             <p>Войдите в свою учетную запись</p>
-            <AllProfilesLogin/>
+            <AllProfilesLogin />
         </div>
     );
 };

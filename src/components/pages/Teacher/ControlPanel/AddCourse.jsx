@@ -5,10 +5,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import { apiUrl } from "../../../../shared/config";
+import { apiLmsUrl } from "../../../../shared/config";
 
 function AddCourse() {
-    const teacherId = localStorage.getItem("teacherId");
+    const teacherId = localStorage.getItem("user");
     const [categories, setCategories] = useState([]);
     const [courseAddData, setCourseAddData] = useState({
         category: 1,
@@ -22,7 +22,7 @@ function AddCourse() {
     useEffect(() => {
         axios
             .get(
-                apiUrl + "category/",
+                apiLmsUrl + "category/",
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
@@ -58,7 +58,7 @@ function AddCourse() {
 
         axios
             .post(
-                apiUrl + "course/",
+                apiLmsUrl + "course/",
                 courseAddData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
