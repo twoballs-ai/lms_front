@@ -15,6 +15,7 @@ import NewAddedCourse from "./HomeComponents/NewAddedCourse";
 import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
 import HomePopularCourses from "./HomeComponents/HomePopularCourses";
 import StudentTestimonials from "./HomeComponents/StudentTestiomonials";
+import SiteService from "../../../services/site.service";
 
 function Home() {
     const [allCourseData, setAllCourseData] = useState([]);
@@ -25,58 +26,29 @@ function Home() {
     const teacherId = localStorage.getItem("teacherId");
     // console.log(teacherId)
     useEffect(() => {
-        axios
-            .get(
-                apiLmsUrl + "course/?result=4"
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setAllCourseData(response.data.results);
-                console.log(response.data);
+        const fetchData = async () => {
+            await SiteService.homePageNewCourses().then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    setAllCourseData(response.data.results);
+                }
             });
-        try {
-            axios
-                .get(
-                    apiLmsUrl + "popular-courses/?popular=1"
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    // ,{headers: { "Content-Type": "multipart/form-data" }}
-                )
-                .then((response) => {
+            await SiteService.homePagePopularCourses().then((response) => {
+                if (response.status === 200 || response.status === 201) {
                     setPopularCourseData(response.data);
-                    console.log(response.data);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-        try {
-            axios
-                .get(
-                    apiUserUrl + "popular-teachers/?popular=1"
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    // ,{headers: { "Content-Type": "multipart/form-data" }}
-                )
-                .then((response) => {
+                }
+            });
+            await SiteService.homePagePopularTeachers().then((response) => {
+                if (response.status === 200 || response.status === 201) {
                     setPopularTeacherData(response.data);
-                    console.log(response.data);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-        try {
-            axios
-                .get(
-                    apiLmsUrl + "student-testimonial/"
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    // ,{headers: { "Content-Type": "multipart/form-data" }}
-                )
-                .then((response) => {
+                }
+            });
+            await SiteService.homePageStudentsreviews().then((response) => {
+                if (response.status === 200 || response.status === 201) {
                     setStudentTestimonialData(response.data);
-                    console.log(response.data);
-                });
-        } catch (error) {
-            console.log(error);
-        }
+                }
+            });
+        };
+        fetchData();
     }, []);
 
     return (
@@ -85,7 +57,7 @@ function Home() {
                 <NewAddedCourse allCourseData={allCourseData} />
                 {/* popular courses */}
                 <HomePopularCourses popularCourseData={popularCourseData} />
-                {/* <HomeTeacherPopular popularTeacherData={popularTeacherData} /> */}
+                <HomeTeacherPopular popularTeacherData={popularTeacherData} />
                <StudentTestimonials studentTestimonialData={studentTestimonialData} />
             </div>
         </>

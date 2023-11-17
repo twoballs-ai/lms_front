@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { apiLmsUrl } from "../../../../shared/config";
+import SiteService from '../../../../services/site.service';
+import TeacherService from '../../../../services/teacher.service';
 
 function AddCourse() {
     const teacherId = localStorage.getItem("user");
@@ -20,16 +22,14 @@ function AddCourse() {
     });
 
     useEffect(() => {
-        axios
-            .get(
-                apiLmsUrl + "category/",
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                setCategories(response.data);
-                console.log(response.data);
+        const fetchData = async () => {
+            await SiteService.getCategory().then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    setCategories(response.data);
+                }
             });
+        }
+        fetchData()
     }, []);
 
     const handleChange = (event) => {
@@ -39,13 +39,6 @@ function AddCourse() {
         });
         console.log(courseAddData);
     };
-    // const handleChange = (event)=>{
-    //   setTeacherLoginData({
-    //     ...teacherLoginData,
-    //     [event.target.name]:event.target.value
-    //   })
-    //   console.log(teacherLoginData)
-    // }
 
     const handleFileChange = (event) => {
         setCourseAddData({
@@ -53,23 +46,19 @@ function AddCourse() {
             [event.target.name]: event.target.files[0],
         });
     };
-    const formSubmit = (e) => {
-        e.preventDefault();
 
-        axios
-            .post(
-                apiLmsUrl + "course/",
-                courseAddData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                window.location.href = "/teacher-profile/my-courses";
-            });
+    const formSubmit = async (e) => {
+        e.preventDefault();
+        const response = await TeacherService.addCourse(courseAddData)
+        if (response.status === 200 || response.status === 201) {
+            console.log(response.status)
+        window.location.href = "/teacher-profile/my-courses";
+        }
+       
     };
     return (
         <>
-            <Card>
+            <Card className="border border-0 shadow ">
                 <Card.Header>Добавление курса</Card.Header>
                 <Card.Body>
                     <Form>

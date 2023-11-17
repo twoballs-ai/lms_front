@@ -78,8 +78,10 @@ function Header() {
                         </Nav.Link>
                    
                         {isAuth ?  <NavDropdown
+                        align="end"
                             title="Профиль"
                             id="navbarScrollingDropdown"
+                            className="mb-2"
                         >
                             {is_teacher === "true" && (
                                 <>

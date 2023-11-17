@@ -63,6 +63,9 @@ console.log("pipiska")
             return Promise.reject(_error);
           }
         }
+        if (err.response.status === 403 && err.response.data) {
+          return Promise.reject(err.response.data);
+        }
     }
   
       return Promise.reject(err);

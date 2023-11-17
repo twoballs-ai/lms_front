@@ -31,6 +31,7 @@ const login = async (data) => {
 
 const logout = () => {
   localStorage.clear();
+  window.location.href='/';
 };
 
 const getCurrentUser = () => {

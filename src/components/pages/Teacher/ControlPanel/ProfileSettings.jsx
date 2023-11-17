@@ -103,7 +103,7 @@ function ProfileSettings() {
     // }
     return (
         <>
-            <Card>
+            <Card className="border border-0 shadow ">
                 <Card.Header>
                     <h3>Изменение настроек профиля</h3>
                 </Card.Header>

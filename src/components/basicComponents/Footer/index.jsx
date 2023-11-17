@@ -8,26 +8,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { apiLmsUrl } from "../../../shared/config";
+import SiteService from "../../../services/site.service";
 function Footer() {
-  const [categoryData, setCategoryData] = useState([]);
-  useEffect(() => {
-
-    try {
-        axios
-            .get(
-                apiLmsUrl + "category/"
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setCategoryData(response.data);
-                console.log(response.data);
+    const [categoryData, setCategoryData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            await SiteService.getCategory().then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    setCategoryData(response.data);
+                }
             });
-    } catch (error) {
-        console.log(error);
-    }
- 
-}, []);
+        };
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -40,19 +33,19 @@ function Footer() {
                             <span>Telegram:</span>
                             <br />
                             <span>
-                                
-                                <a
-                                    href="https://vk.com/intellity"
-
-                                >vk</a>
+                                <a href="https://vk.com/intellity">vk</a>
                             </span>
                         </span>
                     </Col>
-                    <Col><div>Категории курсов:</div>
-                    {categoryData &&
-                        categoryData.map((category, index) => (
-                          <p key = {category.id}>{category.title}. кол-во курсов: {category.total_courses}</p>
-                        ))}
+                    <Col>
+                        <div>Категории курсов:</div>
+                        {categoryData &&
+                            categoryData.map((category, index) => (
+                                <p key={category.id}>
+                                    {category.title}. кол-во курсов:{" "}
+                                    {category.total_courses}
+                                </p>
+                            ))}
                     </Col>
                     <div className="border-top">
                         <p>intellity code, 2023</p>

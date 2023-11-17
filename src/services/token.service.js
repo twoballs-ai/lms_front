@@ -5,7 +5,6 @@ const getLocalRefreshToken = () => {
   
   const getLocalAccessToken = () => {
     const access_token = JSON.parse(localStorage.getItem("access_token"));
-    console.log(access_token)
     return access_token;
   };
   

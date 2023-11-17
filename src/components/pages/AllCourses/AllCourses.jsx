@@ -9,6 +9,7 @@ import Pagination from "react-bootstrap/Pagination";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { apiLmsUrl } from "../../../shared/config";
+import SiteService from "../../../services/site.service";
 
 function AllCourses() {
     const [allCourseData, setAllCourseData] = useState([]);
@@ -34,19 +35,14 @@ function AllCourses() {
         fetchData(url);
     };
 
-    function fetchData(url) {
-        axios
-            .get(
-                url
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
+    async function fetchData(url) {
+        await SiteService.allCoursesPage(url).then((response) => {
+            if (response.status === 200 || response.status === 201) {
                 setAllCourseData(response.data.results);
                 setNextUrl(response.data.next);
                 setPrevUrl(response.data.previous);
-                console.log(response.data);
-            });
+            }
+        });
     }
     const paginationBasic = (
         <div className="mt-5">

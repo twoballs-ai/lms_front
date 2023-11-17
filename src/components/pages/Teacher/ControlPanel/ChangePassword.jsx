@@ -54,7 +54,7 @@ function ChangePassword() {
     };
     return (
         <>
-            <Card>
+            <Card className="border border-0 shadow ">
                 <Card.Header>Смена пароля</Card.Header>
                 <Card.Body>
                     <Form>

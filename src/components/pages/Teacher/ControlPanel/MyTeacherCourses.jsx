@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { apiLmsUrl } from "../../../../shared/config";
+import TeacherService from '../../../../services/teacher.service';
 
 function MyTeacherCourses() {
     const [courseData, setCourseData] = useState([]);
@@ -16,42 +17,57 @@ function MyTeacherCourses() {
     // const [avgRatingStatus, setAvgRatingStatus] = useState("")
     // console.log(teacherId)
     useEffect(() => {
-        axios
-            .get(
-                apiLmsUrl + "teacher-courses/" + teacherId
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setCourseData(response.data);
-                setTotalResult(response.data.length);
-                console.log(response.data.length);
-                // setAvgRatingStatus
-            });
-    }, [totalResult]);
-    const handleDeleteClick = (course_id) => {
 
-                try {
-                    axios
-                        .delete(apiLmsUrl + "teacher-courses-detail/" + course_id)
-                        .then((response) => {
-                           
-                            setTotalResult(response.data.length);
-                            console.log(response.data.length);
-                        });
-                 
-                } catch (error) {
-                   
+        const fetchData = async () => {
+            await TeacherService.teacherCourses(teacherId).then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    setCourseData(response.data);
+                    setTotalResult(response.data.length);
                 }
+            });
+        }
+        fetchData()
+        // axios
+        //     .get(
+        //         apiLmsUrl + "teacher-courses/" + teacherId
+        //         // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+        //         // ,{headers: { "Content-Type": "multipart/form-data" }}
+        //     )
+        //     .then((response) => {
+        //         setCourseData(response.data);
+        //         setTotalResult(response.data.length);
+        //         console.log(response.data.length);
+        //         // setAvgRatingStatus
+        //     });
+    }, [totalResult]);
+    const handleDeleteClick = async (course_id) => {
+
+       
+        const response = await TeacherService.deleteTeacherCourse(course_id)
+        // console.log(resp)
+                      setTotalResult(response.data.length);
+                            console.log(response.data.length);
+                // try {
+                //     axios
+                //         .delete(apiLmsUrl + "teacher-courses-detail/" + course_id)
+                //         .then((response) => {
+                           
+                //             setTotalResult(response.data.length);
+                //             console.log(response.data.length);
+                //         });
+                 
+                // } catch (error) {
+                   
+                // }
        
      
     };
     return (
         <>
-            <Card>
+            <Card className="border border-0 shadow ">
                 <Card.Header>Мои курсы</Card.Header>
                 <Card.Body>
-                    <Table striped bordered hover>
+                    <Table hover >
                         <thead>
                             <tr>
                                 <th>Название курса</th>

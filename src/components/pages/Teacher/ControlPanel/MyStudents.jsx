@@ -5,28 +5,28 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { apiLmsUrl } from "../../../../shared/config";
+import TeacherService from '../../../../services/teacher.service';
 
 function MyStudents() {
     const [studentData, setStudentData] = useState([]);
     const teacherId = localStorage.getItem("user");
     // console.log(teacherId)
     useEffect(() => {
-        axios
-            .get(
-                apiLmsUrl + "teacher-students/" + teacherId
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setStudentData(response.data);
-                console.log(response.data);
+        const fetchData = async () => {
+            await TeacherService.teacherStudents(teacherId).then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    setStudentData(response.data);
+                    console.log(response.data);
+                }
             });
+        }
+        fetchData()
     }, []);
-    console.log();
+
     return (
         <>
-            <Card>
-                <Card.Header>Список подписавшихся на курс</Card.Header>
+            <Card className="border border-0 shadow ">
+                <Card.Header>Список всех учеников.</Card.Header>
                 <Card.Body>
                     <Table striped bordered hover>
                         <thead>
