@@ -7,9 +7,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
-import Editor from "../../../../../Editor";
+import Editor from "../../../../../../Editor";
 import axios from "axios";
-import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
+import { apiUrl, typesApiUrl } from "../../../../../../../shared/config";
 function EditQuizLesson(props) {
     let stage_id = props.contentData.stage
     let contentData = props.contentData.content

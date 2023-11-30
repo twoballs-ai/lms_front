@@ -16,7 +16,7 @@ import { faGhost } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import { faFilm } from "@fortawesome/free-solid-svg-icons";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl, typesApiUrl } from "../../../../shared/config";
+import { apiUrl, typesApiUrl } from "../../../../../shared/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
 import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
@@ -25,6 +25,7 @@ import AddingCodeLesson from "./TypeLessonForm/CodeLesson";
 import EditClassicLesson from "./TypeLessonForm/Edit/ClassicLessonEdit";
 import EditQuizLesson from "./TypeLessonForm/Edit/QuizLessonEdit";
 import EditVideoLesson from "./TypeLessonForm/Edit/VideoLessonEdit";
+import CourseEditorService from "../../../../../services/course.editor.service";
 function EditModuleStage() {
     let { module_id } = useParams();
     let { course_id } = useParams();
@@ -42,24 +43,17 @@ function EditModuleStage() {
     // const {state} = useLocation();
     // const { type } = state;
     useEffect(() => {
-        try {
-            axios
-                .get(
-                    apiUrl + "module-stage/" + module_id
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    // ,{headers: { "Content-Type": "multipart/form-data" }}
-                )
-                .then((response) => {
-                    console.log(response.data);
+        const fetchData = async () => {
+            await CourseEditorService.editCoursePageGetModuleStage(module_id).then((response) => {
+                if (response.status === 200 || response.status === 201) {
                     setModuleData(response.data);
                     // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
                     setStagePkData(response.data[parseInt(stage_id)-1] && response.data[parseInt(stage_id)-1]["id"])
-                    // setTypeStageData()
-                    // setStagePk(response.data.id);
-                });
-        } catch (error) {
-            console.log(error);
-        }
+                }
+            });
+        };
+        fetchData();
+
     }, [module_id,stage_id, navigate, location]);
     const addStage = () => {
         try {

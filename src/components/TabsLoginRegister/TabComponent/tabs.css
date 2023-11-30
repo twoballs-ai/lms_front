@@ -13,7 +13,7 @@
     }
    }
 
-   ul.nav {
+   ul.tabsNav {
     width: 60%;
     margin: 0 auto 2rem;
     display: flex;
@@ -26,7 +26,7 @@
       width: 90%;
     }
   }
-  ul.nav li {
+  ul.tabsNav li {
     width: 50%;
     padding: 1rem;
     list-style: none;
@@ -36,15 +36,15 @@
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
   }
-  ul.nav li:nth-child(2) {
+  ul.tabsNav li:nth-child(2) {
     border-radius: 0;
     border-bottom-right-radius: 2rem;
     border-top-right-radius: 2rem;
   }
-  ul.nav li:hover {
+  ul.tabsNav li:hover {
     background: rgba(50, 224, 196, 0.15);
   }
-  ul.nav li.active {
+  ul.tabsNav li.active {
     background: #39A2DB;
   }
 

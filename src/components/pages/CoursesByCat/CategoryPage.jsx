@@ -9,23 +9,23 @@ import Pagination from "react-bootstrap/Pagination";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { apiLmsUrl } from "../../../shared/config";
+import SiteService from "../../../services/site.service";
 
 function CategoryPage() {
+
     const [categoryData, setCategoryData] = useState([]);
 
     // const teacherId = localStorage.getItem('teacherId')
     // console.log(teacherId)
     useEffect(() => {
-        axios
-            .get(
-                apiLmsUrl + "category/"
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setCategoryData(response.data);
-                console.log(response.data);
+        const fetchData = async () => {
+            await SiteService.getCategory().then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    setCategoryData(response.data);
+                }
             });
+        };
+        fetchData();
     }, []);
 
     let active = 2;

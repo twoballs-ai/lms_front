@@ -5,8 +5,9 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import axios from "axios";
-import { apiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from 'react-router-dom';
+import CourseEditorService from '../../../../../services/course.editor.service'
+// import { apiLmsUrl } from '../../../../shared/config'
 function AddModule() {
     // const teacherId= localStorage.getItem('teacherId')
     const { chapter_id } = useParams();
@@ -14,8 +15,10 @@ function AddModule() {
     const navigate = useNavigate();
     const [chapterAddData, setChapterAddData] = useState({
         chapter: chapter_id,
+        course: course_id,
         title: "",
         description: "",
+        stage_modules:[],
     });
     useEffect(() => {
         setChapterAddData({
@@ -33,45 +36,48 @@ function AddModule() {
         // console.log(chapterAddData);
     };
 
-    const formSubmit = (e) => {
+    const formSubmit = async (e) => {
         e.preventDefault();
+        
+        const response = await CourseEditorService.editCoursePageAddModule(chapter_id, chapterAddData)
+        if (response.status === 200 || response.status === 201) {
+            const data =  {
+                module: response.data.id,
+                course: course_id,
+                stage_numbers:1
+            }
+            const responseNext = await CourseEditorService.editCoursePageAddModuleStage(response.data.id, data)
+            if (responseNext.status === 200 || responseNext.status === 201) {
+                console.log(response)
+                navigate(
+                    `/edit-course-full/edit-module/${course_id}/${responseNext.data.module}/stage/1`
+                );
+            }
+            // console.log(response)
+            // try {
+            //     axios
+            //         .post(
+            //             apiUrl + "module-stage/" + response.data.id,
+            //             {
+            //                 module: response.data.id,
+            //                 stage_numbers:1
+            //             },
+            //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+            //             { headers: { "Content-Type": "multipart/form-data" } }
+            //         )
+            //         .then((response) => {
+            //             if (response.status === 200 || response.status === 201) {
+                          
+            //                 navigate(
+            //                     `/edit-course-full/edit-module/${course_id}/${response.data.module}/stage/1`
+            //                 );
+            //             }
+            //         });
+            // } catch (error) {
+            //     console.log(error);
+            // }
+        }
 
-        axios
-            .post(
-                apiUrl + "chapter-module/" + chapter_id,
-                chapterAddData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    
-                    try {
-                        axios
-                            .post(
-                                apiUrl + "module-stage/" + response.data.id,
-                                {
-                                    module: response.data.id,
-                                    stage_numbers:1
-                                },
-                                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                                { headers: { "Content-Type": "multipart/form-data" } }
-                            )
-                            .then((response) => {
-                                if (response.status === 200 || response.status === 201) {
-                                  
-                                    navigate(
-                                        `/edit-course-full/edit-module/${course_id}/${response.data.module}/stage/1`
-                                    );
-                                }
-                            });
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
-
-                // window.location.href='/teacher-profile/my-courses'
-            });
     };
 
     return (

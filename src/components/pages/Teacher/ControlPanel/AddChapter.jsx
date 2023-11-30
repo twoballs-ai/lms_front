@@ -6,16 +6,16 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import { apiUrl } from "../../../../shared/config";
+import CourseEditorService from "../../../../services/course.editor.service";
 
 function AddChapter() {
-    // const teacherId= localStorage.getItem('teacherId')
     const { course_id } = useParams();
     const [chapterAddData, setChapterAddData] = useState({
         course: course_id,
         title: "",
         description: "",
+        chapter_modules:[],
     });
-
     const handleChange = (event) => {
         setChapterAddData({
             ...chapterAddData,
@@ -30,24 +30,14 @@ function AddChapter() {
     //     [event.target.name]:event.target.files[0]
     //   })
     // }
-    const formSubmit = (e) => {
+    const formSubmit = async (e) => {
         e.preventDefault();
+        const response = await CourseEditorService.editCoursePageAddChapter(course_id, chapterAddData)
+        if (response.status === 200 || response.status === 201) {
+            console.log(response.status)
+            // window.location.reload();
+        }
 
-        axios
-            .post(
-                apiUrl + "course-chapter/" + course_id,
-                chapterAddData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                 
-                    window.location.reload();
-                }
-
-                // window.location.href='/teacher-profile/my-courses'
-            });
     };
     return (
         <>

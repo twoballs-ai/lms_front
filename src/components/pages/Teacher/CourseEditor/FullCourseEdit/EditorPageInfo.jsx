@@ -9,7 +9,7 @@ import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 // import Form from 'react-bootstrap/Form';
 import Row from "react-bootstrap/Row";
-import { apiUrl } from "../../../../shared/config";
+// import { apiUrl } from "../../../../shared/config";
 
 function EditorPageInfo() {
     const [dashboardData, setDashboardData] = useState([]);

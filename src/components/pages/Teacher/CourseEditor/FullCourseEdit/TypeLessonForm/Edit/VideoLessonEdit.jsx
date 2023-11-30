@@ -11,7 +11,7 @@ import axios from "axios";
 import ReactPlayer from 'react-player'
 
 
-import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
+import { apiUrl, typesApiUrl } from "../../../../../../../shared/config";
 function EditVideoLesson(props) {
     let stage_id = props.contentData.stage
     let contentData = props.contentData.video_lesson

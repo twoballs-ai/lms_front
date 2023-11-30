@@ -8,70 +8,67 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
-import Editor from "../../../../Editor";
-import { apiUrl, typesApiUrl } from "../../../../../shared/config";
-function AddingClassicLesson(props) {
+import Editor from "../../../../../../Editor";
+import { apiUrl, typesApiUrl } from "../../../../../../../shared/config";
+function EditClassicLesson(props) {
     const [valueEditor, setValueEditor] = useState('')
-    const handleChange = (valueEditor) => {
+    const handleChange2 = (valueEditor) => {
         setValueEditor(valueEditor)
-        console.log(valueEditor)
     }
 
-    let stagePk = props.data
+    let stage_id = props.contentData.stage
+    let contentData = props.contentData.content
     const location = useLocation();
     const navigate = useNavigate();
-
-    console.log(stagePk)
-
-    
+ 
+    console.log(props)
 
     const formSubmit = (e) => {
         e.preventDefault();
 
         axios
-            .post(
-                typesApiUrl + "classic-lesson/" + stagePk,
+            .put(
+                typesApiUrl + "classic-lesson-detail/" + props.contentData.id,
                 {
-                    stage: stagePk,
+                    stage: stage_id,
                     is_classic: true,
                     content: JSON.stringify(valueEditor)
-
+            
                 },
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
             .then((response) => {
-                navigate(-2);
+                // navigate(-2);
+                window.location.reload();
             });
     };
-
     return (
         <div>
-            {location.state.type === "classicLesson" && (
             <Card className="mt-3 mx-3">
                     <Card.Header>
-                        Вы находитесь на этапе добавления классического урока с видео, фото, текстом
+                    Вы находитесь на этапе редактирования классического урока с видео, фото, текстом
                     </Card.Header>
                     <Card.Body>
-                        <div className="App">
+                    <div className="App">
 
-                            <Editor onChange={handleChange} />
+<Editor onChange={handleChange2} data ={contentData} />
 
-                        </div>
-
-                        <Button
-                            onClick={formSubmit}
-                            variant="primary"
-                            type="submit"
-                        >
-                            Submit
-                        </Button>
-
+    </div>
+                   
+                            <Button
+                                onClick={formSubmit}
+                                variant="primary"
+                                type="submit"
+                            >
+                                Submit
+                            </Button>
+                   
                     </Card.Body>
                 </Card>
-            )}
+
         </div>
     );
 }
 
-export default AddingClassicLesson
+export default EditClassicLesson

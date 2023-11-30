@@ -19,7 +19,7 @@ const TabsAuth = ({authState}) => {
     return (
         <div className="Tabs">
             {/* Tab nav */}
-            <ul className="nav">
+            <ul className="nav tabsNav">
                 {/* <li className={activeTab === "login" ? "active" : "" } onClick={handleTab1}>Вход</li>
         <li className={activeTab === "register" ? "active" : ""} onClick={handleTab2}>Регистрация</li> */}
                 <TabNavItem

@@ -8,8 +8,8 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
-import Editor from "../../../../Editor";
-import { apiUrl, typesApiUrl } from "../../../../../shared/config";
+import Editor from "../../../../../Editor";
+import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
 function AddingQuizLesson(props) {
     let stagePk = props.data
     const location = useLocation();

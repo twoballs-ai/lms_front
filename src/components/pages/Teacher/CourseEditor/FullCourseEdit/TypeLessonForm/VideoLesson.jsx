@@ -8,46 +8,36 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
-import Editor from "../../../../Editor";
-import { apiUrl, typesApiUrl } from "../../../../../shared/config";
-import CodeEditor from "../../../../CodeEditor";
-function AddingCodeLesson(props) {
-    let stagePk = props.stagePk
+import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
+function AddingVideoLesson(props) {
+    let stagePk = props.data
+
     const location = useLocation();
     const navigate = useNavigate();
-    const [programmingLessonData, setProgrammingLessonData] = useState({
-        stage: stagePk,
+    const [videoLessonData, setVideoLessonData] = useState({
         is_video: true,
         video_lesson: "",
-        description: ""
+        stage: "",
     });
-    const [valueEditor, setValueEditor] = useState('')
-    const handleChangeContent = (valueEditor) => {
-        setValueEditor(valueEditor)
-        console.log(valueEditor)
-    }
-    const [valueCodeEditor, setValueCodeEditor] = useState('')
-    const handleChangeCodeContent = (valueEditor) => {
-        setValueCodeEditor(valueCodeEditor)
-        console.log(valueCodeEditor)
-    }
-    console.log(location.state);
- 
+
     const handleChange = (event) => {
-        setProgrammingLessonData({
-            ...programmingLessonData,
+        setVideoLessonData({
+            ...videoLessonData,
             [event.target.name]: event.target.value,
         });
-        console.log(programmingLessonData);
+        console.log(videoLessonData);
     };
 
     const formSubmit = (e) => {
         e.preventDefault();
-
+        const _formData = new FormData();
+        _formData.append("stage", stagePk);
+        _formData.append("is_video", videoLessonData.is_video);
+        _formData.append("video_lesson", videoLessonData.video_lesson);
         axios
             .post(
-                typesApiUrl + "video-lesson/" + stage_id,
-                programmingLessonData,
+                typesApiUrl + "video-lesson/" + stagePk,
+                _formData,
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
@@ -56,27 +46,35 @@ function AddingCodeLesson(props) {
                 navigate(-2);
             });
     };
-    console.log(props)
     return (
         <div>
-            {location.state.type === "codingLesson" && (
+            {location.state.type === "videoLesson" && (
             <Card className="mt-3 mx-3">
                     <Card.Header>
-                        Добавление урока на программирование
+                    Вы находитесь на этапе добавления видеоурока
                     </Card.Header>
                     <Card.Body>
-                    <Editor  onChange={handleChangeContent}/>
                         <Form>
-                    <div className="mt-5">
-                        <CodeEditor onChange={handleChangeCodeContent}/>
-                    </div>
-   
+                                            <Form.Group
+                                className="mb-3"
+                                controlId="formBasicCategory"
+                            >
+                                <Form.Label>
+                                    Добавление ссылки на видео
+                                </Form.Label>
+                                <Form.Control
+                                    name="video_lesson"
+                                    type="text"
+                                    placeholder="Добавление ссылки"
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>   
                             <Button
                                 onClick={formSubmit}
                                 variant="primary"
                                 type="submit"
                             >
-                                Submit
+                                Добавить видеоурок
                             </Button>
                         </Form>
                     </Card.Body>
@@ -86,4 +84,4 @@ function AddingCodeLesson(props) {
     );
 }
 
-export default AddingCodeLesson
+export default AddingVideoLesson

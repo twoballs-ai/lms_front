@@ -10,65 +10,68 @@ import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import Editor from "../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
-function EditClassicLesson(props) {
+function AddingClassicLesson(props) {
     const [valueEditor, setValueEditor] = useState('')
-    const handleChange2 = (valueEditor) => {
+    const handleChange = (valueEditor) => {
         setValueEditor(valueEditor)
+        console.log(valueEditor)
     }
 
-    let stage_id = props.contentData.stage
-    let contentData = props.contentData.content
+    let stagePk = props.data
     const location = useLocation();
     const navigate = useNavigate();
- 
-    console.log(props)
+
+    console.log(stagePk)
+
+    
 
     const formSubmit = (e) => {
         e.preventDefault();
 
         axios
-            .put(
-                typesApiUrl + "classic-lesson-detail/" + props.contentData.id,
+            .post(
+                typesApiUrl + "classic-lesson/" + stagePk,
                 {
-                    stage: stage_id,
+                    stage: stagePk,
                     is_classic: true,
                     content: JSON.stringify(valueEditor)
-            
+
                 },
                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                 { headers: { "Content-Type": "multipart/form-data" } }
             )
             .then((response) => {
-                // navigate(-2);
-                window.location.reload();
+                navigate(-2);
             });
     };
+
     return (
         <div>
+            {location.state.type === "classicLesson" && (
             <Card className="mt-3 mx-3">
                     <Card.Header>
-                    Вы находитесь на этапе редактирования классического урока с видео, фото, текстом
+                        Вы находитесь на этапе добавления классического урока с видео, фото, текстом
                     </Card.Header>
                     <Card.Body>
-                    <div className="App">
+                        <div className="App">
 
-<Editor onChange={handleChange2} data ={contentData} />
+                            <Editor onChange={handleChange} />
 
-    </div>
-                   
-                            <Button
-                                onClick={formSubmit}
-                                variant="primary"
-                                type="submit"
-                            >
-                                Submit
-                            </Button>
-                   
+                        </div>
+
+                        <Button
+                            onClick={formSubmit}
+                            variant="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+
                     </Card.Body>
                 </Card>
-
+            )}
         </div>
     );
 }
 
-export default EditClassicLesson
+export default AddingClassicLesson

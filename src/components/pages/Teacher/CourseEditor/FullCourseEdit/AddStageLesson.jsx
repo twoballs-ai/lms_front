@@ -7,8 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import axios from "axios";
-import ListGroup from "react-bootstrap/ListGroup";
-import { apiUrl, typesApiUrl } from "../../../../shared/config";
+// import ListGroup from "react-bootstrap/ListGroup";
+// import { apiUrl, typesApiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from 'react-router-dom';
 function AddStageLesson() {
     let { module_id } = useParams();
