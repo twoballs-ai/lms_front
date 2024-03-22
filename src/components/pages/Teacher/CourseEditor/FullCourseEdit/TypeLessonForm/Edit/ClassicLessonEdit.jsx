@@ -10,6 +10,7 @@ import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import Editor from "../../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../../shared/config";
+import CourseEditorService from "../../../../../../../services/course.editor.service";
 function EditClassicLesson(props) {
     const [valueEditor, setValueEditor] = useState('')
     const handleChange2 = (valueEditor) => {
@@ -23,26 +24,21 @@ function EditClassicLesson(props) {
  
     console.log(props)
 
-    const formSubmit = (e) => {
-        e.preventDefault();
 
-        axios
-            .put(
-                typesApiUrl + "classic-lesson-detail/" + props.contentData.id,
-                {
-                    stage: stage_id,
-                    is_classic: true,
-                    content: JSON.stringify(valueEditor)
-            
-                },
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                // navigate(-2);
+    const formSubmit = async (e) => {
+        e.preventDefault();
+        const data = {
+            stage: stage_id,
+            is_classic: true,
+            content: valueEditor
+        };
+        await CourseEditorService.editCoursePagePutClassicLesson(props.contentData.id,data).then((response) => {
+            if (response.status === 200 || response.status === 201) {
                 window.location.reload();
-            });
+            }
+        });
     };
+
     return (
         <div>
             <Card className="mt-3 mx-3">

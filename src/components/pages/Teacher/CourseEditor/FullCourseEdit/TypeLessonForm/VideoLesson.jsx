@@ -9,6 +9,7 @@ import Table from "react-bootstrap/Table";
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
+import CourseEditorService from "../../../../../../services/course.editor.service";
 function AddingVideoLesson(props) {
     let stagePk = props.data
 
@@ -28,24 +29,20 @@ function AddingVideoLesson(props) {
         console.log(videoLessonData);
     };
 
-    const formSubmit = (e) => {
+    const formSubmit = async (e) => {
         e.preventDefault();
         const _formData = new FormData();
         _formData.append("stage", stagePk);
         _formData.append("is_video", videoLessonData.is_video);
         _formData.append("video_lesson", videoLessonData.video_lesson);
-        axios
-            .post(
-                typesApiUrl + "video-lesson/" + stagePk,
-                _formData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                console.log(response.status)
+
+        await CourseEditorService.editCoursePageAddVideoLesson(stagePk,_formData).then((response) => {
+            if (response.status === 200 || response.status === 201) {
                 navigate(-2);
-            });
+            }
+        });
     };
+
     return (
         <div>
             {location.state.type === "videoLesson" && (

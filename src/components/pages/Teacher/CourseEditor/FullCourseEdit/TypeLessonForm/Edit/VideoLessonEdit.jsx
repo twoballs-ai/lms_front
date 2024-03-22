@@ -12,6 +12,7 @@ import ReactPlayer from 'react-player'
 
 
 import { apiUrl, typesApiUrl } from "../../../../../../../shared/config";
+import CourseEditorService from "../../../../../../../services/course.editor.service";
 function EditVideoLesson(props) {
     let stage_id = props.contentData.stage
     let contentData = props.contentData.video_lesson
@@ -36,25 +37,20 @@ function EditVideoLesson(props) {
         console.log(videoLessonData);
     };
 
-    const formSubmit = (e) => {
+    const formSubmit = async (e) => {
         e.preventDefault();
         const _formData = new FormData();
         _formData.append("stage", stage_id);
         _formData.append("is_video", videoLessonData.is_video);
         _formData.append("video_lesson", videoLessonData.video_lesson);
-        axios
-            .put(
-                typesApiUrl + "video-lesson-detail/" + props.contentData.id,
-                _formData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
-                console.log(response.status)
-                // navigate(-2);
+
+        await CourseEditorService.editCoursePagePutVideoLesson(props.contentData.id,_formData).then((response) => {
+            if (response.status === 200 || response.status === 201) {
                 window.location.reload();
-            });
+            }
+        });
     };
+
     return (
         <div>
             <Card className="mt-3 mx-3">

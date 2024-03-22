@@ -46,7 +46,7 @@ function AddModule() {
                 course: course_id,
                 stage_numbers:1
             }
-            const responseNext = await CourseEditorService.editCoursePageAddModuleStage(response.data.id, data)
+            const responseNext = await CourseEditorService.editCoursePageAddModuleStage(course_id, response.data.id, data)
             if (responseNext.status === 200 || responseNext.status === 201) {
                 console.log(response)
                 navigate(

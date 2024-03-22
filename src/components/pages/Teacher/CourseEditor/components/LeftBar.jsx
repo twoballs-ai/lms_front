@@ -13,9 +13,11 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 // import { apiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import CourseEditorService from "../../../../../services/course.editor.service";
+import { apiLmsUrl } from "../../../../../shared/config";
+import "./style.css";
 
-function LeftBar() { 
-
+function LeftBar() {
+    
     let { course_id } = useParams();
     let { module_id } = useParams();
     const navigate = useNavigate();
@@ -25,25 +27,32 @@ function LeftBar() {
     // const [moduleData, setModuleData]= useState([])
     // const [skillListData, setSkillListData]= useState([])
     // const [teacherData, setTeacherData]= useState([])
-    console.log(module_id)
+    console.log(module_id);
     useEffect(() => {
         const fetchData = async () => {
-            await CourseEditorService.editCoursePageGetCourse(course_id).then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    setCourseData(response.data);
+            await CourseEditorService.editCoursePageGetCourse(course_id).then(
+                (response) => {
+                    if (response.status === 200 || response.status === 201) {
+                        setCourseData(response.data);
+                    }
                 }
-            });
-            await CourseEditorService.editCoursePageGetChapter(course_id).then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    setChapterData(response.data);
+            );
+            await CourseEditorService.editCoursePageGetChapter(course_id).then(
+                (response) => {
+                    if (response.status === 200 || response.status === 201) {
+                        setChapterData(response.data);
+                    }
                 }
-            });
+            );
         };
         fetchData();
     }, [navigate, location, course_id]);
     useEffect(() => {
         const fetchData = async () => {
-            await CourseEditorService.editCoursePageGetModuleStage(module_id).then((response) => {
+            await CourseEditorService.editCoursePageGetModuleStage(
+                course_id,
+                module_id
+            ).then((response) => {
                 if (response.status === 200 || response.status === 201) {
                     setStepsData(response.data);
                 }
@@ -51,75 +60,132 @@ function LeftBar() {
         };
         fetchData();
     }, [module_id]);
-    return(
-        <>
 
-                        <div className="leftsidebar ps-2">
-                            <p className="text-light">{courseData.title}</p>
-                            <hr className="text-light me-2" />
-                            {/* пофиксить: */}
-                            {chapterData.map((tech) => {
-                                return (
-                                    <div key={tech.id}>
-                                        <h5 className="text-light h6">
-                                            {tech.title}
-                                        </h5>
-                                        {tech.chapter_modules.map(
-                                            (modules, index) => {
-                                                return (
-                                                    <ul
-                                                        className="nav flex-column"
-                                                        key={modules.id}
-                                                    >
-                                                        <li className="nav-item">
-                                                            <Link
-                                                                className="nav-link text-light"
-                                                                to={
-                                                                    "/edit-course-full/edit-module/" +
-                                                                    course_id +
-                                                                    "/" +
-                                                                    modules.id +
-                                                                    "/stage/1"
-                                                                }
-                                                            >
-                                                                {modules.title}
-                                                            </Link>
-                                                        </li>
-                                                    </ul>
-                                                );
-                                            }
-                                        )}
-                                        <Button
-                                            className="ms-5"
-                                            as={Link}
-                                            to={
-                                                "/edit-course-full/add-module/" +
-                                                course_id +
-                                                "/" +
-                                                tech.id
-                                            }
-                                            variant="success"
-                                        >
-                                            + модуль
-                                        </Button>{" "}
-                                    </div>
-                                );
-                            })}
-                            <hr />
+    const ModuleListMenu = ({ data }) => {
+        return (
+            <>
+                {data.map((modules, index) => {
+                    return (
+                        <ul className="nav flex-column" key={modules.id}>
+                            <li className="nav-item">
+                                <ModuleMenuItem item={modules} />
+
+                                {/* {showButtonDelete && key === modules.id && (
+                        <span>{index}</span>
+                    )} */}
+                            </li>
+                        </ul>
+                    );
+                })}
+            </>
+        );
+    };
+
+
+    const ModuleMenuItem = ({ item }) => {
+        const [showButtonDelete, setShowButtonDelete] = useState(false);
+        return (
+            <>
+                <Link
+                    onMouseEnter={() => setShowButtonDelete(true)}
+                    onMouseLeave={() => setShowButtonDelete(false)}
+                    className="nav-link text-light"
+                    to={
+                        "/edit-course-full/edit-module/" +
+                        course_id +
+                        "/" +
+                        item.id +
+                        "/stage/1"
+                        
+                    }
+                    key={item.id}
+                >
+                    
+                    {item.title}
+                    {showButtonDelete &&  
+               <Button className="ms-2" onClick={() => handleDeleteModule(item)} variant="danger" size="sm">Удалить модуль</Button>}
+                </Link>
+  
+               
+            </>
+        );
+    };
+
+    const ChapterMenuItem = ({ data }) => {
+        const [showButtonDelete, setShowButtonDelete] = useState(false);
+        return (
+            <>
+            <h5     onMouseEnter={() => setShowButtonDelete(true)}
+                    onMouseLeave={() => setShowButtonDelete(false)}
+            className="text-light h6">{data.title} {showButtonDelete &&  
+               <Button className="ms-2" onClick={() => handleDeleteChapter(data)} variant="danger" size="sm">Удалить главу</Button>}</h5>               
+            </>
+        );
+    };
+
+    const handleDeleteModule = async (data) => {
+        console.log("del")
+        console.log(data)
+        await CourseEditorService.editCoursePageDeleteModule(data.chapter,data.id).then(
+            (response) => {
+                if (response.status === 204) {
+                    window.location.reload();
+                }
+            }
+        );
+    };
+    const handleDeleteChapter = async (data) => {
+        console.log("del")
+        console.log(data)
+        await CourseEditorService.editCoursePageDeleteChapter(data.id).then(
+            (response) => {
+                if (response.status === 204) {
+                    navigate(
+                        `/edit-course-full/editor-info/${course_id}`
+                    );
+                }
+            }
+        );
+    };
+    return (
+        <>
+            <div className="leftsidebar ps-2">
+                <p className="text-light">{courseData.title}</p>
+                <hr className="text-light me-2" />
+                {/* пофиксить: */}
+                {chapterData.map((tech) => {
+                    return (
+                        <div key={tech.id}>
+                            <ChapterMenuItem data={tech} />
+                            <ModuleListMenu data={tech.chapter_modules} />
                             <Button
+                                className="ms-5"
                                 as={Link}
                                 to={
-                                    "/edit-course-full/add-chapter-full/" +
-                                    course_id
+                                    "/edit-course-full/add-module/" +
+                                    course_id +
+                                    "/" +
+                                    tech.id
                                 }
-                                variant="outline-success"
+                                variant="success"
+                                size="sm"
                             >
-                                добавить новую главу
+                                + модуль
                             </Button>{" "}
                         </div>
+                    );
+                })}
+                <hr />
+                <Button
+                    as={Link}
+                    to={"/edit-course-full/add-chapter-full/" + course_id}
+                    variant="outline-success"
+                >
+                    добавить новую главу
+                </Button>{" "}
+            </div>
         </>
-    )
-
+    );
 }
 
-export default LeftBar
+export default LeftBar;

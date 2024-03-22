@@ -1,0 +1,5 @@
+.leftsidebar{
+    height: 100vh;
+    background-color:rgb(47, 47, 47);   
+    overflow-y: auto;
+}

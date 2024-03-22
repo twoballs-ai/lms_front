@@ -10,6 +10,7 @@ import Figure from "react-bootstrap/Figure";
 import Editor from "../../../../../../Editor";
 import axios from "axios";
 import { apiUrl, typesApiUrl } from "../../../../../../../shared/config";
+import CourseEditorService from "../../../../../../../services/course.editor.service";
 function EditQuizLesson(props) {
     let stage_id = props.contentData.stage
     let contentData = props.contentData.content
@@ -18,7 +19,7 @@ function EditQuizLesson(props) {
     const [quizLessonData, setQuizLessonData] = useState({
         stage: stage_id,
         is_quiz: true,
-        questions: "",
+        content: "",
         answer1: props.contentData.answer1,
         answer2: props.contentData.answer2,
         answer3: props.contentData.answer3,
@@ -29,31 +30,25 @@ function EditQuizLesson(props) {
     const [valueEditor, setValueEditor] = useState('')
     const handleChangeContent = (valueEditor) => {
         setValueEditor(valueEditor)
-        console.log(valueEditor)
     }
-  console.log(props)
+
  
     const handleChange = (event) => {
         setQuizLessonData({
             ...quizLessonData,
             [event.target.name]: event.target.value,
         });
-        console.log(quizLessonData);
+        // console.log(quizLessonData);
     };
 
-    const formSubmit = (e) => {
+    const formSubmit = async (e) => {
         e.preventDefault();
-
-        axios
-            .put(
-                typesApiUrl + "quiz-lesson-detail/" + props.contentData.id,
-                quizLessonData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
+        quizLessonData.content=valueEditor
+        await CourseEditorService.editCoursePagePutQuizLesson(props.contentData.id,quizLessonData).then((response) => {
+            if (response.status === 200 || response.status === 201) {
                 window.location.reload();
-            });
+            }
+        });
     };
     return (
         <div>

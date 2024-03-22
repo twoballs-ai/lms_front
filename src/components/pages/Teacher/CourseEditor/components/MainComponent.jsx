@@ -11,17 +11,16 @@ import LeftBar from "./LeftBar";
 
 function MainComponent() {
     return (
-
-                <Row>
-                    <aside className="col-md-3">
-                        <LeftBar />
-                    </aside>
-
-                    <section className="col-md-8">
-                        <Outlet />
-                    </section>
-                </Row>
-
+        <Container className="g-0" fluid>
+            <Row className="g-0">
+                <Col  xs={5} md={3}>
+                    <LeftBar />
+                </Col>
+                <Col md={9}>
+                    <Outlet />
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

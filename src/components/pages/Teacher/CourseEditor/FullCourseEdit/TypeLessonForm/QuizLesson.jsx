@@ -10,6 +10,7 @@ import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import Editor from "../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
+import CourseEditorService from "../../../../../../services/course.editor.service";
 function AddingQuizLesson(props) {
     let stagePk = props.data
     const location = useLocation();
@@ -38,28 +39,26 @@ function AddingQuizLesson(props) {
         console.log(quizLessonData);
     };
 
-    const formSubmit = (e) => {
+
+    const formSubmit = async (e) => {
         e.preventDefault();
-       const _formData = new FormData();
+        const _formData = new FormData();
         _formData.append("stage", stagePk);
-        _formData.append("content", JSON.stringify(valueEditor));
+        _formData.append("content", valueEditor);
         _formData.append("is_quiz", quizLessonData.is_quiz);
         _formData.append("answer1", quizLessonData.answer1);
         _formData.append("answer2", quizLessonData.answer2);
         _formData.append("answer3", quizLessonData.answer3);
         _formData.append("answer4", quizLessonData.answer4);
         _formData.append("true_answer", quizLessonData.true_answer);
-        axios
-            .post(
-                typesApiUrl + "quiz-lesson/" + stagePk,
-                _formData,
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                { headers: { "Content-Type": "multipart/form-data" } }
-            )
-            .then((response) => {
+        await CourseEditorService.editCoursePageAddQuizLesson(stagePk,_formData).then((response) => {
+            if (response.status === 200 || response.status === 201) {
                 navigate(-2);
-            });
+            }
+        });
     };
+
+
     
     return (
         <div>
