@@ -44,6 +44,7 @@ function CoursesByCat() {
                 // ,{headers: { "Content-Type": "multipart/form-data" }}
             )
             .then((response) => {
+                console.log(response.data)
                 setCourseByCatData(response.data.results);
                 setNextUrl(response.data.next);
                 setPrevUrl(response.data.previous);

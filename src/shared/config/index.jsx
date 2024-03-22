@@ -2,7 +2,7 @@
 // ты имеешь ввиду репозиторий я понял.
 export const serverUrl = "http://127.0.0.1:8000";
 export const apiUrl = `${serverUrl}/api/`;
-export const apiLmsUrl = `${serverUrl}/api/lms/`;
+export const apiLmsUrl = `${serverUrl}/api/v1/lms/`;
 export const restAuthApiUrl = `${serverUrl}/dj-rest-auth/`;
 export const apiUserUrl = `${serverUrl}/api/user/`;
 export const typesApiUrl = `${serverUrl}/api/types/`;

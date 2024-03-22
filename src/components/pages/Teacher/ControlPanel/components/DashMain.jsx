@@ -10,7 +10,7 @@ import Table from "react-bootstrap/Table";
 import MyCourses from "../MyTeacherCourses";
 import SideBar from "./SideBar";
 
-function DashMain() {
+function TeacherDashMain() {
     return (
         <div className="mx-3">
             <div className="shadow rounded p-3 mt-3 mb-5">
@@ -28,4 +28,4 @@ function DashMain() {
     );
 }
 
-export default DashMain;
+export default TeacherDashMain;

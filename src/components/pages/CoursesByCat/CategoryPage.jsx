@@ -21,7 +21,8 @@ function CategoryPage() {
         const fetchData = async () => {
             await SiteService.getCategory().then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    setCategoryData(response.data);
+                    console.log(response.data)
+                    setCategoryData(response.data.data);
                 }
             });
         };

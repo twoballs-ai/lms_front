@@ -19,7 +19,7 @@ function AllCourses() {
     const [prevUrl, setPrevUrl] = useState();
     // console.log(teacherId)
     useEffect(() => {
-        fetchData(apiLmsUrl + "course/");
+        fetchData(apiLmsUrl + "courses/");
     }, []);
 
     let active = 1;

@@ -8,7 +8,7 @@ const getCategory = async () => {
 }
 const homePageNewCourses = async () => {
     return await api
-    .get(apiLmsUrl + "course/?result=4")
+    .get(apiLmsUrl + "courses/?result=4")
 }
 const homePagePopularCourses = async () => {
     return await api

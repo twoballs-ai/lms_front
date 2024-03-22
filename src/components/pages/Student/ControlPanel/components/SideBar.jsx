@@ -24,7 +24,7 @@ function SideBar() {
     return (
         <>
             <Card style={{ width: "18rem" }}>
-                <Card.Header as={Link} to="dashboard">
+                <Card.Header as={Link} to="student-dashboard">
                     Личный кабинет
                 </Card.Header>
                 <ListGroup variant="flush">

@@ -10,6 +10,8 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 // import { apiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import CourseEditorService from "../../../../../services/course.editor.service";
@@ -17,7 +19,6 @@ import { apiLmsUrl } from "../../../../../shared/config";
 import "./style.css";
 
 function LeftBar() {
-    
     let { course_id } = useParams();
     let { module_id } = useParams();
     const navigate = useNavigate();
@@ -67,13 +68,13 @@ function LeftBar() {
                 {data.map((modules, index) => {
                     return (
                         <ul className="nav flex-column" key={modules.id}>
-                            <li className="nav-item">
+                            
                                 <ModuleMenuItem item={modules} />
 
                                 {/* {showButtonDelete && key === modules.id && (
                         <span>{index}</span>
                     )} */}
-                            </li>
+                          
                         </ul>
                     );
                 })}
@@ -81,14 +82,15 @@ function LeftBar() {
         );
     };
 
-
     const ModuleMenuItem = ({ item }) => {
         const [showButtonDelete, setShowButtonDelete] = useState(false);
         return (
             <>
+            <li className="nav-item d-flex "      
+            onMouseEnter={() => setShowButtonDelete(true)}
+                    onMouseLeave={() => setShowButtonDelete(false)}>
                 <Link
-                    onMouseEnter={() => setShowButtonDelete(true)}
-                    onMouseLeave={() => setShowButtonDelete(false)}
+               
                     className="nav-link text-light"
                     to={
                         "/edit-course-full/edit-module/" +
@@ -96,17 +98,23 @@ function LeftBar() {
                         "/" +
                         item.id +
                         "/stage/1"
-                        
                     }
                     key={item.id}
                 >
-                    
                     {item.title}
-                    {showButtonDelete &&  
-               <Button className="ms-2" onClick={() => handleDeleteModule(item)} variant="danger" size="sm">Удалить модуль</Button>}
                 </Link>
-  
-               
+                {showButtonDelete && (
+                    <Link onClick={() => handleDeleteModule(item)}>
+                        <FontAwesomeIcon
+                            icon={faTrashCan}
+                            transform="down-6 grow-3"
+                            className="ms-3 icon"
+                            onClick={() => handleDeleteModule(item)}
+                        />
+                    </Link>
+                    
+                )}
+                  </li>
             </>
         );
     };
@@ -115,34 +123,46 @@ function LeftBar() {
         const [showButtonDelete, setShowButtonDelete] = useState(false);
         return (
             <>
-            <h5     onMouseEnter={() => setShowButtonDelete(true)}
+                <h5
+                    onMouseEnter={() => setShowButtonDelete(true)}
                     onMouseLeave={() => setShowButtonDelete(false)}
-            className="text-light h6">{data.title} {showButtonDelete &&  
-               <Button className="ms-2" onClick={() => handleDeleteChapter(data)} variant="danger" size="sm">Удалить главу</Button>}</h5>               
+                    className="text-light h6"
+                >
+                    {data.title}{" "}
+                    {showButtonDelete && (
+                        <Button
+                            className="ms-2"
+                            onClick={() => handleDeleteChapter(data)}
+                            variant="danger"
+                            size="sm"
+                        >
+                            Удалить главу
+                        </Button>
+                    )}
+                </h5>
             </>
         );
     };
 
     const handleDeleteModule = async (data) => {
-        console.log("del")
-        console.log(data)
-        await CourseEditorService.editCoursePageDeleteModule(data.chapter,data.id).then(
-            (response) => {
-                if (response.status === 204) {
-                    window.location.reload();
-                }
+        console.log("del");
+        console.log(data);
+        await CourseEditorService.editCoursePageDeleteModule(
+            data.chapter,
+            data.id
+        ).then((response) => {
+            if (response.status === 204) {
+                window.location.reload();
             }
-        );
+        });
     };
     const handleDeleteChapter = async (data) => {
-        console.log("del")
-        console.log(data)
+        console.log("del");
+        console.log(data);
         await CourseEditorService.editCoursePageDeleteChapter(data.id).then(
             (response) => {
                 if (response.status === 204) {
-                    navigate(
-                        `/edit-course-full/editor-info/${course_id}`
-                    );
+                    navigate(`/edit-course-full/editor-info/${course_id}`);
                 }
             }
         );
