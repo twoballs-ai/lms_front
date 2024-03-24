@@ -8,7 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ModalRegisterLogin from "../../TabsLoginRegister/HeaderComponents/ModalRegistrationLogin";
+// import ModalRegisterLogin from "../../TabsLoginRegister/HeaderComponents/ModalRegistrationLogin";
 
 function Header() {
     const [searchData, setSearchData] = useState({
@@ -39,15 +39,19 @@ function Header() {
 
     return (
         <>
+<div className="container__header-container">   
+<div className="header-container__logo">Intellity code</div>
+
+</div>
+
+{/* 
             <Navbar
                 bg="light"
                 data-bs-theme="light"
                 expand="lg"
                 className="shadow"
             >
-                <Navbar.Brand className="ms-3" href="/">
-                    Intellity code
-                </Navbar.Brand>
+
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse className="me-3" id="basic-navbar-nav">
                     <Form className="d-flex me-4">
@@ -112,12 +116,13 @@ function Header() {
                                     >
                                         Выход
                                     </NavDropdown.Item>
-                        </NavDropdown> :  
-                    <ModalRegisterLogin />}
+                        </NavDropdown> :  ""
+                    // <ModalRegisterLogin />
+                    }
                         
                     </Nav>
                 </Navbar.Collapse>
-            </Navbar>
+            </Navbar> */}
         </>
     );
 }

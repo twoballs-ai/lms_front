@@ -86,7 +86,7 @@ function LeftBar() {
         const [showButtonDelete, setShowButtonDelete] = useState(false);
         return (
             <>
-            <li className="nav-item d-flex "      
+            <div className=" "      
             onMouseEnter={() => setShowButtonDelete(true)}
                     onMouseLeave={() => setShowButtonDelete(false)}>
                 <Link
@@ -114,7 +114,7 @@ function LeftBar() {
                     </Link>
                     
                 )}
-                  </li>
+                  </div>
             </>
         );
     };
@@ -169,9 +169,9 @@ function LeftBar() {
     };
     return (
         <>
-            <div className="leftsidebar ps-2">
-                <p className="text-light">{courseData.title}</p>
-                <hr className="text-light me-2" />
+            <div className="">
+                <p className="">{courseData.title}</p>
+                <hr className="" />
                 {/* пофиксить: */}
                 {chapterData.map((tech) => {
                     return (

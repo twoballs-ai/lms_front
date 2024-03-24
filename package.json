@@ -17,6 +17,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^4.3.0",
+    "antd": "^5.15.3",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "dompurify": "^3.0.5",

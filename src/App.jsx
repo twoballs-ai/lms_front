@@ -4,69 +4,72 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import Layout from './components/pages/basicComponents/layouts';
+// import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/pages/Home/Home';
-import Layout from './components/basicComponents/layouts';
-import About from './components/pages/About/About';
-import CourseDetail from './components/pages/Course/CourseDetail';
-import TeacherDetail from './components/pages/Course/TeacherDetail';
-import AllCourses from './components/pages/AllCourses/AllCourses';
-import PopularCourses from './components/pages/PopularCourses/PopularCourses';
-import PopularTeachers from './components/pages/PopularTeachers/PopularTeachers';
-import CoursesByCat from './components/pages/CoursesByCat/CoursesByCat';
-//student pages
-// import StudentLogin from './components/pages/Student/Login/Login';
-
-import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
-import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses';
-import UserDashmain from './components/pages/Student/ControlPanel/components/DashMain';
-import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
-import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
-import StudentProfileSettings from './components/pages/Student/ControlPanel/StudentProfileSettings';
-import StudentChangePassword from './components/pages/Student/ControlPanel/StudentChangePassword';
-import StudentIncomingTask from './components/pages/Student/ControlPanel/StudentTask';
-
-// quiz pages
-import AddQuiz from './components/pages/Teacher/ControlPanel/AddQuiz';
-
-//teacher pages
-// import TeacherLogin from './components/pages/Teacher/Login/Login';
-
-import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
-import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherCourses';
-import TeacherDashMain from './components/pages/Teacher/ControlPanel/components/DashMain';
-import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
-import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
-import EditChapter from './components/pages/Teacher/ControlPanel/EditChapter';
-import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
-import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
-import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
-import Coursechapter from './components/pages/Teacher/ControlPanel/CourseChapters';
-import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
-import SkillCourses from './components/pages/CoursesByCat/SkillCourses';
-import EnrolledStudents from './components/pages/Teacher/ControlPanel/EnrolledStudents';
-import AddTask from './components/pages/Teacher/ControlPanel/AddTask';
-import ViewTask from './components/pages/Teacher/ControlPanel/ViewTask';
-import MyTeacherQuizes from './components/pages/Teacher/ControlPanel/TeacherQuizes';
-import EditQuiz from './components/pages/Teacher/ControlPanel/EditQuiz';
-import QuizQuestion from './components/pages/Teacher/ControlPanel/QuizQuestion';
-import AddQuizQuestion from './components/pages/Teacher/ControlPanel/AddQuizQuestion';
-import AssignQuiz from './components/pages/Teacher/ControlPanel/AssignQuizToCourse';
-import SearchByCourse from './components/pages/Search/Search';
-import StudyMaterials from './components/pages/Teacher/ControlPanel/StudyMaterials';
-import AddStudyMaterial from './components/pages/Teacher/ControlPanel/AddStudyMaterial';
-import StudentStudyMaterials from './components/pages/Student/ControlPanel/StudyMaterials';
-import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
-import VerifyOTPTeacher from './components/pages/Teacher/ControlPanel/VerifyTeacher';
-import CourseStudy from './components/pages/Course/CourseStudy';
-import EditorPageInfo from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditorPageInfo';
-import AddModule from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddModule';
-// import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
-import EditModuleStage from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditModuleStage';
-import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
-import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
-import UserLogout from './components/Auth/Logout/Logout';
 import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
+
+// // import About from './components/pages/About/About';
+// // import CourseDetail from './components/pages/Course/CourseDetail';
+// // import TeacherDetail from './components/pages/Course/TeacherDetail';
+// // import AllCourses from './components/pages/AllCourses/AllCourses';
+// // import PopularCourses from './components/pages/PopularCourses/PopularCourses';
+// // import PopularTeachers from './components/pages/PopularTeachers/PopularTeachers';
+// // import CoursesByCat from './components/pages/CoursesByCat/CoursesByCat';
+// //student pages
+// // import StudentLogin from './components/pages/Student/Login/Login';
+
+// import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
+// import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses';
+// import UserDashmain from './components/pages/Student/ControlPanel/components/DashMain';
+// import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
+// import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
+// import StudentProfileSettings from './components/pages/Student/ControlPanel/StudentProfileSettings';
+// import StudentChangePassword from './components/pages/Student/ControlPanel/StudentChangePassword';
+// import StudentIncomingTask from './components/pages/Student/ControlPanel/StudentTask';
+
+// // quiz pages
+// import AddQuiz from './components/pages/Teacher/ControlPanel/AddQuiz';
+
+// //teacher pages
+// // import TeacherLogin from './components/pages/Teacher/Login/Login';
+
+// import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
+// import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherCourses';
+// import TeacherDashMain from './components/pages/Teacher/ControlPanel/components/DashMain';
+// // import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
+// // import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
+// // import EditChapter from './components/pages/Teacher/ControlPanel/EditChapter';
+// // import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
+// // import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
+// // import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
+// // import Coursechapter from './components/pages/Teacher/ControlPanel/CourseChapters';
+// // import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
+// // import SkillCourses from './components/pages/CoursesByCat/SkillCourses';
+// // import EnrolledStudents from './components/pages/Teacher/ControlPanel/EnrolledStudents';
+// // import AddTask from './components/pages/Teacher/ControlPanel/AddTask';
+// // import ViewTask from './components/pages/Teacher/ControlPanel/ViewTask';
+// // import MyTeacherQuizes from './components/pages/Teacher/ControlPanel/TeacherQuizes';
+// // import EditQuiz from './components/pages/Teacher/ControlPanel/EditQuiz';
+// // import QuizQuestion from './components/pages/Teacher/ControlPanel/QuizQuestion';
+// // import AddQuizQuestion from './components/pages/Teacher/ControlPanel/AddQuizQuestion';
+// // import AssignQuiz from './components/pages/Teacher/ControlPanel/AssignQuizToCourse';
+// // import SearchByCourse from './components/pages/Search/Search';
+// // import StudyMaterials from './components/pages/Teacher/ControlPanel/StudyMaterials';
+// // import AddStudyMaterial from './components/pages/Teacher/ControlPanel/AddStudyMaterial';
+// // import StudentStudyMaterials from './components/pages/Student/ControlPanel/StudyMaterials';
+// // import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
+// // import VerifyOTPTeacher from './components/pages/Teacher/ControlPanel/VerifyTeacher';
+// // import CourseStudy from './components/pages/Course/CourseStudy';
+import EditorPageInfo from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditorPageInfo';
+// import AddModule from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddModule';
+// // import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
+import EditModuleStage from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditModuleStage';
+// // import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
+// // import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
+// // import UserLogout from './components/Auth/Logout/Logout';
+// import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
+// import Layout from './components/pages/basicComponents/layouts';
 // import StudentRegister from './components/Auth/TabComponent/RegisterComponents/StudentRegister/Register';
 // import TeacherRegister from './components/Auth/TabComponent/RegisterComponents/TeacherRegister/Register';
 
@@ -77,87 +80,127 @@ function App() {
       element: <Layout />,
       children: [
         {
-          path: "home",
+          index: true,
+          // path: "home",
           element: <Home />,
         },
-        {
-          path: "detail/:course_id",
-          element: <CourseDetail />,
-        },
-        {
-          path: "search/:searchString",
-          element: <SearchByCourse />,
-        },
-        {
-          path: "all-courses",
-          element: <AllCourses />,
-        },
-        {
-          path: "category",
-          element: <CategoryPage />,
-        },
-        {
-          path: "about",
-          element: <About />,
-        },
-        {
-          path: "logout",
-          element: <UserLogout />,
-        },
-        {
-          path: "student-profile/",
-          element: <UserDashmain />,
-          children: [
-            { 
-              index: true,
-              element: <StudentDashboard /> 
-            },
-            {
-              path: "student-dashboard", 
-              element: <StudentDashboard /> 
-            },
-            {
-              path: "my-courses",
-              indexelement: <StudentMyCourses />,
-            },
-          ]
-        },
-        {
-          path: "teacher-profile/",
-          element: <TeacherDashMain />,
-          children: [
-            { 
-              index: true,
-              element: <TeacherDashboard /> 
-            },
-            {
-              path: "my-courses",
-              element: <MyTeacherCourses />,
-            },
-            {
-              path: "dashboard", 
-              element: <TeacherDashboard /> 
-            },
-            {
-              path: "all-chapters/:course_id",
-              element: <Coursechapter />,
-            },
-            {
-              path: "add-course",
-              element: <AddCourse />,
-            },
-            {
-              path: "my-courses",
-              element: <StudentMyCourses />,
-            },
-            {
-              path: "my-courses",
-              element: <StudentMyCourses />,
-            },
-          ]
-        },
-      ],
-    },
+
+
+         
+      ]},
+      {
+        path: "course-editor/:course_id",
+        element: <MainComponent />,
+        children: [
+          { 
+            index: true,
+            element: <EditorPageInfo /> 
+          },
+          { 
+            path: "edit-module/:module_id",
+            element: <EditModuleStage /> 
+          },
+          
+        ]
+      }
+        // {
+        //   path: "detail/:course_id",
+        //   element: <CourseDetail />,
+        // },
+        // {
+        //   path: "search/:searchString",
+        //   element: <SearchByCourse />,
+        // },
+        // {
+        //   path: "all-courses",
+        //   element: <AllCourses />,
+        // },
+        // {
+        //   path: "category",
+        //   element: <CategoryPage />,
+        // },
+        // {
+        //   path: "about",
+        //   element: <About />,
+        // },
+        // {
+        //   path: "logout",
+        //   element: <UserLogout />,
+        // },
+        // {
+        //   path: "student-profile/",
+        //   element: <UserDashmain />,
+        //   children: [
+        //     { 
+        //       index: true,
+        //       element: <StudentDashboard /> 
+        //     },
+        //     {
+        //       path: "student-dashboard", 
+        //       element: <StudentDashboard /> 
+        //     },
+        //     {
+        //       path: "my-courses",
+        //       indexelement: <StudentMyCourses />,
+        //     },
+        //   ]
+        // },
+        // {
+          // path: "teacher-profile/",
+          // element: <TeacherDashMain />,
+          // children: [
+            // { 
+            //   index: true,
+            //   element: <TeacherDashboard /> 
+            // },
+            // {
+            //   path: "my-courses",
+            //   element: <MyTeacherCourses />,
+            // },
+            // {
+            //   path: "dashboard", 
+            //   element: <TeacherDashboard /> 
+            // },
+            // {
+            //   path: "all-chapters/:course_id",
+            //   element: <Coursechapter />,
+            // },
+            // {
+            //   path: "add-course",
+            //   element: <AddCourse />,
+            // },
+            // {
+            //   path: "my-courses",
+            //   element: <StudentMyCourses />,
+            // },
+            // {
+            //   path: "my-courses",
+            //   element: <StudentMyCourses />,
+            // },
+            // {
+            //   path: "course-editor/",
+            //   element: <MainComponent />,
+            //   children: [
+            //     { 
+            //       index: true,
+            //       path: "editor-info/:course_id",
+            //       element: <EditorPageInfo /> 
+            //     },
+            //   ]
+            // }
+//     <Route path='edit-course-full/' element={<MainComponent/>} >
+//         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
+//         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
+//         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
+//         <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
+//         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
+//         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
+//       </Route>
+
+    //       ]
+    //     },
+    //   ],
+    // },
     // other pages....
 
   ])

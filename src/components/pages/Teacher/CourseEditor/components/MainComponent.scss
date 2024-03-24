@@ -1,0 +1,39 @@
+.course-edit__container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    .container__leftbar{
+        display: flex;
+        flex-direction: column;
+        width: 14%;
+        min-width: 10%;
+        height: 100vh;
+        overflow-x: auto;
+        background-color: rgba(240,248,255, 0.9);
+        .leftbar__chapters{
+            display: flex;
+            flex-direction: column;
+            gap:5px;
+            .chapters__block{      
+                background-color: #1975ff3f;      
+                .chapters__modules{
+                width: auto;
+                min-height: 10px;
+                display: flex;
+                flex-direction: column;
+
+     
+                .modules__block{
+                    padding-left: 5px;
+                    cursor: pointer;
+                }
+            }}
+
+        }
+    }
+    .container__main{
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+    }
+}

@@ -3,7 +3,7 @@ import TokenService from "./token.service";
 import { restAuthApiUrl } from "../shared/config";
 import AuthService from "./auth.service";
 import { jwtDecode } from "jwt-decode";
-import UserLogout from "../components/Auth/Logout/Logout";
+// import UserLogout from "../components/Auth/Logout/Logout";
 
 const instance = axios.create({
 //   baseURL: "http://localhost:8080/api",
