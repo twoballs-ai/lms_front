@@ -1,205 +1,186 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-// import { redirect } from "react-router-dom";
-// import Row from "react-bootstrap/Row";
-// import Col from "react-bootstrap/Col";
-// import Card from "react-bootstrap/Card";
-// import Button from "react-bootstrap/Button";
-// import Form from "react-bootstrap/Form";
-// import Table from "react-bootstrap/Table";
-// import Figure from "react-bootstrap/Figure";
-// import axios from "axios";
-// import "./style.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPlus } from "@fortawesome/free-solid-svg-icons";
-// import { faGhost } from "@fortawesome/free-solid-svg-icons";
-// import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
-// import { faFilm } from "@fortawesome/free-solid-svg-icons";
-// import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
-// import { apiLmsUrl, apiUrl, typesApiUrl } from "../../../../../shared/config";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
-// import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
-// import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
-// import AddingCodeLesson from "./TypeLessonForm/CodeLesson";
-// import EditClassicLesson from "./TypeLessonForm/Edit/ClassicLessonEdit";
-// import EditQuizLesson from "./TypeLessonForm/Edit/QuizLessonEdit";
-// import EditVideoLesson from "./TypeLessonForm/Edit/VideoLessonEdit";
-// import CourseEditorService from "../../../../../services/course.editor.service";
+import { useLocation, useNavigate } from "react-router-dom";
+import { apiLmsUrl } from "../../../../../shared/config";
+import axios from "axios";
+
+import "./FullCourseEdit.scss";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faGhost } from "@fortawesome/free-solid-svg-icons";
+import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
+import { faFilm } from "@fortawesome/free-solid-svg-icons";
+import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import LmsButton from "../../../../reUseComponents/Button";
+import LmsModalBase from "../../../../reUseComponents/ModalBase";
+import AddStageLesson from "./AddStageLesson";
+import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
+
 function EditModuleStage() {
-    let { module_id } = useParams();
-    let { course_id } = useParams();
-    let { stage_id } = useParams();
+
+    const [showClassicLesson, setShowClassicLesson] = useState(false);
+
     const [moduleData, setModuleData] = useState([]);
     // const [stagePkData, setStagePkData] = useState("");
     // const [typeStageData, setTypeStageData] = useState(null);
-    // const location = useLocation();
-    // const navigate = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
     // const styleIndex = {
     //     left: "26px",
     //     top: "-20px",
     // };
     // // const {state} = useLocation();
     // // const { type } = state;
+    let { module_id, course_id, stage_id } = useParams();
+
+    const [selectedStage, setSelectedStage] = useState(null);
+
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
+
+
+    const handleDeleteStage = async () => {
+        // Логика для удаления этапа
+        // Можно отправлять запрос на сервер или обновлять локальное состояние
+    };
+    const handleShowClassicLesson = () => {
+        // Переключаем состояние showClassicLesson
+        setShowClassicLesson(!showClassicLesson);
+        handleCloseModal()
+    };
+    const handleSelectStage = (tech) => {
+        setSelectedStage(tech.id);
+        console.log(tech)
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            await CourseEditorService.editCoursePageGetModuleStage(
-                course_id,
-                module_id
+        const fetchData =  () => {
+            axios
+            .get(
+                `${apiLmsUrl}course-chapter-module-stage-list/${module_id}`
+                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                // { headers: { "Content-Type": "multipart/form-data" } }
             ).then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    setModuleData(response.data);
-                    // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
-                    setStagePkData(
-                        response.data[parseInt(stage_id) - 1] &&
-                            response.data[parseInt(stage_id) - 1]["id"]
-                    );
+
+                    setModuleData(response.data.data);
+                    // // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
+                    // setStagePkData(
+                    //     response.data[parseInt(stage_id) - 1] &&
+                    //         response.data[parseInt(stage_id) - 1]["id"]
+                    // );
                 }
             });
         };
         fetchData();
-    }, [module_id, stage_id, navigate, location]);
-    // const addStage = async () => {
-    //     const data = {
-    //         module: module_id,
-    //         course: course_id,
-    //     };
-    //     await CourseEditorService.editCoursePageAddModuleStage(
-    //         course_id,
-    //         module_id,
-    //         data
-    //     ).then((response) => {
-    //         if (response.status === 200 || response.status === 201) {
-    //             navigate(
-    //                 `/edit-course-full/edit-module/${course_id}/${module_id}/stage/${
-    //                     parseInt(stage_id) + 1
-    //                 }`
-    //             );
-    //         }
-    //     });
-    // };
-    // const handleDeleteStage = async () => {
-    //     await CourseEditorService.editCoursePageDeleteModuleStage(
-    //         course_id,
-    //         module_id,
-    //         stagePkData
-    //     ).then((response) => {
-    //         if (response.status === 204) {
-    //             navigate(
-    //                 `/edit-course-full/edit-module/${course_id}/${module_id}/stage/${parseInt(
-    //                     stage_id
-    //                 )}`
-    //             );
-    //         }
-    //     });
-    // };
+    }, [location]);
 
-    // // const handleDeleteModule = () => {
-    // //     console.log("del")
-    // //     try {
-    // //         axios.delete(apiLmsUrl + "chapter-module-detail/" + chapter_id+"/"+module_id).then((response) => {
-    // //             if (response.status === 204) {
-    // //                 console.log("success")
-    // //                 // window.location.reload();
-    // //             }
-    // //         });
-    // //     } catch (error) {console.log(error)}
-    // // };
+    
+    const addStage = () => {
+        console.log("123")
+     const dataParams = {
+        module_id:module_id,
+        title:"Этап",
+     }
+        try {
+            axios
+                .post(
+                    `${apiLmsUrl}add_stage_to_module/`,
+                    dataParams,
+                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                    // { headers: { "Content-Type": "multipart/form-data" } }
+                )
+                .then((response) => {
+                    console.log(response.data.modules);
+                    if (response.status === 200) {
 
-    // // console.log(moduleData[stage_id - 1] && moduleData[stage_id - 1]["type"]);
-    // // console.log(moduleData);
-    // // console.log(stagePkData);
-    // // console.log(stage_id);
+                    console.log(response.data)
+                    }
+                    // window.location.href='/teacher-profile/my-courses'
+                    // Handle response
+                });
+        } catch (error) {
+;
+        }
+    };
 
+    console.log(moduleData);
+    const [openedStage, setOpenedStage] = useState(null);
+    const contentToModal=( <AddStageLesson handleShowClassicLesson={handleShowClassicLesson} />)
+
+   
+    // Обработчик для открытия элемента
+    const handleStageClick = (stageId) => {
+        setOpenedStage(stageId);
+        console.log("dd")
+    };
     return (
         <>
-  <p className="s">Вы перешли на страницу редактирования модуля  </p>{" "}
-            
-            <div>
-                <div className="ms-3">
-                    {moduleData.map((tech, index) => (
-                        <div
-                            className="d-inline-block position-relative"
-                            key={tech.id}
-                        >
-                            <span
-                                style={styleIndex}
-                                className="position-absolute"
-                            >
-                                {index + 1}
-                            </span>
-                            <Link
-                                to={`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${
-                                    index + 1
-                                }`}
-                            >
-                                <div className="dot ms-2">
-                                    {tech.type !== "не назначен" && (
-                                        <>
-                                            {tech.type.is_classic === true && (
-                                                <div className="mt-1">
-                                                    <FontAwesomeIcon
-                                                        icon={faChalkboardUser}
-                                                        transform="down-6 grow-3"
-                                                    />
-                                                </div>
-                                            )}
-                                            {tech.type.is_quiz === true && (
-                                                <div className="mt-1">
-                                                    <FontAwesomeIcon
-                                                        icon={faSquareCheck}
-                                                        transform="down-6 grow-3"
-                                                    />
-                                                </div>
-                                            )}
-                                            {tech.type.is_video === true && (
-                                                <div className="mt-1">
-                                                    <FontAwesomeIcon
-                                                        icon={faFilm}
-                                                        transform="down-6 grow-3"
-                                                    />
-                                                </div>
-                                            )}
-                                        </>
-                                    )}
-                                    {tech.type === "не назначен" && (
-                                        <div className="mt-1">
-                                            <FontAwesomeIcon
-                                                icon={faGhost}
-                                                transform="down-6 grow-3"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            </Link>
+        <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal}/>
+        <div className="main__nav-block"><p className="">Вы перешли на страницу редактирования модуля {module_id} </p>{" "}
+        <div className="nav-block__stages" >
+        {moduleData.length < 20 && (
+                    // <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    <div className="stages__add"><LmsButton buttonText={"Добавить этап"}  handleClick={addStage} /></div>
+                    
+  
+                )}
+                <div className="stages__case">
+                {moduleData.map((tech, index) => (
+                        <div className="d-inline-block position-relative" key={tech.id}>
+
+                            <div className="dot" onClick={() => handleSelectStage(tech)}>
+                               
+                                    <>
+                                        {/* {tech.type.is_classic === true && (
+                                            <div className="mt-1">
+                                                <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
+                                            </div>
+                                        )}
+                                        {tech.type.is_quiz === true && (
+                                            <div className="mt-1">
+                                                <FontAwesomeIcon icon={faSquareCheck} transform="down-6 grow-3" />
+                                            </div>
+                                        )} */}
+                                        {/* {tech.type.is_video === true && (
+                                            <div className="mt-1">
+                                                <FontAwesomeIcon icon={faFilm} transform="down-6 grow-3" />
+                                            </div>
+                                        )} */}
+                                    </>
+                              
+                                    <div className="mt-1">
+                                        <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
+                                    </div>
+                              
+                            </div>
                         </div>
                     ))}
-                    {/* {moduleData.length < 20 && (
-                        <Link onClick={addStage}>
-                            <div className="dot ms-3">
-                                <div className="mt-1">
-                                    <FontAwesomeIcon
-                                        icon={faPlus}
-                                        transform="down-6 grow-3"
-                                    />
-                                </div>
-                            </div>
-                        </Link>
-                    )} */}
                 </div>
-                {/* {stage_id === 1 && (
-                    <button
-                        type="button"
-                        className="btn btn-danger mt-3"
-                        onClick={handleDeleteStage}
-                    >
-                        Удалить {stage_id} этап
+                {/* {selectedStage === 1 && (
+                    <button type="button" className="btn btn-danger mt-3" onClick={handleDeleteStage}>
+                        Удалить {selectedStage} этап
                     </button>
                 )} */}
+
+
+            </div>
+            </div>
+            <div className="main__content">
+            <p>Вы еще не заполнили ваш урок . </p>
+                        <div className="mb-2">
+                        <div>
+
+                <LmsButton buttonText={"заполнить урок"}  handleClick={handleOpenModal} />
             </div>
 
- 
-
+            {showClassicLesson && <AddingClassicLesson />}
+                        </div>
+            </div>
+            
+      
         </>
     );
 }

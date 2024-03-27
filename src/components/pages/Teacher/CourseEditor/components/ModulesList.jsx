@@ -6,9 +6,7 @@ export default function ModulesList({chapter}){
     // const [getModules, setGetModules] = useState([])
     // setGetModules()
     const navigate = useNavigate();
-    const handleClick = (module_id) => {
-        navigate(`edit-module/${module_id}`);
-      }
+
             //    <Link
                
             //         className="nav-link text-light"
@@ -27,7 +25,7 @@ export default function ModulesList({chapter}){
         <>
         <div className="chapters__modules">
         {chapter.modules.map((module)=>(
-           <div key={module.id} className="modules__block" onClick={(e) => handleClick(module.id)}>{module.title}</div>
+           <div key={module.id} className="modules__block" onClick={(e) => navigate(`edit-module/${module.id}`)}>{module.title}</div>
         ))}
         </div>
         </>

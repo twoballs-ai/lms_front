@@ -115,7 +115,7 @@ console.log(getChapters)
                 {getChapters.map((chapter)=>(
 <>
                 <div className="chapters__block">
-                <div key={chapter.id} className="chapters__title">{chapter.title}</div>
+                <div key={chapter.id} className="block__title"><p>{chapter.title}</p></div>
                 <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} />
                     <ModulesList chapter={chapter}/>
                     </div>

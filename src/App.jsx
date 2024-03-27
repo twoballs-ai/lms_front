@@ -8,7 +8,7 @@ import Layout from './components/pages/basicComponents/layouts';
 // import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/pages/Home/Home';
 import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
-
+import "./App.scss"
 // // import About from './components/pages/About/About';
 // // import CourseDetail from './components/pages/Course/CourseDetail';
 // // import TeacherDetail from './components/pages/Course/TeacherDetail';

@@ -1,0 +1,49 @@
+.dot {
+  height: 50px;
+  width: 50px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+  .main__nav-block{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+      .nav-block__stages{
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+        .stages__case{
+          display: flex;
+          flex-direction: row;
+          gap:10px;
+        }
+      }
+  }
+  .main__content{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    min-height: 30%;
+  }
+
+.add-lesson{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  .add-lesson__block{
+    background-color: rgb(232, 246, 247);
+    display: flex;
+    width: auto;
+    height: 150px;
+    border-radius: 30px;
+
+    flex-direction: column;
+  }
+}

@@ -12,32 +12,32 @@ import Editor from "../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 function AddingClassicLesson(props) {
-    const [valueEditor, setValueEditor] = useState('')
-    const handleChange = (valueEditor) => {
-        setValueEditor(valueEditor)
-    }
+    // const [valueEditor, setValueEditor] = useState('')
+    // const handleChange = (valueEditor) => {
+    //     setValueEditor(valueEditor)
+    // }
 
-    let stagePk = props.data
-    const location = useLocation();
-    const navigate = useNavigate();
+    // let stagePk = props.data
+    // const location = useLocation();
+    // const navigate = useNavigate();
 
-    const formSubmit = async (e) => {
-        e.preventDefault();
-        const data = {
-            stage: stagePk,
-            is_classic: true,
-            content: valueEditor
-        };
-        await CourseEditorService.editCoursePageAddClassicLesson(stagePk,data).then((response) => {
-            if (response.status === 200 || response.status === 201) {
-                navigate(-2);
-            }
-        });
-    };
+    // const formSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const data = {
+    //         stage: stagePk,
+    //         is_classic: true,
+    //         content: valueEditor
+    //     };
+    //     await CourseEditorService.editCoursePageAddClassicLesson(stagePk,data).then((response) => {
+    //         if (response.status === 200 || response.status === 201) {
+    //             navigate(-2);
+    //         }
+    //     });
+    // };
 
     return (
         <div>
-            {location.state.type === "classicLesson" && (
+        
             <Card className="mt-3 mx-3">
                     <Card.Header>
                         Вы находитесь на этапе добавления классического урока с видео, фото, текстом
@@ -45,12 +45,12 @@ function AddingClassicLesson(props) {
                     <Card.Body>
                         <div className="App">
 
-                            <Editor onChange={handleChange} />
+                            <Editor onChange={"handleChange"} />
 
                         </div>
 
                         <Button
-                            onClick={formSubmit}
+                            onClick={"formSubmit"}
                             variant="primary"
                             type="submit"
                         >
@@ -59,7 +59,7 @@ function AddingClassicLesson(props) {
 
                     </Card.Body>
                 </Card>
-            )}
+  
         </div>
     );
 }
