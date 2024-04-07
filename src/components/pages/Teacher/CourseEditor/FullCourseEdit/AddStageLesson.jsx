@@ -31,45 +31,48 @@ function AddStageLesson({ handleShowClassicLesson }) {
     // console.log(stageData);
     return (
         <>
-            
+
 
             <div className='add-lesson'>
-            <p>Вы создали урок, но теперь нужно наполнить его контентом</p>
-                <div className='add-lesson__block'>
-                
+                <p>Вы создали урок, но теперь нужно наполнить его контентом</p>
+                <div className='add-lesson__lesson_block'>
 
-                            <div>Классический урок</div>
-                            <div
-                            >
-                                Классический урок позволяет добавлять текст,
-                                картинки, ссылки, текст может быть сложно
-                                форматируемым.
-                            </div>
-                            <LmsButton buttonText={"Выбрать классический урок"} handleClick={handleShowClassicLesson}  />
-                   
-          
+
+                    <div className='lesson_block__title'>Классический урок</div>
+                    <div className='lesson_block__body'>
+                        Классический урок позволяет добавлять текст,
+                        картинки, ссылки, текст может быть сложно
+                        форматируемым.
+                    </div>
+                    <div className='lesson_block__footer'>
+                        <LmsButton buttonText={"Выбрать классический урок"} handleClick={handleShowClassicLesson} />
+                    </div>
+
                 </div>
-                <div className='add-lesson__block'>
-                     
-                            <div>Видео урок</div>
-                            <div>
-                                В видео уроке вам доступны название урока,
-                                описание и ссылка на ваш видеоурок
-                            </div>
-                            <LmsButton buttonText={"Выбрать видео урок"}  handleClick={"addStage"} />
-                       
-               
+                <div className='add-lesson__lesson_block'>
+
+                    <div className='lesson_block__title'>Видео урок</div>
+                    <div className='lesson_block__body'>
+                        В видео уроке вам доступны название урока,
+                        описание и ссылка на ваш видеоурок
+                    </div>
+                    <div className='lesson_block__footer'>
+                        <LmsButton buttonText={"Выбрать видео урок"} handleClick={"addStage"} />
+                    </div>
+
                 </div>
-                <div className='add-lesson__block'>
-                   
-                            <div>Квиз</div>
-                            <divt>
-                                Квиз позволит выбрать один ответ или несколько в
-                                зависимости от выбранного вами типа квиза.
-                            </divt>
-                            <LmsButton buttonText={"Выбрать квиз"}  handleClick={"addStage"} />
-                       
-                  
+                <div className='add-lesson__lesson_block'>
+
+                    <div className='lesson_block__title'>Квиз</div>
+                    <div className='lesson_block__body'>
+                        Квиз позволит выбрать один ответ или несколько в
+                        зависимости от выбранного вами типа квиза.
+                    </div>
+                    <div className='lesson_block__footer'>
+                        <LmsButton buttonText={"Выбрать квиз"} handleClick={"addStage"} />
+                    </div>
+
+
                 </div>
                 {/* <div>
                     <div border="info" style={{ width: "18rem" }}>

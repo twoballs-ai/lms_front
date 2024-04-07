@@ -52,38 +52,37 @@ function EditModuleStage() {
         handleCloseModal()
     };
     const handleSelectStage = (tech) => {
-        setSelectedStage(tech.id);
-        console.log(tech)
+        setSelectedStage(tech);
     };
     useEffect(() => {
-        const fetchData =  () => {
+        const fetchData = () => {
             axios
-            .get(
-                `${apiLmsUrl}course-chapter-module-stage-list/${module_id}`
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // { headers: { "Content-Type": "multipart/form-data" } }
-            ).then((response) => {
-                if (response.status === 200 || response.status === 201) {
+                .get(
+                    `${apiLmsUrl}course-chapter-module-stage-list/${module_id}`
+                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+                    // { headers: { "Content-Type": "multipart/form-data" } }
+                ).then((response) => {
+                    if (response.status === 200 || response.status === 201) {
 
-                    setModuleData(response.data.data);
-                    // // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
-                    // setStagePkData(
-                    //     response.data[parseInt(stage_id) - 1] &&
-                    //         response.data[parseInt(stage_id) - 1]["id"]
-                    // );
-                }
-            });
+                        setModuleData(response.data.data);
+                        // // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
+                        // setStagePkData(
+                        //     response.data[parseInt(stage_id) - 1] &&
+                        //         response.data[parseInt(stage_id) - 1]["id"]
+                        // );
+                    }
+                });
         };
         fetchData();
     }, [location]);
 
-    
+
     const addStage = () => {
         console.log("123")
-     const dataParams = {
-        module_id:module_id,
-        title:"Этап",
-     }
+        const dataParams = {
+            module_id: module_id,
+            title: "Этап",
+        }
         try {
             axios
                 .post(
@@ -96,21 +95,21 @@ function EditModuleStage() {
                     console.log(response.data.modules);
                     if (response.status === 200) {
 
-                    console.log(response.data)
+                        console.log(response.data)
                     }
                     // window.location.href='/teacher-profile/my-courses'
                     // Handle response
                 });
         } catch (error) {
-;
+
         }
     };
 
     console.log(moduleData);
     const [openedStage, setOpenedStage] = useState(null);
-    const contentToModal=( <AddStageLesson handleShowClassicLesson={handleShowClassicLesson} />)
+    const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} />)
 
-   
+
     // Обработчик для открытия элемента
     const handleStageClick = (stageId) => {
         setOpenedStage(stageId);
@@ -118,28 +117,37 @@ function EditModuleStage() {
     };
     return (
         <>
-        <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal}/>
-        <div className="main__nav-block"><p className="">Вы перешли на страницу редактирования модуля {module_id} </p>{" "}
-        <div className="nav-block__stages" >
-        {moduleData.length < 20 && (
-                    // <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                    <div className="stages__add"><LmsButton buttonText={"Добавить этап"}  handleClick={addStage} /></div>
-                    
-  
-                )}
-                <div className="stages__case">
-                {moduleData.map((tech, index) => (
-                        <div className="d-inline-block position-relative" key={tech.id}>
+            <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal} />
+            <div className="main__nav-block"><p className="">Вы перешли на страницу редактирования модуля {module_id} </p>{" "}
+                <div className="nav-block__stages" >
+                    {moduleData.length < 20 && (
+                        // <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                        <div className="stages__add"><LmsButton buttonText={"Добавить этап"} handleClick={addStage} /></div>
 
-                            <div className="dot" onClick={() => handleSelectStage(tech)}>
-                               
+
+                    )}
+                    <div className="stages__case">
+                        {moduleData.map((tech, index) => (
+                            <div className="" key={tech.id}>
+
+                                <div className="dot" onClick={() => handleSelectStage(tech)}>
+
                                     <>
-                                        {/* {tech.type.is_classic === true && (
+                                        {tech.items.type === "classic" ? (
                                             <div className="mt-1">
                                                 <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
                                             </div>
+                                        ) : (
+                                            <div className="mt-1">
+                                                <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
+                                            </div>
                                         )}
-                                        {tech.type.is_quiz === true && (
+                                        {/* {tech.item.type === "classic" && (
+                                            <div className="mt-1">
+                                                <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
+                                            </div>
+                                        )} */}
+                                        {/* {tech.type.is_quiz === true && (
                                             <div className="mt-1">
                                                 <FontAwesomeIcon icon={faSquareCheck} transform="down-6 grow-3" />
                                             </div>
@@ -150,37 +158,40 @@ function EditModuleStage() {
                                             </div>
                                         )} */}
                                     </>
-                              
-                                    <div className="mt-1">
+
+                                    {/* <div className="mt-1">
                                         <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
-                                    </div>
-                              
+                                    </div> */}
+
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                {/* {selectedStage === 1 && (
+                        ))}
+                    </div>
+                    {/* {selectedStage === 1 && (
                     <button type="button" className="btn btn-danger mt-3" onClick={handleDeleteStage}>
                         Удалить {selectedStage} этап
                     </button>
                 )} */}
 
 
-            </div>
+                </div>
             </div>
             <div className="main__content">
-            <p>Вы еще не заполнили ваш урок . </p>
-                        <div className="mb-2">
-                        <div>
+                <p>Вы еще не заполнили ваш урок . </p>
+                <div className="mb-2">
+                    <div>
 
-                <LmsButton buttonText={"заполнить урок"}  handleClick={handleOpenModal} />
+                        <LmsButton buttonText={"заполнить урок"} handleClick={handleOpenModal} />
+                    </div>
+
+                    {showClassicLesson && <AddingClassicLesson selectedStage={selectedStage} />}
+                    {
+                        selectedStage && selectedStage.items.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />
+                    }
+                </div>
             </div>
 
-            {showClassicLesson && <AddingClassicLesson />}
-                        </div>
-            </div>
-            
-      
+
         </>
     );
 }
