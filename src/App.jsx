@@ -83,7 +83,7 @@ function App() {
           index: true,
           // path: "home",
           element: <Home />,
-        },
+        },lk
 
 
          
