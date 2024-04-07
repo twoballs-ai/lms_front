@@ -32,7 +32,7 @@ function AddingCodeLesson(props) {
         console.log(valueCodeEditor)
     }
     console.log(location.state);
- 
+
     const handleChange = (event) => {
         setProgrammingLessonData({
             ...programmingLessonData,
@@ -60,23 +60,23 @@ function AddingCodeLesson(props) {
     return (
         <div>
             {location.state.type === "codingLesson" && (
-            <Card className="mt-3 mx-3">
+                <Card className="mt-3 mx-3">
                     <Card.Header>
                         Добавление урока на программирование
                     </Card.Header>
                     <Card.Body>
-                    <Editor  onChange={handleChangeContent}/>
+                        <Editor onChange={handleChangeContent} />
                         <Form>
-                    <div className="mt-5">
-                        <CodeEditor onChange={handleChangeCodeContent}/>
-                    </div>
-   
+                            <div className="mt-5">
+                                <CodeEditor onChange={handleChangeCodeContent} />
+                            </div>
+
                             <Button
                                 onClick={formSubmit}
                                 variant="primary"
                                 type="submit"
                             >
-                                Submit
+                                Submithg
                             </Button>
                         </Form>
                     </Card.Body>
