@@ -17,7 +17,7 @@ import LmsModalBase from "../../../../reUseComponents/ModalBase";
 import AddStageLesson from "./AddStageLesson";
 import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
 
-function EditModuleStage() {
+function EditModuleStage({ moduleEditData }) {
 
     const [showClassicLesson, setShowClassicLesson] = useState(false);
 
@@ -32,7 +32,6 @@ function EditModuleStage() {
     // };
     // // const {state} = useLocation();
     // // const { type } = state;
-    let { module_id, course_id, stage_id } = useParams();
 
     const [selectedStage, setSelectedStage] = useState(null);
 
@@ -54,18 +53,23 @@ function EditModuleStage() {
     const handleSelectStage = (tech) => {
         setSelectedStage(tech);
     };
+
+    // useEffect(() => {
+    //     setShowClassicLesson(false);
+    // }, [selectedStage]);
     useEffect(() => {
         const fetchData = () => {
             axios
                 .get(
-                    `${apiLmsUrl}course-chapter-module-stage-list/${module_id}`
+                    `${apiLmsUrl}course-chapter-module-stage-list/${moduleEditData.id}`
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // { headers: { "Content-Type": "multipart/form-data" } }
                 ).then((response) => {
+                    console.log(response);
                     if (response.status === 200 || response.status === 201) {
 
                         setModuleData(response.data.data);
-                        // // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
+                        console.log(response);
                         // setStagePkData(
                         //     response.data[parseInt(stage_id) - 1] &&
                         //         response.data[parseInt(stage_id) - 1]["id"]
@@ -74,13 +78,13 @@ function EditModuleStage() {
                 });
         };
         fetchData();
-    }, [location]);
+    }, [moduleEditData]);
 
 
     const addStage = () => {
-        console.log("123")
+
         const dataParams = {
-            module_id: module_id,
+            module_id: moduleEditData.id,
             title: "Этап",
         }
         try {
@@ -94,7 +98,7 @@ function EditModuleStage() {
                 .then((response) => {
                     console.log(response.data.modules);
                     if (response.status === 200) {
-
+                        setModuleData(prevModuleData => [...prevModuleData, response.data.modules]);
                         console.log(response.data)
                     }
                     // window.location.href='/teacher-profile/my-courses'
@@ -105,7 +109,6 @@ function EditModuleStage() {
         }
     };
 
-    console.log(moduleData);
     const [openedStage, setOpenedStage] = useState(null);
     const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} />)
 
@@ -113,12 +116,52 @@ function EditModuleStage() {
     // Обработчик для открытия элемента
     const handleStageClick = (stageId) => {
         setOpenedStage(stageId);
-        console.log("dd")
+
     };
+
+    const Dot = ({ tech }) => {
+        return (
+            <div className="dot" onClick={() => handleSelectStage(tech)}>
+
+                <>
+                    {tech.items.type === "classic" ? (
+                        <div className="mt-1">
+                            <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
+                        </div>
+                    ) : (
+                        <div className="mt-1">
+                            <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
+                        </div>
+                    )}
+                    {/* {tech.item.type === "classic" && (
+                <div className="mt-1">
+                    <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
+                </div>
+            )} */}
+                    {/* {tech.type.is_quiz === true && (
+                <div className="mt-1">
+                    <FontAwesomeIcon icon={faSquareCheck} transform="down-6 grow-3" />
+                </div>
+            )} */}
+                    {/* {tech.type.is_video === true && (
+                <div className="mt-1">
+                    <FontAwesomeIcon icon={faFilm} transform="down-6 grow-3" />
+                </div>
+            )} */}
+                </>
+
+                {/* <div className="mt-1">
+            <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
+        </div> */}
+
+            </div>
+        )
+
+    }
     return (
         <>
             <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal} />
-            <div className="main__nav-block"><p className="">Вы перешли на страницу редактирования модуля {module_id} </p>{" "}
+            <div className="main__nav-block"><p>Вы перешли на страницу редактирования модуля: "{moduleEditData.title}"</p>{" "}
                 <div className="nav-block__stages" >
                     {moduleData.length < 20 && (
                         // <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
@@ -129,41 +172,7 @@ function EditModuleStage() {
                     <div className="stages__case">
                         {moduleData.map((tech, index) => (
                             <div className="" key={tech.id}>
-
-                                <div className="dot" onClick={() => handleSelectStage(tech)}>
-
-                                    <>
-                                        {tech.items.type === "classic" ? (
-                                            <div className="mt-1">
-                                                <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
-                                            </div>
-                                        ) : (
-                                            <div className="mt-1">
-                                                <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
-                                            </div>
-                                        )}
-                                        {/* {tech.item.type === "classic" && (
-                                            <div className="mt-1">
-                                                <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />
-                                            </div>
-                                        )} */}
-                                        {/* {tech.type.is_quiz === true && (
-                                            <div className="mt-1">
-                                                <FontAwesomeIcon icon={faSquareCheck} transform="down-6 grow-3" />
-                                            </div>
-                                        )} */}
-                                        {/* {tech.type.is_video === true && (
-                                            <div className="mt-1">
-                                                <FontAwesomeIcon icon={faFilm} transform="down-6 grow-3" />
-                                            </div>
-                                        )} */}
-                                    </>
-
-                                    {/* <div className="mt-1">
-                                        <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />
-                                    </div> */}
-
-                                </div>
+                                <Dot tech={tech} />
                             </div>
                         ))}
                     </div>
@@ -179,14 +188,16 @@ function EditModuleStage() {
             <div className="main__content">
                 <p>Вы еще не заполнили ваш урок . </p>
                 <div className="mb-2">
-                    <div>
+                    {moduleData.length > 0 && (
+                        selectedStage && selectedStage?.items && Object.keys(selectedStage.items).length === 0) && (
+                            <div>
+                                <LmsButton buttonText={"заполнить урок"} handleClick={handleOpenModal} />
+                            </div>
 
-                        <LmsButton buttonText={"заполнить урок"} handleClick={handleOpenModal} />
-                    </div>
-
+                        )}
                     {showClassicLesson && <AddingClassicLesson selectedStage={selectedStage} />}
                     {
-                        selectedStage && selectedStage.items.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />
+                        selectedStage && selectedStage.items && selectedStage.items.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />
                     }
                 </div>
             </div>

@@ -23,7 +23,7 @@ function AddingClassicLesson(props) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    console.log(stageEditorData)
+    console.log(props)
     useEffect(() => {
         const fetchData = () => {
             axios
@@ -34,7 +34,9 @@ function AddingClassicLesson(props) {
                 ).then((response) => {
                     if (response.status === 200 || response.status === 201) {
                         console.log(response.data)
-                        setStageEditorData(response.data.items.text);
+                        if (response.data.items && Object.keys(response.data.items).length > 0) {
+                            setStageEditorData(response.data.items.text);
+                        }
 
                         // // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
                         // setStagePkData(
@@ -45,7 +47,7 @@ function AddingClassicLesson(props) {
                 });
         };
         fetchData();
-    }, []);
+    }, [stagePk]);
     const formSubmit = async (e) => {
 
         e.preventDefault();

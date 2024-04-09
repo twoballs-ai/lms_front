@@ -65,6 +65,7 @@ import EditorPageInfo from './components/pages/Teacher/CourseEditor/FullCourseEd
 // import AddModule from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddModule';
 // // import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
 import EditModuleStage from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditModuleStage';
+import CourseEditor from './components/pages/Teacher/CourseEditor/components/CourseEditor';
 // // import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
 // // import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
 // // import UserLogout from './components/Auth/Logout/Logout';
@@ -98,8 +99,8 @@ function App() {
           element: <EditorPageInfo />
         },
         {
-          path: "edit-module/:module_id",
-          element: <EditModuleStage />
+          path: "edit/",
+          element: <CourseEditor />
         },
 
       ]
