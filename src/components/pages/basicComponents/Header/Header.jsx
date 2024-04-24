@@ -1,15 +1,8 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-// import ModalRegisterLogin from "../../TabsLoginRegister/HeaderComponents/ModalRegistrationLogin";
-
+import "./Header.scss"; // Import SCSS file
+import ModalRegisterLogin from "../../Auth/TabsLoginRegister/HeaderComponents/ModalRegistrationLogin"
+import LmsButton from "../../../reUseComponents/Button";
 function Header() {
     const [searchData, setSearchData] = useState({
         search: "",
@@ -31,98 +24,68 @@ function Header() {
 
     const [isAuth, setIsAuth] = useState(false);
     useEffect(() => {
-      if (localStorage.getItem('access_token') !== null) {
-         setIsAuth(true); 
-       }
-     }, [isAuth]);
-
+        if (localStorage.getItem('access_token') !== null) {
+            setIsAuth(true);
+        }
+    }, [isAuth]);
 
     return (
         <>
-<div className="container__header-container">   
-<div className="header-container__logo">Intellity code</div>
+            <div className="container__header-container">
 
-</div>
+                <div className="header-container__logo">Intellity code</div>
 
-{/* 
-            <Navbar
-                bg="light"
-                data-bs-theme="light"
-                expand="lg"
-                className="shadow"
-            >
 
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse className="me-3" id="basic-navbar-nav">
-                    <Form className="d-flex me-4">
-                        <Form.Control
+                <div className="header-container__navbar">
+
+                    <div className="navbar__search">
+                        <input
                             type="search"
                             name="search"
                             onChange={handleChange}
                             placeholder="Поиск курсов по названию"
-                            className="me-2"
+                            className="search__input"
                             aria-label="Search"
                         />
-                        <Button
-                            onClick={searchByCourse}
-                            variant="outline-secondary"
-                        >
-                            Поиск
-                        </Button>
-                    </Form>
-                    <Nav className="ms-auto">
-                        <Nav.Link as={Link} to="/category">
+                        <LmsButton buttonText={"Поиск"} handleClick={searchByCourse} />
+                    </div>
+                    <div className="nav-links ms-auto">
+                        <Link to="/category" className="nav-link">
                             Категории
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/all-courses">
+                        </Link>
+                        <Link to="/all-courses" className="nav-link">
                             Курсы
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/about">
+                        </Link>
+                        <Link to="/about" className="nav-link">
                             О нас
-                        </Nav.Link>
-                   
-                        {isAuth ?  <NavDropdown
-                        align="end"
-                            title="Профиль"
-                            id="navbarScrollingDropdown"
-                            className="mb-2"
-                        >
-                            {is_teacher === "true" && (
-                                <>
-                                    <NavDropdown.Item
-                                        as={Link}
-                                        to="/teacher-profile"
-                                    >
-                                        Личный кабинет учителя
-                                    </NavDropdown.Item>
+                        </Link>
 
-                          
-                                </>
-                            )}
-                            {is_student === "true" && (
-                                <>
-                                    <NavDropdown.Item
-                                        as={Link}
-                                        to="/student-profile"
-                                    >
-                                        Личный кабинет ученика
-                                    </NavDropdown.Item>
-                       
-                                </>
-                            )}
-                                      <NavDropdown.Item
-                                        as={Link}
-                                        to="/logout"
-                                    >
+                        {isAuth ? (
+                            <div className="nav-dropdown">
+                                <div className="nav-dropdown-toggle">Профиль</div>
+                                <div className="nav-dropdown-menu">
+                                    {is_teacher === "true" && (
+                                        <Link to="/teacher-profile" className="nav-dropdown-item">
+                                            Личный кабинет учителя
+                                        </Link>
+                                    )}
+                                    {is_student === "true" && (
+                                        <Link to="/student-profile" className="nav-dropdown-item">
+                                            Личный кабинет ученика
+                                        </Link>
+                                    )}
+                                    <Link to="/logout" className="nav-dropdown-item">
                                         Выход
-                                    </NavDropdown.Item>
-                        </NavDropdown> :  ""
-                    // <ModalRegisterLogin />
-                    }
-                        
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar> */}
+                                    </Link>
+                                </div>
+                            </div>
+                        ) : <ModalRegisterLogin />}
+
+                    </div>
+                </div>
+
+            </div>
+
         </>
     );
 }

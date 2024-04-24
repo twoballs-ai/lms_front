@@ -12,6 +12,9 @@ function CourseEditor() {
     const course_id = 1
     const [getChapters, setGetChapters] = useState([])
     const [moduleEditData, setModuleEditData] = useState([])
+    const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
+    const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -105,11 +108,10 @@ function CourseEditor() {
         }
     };
     const moduleChange = (module) => {
-        console.log(module)
         setModuleEditData(module)
     }
 
-    console.log(moduleEditData)
+
     return (
 
         <div className="course-edit__container">
@@ -117,17 +119,29 @@ function CourseEditor() {
                 <div className="leftbar__chapters">
                     <LmsButton buttonText={"Добавить раздел"} handleClick={addChapter} />
                     {getChapters.map((chapter) => (
-                        <>
-                            <div className="chapters__block">
-                                <div key={chapter.id} className="block__title"><p>{chapter.title}</p></div>
-                                <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} />
-                                <div className="chapters__modules">
-                                    {chapter.modules.map((module) => (
-                                        <div key={module.id} className="modules__block" onClick={(e) => moduleChange(module)} >{module.title}</div>
-                                    ))}
-                                </div>
+
+                        <div className={`chapters__block ${activeChapterId === chapter.id ? 'active' : ''}`} key={chapter.id} onClick={() => setActiveChapterId(chapter.id)}>
+                            <div className="block__title"><p>{chapter.title}</p></div>
+                            <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} />
+                            <div className="chapters__modules">
+                                {/* {chapter.modules.map((module) => (
+                                    <div key={module.id} className="modules__block" onClick={(e) => moduleChange(module)} >{module.title}</div>
+                                ))} */}
+                                {chapter.modules.map((module) => (
+                                    <div
+                                        key={module.id}
+                                        className={`modules__block ${activeModuleId === module.id ? "active" : ""}`}
+                                        onClick={() => {
+                                            setActiveModuleId(module.id);
+                                            moduleChange(module);
+                                        }}
+                                    >
+                                        {module.title}
+                                    </div>
+                                ))}
                             </div>
-                        </>
+                        </div>
+
                     ))}
                 </div>
 

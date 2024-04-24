@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
+
 import axios from "axios";
-import Badge from "react-bootstrap/Badge";
+
 import { apiUrl } from "../../../../shared/config";
 
 

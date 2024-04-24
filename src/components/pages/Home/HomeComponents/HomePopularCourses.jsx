@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
 import { Link } from "react-router-dom";
 function HomePopularCourses(props) {
     let popularCourseData = props.popularCourseData;
@@ -58,7 +55,7 @@ function HomePopularCourses(props) {
                         </Col>
                     ))}
             </Row>
-            </div>
+        </div>
 
     );
 }

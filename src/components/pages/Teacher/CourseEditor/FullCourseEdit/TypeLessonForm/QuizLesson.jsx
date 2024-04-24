@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
-import Figure from "react-bootstrap/Figure";
+
 import axios from "axios";
 import Editor from "../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";
@@ -30,7 +24,7 @@ function AddingQuizLesson(props) {
         setValueEditor(valueEditor)
         console.log(valueEditor)
     }
- 
+
     const handleChange = (event) => {
         setQuizLessonData({
             ...quizLessonData,
@@ -51,7 +45,7 @@ function AddingQuizLesson(props) {
         _formData.append("answer3", quizLessonData.answer3);
         _formData.append("answer4", quizLessonData.answer4);
         _formData.append("true_answer", quizLessonData.true_answer);
-        await CourseEditorService.editCoursePageAddQuizLesson(stagePk,_formData).then((response) => {
+        await CourseEditorService.editCoursePageAddQuizLesson(stagePk, _formData).then((response) => {
             if (response.status === 200 || response.status === 201) {
                 navigate(-2);
             }
@@ -59,13 +53,13 @@ function AddingQuizLesson(props) {
     };
 
 
-    
+
     return (
         <div>
             {location.state.type === "quizLesson" && (
-            <Card className="mt-3 mx-3">
+                <Card className="mt-3 mx-3">
                     <Card.Header>
-                    Вы находитесь на этапе добавления квиза(теста)
+                        Вы находитесь на этапе добавления квиза(теста)
                     </Card.Header>
                     <Card.Body>
                         <Form>

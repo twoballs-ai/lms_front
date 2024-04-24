@@ -6,7 +6,7 @@ import axios from "axios";
 // import { apiUrl, typesApiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from 'react-router-dom';
 import LmsButton from '../../../../reUseComponents/Button';
-function AddStageLesson({ handleShowClassicLesson }) {
+function AddStageLesson({ handleShowClassicLesson, handleShowVideoLesson }) {
     let { module_id } = useParams();
     let { course_id } = useParams();
     let { stage_id } = useParams();
@@ -57,7 +57,7 @@ function AddStageLesson({ handleShowClassicLesson }) {
                         описание и ссылка на ваш видеоурок
                     </div>
                     <div className='lesson_block__footer'>
-                        <LmsButton buttonText={"Выбрать видео урок"} handleClick={"addStage"} />
+                        <LmsButton buttonText={"Выбрать видео урок"} handleClick={handleShowVideoLesson} />
                     </div>
 
                 </div>

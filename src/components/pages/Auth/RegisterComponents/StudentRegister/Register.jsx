@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import { Row, Col } from "react-bootstrap";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
+
+
 import axios from "axios";
 
-import "../registerComponents.css";
-import { apiUrl } from "../../../../shared/config";
-import AuthService from "../../../../services/auth.service";
+// import "../registerComponents.css";
+// import { apiUrl } from "../../../../shared/config";
+import AuthService from "../../../../../services/auth.service"
 
 function StudentRegister() {
     const [studentRegisterData, setStudentRegisterData] = useState({
@@ -36,23 +32,23 @@ function StudentRegister() {
         // console.log(userData)
         // console.log(teacherRegisterData)
 
-            await AuthService.studentRegister(_formData).then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    setStudentRegisterData({
-                        email: "",
-                        password1: "",
-                        password2: "",
-                        status: "success",
-                    });
-                    console.log(response);
-                }
-            });
+        await AuthService.studentRegister(_formData).then((response) => {
+            if (response.status === 200 || response.status === 201) {
+                setStudentRegisterData({
+                    email: "",
+                    password1: "",
+                    password2: "",
+                    status: "success",
+                });
+                console.log(response);
+            }
+        });
     };
     return (
         <div className="mx-3">
-            <Row className="justify-content-md-center">
-                <Col md={3}>
-            
+            <div className="justify-content-md-center">
+                <div md={3}>
+
                     {studentRegisterData.status === "success" && (
                         <p className="text-success">
                             регистрация прошла успешно
@@ -63,47 +59,47 @@ function StudentRegister() {
                             Во время регистрации произошла ошибка
                         </p>
                     )}
-                    <Form>
-                    <FloatingLabel
-                        controlId="email"
-                        label="Введите ваш email"
-                        className="mb-3 text-secondary text-label-size"
-                    >
-                        <Form.Control
-                             value={studentRegisterData.email}
-                             name="email"
-                             onChange={handleChange}
-                             type="email"
-                             placeholder="Введите ваш email"
-                        />
-                    </FloatingLabel>
-                    <FloatingLabel
-                        controlId="password"
-                        label="Введите пароль"
-                        className="mb-3 text-secondary text-label-size"
-                    >
-                        <Form.Control
+                    <div>
+                        <div
+                            controlId="email"
+                            label="Введите ваш email"
+                            className="mb-3 text-secondary text-label-size"
+                        >
+                            <div
+                                value={studentRegisterData.email}
+                                name="email"
+                                onChange={handleChange}
+                                type="email"
+                                placeholder="Введите ваш email"
+                            />
+                        </div>
+                        <div
+                            controlId="password"
+                            label="Введите пароль"
+                            className="mb-3 text-secondary text-label-size"
+                        >
+                            <div
                                 value={studentRegisterData.password1}
                                 name="password1"
                                 onChange={handleChange}
                                 type="password1"
                                 placeholder="Введите пароль"
-                        />
-                    </FloatingLabel>
-                        <Button
+                            />
+                        </div>
+                        <button
                             onClick={submitForm}
                             variant="secondary"
                             type="submit"
                         >
                             Регистрация
-                        </Button>
-                    </Form>
-                </Col>
-                <Col md={4} className="auth_reg_text">
-                    <span>Выберите этот вариант если вы хотите проходить курсы на нашей платформе, 
+                        </button>
+                    </div>
+                </div>
+                <div md={4} className="auth_reg_text">
+                    <span>Выберите этот вариант если вы хотите проходить курсы на нашей платформе,
                         в последующем вы сможете расширить свою учетную запись для преподавания..</span>
-                </Col>
-            </Row>
+                </div>
+            </div>
         </div>
     );
 }

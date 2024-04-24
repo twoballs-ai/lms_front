@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
-import Figure from "react-bootstrap/Figure";
+
 import axios from "axios";
 import Editor from "../../../../../Editor";
 import { apiUrl, typesApiUrl } from "../../../../../../shared/config";

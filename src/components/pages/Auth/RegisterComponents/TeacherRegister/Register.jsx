@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import { Row, Col } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+
 import axios from "axios";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Alert from "react-bootstrap/Alert";
+
 // import { teacherApiUrl } from "../../../../../shared/config";
 
-import "../registerComponents.css";
-import { apiUrl } from "../../../../shared/config";
-import AuthService from "../../../../services/auth.service";
+// import "../registerComponents.css";
+// import { apiUrl } from "../../../../shared/config";
+import AuthService from "../../../../../services/auth.service";
 
 function TeacherRegister() {
     const [showDangerAlert, setshowDangerAlert] = useState(false);

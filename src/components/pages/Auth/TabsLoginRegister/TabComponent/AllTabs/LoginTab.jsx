@@ -1,5 +1,5 @@
 import React from "react";
-import AllProfilesLogin from "../../../Auth/LoginComponents/Login/Login";
+import AllProfilesLogin from "../../../LoginComponents/Login/Login";
 
 
 const LoginTab = () => {

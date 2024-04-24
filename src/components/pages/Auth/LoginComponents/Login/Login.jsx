@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import { Row, Col } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
+
 import axios from "axios";
-import { restAuthApiUrl } from "../../../../shared/config";
-import AuthService from "../../../../services/auth.service";
+// import { restAuthApiUrl } from "../../../../shared/config";
+import AuthService from "../../../../../services/auth.service";
 
 function AllProfilesLogin() {
     const [allProfilesLoginData, setAllProfilesLoginData] = useState({
@@ -108,49 +103,49 @@ function AllProfilesLogin() {
     // }
     return (
         <div className="mx-3">
-            <Row className="justify-content-md-center">
-                <Col md={4}>
+            <div className="justify-content-md-center">
+                <div md={4}>
                     {errorMsg && <p className="text-danger">{errorMsg}</p>}
-                    <Form>
+                    <div>
                         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Запомнить меня" />
       </Form.Group> */}
-                        <FloatingLabel
+                        <div
                             controlId="email"
                             label="Введите ваш email"
                             className="mb-3 text-secondary text-label-size"
                         >
-                            <Form.Control
+                            <div
                                 value={allProfilesLoginData.email}
                                 name="email"
                                 onChange={handleChange}
                                 type="email"
                                 placeholder="Введите ваш email"
                             />
-                        </FloatingLabel>
-                        <FloatingLabel
+                        </div>
+                        <div
                             controlId="password"
                             label="Введите пароль"
                             className="mb-3 text-secondary text-label-size"
                         >
-                            <Form.Control
+                            <div
                                 value={allProfilesLoginData.password}
                                 name="password"
                                 onChange={handleChange}
                                 type="password"
                                 placeholder="Введите пароль"
                             />
-                        </FloatingLabel>
-                        <Button
+                        </div>
+                        <button
                             onClick={submitForm}
                             variant="secondary"
                             type="submit"
                         >
                             Войти
-                        </Button>
-                    </Form>
-                </Col>
-            </Row>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

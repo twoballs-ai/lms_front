@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
-export default function LmsModalBase({ open, onClose, content }) {
+
+export default function LmsModalBase({ open, onClose, content, modalStyles }) {
     return (
-        <Modal open={open} onClose={onClose} center>
+        <Modal open={open} onClose={onClose} center styles={modalStyles}>
             {content}
         </Modal>
     );
