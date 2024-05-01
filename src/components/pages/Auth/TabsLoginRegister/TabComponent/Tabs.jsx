@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import LoginTab from "./AllTabs/LoginTab";
 import RegisterTab from "./AllTabs/RegisterTab";
 
-import "./tabs.css";
+import "./Tabs.scss";
 import TabNavItem from "./TabNavItem";
 import TabContent from "./TabContent";
 
-const TabsAuth = ({authState}) => {
+const TabsAuth = ({ authState }) => {
     const [activeTab, setActiveTab] = useState(authState);
     // const handleTab1 = () => {
     //   // update the state to tab1
@@ -17,7 +17,9 @@ const TabsAuth = ({authState}) => {
     //   setActiveTab("register");
     // };
     return (
-        <div className="Tabs">
+        <div className="modal__tabs">
+
+<div className="tabs">
             {/* Tab nav */}
             <ul className="nav tabsNav">
                 {/* <li className={activeTab === "login" ? "active" : "" } onClick={handleTab1}>Вход</li>
@@ -45,6 +47,8 @@ const TabsAuth = ({authState}) => {
                 </TabContent>
             </div>
         </div>
+        </div>
+        
     );
 };
 export default TabsAuth;

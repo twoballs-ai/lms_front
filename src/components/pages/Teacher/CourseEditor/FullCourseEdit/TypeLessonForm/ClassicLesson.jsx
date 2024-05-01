@@ -17,6 +17,7 @@ function AddingClassicLesson(props) {
     const [stageEditorData, setStageEditorData] = useState('')
     const [showClassicLesson, setShowClassicLesson] = useState(false)
     let stagePk = props.selectedStage ? props.selectedStage.id : null;
+    console.log(stagePk)
     let addClasiclesson = props.addClasiclesson
     const setModuleData = props.setModuleData
     const location = useLocation();
@@ -26,22 +27,18 @@ function AddingClassicLesson(props) {
     useEffect(() => {
         if (stagePk) {
             const fetchData = async () => {
-                try {
-                    const response = await axios.get(`${apiLmsUrl}stage/${stagePk}`);
+                await CourseEditorService.editCoursePageGetClassicLesson(stagePk).then((response) => {
+                    // console.log(response.data.data)
                     if (response.status === 200 || response.status === 201) {
-                        console.log(response.data.items);
                         if (response.data.items && Object.keys(response.data.items).length > 0) {
                             setStageEditorData(response.data.items.html_code_text);
-                            console.log(response.data.items.html_code_text)
                             setShowClassicLesson(true);
                         } else {
                             setStageEditorData("");
                             setShowClassicLesson(false);
                         }
                     }
-                } catch (error) {
-                    console.error("Error fetching stage data:", error);
-                }
+                });
             };
             fetchData();
         }
@@ -49,38 +46,29 @@ function AddingClassicLesson(props) {
     const formSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            text: valueEditor
+
+            html_code_text: valueEditor
         };
-        try {
-            const response = await axios.post(
-                `${apiLmsUrl}stage/${stagePk}/classic_lesson/`,
-                data
-            );
 
-            console.log(response.data);
-
-            if (response.status === 200) {
-                // Обновляем состояние moduleData
-                setModuleData(prevModuleData => {
-                    const updatedModuleData = [...prevModuleData];
-                    // Находим нужный этап в moduleData и обновляем его данные
-                    const updatedStageIndex = updatedModuleData.findIndex(stage => stage.id === stagePk);
-                    if (updatedStageIndex !== -1) {
-                        updatedModuleData[updatedStageIndex] = {
-                            ...updatedModuleData[updatedStageIndex],
-                            items: {
-                                id: response.data.items.id,
-                                text: response.data.items.text,
-                                type: response.data.items.type,
-                                stage_id: response.data.items.stage_id
-                            }
-                        };
-                    }
-                    return updatedModuleData;
-                });
-            }
-        } catch (error) {
-            console.error("Error:", error);
+        const response = await CourseEditorService.editCoursePageAddClassicLesson(stagePk, data)
+        if (response.status === 200 || response.status === 201) {
+            setModuleData(prevModuleData => {
+                const updatedModuleData = [...prevModuleData];
+                // Находим нужный этап в moduleData и обновляем его данные
+                const updatedStageIndex = updatedModuleData.findIndex(stage => stage.id === stagePk);
+                if (updatedStageIndex !== -1) {
+                    updatedModuleData[updatedStageIndex] = {
+                        ...updatedModuleData[updatedStageIndex],
+                        items: {
+                            id: response.data.items.id,
+                            text: response.data.items.text,
+                            type: response.data.items.type,
+                            stage_id: response.data.items.stage_id
+                        }
+                    };
+                }
+                return updatedModuleData;
+            });
         }
     };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import TabsAuth from "../TabComponent/Tabs";
-import "./ModalRegistrationLogin.scss"
+// import "./ModalRegistrationLogin.scss"
 import LmsButton from "../../../../reUseComponents/Button";
 import LmsModalBase from "../../../../reUseComponents/ModalBase";
 
@@ -15,18 +15,16 @@ function ModalRegisterLogin() {
             margin: '0',
             overflow: 'none'
 
+
         },
         overlay: {
             background: 'rgba(0, 0, 0, 0.5)'
         }
     };
 
-
-    const [fullscreen, setFullscreen] = useState(true);
-    const [show, setShow] = useState(false);
     const [authState, setAuthState] = useState("");
     function handleShow(breakpoint, auth) {
-        setFullscreen(breakpoint);
+        // setFullscreen(breakpoint);
         handleOpenModal()
         setAuthState(auth)
     }

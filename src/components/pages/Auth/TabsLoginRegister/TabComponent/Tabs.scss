@@ -1,31 +1,49 @@
-.Tabs {
+.modal__tabs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+
+  .tabs {
+
     width: 90%;
     height: auto;
     min-height: 550px;
-    background: #0078c3;
-    margin: 0.5rem auto 1.5rem;
+    background: #0066ff;
+    margin: auto;
+    /* автоматическое выравнивание по горизонтали */
+    margin-top: 0.5rem;
+    /* сохраняем верхний отступ */
+    margin-bottom: 1.5rem;
+    /* сохраняем нижний отступ */
     padding: 2rem 1rem;
-    color: #E8F0F2;
-    box-shadow: 80px 40px rgb(51, 0, 128);
+    color: #e8f0f2;
+    box-shadow: 1px 1px 20px 20px rgb(51, 0, 128);
     border-radius: 2rem;
-    @media (max-width: 769px) {
-     padding: 2rem 0;
-    }
-   }
 
-   ul.tabsNav {
+
+    @media (max-width: 769px) {
+      padding: 2rem 0;
+    }
+  }
+
+  ul.tabsNav {
     width: 60%;
     margin: 0 auto 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #39A2DB;
+    border: 1px solid #39a2db;
     border-radius: 2rem;
     padding-left: 0px;
+
     @media (max-width: 768px) {
       width: 90%;
     }
   }
+
   ul.tabsNav li {
     width: 50%;
     padding: 1rem;
@@ -36,43 +54,43 @@
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
   }
+
   ul.tabsNav li:nth-child(2) {
     border-radius: 0;
     border-bottom-right-radius: 2rem;
     border-top-right-radius: 2rem;
   }
+
   ul.tabsNav li:hover {
     background: rgba(50, 224, 196, 0.15);
   }
-  ul.tabsNav li.active {
-    background: #39A2DB;
-  }
 
+  ul.tabsNav li.active {
+    background: #39a2db;
+  }
 
   /* First and Second Tab Styles */
-.LoginTab p,
-.RegisterTab p {
-  font-size: 2rem;
-  text-align: center;
-}
+  .LoginTab p,
+  .RegisterTab p {
+    font-size: 2rem;
+    text-align: center;
+  }
 
-/* registertabs */
+  /* registertabs */
 
-.react-tabs {
+  .react-tabs {
     -webkit-tap-highlight-color: transparent;
   }
-   
+
   .react-tabs__tab-list {
     width: 40%;
     margin: 0 auto 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* border: 1px solid #db39d8;
-    border-radius: 2rem; */
     padding-left: 0px;
   }
-   
+
   .react-tabs__tab {
     width: 50%;
     padding: 0.5rem;
@@ -81,36 +99,37 @@
     cursor: pointer;
     transition: all 0.7s;
   }
-   
+
   .react-tabs__tab--selected {
-    background: #39A2DB;
+    background: #39a2db;
   }
-   
+
   .react-tabs__tab--disabled {
-    color: GrayText;
+    color: graytext;
     cursor: default;
   }
-   
+
   .react-tabs__tab:hover {
     background: rgba(50, 224, 196, 0.15);
   }
-   
+
   .react-tabs__tab:first-child {
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
   }
-   
+
   .react-tabs__tab:last-child {
     border-bottom-right-radius: 2rem;
     border-top-right-radius: 2rem;
   }
-   
+
   .react-tabs__tab-panel {
     display: none;
   }
-   
+
   .react-tabs__tab-panel--selected {
     display: block;
     font-size: 2rem;
     text-align: center;
   }
+}

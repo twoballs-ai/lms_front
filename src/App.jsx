@@ -34,10 +34,10 @@ import "./App.scss"
 // //teacher pages
 // // import TeacherLogin from './components/pages/Teacher/Login/Login';
 
-// import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
-// import MyTeacherCourses from './components/pages/Teacher/ControlPanel/MyTeacherCourses';
-// import TeacherDashMain from './components/pages/Teacher/ControlPanel/components/DashMain';
-// // import AddCourse from './components/pages/Teacher/ControlPanel/AddCourse';
+import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
+import MyTeacherCourses from './components/pages/Teacher/ControlPanel/TeacherCoursesProfile/MyTeacherCourses';
+import TeacherDashMain from './components/pages/Teacher/ControlPanel/components/DashMain';
+import AddCourse from './components/pages/Teacher/ControlPanel/TeacherCoursesProfile/AddCourse';
 // // import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
 // // import EditChapter from './components/pages/Teacher/ControlPanel/EditChapter';
 // // import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
@@ -68,7 +68,7 @@ import EditModuleStage from './components/pages/Teacher/CourseEditor/FullCourseE
 import CourseEditor from './components/pages/Teacher/CourseEditor/components/CourseEditor';
 // // import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
 // // import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
-// // import UserLogout from './components/Auth/Logout/Logout';
+import UserLogout from './components/pages/Auth/Logout/Logout';
 // import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
 // import Layout from './components/pages/basicComponents/layouts';
 // import StudentRegister from './components/Auth/TabComponent/RegisterComponents/StudentRegister/Register';
@@ -84,10 +84,29 @@ function App() {
           index: true,
           // path: "home",
           element: <Home />,
-        }
-
-
-
+        },
+        {
+          path: "logout",
+          element: <UserLogout />,
+        },
+      ]
+    },
+    {
+      path: "teacher-profile/",
+      element: <TeacherDashMain />,
+      children: [
+        {
+          index: true,
+          element: <TeacherDashboard />
+        },
+        {
+          path: "my-courses",
+          element: <MyTeacherCourses />,
+        },
+        {
+          path: "add-course",
+          element: <AddCourse />,
+        },
       ]
     },
     {
@@ -104,7 +123,7 @@ function App() {
         },
 
       ]
-    }
+    },
     // {
     //   path: "detail/:course_id",
     //   element: <CourseDetail />,
@@ -125,10 +144,7 @@ function App() {
     //   path: "about",
     //   element: <About />,
     // },
-    // {
-    //   path: "logout",
-    //   element: <UserLogout />,
-    // },
+
     // {
     //   path: "student-profile/",
     //   element: <UserDashmain />,
@@ -147,18 +163,8 @@ function App() {
     //     },
     //   ]
     // },
-    // {
-    // path: "teacher-profile/",
-    // element: <TeacherDashMain />,
-    // children: [
-    // { 
-    //   index: true,
-    //   element: <TeacherDashboard /> 
-    // },
-    // {
-    //   path: "my-courses",
-    //   element: <MyTeacherCourses />,
-    // },
+
+
     // {
     //   path: "dashboard", 
     //   element: <TeacherDashboard /> 
@@ -167,10 +173,7 @@ function App() {
     //   path: "all-chapters/:course_id",
     //   element: <Coursechapter />,
     // },
-    // {
-    //   path: "add-course",
-    //   element: <AddCourse />,
-    // },
+
     // {
     //   path: "my-courses",
     //   element: <StudentMyCourses />,

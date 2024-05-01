@@ -28,7 +28,7 @@ function AddStageLesson({ handleShowClassicLesson, handleShowVideoLesson }) {
     //     console.log('hi')  
     //     navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'codingLesson' } });
     // };
-    // console.log(stageData);
+    console.log("stageData");
     return (
         <>
 

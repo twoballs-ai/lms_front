@@ -2,31 +2,32 @@ import axios from "axios";
 import { apiLmsUrl, apiUserUrl, restAuthApiUrl } from "../shared/config";
 import api from "./api";
 // import authHeader from "./auth-header";
-const teacherDashboard = async (teacherId) => {
+const teacherDashboard = async () => {
     return await api
-    .get(apiUserUrl + "teacher/dashboard/"+ teacherId
-    )
+        .get(apiUserUrl + "teacher/dashboard/"
+        )
 }
-const teacherCourses = async (teacherId) => {
+const teacherCourses = async () => {
     return await api
-    .get(apiLmsUrl + "teacher-courses/" + teacherId
-    )
+        .get(apiLmsUrl + "teacher-courses/"
+        )
 }
 const deleteTeacherCourse = async (courseId) => {
     return await api
-    .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
-    )
+        .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
+        )
 }
 const addCourse = async (data) => {
     return await api
-    .post(apiLmsUrl + "course/",
-    data, {headers: { "Content-Type": "multipart/form-data" }}
-    )
+        .post(apiLmsUrl + "course/",
+            data,
+            // {headers: { "Content-Type": "multipart/form-data" }}
+        )
 }
 const teacherStudents = async (teacherId) => {
     return await api
-    .get(apiLmsUrl + "teacher-students/" + teacherId
-    )
+        .get(apiLmsUrl + "teacher-students/" + teacherId
+        )
 }
 
 

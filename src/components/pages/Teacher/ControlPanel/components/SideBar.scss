@@ -1,0 +1,45 @@
+.sidebar {
+    width: 100%;
+}
+
+.sidebar__menu {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.sidebar__menu-item {
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.sidebar__menu-item-block {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    color: #333;
+    /* Цвет текста для обычных ссылок */
+}
+
+.sidebar__menu-item-block:hover {
+    background-color: #f0f0f0;
+    transform: translateX(5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar__menu-item-block:active {
+    transform: translateY(2px);
+}
+
+.sidebar__menu-item-block p {
+    font-size: 1.3rem;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.sidebar__menu-item-block:visited {
+    color: #333;
+    /* Цвет текста для посещенных ссылок */
+}

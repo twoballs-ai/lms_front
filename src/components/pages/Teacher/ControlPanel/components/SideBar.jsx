@@ -1,29 +1,54 @@
 import React from 'react';
 import { Link } from "react-router-dom"
-
-
+import "./SideBar.scss"
 
 function SideBar() {
   return (
-    <>
-
-      <Card style={{ width: '18rem' }} className="border border-0 shadow ">
-        <Card.Header as={Link} to="dashboard">Личный кабинет</Card.Header>
-        <ListGroup variant="flush">
-          <ListGroup.Item action className="border border-0" as={Link} to="my-courses">Мои курсы</ListGroup.Item>
-          <ListGroup.Item action className="border border-0" as={Link} to="add-course">Добавить курс</ListGroup.Item>
-          <ListGroup.Item action className="border border-0" as={Link} to="my-students">Мои учащиеся</ListGroup.Item>
-          {/* <ListGroup.Item as={Link} to="teacher-quizes">Квизы</ListGroup.Item>
-        <ListGroup.Item as={Link} to="add-quiz">Добавить квиз</ListGroup.Item> */}
-          <ListGroup.Item action className="border border-0" as={Link} to="profile-settings">Настройки профиля</ListGroup.Item>
-          <ListGroup.Item action className="border border-0" as={Link} to="reset-password">Смена пароля</ListGroup.Item>
-          <ListGroup.Item action className="border border-0 text-danger" as={Link} to="/logout">Выход</ListGroup.Item>
-        </ListGroup>
-      </Card>
-
-    </>
+    <div className="sidebar">
+      <div className="sidebar__menu">
+        <Link to="my-courses" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Мои курсы</p>
+          </div>
+        </Link>
+        <Link to="add-course" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Добавить курс</p>
+          </div>
+        </Link>
+        <Link to="my-students" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Мои учащиеся</p>
+          </div>
+        </Link>
+        {/* <Link to="teacher-quizes" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Квизы</p>
+          </div>
+        </Link>
+        <Link to="add-quiz" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Добавить квиз</p>
+          </div>
+        </Link> */}
+        <Link to="profile-settings" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Настройки профиля</p>
+          </div>
+        </Link>
+        <Link to="reset-password" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Смена пароля</p>
+          </div>
+        </Link>
+        <Link to="/logout" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Выход</p>
+          </div>
+        </Link>
+      </div>
+    </div>
   )
-
 }
 
 export default SideBar

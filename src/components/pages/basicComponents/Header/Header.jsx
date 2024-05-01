@@ -64,12 +64,12 @@ function Header() {
                             <div className="nav-dropdown">
                                 <div className="nav-dropdown-toggle">Профиль</div>
                                 <div className="nav-dropdown-menu">
-                                    {is_teacher === "true" && (
+                                    {is_teacher === "teacher_model" && (
                                         <Link to="/teacher-profile" className="nav-dropdown-item">
                                             Личный кабинет учителя
                                         </Link>
                                     )}
-                                    {is_student === "true" && (
+                                    {is_student === "student_model" && (
                                         <Link to="/student-profile" className="nav-dropdown-item">
                                             Личный кабинет ученика
                                         </Link>
