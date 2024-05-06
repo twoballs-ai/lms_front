@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Image } from "react-bootstrap";
+import { Container, div, div, div, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
+
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import Badge from "react-bootstrap/Badge";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import Form from "react-bootstrap/Form";
+
 import { apiUrl, serverUrl } from "../../../shared/config";
 
 function CourseDetail() {
@@ -62,14 +62,14 @@ function CourseDetail() {
                     console.log(response.data);
                     try {
                         axios
-                            .get( 
+                            .get(
                                 apiUrl + "chapter/" + response.data.course_chapters[0]["id"]
                                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                                 // ,{headers: { "Content-Type": "multipart/form-data" }}
                             )
                             .then((response) => {
                                 setFirstModuleData(response.data.chapter_modules)
-                              console.log(response.data.chapter_modules);
+                                console.log(response.data.chapter_modules);
                             });
                     } catch (error) {
                         console.log(error);
@@ -87,10 +87,10 @@ function CourseDetail() {
             axios
                 .get(
                     apiUrl +
-                        "enroll-course-status/" +
-                        studentId +
-                        "/" +
-                        course_id
+                    "enroll-course-status/" +
+                    studentId +
+                    "/" +
+                    course_id
                 )
                 .then((response) => {
                     if (response.data.bool == true) {
@@ -122,10 +122,10 @@ function CourseDetail() {
             axios
                 .get(
                     apiUrl +
-                        "get-favorite-status/" +
-                        studentId +
-                        "/" +
-                        course_id
+                    "get-favorite-status/" +
+                    studentId +
+                    "/" +
+                    course_id
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
@@ -238,10 +238,10 @@ function CourseDetail() {
             axios
                 .get(
                     apiUrl +
-                        "remove-favorite-courses/" +
-                        studentId +
-                        "/" +
-                        course_id,
+                    "remove-favorite-courses/" +
+                    studentId +
+                    "/" +
+                    course_id,
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     { headers: { "Content-Type": "multipart/form-data" } }
                 )
@@ -257,19 +257,19 @@ function CourseDetail() {
             console.log(error);
         }
     };
-console.log(chapterData[0])
+    console.log(chapterData[0])
     return (
         <div className="mx-3">
             <div className="shadow rounded p-3 mt-3 mb-5">
-                <Row className="mt-5">
-                    <Col md={4}>
+                <div className="mt-5">
+                    <div md={4}>
                         <Image
                             variant="top"
                             src={courseData.course_image}
                             thumbnail
                         />
-                    </Col>
-                    <Col md={8}>
+                    </div>
+                    <div md={8}>
                         <h3>Курс: {courseData.title}</h3>
                         <h5>Описание:</h5>
                         <p>{courseData.description}</p>
@@ -460,7 +460,7 @@ console.log(chapterData[0])
                                     <Button
                                         as={Link}
                                         title="Проходить курс"
-                                                                                        
+
                                         to={`/course-study/course/${course_id}/${firstModuleData[0] && firstModuleData[0].id}/stage/1`}
                                         variant="primary"
                                     >
@@ -518,12 +518,12 @@ console.log(chapterData[0])
                                 </Button>
                             </p>
                         )}
-                    </Col>
-                </Row>
+                    </div>
+                </div>
                 {/* {enrollStatus === "success" &&
                     userLoggedStatus === "success" && (
-                        <Card className="m-2">
-                            <Card.Header>главы курса</Card.Header>
+                        <div className="m-2">
+                            <div>главы курса</div>
                             <ListGroup variant="flush">
                                 {chapterData.map((chapter, index) => (
                                     <ListGroup.Item key={index}>
@@ -557,37 +557,37 @@ console.log(chapterData[0])
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
-                        </Card>
+                        </div>
                     )} */}
-                <Row className="mt-5">
+                <div className="mt-5">
                     <hr />
                     <h3>Схожие курсы:</h3>
                     {relatedCourseData.map((related, index) => (
-                        <Col>
-                            <Card style={{ width: "10rem" }}>
+                        <div>
+                            <div style={{ width: "10rem" }}>
                                 <Link
                                     target="_blank"
                                     to={`/detail/${related.pk}`}
                                 >
-                                    <Card.Img
+                                    <div.Img
                                         variant="top"
                                         src={`${serverUrl}media/${related.fields.course_image}`}
                                     />
                                 </Link>
-                                <Card.Body>
-                                    <Card.Title>
+                                <div>
+                                    <div>
                                         <Link
                                             target="_blank"
                                             to={`/detail/${related.pk}`}
                                         >
                                             {related.fields.title}
                                         </Link>
-                                    </Card.Title>
-                                </Card.Body>
-                            </Card>
-                        </Col>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ))}
-                </Row>
+                </div>
             </div>
         </div>
     );

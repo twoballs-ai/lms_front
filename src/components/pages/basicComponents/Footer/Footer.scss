@@ -1,0 +1,50 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 50px 0;
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    h4 {
+        color: #fff;
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 10px;
+
+            a {
+                color: #fff;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .address {
+        font-style: normal;
+    }
+
+    .col-md-4 {
+        width: 33.33%;
+        float: left;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
+
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 import { renderToString } from "react-dom/server";
@@ -17,19 +17,19 @@ function ClassicLessonView(props) {
     // console.log(props.contentData.content)
     return (
         <>
-            <Card className="mt-3 mx-3 h-75">
-                <Card.Header>
-               Это классический урок за который не начисляется энергия
-                </Card.Header>
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                        Card Subtitle
-                    </Card.Subtitle>
+            <div className="mt-3 mx-3 h-75">
+                <div>
+                    Это классический урок за который не начисляется энергия
+                </div>
+                <div>
+                    <div>div Title</div>
+                    <div.Subtitle className="mb-2 text-muted">
+                        div Subtitle
+                    </div.Subtitle>
                     {textClassicLesson && htmlFrom(textClassicLesson)}
                     {/* <div dangerouslySetInnerHTML={{ __html: textClassicLesson }}></div> */}
-                </Card.Body>
-            </Card>
+                </div>
+            </div>
         </>
     );
 }

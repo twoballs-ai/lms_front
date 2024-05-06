@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
+
 import ReactPlayer from "react-player";
 function VideoLessonView(props) {
     let videoLessonContent = props.contentData.video_lesson;
@@ -7,18 +7,18 @@ function VideoLessonView(props) {
     // console.log(props.contentData.content)
     return (
         <>
-            <Card className="mt-3 mx-3 h-75">
-                <Card.Header>
-                Это видеоурок за который не начисляется энергия
-                </Card.Header>
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                        Card Subtitle
-                    </Card.Subtitle>
+            <div className="mt-3 mx-3 h-75">
+                <div>
+                    Это видеоурок за который не начисляется энергия
+                </div>
+                <div>
+                    <div>div Title</div>
+                    <div.Subtitle className="mb-2 text-muted">
+                        div Subtitle
+                    </div.Subtitle>
                     <ReactPlayer url={videoLessonContent} controls={true} />
-                </Card.Body>
-            </Card>
+                </div>
+            </div>
         </>
     );
 }

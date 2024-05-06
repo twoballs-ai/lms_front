@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { redirect } from "react-router-dom";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
+
+
+
+
+
+
 import Figure from "react-bootstrap/Figure";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,7 +47,7 @@ function StudentCourseLearn() {
     // const {state} = useLocation();
     // const { type } = state;
     useEffect(() => {
-    
+
     }, [module_id, stage_id, navigate, location]);
 
     const Dots = () => {
@@ -59,9 +59,8 @@ function StudentCourseLearn() {
                         key={tech.id}
                     >
                         <Link
-                            to={`/course-study/course/${course_id}/${module_id}/stage/${
-                                index + 1
-                            }`}
+                            to={`/course-study/course/${course_id}/${module_id}/stage/${index + 1
+                                }`}
                         >
                             {tech.type !== "не назначен" && (
                                 <div className={`dotUser ms-2 ${tech.pass_items[0].is_passed === true ? 'passed' : 'curi'}`}>
@@ -100,17 +99,17 @@ function StudentCourseLearn() {
 
     return (
         <>
-            <Col>
+            <div>
                 <Dots />
-            </Col>
+            </div>
 
             {moduleData[stage_id - 1] &&
-            moduleData[stage_id - 1]["type"] === null ? (
+                moduleData[stage_id - 1]["type"] === null ? (
                 <></>
             ) : (
                 <>
                     {moduleData[stage_id - 1] &&
-                    moduleData[stage_id - 1]["type"].is_classic === true ? (
+                        moduleData[stage_id - 1]["type"].is_classic === true ? (
                         <ClassicLessonView
                             stage_id={stage_id}
                             contentData={
@@ -121,7 +120,7 @@ function StudentCourseLearn() {
                     ) : (
                         <>
                             {moduleData[stage_id - 1] &&
-                            moduleData[stage_id - 1]["type"].is_quiz ===
+                                moduleData[stage_id - 1]["type"].is_quiz ===
                                 true ? (
                                 <QuizLessonView
                                     stage_id={stage_id}
@@ -133,8 +132,8 @@ function StudentCourseLearn() {
                             ) : (
                                 <>
                                     {moduleData[stage_id - 1] &&
-                                    moduleData[stage_id - 1]["type"]
-                                        .is_video === true ? (
+                                        moduleData[stage_id - 1]["type"]
+                                            .is_video === true ? (
                                         <VideoLessonView
                                             stage_id={stage_id}
                                             contentData={

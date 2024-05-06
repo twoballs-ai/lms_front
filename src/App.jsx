@@ -7,9 +7,9 @@ import {
 import Layout from './components/pages/basicComponents/layouts';
 // import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/pages/Home/Home';
-import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
+import MainComponent from './components/pages/TeacherProfile/CourseEditor/components/MainComponent';
 import "./App.scss"
-// // import About from './components/pages/About/About';
+import About from './components/pages/About/About';
 // // import CourseDetail from './components/pages/Course/CourseDetail';
 // // import TeacherDetail from './components/pages/Course/TeacherDetail';
 // // import AllCourses from './components/pages/AllCourses/AllCourses';
@@ -34,10 +34,10 @@ import "./App.scss"
 // //teacher pages
 // // import TeacherLogin from './components/pages/Teacher/Login/Login';
 
-import TeacherDashboard from './components/pages/Teacher/ControlPanel/Dashboard';
-import MyTeacherCourses from './components/pages/Teacher/ControlPanel/TeacherCoursesProfile/MyTeacherCourses';
-import TeacherDashMain from './components/pages/Teacher/ControlPanel/components/DashMain';
-import AddCourse from './components/pages/Teacher/ControlPanel/TeacherCoursesProfile/AddCourse';
+import TeacherDashboard from './components/pages/TeacherProfile/ControlPanel/Dashboard';
+import MyTeacherCourses from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/MyTeacherCourses';
+import TeacherDashMain from './components/pages/TeacherProfile/ControlPanel/components/DashMain';
+import AddCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/AddCourse';
 // // import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
 // // import EditChapter from './components/pages/Teacher/ControlPanel/EditChapter';
 // // import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
@@ -61,14 +61,16 @@ import AddCourse from './components/pages/Teacher/ControlPanel/TeacherCoursesPro
 // // import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 // // import VerifyOTPTeacher from './components/pages/Teacher/ControlPanel/VerifyTeacher';
 // // import CourseStudy from './components/pages/Course/CourseStudy';
-import EditorPageInfo from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditorPageInfo';
+import EditorPageInfo from './components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditorPageInfo';
 // import AddModule from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddModule';
 // // import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
-import EditModuleStage from './components/pages/Teacher/CourseEditor/FullCourseEdit/EditModuleStage';
-import CourseEditor from './components/pages/Teacher/CourseEditor/components/CourseEditor';
+import EditModuleStage from './components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditModuleStage';
+import CourseEditor from './components/pages/TeacherProfile/CourseEditor/components/CourseEditor';
 // // import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
 // // import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
 import UserLogout from './components/pages/Auth/Logout/Logout';
+import AllCourses from './components/pages/AllCourses/AllCourses';
+import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 // import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
 // import Layout from './components/pages/basicComponents/layouts';
 // import StudentRegister from './components/Auth/TabComponent/RegisterComponents/StudentRegister/Register';
@@ -88,6 +90,18 @@ function App() {
         {
           path: "logout",
           element: <UserLogout />,
+        },
+        {
+          path: "about",
+          element: <About />,
+        },
+        {
+          path: "all-courses",
+          element: <AllCourses />,
+        },
+        {
+          path: "category",
+          element: <CategoryPage />,
         },
       ]
     },
@@ -132,18 +146,9 @@ function App() {
     //   path: "search/:searchString",
     //   element: <SearchByCourse />,
     // },
-    // {
-    //   path: "all-courses",
-    //   element: <AllCourses />,
-    // },
-    // {
-    //   path: "category",
-    //   element: <CategoryPage />,
-    // },
-    // {
-    //   path: "about",
-    //   element: <About />,
-    // },
+
+
+
 
     // {
     //   path: "student-profile/",

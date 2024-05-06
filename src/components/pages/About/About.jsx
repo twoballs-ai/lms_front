@@ -5,18 +5,18 @@ function About() {
         <div className="mx-3">
             <div className="shadow rounded p-3 mt-3 mb-5">
                 <div className="px-5 py-5">
-                    <Card>
-                        <Card.Header as="h5">Немного о компании</Card.Header>
-                        <Card.Body>
-                            <Card.Title>
+                    <div>
+                        <div as="h5">Немного о компании</div>
+                        <div>
+                            <div>
                                 Intellity code - сайт для изучения
                                 программирования.
-                            </Card.Title>
-                            <Card.Text>
+                            </div>
+                            <div>
                                 Сюда мы напишем что ни будь, но потом.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

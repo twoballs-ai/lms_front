@@ -91,8 +91,8 @@ function TeacherRegister() {
     console.log(teacherRegisterData);
     return (
         <div className="mx-3">
-            <Row className="justify-content-md-center">
-                <Col md={3}>
+            <div className="justify-content-md-center">
+                <div md={3}>
                     {teacherRegisterData.status === "success" && (
                         <p className="text-success">
                             регистрация прошла успешно
@@ -138,14 +138,14 @@ function TeacherRegister() {
                             Регистрация
                         </Button>
                     </Form>
-                </Col>
-                <Col md={4} className="auth_reg_text">
+                </div>
+                <div md={4} className="auth_reg_text">
                     <span>
                         Выберите этот вариант если вы хотите создавать курсы на
                         нашей платформе. В будущем вы сможете на них
                         зарабатывать.
                     </span>
-                </Col>
+                </div>
                 <Alert
                     show={showDangerAlert}
                     variant="danger"
@@ -155,7 +155,7 @@ function TeacherRegister() {
                 >
                     {JSON.stringify(textDangerAlert)}
                 </Alert>
-            </Row>
+            </div>
         </div>
     );
 }

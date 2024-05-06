@@ -18,14 +18,14 @@ function HomePopularCourses(props) {
                     Посмотреть популярные
                 </Button>{" "}
             </h3>
-            <Row className="mt-5 gx-0">
+            <div className="mt-5 gx-0">
                 <hr />
                 {popularCourseData &&
                     popularCourseData.map((course, index) => (
-                        <Col>
-                            <Card style={{ width: "18rem" }} className="shadow-sm">
+                        <div>
+                            <div style={{ width: "18rem" }} className="shadow-sm">
                                 <Link to={`/detail/${course.course.id}`}>
-                                    <Card.Img
+                                    <div.Img
                                         variant="top"
                                         src={
                                             course.course.course_image
@@ -34,27 +34,27 @@ function HomePopularCourses(props) {
                                         }
                                     />
                                 </Link>
-                                <Card.Body>
-                                    <Card.Title>
+                                <div>
+                                    <div>
                                         <Link className="text-decoration-none text-info"
                                             to={`/detail/${course.course.id}`}
                                         >
                                             {course.course.title}
                                         </Link>
-                                    </Card.Title>
-                                </Card.Body>
-                                <Card.Footer>
+                                    </div>
+                                </div>
+                                <div.Footer>
                                     <span>Рейтинг курса: {course.rating}</span>
                                     <br />
                                     <span>
                                         Просмотров курса:{" "}
                                         {course.course.course_views}
                                     </span>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
+                                </div.Footer>
+                            </div>
+                        </div>
                     ))}
-            </Row>
+            </div>
         </div>
 
     );

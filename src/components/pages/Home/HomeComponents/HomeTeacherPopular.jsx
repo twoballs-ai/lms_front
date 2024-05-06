@@ -18,35 +18,35 @@ function HomeTeacherPopular(props) {
                 </Button>{" "}
                 {/* Популярные наставники <Link className='float-end' to={'/popular-teachers'}>Посмотреть всех</Link> */}
             </h3>
-            <Row className="mt-5 gx-0">
+            <div className="mt-5 gx-0">
                 <hr />
                 {popularTeacherData &&
                     popularTeacherData.map((teacher, index) => (
-                        <Col>
-                            <Card style={{ width: "18rem" }} className="shadow-sm">
+                        <div>
+                            <div style={{ width: "18rem" }} className="shadow-sm">
                                 <Link to={`teacher-detail/${teacher.id}`}>
-                                    <Card.Img
+                                    <div.Img
                                         variant="top"
                                         src={teacher.teacher_image ? teacher.teacher_image : "/images/int.svg"}
                                     />
                                 </Link>
-                                <Card.Body>
-                                    <Card.Title>
+                                <div>
+                                    <div>
                                         <Link className="text-decoration-none text-info"
                                             to={`teacher-detail/${teacher.id}`}
                                         >
                                             {teacher.full_name}
                                         </Link>
-                                    </Card.Title>
-                                </Card.Body>
-                                <Card.Footer>
+                                    </div>
+                                </div>
+                                <div.Footer>
                                     Курсов добавлено:{" "}
                                     {teacher.total_teacher_courses}
-                                </Card.Footer>
-                            </Card>
-                        </Col>
+                                </div.Footer>
+                            </div>
+                        </div>
                     ))}
-            </Row>
+            </div>
         </div>
     );
 }

@@ -1,16 +1,16 @@
-import { Container, Row, Col, Card, Image } from "react-bootstrap";
+import { Container, div, div, div, Image } from "react-bootstrap";
 import { Link, Outlet, useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import Badge from "react-bootstrap/Badge";
-import Nav from "react-bootstrap/Nav";
+
 import "./Course.css";
-import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+
+
+
 import { apiUrl } from "../../../shared/config";
 import { useLocation, useNavigate } from "react-router-dom";
 function CourseStudy() {
@@ -33,7 +33,7 @@ function CourseStudy() {
             axios
                 .get(
                     apiUrl +
-                        `student-module-stage-list/${module_id}/${studentId}`
+                    `student-module-stage-list/${module_id}/${studentId}`
                     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
                     // ,{headers: { "Content-Type": "multipart/form-data" }}
                 )
@@ -42,9 +42,9 @@ function CourseStudy() {
                     setModuleData(response.data);
                     setStagePassData(
                         response.data[parseInt(stage_id) - 1] &&
-                            response.data[parseInt(stage_id) - 1][
-                                "pass_items"
-                            ][0].id
+                        response.data[parseInt(stage_id) - 1][
+                            "pass_items"
+                        ][0].id
                     );
                     // console.log(moduleData[stage_id] && moduleData[stage_id]["id"]);
                     // setStagePkData(
@@ -79,7 +79,7 @@ function CourseStudy() {
                     // setCourseData(response.data)
                     setChapterData(response.data);
                 });
-        } catch (error) {}
+        } catch (error) { }
     }, [navigate, location, course_id, module_id]);
 
     const setPass = () => {
@@ -98,8 +98,7 @@ function CourseStudy() {
                         console.log(response.data);
                         // window.location.reload();
                         navigate(
-                            `/course-study/course/${course_id}/${module_id}/stage/${
-                                parseInt(stage_id) + 1
+                            `/course-study/course/${course_id}/${module_id}/stage/${parseInt(stage_id) + 1
                             }`
                         );
                     }
@@ -112,12 +111,12 @@ function CourseStudy() {
     return (
         <>
             <Container fluid className="p-0 bg-light">
-            <Navbar bg="info" data-bs-theme="dark" expand="lg" className="shadow">
-                <Navbar.Brand className="ms-3" href="/">
-                    Intellity code
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                {/* <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar bg="info" data-bs-theme="dark" expand="lg" className="shadow">
+                    <Navbar.Brand className="ms-3" href="/">
+                        Intellity code
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    {/* <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         <Nav.Link as={Link} to="/category">
                             Категории
@@ -131,10 +130,10 @@ function CourseStudy() {
 
                     </Nav>
                 </Navbar.Collapse> */}
-            </Navbar>
+                </Navbar>
                 <div fluid className="g-0">
-                    <Row className="gx-0">
-                        <Col xs={2} className="sticky-top overflow-y-auto">
+                    <div className="gx-0">
+                        <div xs={2} className="sticky-top overflow-y-auto">
                             <div className="sticky-top leftsidebar ps-2">
                                 <p className="text-light">{courseData.title}</p>
                                 <hr className="text-light me-2" />
@@ -171,8 +170,8 @@ function CourseStudy() {
                                 })}
                                 <hr />
                             </div>
-                        </Col>
-                        <Col className="mb-2 sticky-top overflow-y-auto">
+                        </div>
+                        <div className="mb-2 sticky-top overflow-y-auto">
                             <Outlet context={[moduleData, setModuleData]} />
                             <div
                                 style={{ backgroundColor: "#DCDCDC" }}
@@ -189,8 +188,8 @@ function CourseStudy() {
                                     </button>
                                 </div>
                             </div>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </div>
             </Container>
         </>

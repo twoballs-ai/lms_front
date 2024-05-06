@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
+
+
+
+
 import { Link, useParams } from "react-router-dom";
-import Pagination from "react-bootstrap/Pagination";
-import Table from "react-bootstrap/Table";
+
+
 import axios from "axios";
 import { apiUrl } from "../../../shared/config";
 
@@ -71,29 +71,29 @@ function CoursesByCat() {
         <div className="mx-3">
             <div className="shadow rounded p-3 mt-3 mb-5">
                 <h3 className="mt-5">Курсы по категории: {category_slug}</h3>
-                <Row className="mt-5">
+                <div className="mt-5">
                     <hr />
                     {courseByCatData &&
                         courseByCatData.map((course, index) => (
-                            <Col>
-                                <Card style={{ width: "18rem" }}>
-                                    <Link  to={`/detail/${course.id}`}>
-                                        <Card.Img
+                            <div>
+                                <div style={{ width: "18rem" }}>
+                                    <Link to={`/detail/${course.id}`}>
+                                        <div.Img
                                             variant="top"
                                             src={course.course_image}
                                         />
                                     </Link>
-                                    <Card.Body>
-                                        <Card.Title>
+                                    <div>
+                                        <div>
                                             <Link className="text-decoration-none text-info" to={`/detail/${course.id}`}>
                                                 {course.title}
                                             </Link>
-                                        </Card.Title>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                </Row>
+                </div>
                 {paginationBasic}
             </div>
         </div>

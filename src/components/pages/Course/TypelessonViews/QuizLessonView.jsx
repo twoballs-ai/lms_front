@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
+
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 import { renderToString } from "react-dom/server";
-import Form from "react-bootstrap/Form";
+
 function QuizLessonView(props) {
     let quizLessonAnswer = props.contentData.content;
     const cboxes = ["check1", "check2"];
@@ -18,15 +18,15 @@ function QuizLessonView(props) {
     console.log(props.contentData);
     return (
         <>
-            <Card className="mt-3 mx-3 h-75">
-                <Card.Header>
-                Это урок викторина за него может начисляться энергия от 0 до 5
-                </Card.Header>
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                        Card Subtitle
-                    </Card.Subtitle>
+            <div className="mt-3 mx-3 h-75">
+                <div>
+                    Это урок викторина за него может начисляться энергия от 0 до 5
+                </div>
+                <div>
+                    <div>div Title</div>
+                    <div.Subtitle className="mb-2 text-muted">
+                        div Subtitle
+                    </div.Subtitle>
                     {quizLessonAnswer && htmlFrom(quizLessonAnswer)}
                     {/* <div dangerouslySetInnerHTML={{ __html: textClassicLesson }}></div> */}
                     <Form>
@@ -40,7 +40,7 @@ function QuizLessonView(props) {
                                 name="group1"
                                 type="radio"
                                 id={props.contentData.answer1}
-                                // id={`reverse-${type}-1`}
+                            // id={`reverse-${type}-1`}
                             />
                             <Form.Check
                                 label={props.contentData.answer2}
@@ -62,8 +62,8 @@ function QuizLessonView(props) {
                             />
                         </Form.Group>
                     </Form>
-                </Card.Body>
-            </Card>
+                </div>
+            </div>
         </>
     );
 }

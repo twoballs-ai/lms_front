@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Image } from "react-bootstrap";
+import { Container, div, div, div, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
+
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
@@ -32,11 +32,11 @@ function TeacherDetail() {
     return (
         <div className="mx-3">
             <div className="shadow rounded p-3 mt-3 mb-5">
-                <Row className="mt-5">
-                    <Col md={4}>
+                <div className="mt-5">
+                    <div md={4}>
                         <Image variant="top" src="/images/code.jpg" thumbnail />
-                    </Col>
-                    <Col md={8}>
+                    </div>
+                    <div md={8}>
                         <h3>{teacherData.full_name}</h3>
                         <p>{teacherData.detail}</p>
                         <p>
@@ -44,9 +44,8 @@ function TeacherDetail() {
                             {skillListData.map((skill, index) => (
                                 <Badge
                                     as={Link}
-                                    to={`/courses-by-skills/${skill.trim()}/${
-                                        teacherData.id
-                                    }`}
+                                    to={`/courses-by-skills/${skill.trim()}/${teacherData.id
+                                        }`}
                                     pill
                                     bg="success"
                                 >
@@ -59,10 +58,10 @@ function TeacherDetail() {
                             <Link to="#">React + Django курс</Link>
                         </p>
                         <p>Количество учащихся: 600 учеников</p>
-                    </Col>
-                </Row>
-                <Card>
-                    <Card.Header>Список курсов</Card.Header>
+                    </div>
+                </div>
+                <div>
+                    <div>Список курсов</div>
                     <ListGroup variant="flush">
                         {courseData.map((course, index) => (
                             <ListGroup.Item
@@ -73,7 +72,7 @@ function TeacherDetail() {
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
-                </Card>
+                </div>
             </div>
         </div>
     );

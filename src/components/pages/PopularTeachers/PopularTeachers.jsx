@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
+
+
+
+
 import { Link } from "react-router-dom";
-import Pagination from "react-bootstrap/Pagination";
+
 import axios from "axios";
 import { apiUrl } from "../../../shared/config";
 
@@ -38,74 +38,74 @@ function PopularTeachers() {
         <>
             <div>
                 <h3 className="mt-5">Рейтинг популярных преподавателей</h3>
-                <Row className="mt-5">
+                <div className="mt-5">
                     <hr />
-                    <Col>
-                        <Card style={{ width: "18rem" }}>
+                    <div>
+                        <div style={{ width: "18rem" }}>
                             <Link to={"detail/1"}>
-                                <Card.Img
+                                <div.Img
                                     variant="top"
                                     src="/images/code.jpg"
                                 />
                             </Link>
-                            <Card.Body>
-                                <Card.Title>
+                            <div>
+                                <div>
                                     <Link to={"/teacher-detail/1"}>
                                         Имя учителя
                                     </Link>
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer>
+                                </div>
+                            </div>
+                            <div.Footer>
                                 Рейтинг наставника: 4.6 Сердечко
-                            </Card.Footer>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card style={{ width: "18rem" }}>
-                            <Card.Img variant="top" src="/images/code.jpg" />
-                            <Card.Body>
-                                <Card.Title>
+                            </div.Footer>
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ width: "18rem" }}>
+                            <div.Img variant="top" src="/images/code.jpg" />
+                            <div>
+                                <div>
                                     <Link to={"/teacher-detail/1"}>
                                         Имя учителя
                                     </Link>
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer>
+                                </div>
+                            </div>
+                            <div.Footer>
                                 Рейтинг наставника: 4.6 Сердечко
-                            </Card.Footer>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card style={{ width: "18rem" }}>
-                            <Card.Img variant="top" src="/images/code.jpg" />
-                            <Card.Body>
-                                <Card.Title>
+                            </div.Footer>
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ width: "18rem" }}>
+                            <div.Img variant="top" src="/images/code.jpg" />
+                            <div>
+                                <div>
                                     <Link to={"/teacher-detail/1"}>
                                         Имя учителя
                                     </Link>
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer>
+                                </div>
+                            </div>
+                            <div.Footer>
                                 Рейтинг наставника: 4.6 Сердечко
-                            </Card.Footer>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card style={{ width: "18rem" }}>
-                            <Card.Img variant="top" src="/images/code.jpg" />
-                            <Card.Body>
-                                <Card.Title>
+                            </div.Footer>
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ width: "18rem" }}>
+                            <div.Img variant="top" src="/images/code.jpg" />
+                            <div>
+                                <div>
                                     <Link to={"/teacher-detail/1"}>
                                         Имя учителя
                                     </Link>
-                                </Card.Title>
-                            </Card.Body>
-                            <Card.Footer>
+                                </div>
+                            </div>
+                            <div.Footer>
                                 Рейтинг наставника: 4.6 Сердечко
-                            </Card.Footer>
-                        </Card>
-                    </Col>
-                </Row>
+                            </div.Footer>
+                        </div>
+                    </div>
+                </div>
                 {paginationBasic}
             </div>
         </>
