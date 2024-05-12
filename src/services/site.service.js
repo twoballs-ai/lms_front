@@ -2,9 +2,12 @@ import axios from "axios";
 import { apiLmsUrl, apiUserUrl, restAuthApiUrl } from "../shared/config";
 import api from "./api";
 
-const getCategory = async () => {
-    return await api
-    .get(apiLmsUrl + "category/")
+const getCategory = async ({ toSelect }) => {
+    return await api.get(apiLmsUrl + "category/", {
+        params: {
+            to_select: toSelect
+        }
+    });
 }
 const homePageNewCourses = async () => {
     return await api

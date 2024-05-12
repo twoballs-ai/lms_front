@@ -7,21 +7,24 @@ import SiteService from '../../../../../services/site.service';
 import TeacherService from '../../../../../services/teacher.service';
 import "./AddCourse.scss"; // Импорт стилей SCSS
 import LmsButton from '../../../../reUseComponents/Button';
+import CustomSelect from '../../../../reUseComponents/Select';
+import TextInput from '../../../../reUseComponents/TextInput';
 
 function AddCourse() {
-    const teacherId = localStorage.getItem("user");
+    // const teacherId = localStorage.getItem("user");
     const [categories, setCategories] = useState([]);
-    const [courseAddData, setCourseAddData] = useState({
-        category: 1,
-        title: "",
-        description: "",
-        // course_image: "",
-        // technologicals: "",
-    });
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    // const [courseAddData, setCourseAddData] = useState({
+    //     category: 1,
+    //     title: "",
+    //     description: "",
+    //     // course_image: "",
+    //     // technologicals: "",
+    // });
 
     useEffect(() => {
         const fetchData = async () => {
-            await SiteService.getCategory().then((response) => {
+            await SiteService.getCategory({ toSelect: true }).then((response) => {
                 if (response.status === 200 || response.status === 201) {
                     console.log(response.data.data)
                     setCategories(response.data.data);
@@ -45,7 +48,9 @@ function AddCourse() {
             [event.target.name]: event.target.files[0],
         });
     };
-
+    const handleSelectChange = (selectedValues) => {
+        setSelectedCategories(selectedValues);
+    };
     const divSubmit = async (e) => {
         e.preventDefault();
         const response = await TeacherService.addCourse(courseAddData)
@@ -59,37 +64,10 @@ function AddCourse() {
         <div className="add-course-container"> {/* Изменим класс контейнера */}
             <h2>Добавление курса</h2>
             <div>
-                <div className="mb-3">
-                    <label htmlFor="categorySelect">Выберите категорию:</label>
-                    <select
-                        id="categorySelect"
-                        name="category"
-                        className="form-select"
-                        onChange={handleChange}
-                    >
-                        <option>Выберите категорию</option>
-                        {categories.map((category, index) => {
-                            return (
-                                <option key={index} value={category.id}>
-                                    {category.title}
-                                </option>
-                            );
-                        })}
-                    </select>
-                </div>
+            <CustomSelect mode="single" options={categories}  placeholder ={"ddddd"} onChange={handleSelectChange} style={{ width: '100%' }}/>
+ <p>Название курса:</p>
+        <TextInput isTextArea={false} />
 
-                <div className="mb-3">
-                    <label htmlFor="titleInput">Название:</label>
-                    <input
-                        id="titleInput"
-                        name="title"
-                        value={categories.title}
-                        type="text"
-                        className="form-control"
-                        placeholder="Название курса"
-                        onChange={handleChange}
-                    />
-                </div>
 
                 <div className="mb-3">
                     <label htmlFor="descriptionTextarea">Описание курса:</label>
