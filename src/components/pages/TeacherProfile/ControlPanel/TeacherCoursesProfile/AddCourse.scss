@@ -1,0 +1,12 @@
+.add-course-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px; 
+  &__add-form {
+    display: flex;
+    flex-direction: column;
+    width: 600px; /* Ширина формы */
+    gap: 20px; /* Отступ сверху */
+  }
+}

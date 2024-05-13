@@ -17,10 +17,10 @@ const deleteTeacherCourse = async (courseId) => {
         .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
         )
 }
-const addCourse = async (data) => {
+const addCourse = async (...data) => {
     return await api
         .post(apiLmsUrl + "course/",
-            data,
+        ...data,
             // {headers: { "Content-Type": "multipart/form-data" }}
         )
 }

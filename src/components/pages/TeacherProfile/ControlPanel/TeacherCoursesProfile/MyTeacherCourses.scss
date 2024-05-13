@@ -1,0 +1,27 @@
+.my-courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+    .my-courses-container__title{
+        font-size: 2rem;
+    }
+    .my-courses-container__course-item {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        border-radius: 10px;
+        gap: 20px;
+        padding: 10px;
+        width: calc(50% - 20px); // Width of the card - one third of the container width
+        box-sizing: border-box;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Добавляем тень
+        .course-item__course-actions{
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+      }
+      
+  }
+  

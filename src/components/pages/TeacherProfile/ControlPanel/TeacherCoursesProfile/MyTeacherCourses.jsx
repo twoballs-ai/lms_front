@@ -36,23 +36,17 @@ function MyTeacherCourses() {
     };
     return (
         <>
-            <div className="border border-0 shadow course-card">
-                <div className="course-title">Мои курсы</div>
-                <div>
+            <div className="my-courses-container">
+                <div className="my-courses-container__title">Мои курсы</div>
+                
                     {courseData.map((course, index) => (
-                        <div key={index} className="course-item">
-                            <div className="course-info">
-                                <Link
-                                    to={
-                                        "/teacher-profile/all-chapters/" +
-                                        course.id
-                                    }
-                                    className="course-link"
-                                >
+                        <div key={index} className="my-courses-container__course-item">
+                            <div className="course-item__course-title">
+                       
                                     {course.title}
-                                </Link>
-                                <hr />
-                                {course.course_rating && (
+                    
+                                    </div>
+                                {/* {course.course_rating && (
                                     <span className="course-rating">
                                         рейтинг курса:
                                         {course.course_rating}/5{" "}
@@ -62,16 +56,16 @@ function MyTeacherCourses() {
                                     <span>
                                         Ваш курс еще не оценили{" "}
                                     </span>
-                                )}
-                            </div>
-                            <div className="course-image-container">
+                                )} */}
+                            
+                            {/* <div className="course-image-container">
                                 <img
                                     src={course.course_image}
                                     className="rounded float-start course-image"
                                     alt={course.title}
                                 />
-                            </div>
-                            <div className="course-enrolled">
+                            </div> */}
+                            {/* <div className="course-enrolled">
                                 <Link
                                     to={
                                         "/teacher-profile/enrolled-students/" +
@@ -81,9 +75,9 @@ function MyTeacherCourses() {
                                 >
                                     {course.total_enrolled_students}
                                 </Link>{" "}
-                            </div>
-                            <div className="course-actions">
-                                <button
+                            </div> */}
+                            <div className="course-item__course-actions">
+                                {/* <button
                                     as={Link}
                                     to={
                                         "/teacher-profile/edit-course/" +
@@ -92,14 +86,14 @@ function MyTeacherCourses() {
                                     className="action-button"
                                 >
                                     Редактировать данные курса
-                                </button>
+                                </button> */}
                                 <LmsButton buttonText={"Войти в режим редактора курса"} handleClick={() => handleEditCourseClick(course.id)} />
                                 <LmsButton buttonText={"Удалить курс"} handleClick={() => handleDeleteClick(course.id)} />
 
                             </div>
                         </div>
                     ))}
-                </div>
+             
             </div>
         </>
     );
