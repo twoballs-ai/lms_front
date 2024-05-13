@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, Outlet, useParams } from "react-router-dom";
+import {
+    DndContext,
+    // DragMoveEvent,
+    // DragOverlay,
+    // DragStartEvent,
+    KeyboardSensor,
+    PointerSensor,
+    // UniqueIdentifier,
+    closestCorners,
+    useSensor,
+    useSensors,
 
+  } from '@dnd-kit/core';
+// import { DragEndEvent } from '@dnd-kit/core';
+import {
+    SortableContext,
+    arrayMove,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+  } from '@dnd-kit/sortable';
+// import {SortableItem} from './SortableItem';
 // import LeftBar from "./LeftBar";
-import "./MainComponent.scss"
-import { apiLmsUrl } from "../../../../../shared/config";
-import LmsButton from "../../../../reUseComponents/Button";
-import EditModuleStage from "../FullCourseEdit/EditModuleStage";
-import CourseEditorService from "../../../../../services/course.editor.service";
+import "../MainComponent.scss"
+import { apiLmsUrl } from "../../../../../../shared/config";
+import LmsButton from "../../../../../reUseComponents/Button";
+import EditModuleStage from "../../FullCourseEdit/EditModuleStage";
+import CourseEditorService from "../../../../../../services/course.editor.service";
+import SortableChapter from "./SortableChapter";
 
 function CourseEditor() {
     const { course_id } = useParams();
@@ -15,6 +36,19 @@ function CourseEditor() {
     const [moduleEditData, setModuleEditData] = useState([])
     const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
     const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
+    const sensors = useSensors(
+        useSensor(PointerSensor,{
+            // Установите ось перемещения как вертикальную
+            axis: 'y',
+          }),
+        useSensor(KeyboardSensor, {
+          coordinateGetter: sortableKeyboardCoordinates,
+        }),
+      );
+    
+      const handleDragStart = (event) => {};
+      const handleDragMove = (event) => {};
+      const handleDragEnd = (event) => {};
 
     useEffect(() => {
 
@@ -70,41 +104,49 @@ function CourseEditor() {
     }
 
 
+
+
     return (
 
         <div className="course-edit__container">
+                        <DndContext
+  sensors={sensors}
+  collisionDetection={closestCorners}
+  onDragStart={handleDragStart}
+  onDragMove={handleDragMove}
+  onDragEnd={handleDragEnd}
+          >
+                    <SortableContext  items={getChapters.map(chapter => chapter.sorted)}
+                    strategy={verticalListSortingStrategy}
+                    >
             <div className="container__leftbar">
+
                 <div className="leftbar__chapters">
                     <LmsButton buttonText={"Добавить раздел"} handleClick={addChapter} />
+
                     {getChapters.map((chapter) => (
 
-                        <div className={`chapters__block ${activeChapterId === chapter.id ? 'active' : ''}`} key={chapter.id} onClick={() => setActiveChapterId(chapter.id)}>
-                            <div className="block__title"><p>{chapter.title}</p></div>
-                            <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} />
-                            <div className="chapters__modules">
-                                {/* {chapter.modules.map((module) => (
-                                    <div key={module.id} className="modules__block" onClick={(e) => moduleChange(module)} >{module.title}</div>
-                                ))} */}
-                                {chapter.modules.map((module) => (
-                                    <div
-                                        key={module.id}
-                                        className={`modules__block ${activeModuleId === module.id ? "active" : ""}`}
-                                        onClick={() => {
-                                            setActiveModuleId(module.id);
-                                            moduleChange(module);
-                                        }}
-                                    >
-                                        {module.title}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
 
-                    ))}
+
+<SortableChapter
+id= {chapter.id} 
+key={chapter.sorted} // Убедитесь, что уникальный ключ присутствует
+chapter={chapter}
+activeChapterId={activeChapterId}
+setActiveChapterId={setActiveChapterId}
+activeModuleId={activeModuleId}
+setActiveModuleId={setActiveModuleId}
+addModule={addModule}
+moduleChange={moduleChange}
+/>
+))}
+
+
                 </div>
 
             </div>
-
+            </SortableContext>
+                    </DndContext>
             <div className="container__main">
                 {Object.keys(moduleEditData).length > 0 && (
 

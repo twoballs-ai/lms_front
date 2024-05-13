@@ -65,7 +65,7 @@ import EditorPageInfo from './components/pages/TeacherProfile/CourseEditor/FullC
 // import AddModule from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddModule';
 // // import EditModule from './components/pages/Teacher/FullCourseEdit/EditModule';
 import EditModuleStage from './components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditModuleStage';
-import CourseEditor from './components/pages/TeacherProfile/CourseEditor/components/CourseEditor';
+import CourseEditor from './components/pages/TeacherProfile/CourseEditor/components/LeftBar/CourseEditor';
 // // import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
 // // import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
 import UserLogout from './components/pages/Auth/Logout/Logout';
