@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, Outlet, useParams } from "react-router-dom";
 import {
+    restrictToVerticalAxis,
+    restrictToWindowEdges,
+  } from '@dnd-kit/modifiers';
+import {
     DndContext,
     // DragMoveEvent,
     // DragOverlay,
@@ -23,7 +27,7 @@ import {
   } from '@dnd-kit/sortable';
 // import {SortableItem} from './SortableItem';
 // import LeftBar from "./LeftBar";
-import "../MainComponent.scss"
+import "./CourseEditor.scss"
 import { apiLmsUrl } from "../../../../../../shared/config";
 import LmsButton from "../../../../../reUseComponents/Button";
 import EditModuleStage from "../../FullCourseEdit/EditModuleStage";
@@ -110,11 +114,12 @@ function CourseEditor() {
 
         <div className="course-edit__container">
                         <DndContext
-  sensors={sensors}
-  collisionDetection={closestCorners}
-  onDragStart={handleDragStart}
-  onDragMove={handleDragMove}
-  onDragEnd={handleDragEnd}
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragStart}
+            onDragMove={handleDragMove}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToVerticalAxis]}
           >
                     <SortableContext  items={getChapters.map(chapter => chapter.sorted)}
                     strategy={verticalListSortingStrategy}
@@ -129,7 +134,7 @@ function CourseEditor() {
 
 
 <SortableChapter
-id= {chapter.id} 
+id= {chapter.sorted} 
 key={chapter.sorted} // Убедитесь, что уникальный ключ присутствует
 chapter={chapter}
 activeChapterId={activeChapterId}

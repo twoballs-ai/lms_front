@@ -35,11 +35,21 @@
                 }
 
                 .block__title {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
                     width: 100%;
 
                     p {
                         font-weight: 600;
                         padding-left: 10px;
+                    }
+                    .title__menu{
+                        margin-left: auto;
+                        border: none; // Убираем границы кнопки
+                        background: none; // Убираем фон кнопки
+                        padding: 10; // Убираем внутренние отступы кнопки
+                        cursor: pointer; 
                     }
                 }
 

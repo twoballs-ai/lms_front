@@ -2,7 +2,7 @@ import React from 'react';
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import LmsButton from "../../../../../reUseComponents/Button";
-
+import { DragVerticalIcon } from '../../../../../icons/icons';
 const SortableChapter = ({
   id,
   chapter,
@@ -45,21 +45,11 @@ const SortableChapter = ({
 >
 
 
-{/* <div className={`chapters__block ${activeChapterId === chapter.id ? 'active' : ''}`}
- key={chapter.id} 
- onClick={() => setActiveChapterId(chapter.id)}
-  ref={setNodeRef} 
-  style={style} {...attributes} {...listeners}
-  
-  
-  > */}
-          <button
-          className=""
-          {...listeners}
-        >
-          Drag Handle
-        </button>
-<div className="block__title"><p>{chapter.title}</p></div>
+       
+<div className="block__title"><p>{chapter.title}</p>  
+<button {...listeners} className={"title__menu"}  >
+  <DragVerticalIcon  />
+</button></div>
 <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} />
 <div className="chapters__modules">
     {/* {chapter.modules.map((module) => (
