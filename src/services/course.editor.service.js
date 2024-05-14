@@ -24,10 +24,10 @@ const editCoursePageAddChapter = async (data) => {
     return await api
         .post(apiLmsUrl + "add_chapter_to_course/", data)
 }
-// const editCoursePageDeleteChapter = async (chapter_id) => {
-//     return await api
-//         .delete(apiLmsUrl + "chapter/" + chapter_id)
-// }
+const editCoursePageDeleteChapter = async (chapter_id) => {
+    return await api
+        .delete(`${apiLmsUrl}delete-chapter/?chapter_id=${chapter_id}`)
+}
 const editCoursePageAddModule = async (data) => {
     return await api
         .post(apiLmsUrl + "add_module_to_chapter/", data)
@@ -76,7 +76,7 @@ const CourseEditorService = {
     // editCoursePageGetCourse,
     editCoursePageGetChapterList,
     editCoursePageAddChapter,
-    // editCoursePageDeleteChapter,
+    editCoursePageDeleteChapter,
     editCoursePageAddModule,
     // editCoursePageDeleteModule,
     editCoursePageAddClassicLesson,

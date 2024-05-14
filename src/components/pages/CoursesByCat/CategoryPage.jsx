@@ -42,6 +42,7 @@ function CategoryPage() {
                                 <div style={{ width: "18rem" }}>
                                     <div>
                                         <div>
+                                        
                                             <Link
                                                 className="text-decoration-none text-info"
                                                 to={`/courses-by-cat/${row.id}/${row.title}`}

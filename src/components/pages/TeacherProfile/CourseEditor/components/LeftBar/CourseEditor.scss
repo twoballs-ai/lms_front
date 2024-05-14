@@ -44,12 +44,12 @@
                         font-weight: 600;
                         padding-left: 10px;
                     }
-                    .title__menu{
+                    .title__menu {
                         margin-left: auto;
                         border: none; // Убираем границы кнопки
                         background: none; // Убираем фон кнопки
-                        padding: 10; // Убираем внутренние отступы кнопки
-                        cursor: pointer; 
+                        padding: 0; // Убираем внутренние отступы кнопки
+                        cursor: pointer;
                     }
                 }
 
@@ -81,6 +81,13 @@
                             border-radius: 5px;
                         }
                     }
+                }
+                .block__chapter_menu {
+                    margin-left: auto;
+                    border: none; // Убираем границы кнопки
+                    background: none; // Убираем фон кнопки
+                    padding: 0px; // Убираем внутренние отступы кнопки
+                    cursor: pointer
                 }
             }
         }
