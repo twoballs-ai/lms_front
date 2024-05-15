@@ -22,7 +22,7 @@ function AddingClassicLesson(props) {
     const setModuleData = props.setModuleData
 
 
-    console.log(stagePk)
+    console.log(stageEditorData)
     useEffect(() => {
         if (stagePk) {
             const fetchData = async () => {
@@ -33,8 +33,9 @@ function AddingClassicLesson(props) {
                             setStageEditorData(response.data.items.html_code_text);
                             setShowClassicLesson(true);
                         } else {
+                            // console.log("dddd")
                             setStageEditorData("");
-                            setShowClassicLesson(false);
+                            setShowClassicLesson(true);
                         }
                     }
                 });
@@ -70,7 +71,7 @@ function AddingClassicLesson(props) {
             });
         }
     };
-    console.log(showClassicLesson)
+    // console.log(showClassicLesson)
     return (
         <div>
             {(showClassicLesson) && (

@@ -183,7 +183,6 @@ function CourseEditor() {
                                     setActiveChapterId={setActiveChapterId}
 
                                     getChapters={getChapters}
-                                    moduleChange={moduleChange}
                                     setGetChapters={setGetChapters}
                                 >
                                     <SortableContext items={chapter.modules.map((i) => i.id)}>

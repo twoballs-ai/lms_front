@@ -20,7 +20,7 @@ instance.interceptors.request.use(
     if (token) {
       config.headers["Authorization"] = 'Bearer ' + token;  // for Spring Boot back-end
       //   config.headers["x-access-token"] = token; // for Node.js Express back-end
-      console.log(config)
+      // console.log(config)
     }
     return config;
   },
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
       // Access Token was expired
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
-        console.log("pipiska")
+        // console.log("pipiska")
         try {
           let refreshtoken = TokenService.getLocalRefreshToken()
           // check for refresh token expiration

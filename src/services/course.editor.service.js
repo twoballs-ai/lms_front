@@ -32,12 +32,11 @@ const editCoursePageAddModule = async (data) => {
     return await api
         .post(apiLmsUrl + "add_module_to_chapter/", data)
 }
-// const editCoursePageDeleteModule = async (chapter_id, module_id) => {
-//     return await api
-//         .delete(apiLmsUrl + "chapter-module-detail/" + chapter_id + "/" + module_id)
-// }
+const editCoursePageDeleteModule = async (module_id) => {
+    return await api
+        .delete(`${apiLmsUrl}delete-module/?module_id=${module_id}`)
+}
 
-// // добавление уроков немного мудренное.
 const editCoursePageGetClassicLesson = async (stagePk) => {
     return await api
         .get(`${apiLmsUrl}stage/${stagePk}`)
@@ -78,7 +77,7 @@ const CourseEditorService = {
     editCoursePageAddChapter,
     editCoursePageDeleteChapter,
     editCoursePageAddModule,
-    // editCoursePageDeleteModule,
+    editCoursePageDeleteModule,
     editCoursePageAddClassicLesson,
     // editCoursePagePutClassicLesson,
     // editCoursePageAddVideoLesson,

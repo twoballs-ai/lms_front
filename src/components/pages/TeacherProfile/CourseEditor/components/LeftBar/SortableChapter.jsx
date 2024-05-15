@@ -17,7 +17,6 @@ const SortableChapter = ({
   setActiveChapterId,
   getChapters,
   setGetChapters,
-  moduleChange,
 }) => {
   const {
     attributes,
@@ -124,7 +123,7 @@ const SortableChapter = ({
     return (
       <>
         <LmsButton
-          buttonText={"Удалить главу"}
+          buttonText={"Удалить раздел"}
           handleClick={deleteChapter}
         />
       </>
@@ -148,7 +147,7 @@ const SortableChapter = ({
       <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentAddChapterToModal()} />
       <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Найстроки раздела: ${chapter.title}`} popupContent={popupContent()} />
       <div className="block__title"><p>{chapter.title}</p>
-        <button {...listeners} className={"title__menu"}  >
+        <button {...listeners} className={"title__chapter-drag"}  >
           <DragVerticalIcon />
         </button></div>
       {/* <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} /> */}

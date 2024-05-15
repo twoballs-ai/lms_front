@@ -18,7 +18,8 @@ import AddStageLesson from "./AddStageLesson";
 import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
 import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
 import CourseEditorService from "../../../../../services/course.editor.service";
-
+import { SettingOutlined } from '@ant-design/icons';
+import PopupMenu from "../../../../reUseComponents/PopupMenu";
 function EditModuleStage({ moduleEditData }) {
 
 
@@ -53,7 +54,7 @@ function EditModuleStage({ moduleEditData }) {
             html_code_text: "",
         }
         const response = await CourseEditorService.editCoursePageAddClassicLesson(dataParams)
-        console.log(response.data.data)
+        // console.log(response.data.data)
         if (response.status === 200 || response.status === 201) {
             // setModuleData();
             const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
@@ -65,7 +66,7 @@ function EditModuleStage({ moduleEditData }) {
     };
     const handleShowVideoLesson = () => {
         // Переключаем состояние showClassicLesson
-        console.log(addVideolesson)
+        // console.log(addVideolesson)
 
 
         handleCloseModal()
@@ -83,11 +84,11 @@ function EditModuleStage({ moduleEditData }) {
         const fetchData = async () => {
 
             await CourseEditorService.editCoursePageGetModuleStage(moduleEditData.id).then((response) => {
-                console.log(response.data.data)
+                // console.log(response.data.data)
                 if (response.status === 200 || response.status === 201) {
                     setModuleData(response.data.data);
                     if (response.data.data.length !== 0) {
-                        console.log(response.data.data[0])
+                        // console.log(response.data.data[0])
                         // console.log(response.data.data[0]);
                         // Устанавливаем selectedStage во второй элемент массива data
                         setSelectedStage(response.data.data[0]);
@@ -118,11 +119,45 @@ function EditModuleStage({ moduleEditData }) {
 
     };
 
+    const [handlePopupOpen, setHandlePopupOpen] = useState(false);
+
+    const showPopupMenu = () => {
+      setHandlePopupOpen(true);
+    };
+  
+    const handlePopupClose = () => {
+      setHandlePopupOpen(false);
+    };
+  
+
+    const popupContent = () => {
+
+        const deleteChapter = async () => {
+    
+          const response = await CourseEditorService.editCoursePageDeleteModule(
+            moduleEditData.id
+          );
+          if (response.status === 200 || response.status === 201) {
+            // const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
+            // setGetChapters(updatedChapters);
+          }
+        };
+    
+        return (
+          <>
+            <LmsButton
+              buttonText={"Удалить модуль"}
+              handleClick={deleteChapter}
+            />
+          </>
+        )
+      }
+
     const Dot = ({ tech, isActive }) => {
 
         const activeClass = isActive ? "active" : "";
 
-        // console.log(selectedStage)
+
         return (
             <div className={`dot ${activeClass}`} onClick={() => handleSelectStage(tech)}>
 
@@ -153,11 +188,15 @@ function EditModuleStage({ moduleEditData }) {
         )
 
     }
-    console.log(selectedStage)
+
     return (
         <>
             <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal} />
-            <div className="main__nav-block"><p>Вы перешли на страницу редактирования модуля: "{moduleEditData.title}"</p>{" "}
+            <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Найстроки модуля: ${moduleEditData.title}`} popupContent={popupContent()} />
+
+            <div className="main__nav-block"><p>Вы перешли на страницу редактирования модуля: "{moduleEditData.title}"</p>
+            <div className="nav-block__popup-menu"><button className="popup-menu__button" onClick={showPopupMenu}><SettingOutlined style={{ fontSize: '24px' }} /></button></div>
+            
                 <div className="nav-block__stages" >
                     {moduleData.length < 20 && (
                         // <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>

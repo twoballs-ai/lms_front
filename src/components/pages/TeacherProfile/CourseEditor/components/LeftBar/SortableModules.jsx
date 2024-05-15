@@ -1,6 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
+import { DragVerticalIcon } from '../../../../../icons/icons';
 
 const SortableModules = ({ id, title, module,moduleChange, activeModuleId, setActiveModuleId }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -39,15 +40,12 @@ const SortableModules = ({ id, title, module,moduleChange, activeModuleId, setAc
         moduleChange(module);
     }}  
     >
-      <div className="flex items-center justify-between">
+ 
         {title}
-        <button
-          className="border p-2 text-xs rounded-xl shadow-lg hover:shadow-xl"
-          {...listeners}
-        >
-          Drag Handle
+        <button {...listeners} className={"block__module-drag"}  >
+          <DragVerticalIcon />
         </button>
-      </div>
+
     </div>
   );
 };
