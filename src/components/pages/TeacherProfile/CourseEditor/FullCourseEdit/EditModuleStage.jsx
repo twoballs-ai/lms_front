@@ -22,18 +22,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
 function EditModuleStage({ moduleEditData }) {
 
-
     const [moduleData, setModuleData] = useState([]);
-    // const [stagePkData, setStagePkData] = useState("");
-    // const [typeStageData, setTypeStageData] = useState(null);
-    const location = useLocation();
-    const navigate = useNavigate();
-    // const styleIndex = {
-    //     left: "26px",
-    //     top: "-20px",
-    // };
-    // // const {state} = useLocation();
-    // // const { type } = state;
 
     const [selectedStage, setSelectedStage] = useState(null);
 
@@ -43,10 +32,6 @@ function EditModuleStage({ moduleEditData }) {
     const handleCloseModal = () => setOpenModal(false);
 
 
-    const handleDeleteStage = async () => {
-        // Логика для удаления этапа
-        // Можно отправлять запрос на сервер или обновлять локальное состояние
-    };
     const handleShowClassicLesson = async () => {
         const dataParams = {
             module_id: moduleEditData.id,
@@ -54,7 +39,7 @@ function EditModuleStage({ moduleEditData }) {
             html_code_text: "",
         }
         const response = await CourseEditorService.editCoursePageAddClassicLesson(dataParams)
-        // console.log(response.data.data)
+
         if (response.status === 200 || response.status === 201) {
             // setModuleData();
             const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
@@ -72,14 +57,11 @@ function EditModuleStage({ moduleEditData }) {
         handleCloseModal()
     };
     const handleSelectStage = (tech) => {
-        // console.log(tech)
+
 
         setSelectedStage(tech);
     };
-    // console.log(selectedStage)
-    // useEffect(() => {
-    //     setShowClassicLesson(false);
-    // }, [selectedStage]);
+
     useLayoutEffect(() => {
         const fetchData = async () => {
 
@@ -109,15 +91,8 @@ function EditModuleStage({ moduleEditData }) {
         handleOpenModal()
     };
 
-    const [openedStage, setOpenedStage] = useState(null);
     const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} handleShowVideoLesson={handleShowVideoLesson} />)
 
-
-    // Обработчик для открытия элемента
-    const handleStageClick = (stageId) => {
-        setOpenedStage(stageId);
-
-    };
 
     const [handlePopupOpen, setHandlePopupOpen] = useState(false);
 
@@ -152,6 +127,35 @@ function EditModuleStage({ moduleEditData }) {
           </>
         )
       }
+
+
+      const deleteStage = async () => {
+    
+        const response = await CourseEditorService.editCoursePageDeleteStage(
+            selectedStage.id
+        );
+        if (response.status === 200 || response.status === 201) {
+          // const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
+          // setGetChapters(updatedChapters);
+          const updatedModuleData = moduleData.filter(stage => {
+            if (stage.id !== selectedStage.id) {
+                return true; // Оставляем этап, если его id не равен id удаленного этапа
+            } else {
+                // Если это удаленный этап, проверяем, является ли это первый элемент в списке
+                // Если это первый элемент, выбираем следующий за ним
+                // В противном случае, выбираем предыдущий элемент
+                const selectedIndex = moduleData.findIndex(stage => stage.id === selectedStage.id);
+                setSelectedStage(selectedIndex === 0 ? moduleData[1] : moduleData[selectedIndex - 1]);
+                return false; // Исключаем удаленный этап из списка
+            }
+        });
+        // Обновляем состояние moduleData
+        setModuleData(updatedModuleData);
+        }
+      };
+  
+
+console.log(selectedStage)
 
     const Dot = ({ tech, isActive }) => {
 
@@ -221,11 +225,17 @@ function EditModuleStage({ moduleEditData }) {
                 </div>
             </div>
             <div className="main__content">
+<div className="content__mini-menu">
+    {selectedStage &&
+<LmsButton
+            buttonText={"Удалить урок"}
+            handleClick={deleteStage}
+          />}
+</div>
 
-                <div className="mb-2">
                     {selectedStage && (
-                        (selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} setModuleData={setModuleData} />) ||
-                        (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} setModuleData={setModuleData} />)
+                        (selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />) ||
+                        (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />)
                         // (selectedStage.items.type === "video" && <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />)
                     )}
                     {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
@@ -240,7 +250,6 @@ function EditModuleStage({ moduleEditData }) {
                     {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
 
 
-                </div>
             </div>
 
 
