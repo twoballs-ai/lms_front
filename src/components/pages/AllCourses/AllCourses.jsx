@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { apiLmsUrl } from "../../../shared/config";
-import SiteService from "../../../services/site.service";
+import SiteService from "../../../services/siteNoAuth.service";
 
 function AllCourses() {
     const [allCourseData, setAllCourseData] = useState([]);

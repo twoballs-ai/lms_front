@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiLmsUrl, apiUserUrl, restAuthApiUrl } from "../shared/config";
+import { apiLmsUrl, apiUserUrl, restAuthApiUrl, apiBaseUrl } from "../shared/config";
 import api from "./api";
 
 const getCategory = async ({ toSelect }) => {
@@ -9,9 +9,9 @@ const getCategory = async ({ toSelect }) => {
         }
     });
 }
-const homePageNewCourses = async () => {
+const homePageLastAddedCourses = async ({ items }) => {
     return await api
-    .get(apiLmsUrl + "courses/?result=4")
+    .get(apiBaseUrl + `recent_courses/?items=${items}`)
 }
 const homePagePopularCourses = async () => {
     return await api
@@ -32,7 +32,7 @@ const allCoursesPage = async (url) => {
 
 const SiteService = {
     getCategory,
-    homePageNewCourses,
+    homePageLastAddedCourses,
     homePagePopularCourses,
     homePagePopularTeachers,
     homePageStudentsreviews,

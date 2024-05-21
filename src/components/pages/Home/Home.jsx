@@ -11,46 +11,48 @@ import NewAddedCourse from "./HomeComponents/NewAddedCourse";
 import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
 import HomePopularCourses from "./HomeComponents/HomePopularCourses";
 import StudentTestimonials from "./HomeComponents/StudentTestiomonials";
-import SiteService from "../../../services/site.service";
+import SiteService from "../../../services/siteNoAuth.service";
 
 export default function Home() {
-    const [allCourseData, setAllCourseData] = useState([]);
+    const [lastAddedCourses, setlastAddedCourses] = useState([]);
     const [popularCourseData, setPopularCourseData] = useState([]);
     const [popularTeacherData, setPopularTeacherData] = useState([]);
     const [studentTestimonialData, setStudentTestimonialData] = useState([]);
 
     const teacherId = localStorage.getItem("teacherId");
-    console.log(teacherId)
+
+    const items ="8"
     useEffect(() => {
         const fetchData = async () => {
-            await SiteService.homePageNewCourses().then((response) => {
+            await SiteService.homePageLastAddedCourses({items}).then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    setAllCourseData(response.data.results);
+                    setlastAddedCourses(response.data.data);
                 }
             });
-            await SiteService.homePagePopularCourses().then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    setPopularCourseData(response.data);
-                }
-            });
-            await SiteService.homePagePopularTeachers().then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    setPopularTeacherData(response.data);
-                }
-            });
-            await SiteService.homePageStudentsreviews().then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    setStudentTestimonialData(response.data);
-                }
-            });
+            // await SiteService.homePagePopularCourses().then((response) => {
+            //     if (response.status === 200 || response.status === 201) {
+            //         setPopularCourseData(response.data);
+            //     }
+            // });
+            // await SiteService.homePagePopularTeachers().then((response) => {
+            //     if (response.status === 200 || response.status === 201) {
+            //         setPopularTeacherData(response.data);
+            //     }
+            // });
+            // await SiteService.homePageStudentsreviews().then((response) => {
+            //     if (response.status === 200 || response.status === 201) {
+            //         setStudentTestimonialData(response.data);
+            //     }
+            // });
         };
         fetchData();
     }, []);
-    console.log("sds")
+    // console.log("sds")
     return (
         <>
             <div className="main-container__home-container">
-            <NewAddedCourse />
+            <p>Недавно добавленные курсы</p>
+            <NewAddedCourse lastAddedCourses={lastAddedCourses}/>
 
             </div>
 

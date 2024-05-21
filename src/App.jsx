@@ -75,8 +75,16 @@ import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 // import Layout from './components/pages/basicComponents/layouts';
 // import StudentRegister from './components/Auth/TabComponent/RegisterComponents/StudentRegister/Register';
 // import TeacherRegister from './components/Auth/TabComponent/RegisterComponents/TeacherRegister/Register';
+import { Navigate } from 'react-router-dom';
 
 function App() {
+
+  const AuthRoute = ({ children }) => {
+    const isAuthenticated = false; // Replace with actual authentication check
+  
+    return isAuthenticated ? children : <Navigate to="/login" />;
+  };
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -107,7 +115,11 @@ function App() {
     },
     {
       path: "teacher-profile/",
-      element: <TeacherDashMain />,
+      element: (
+        <AuthRoute>
+          <TeacherDashMain />
+        </AuthRoute>
+      ),
       children: [
         {
           index: true,
@@ -125,7 +137,11 @@ function App() {
     },
     {
       path: "course-editor/:course_id",
-      element: <MainComponent />,
+      element: (
+        <AuthRoute>
+          <MainComponent />
+        </AuthRoute>
+      ),
       children: [
         {
           index: true,
@@ -138,6 +154,7 @@ function App() {
 
       ]
     },
+    { path: '*', element: <Navigate to="/" /> }, 
     // {
     //   path: "detail/:course_id",
     //   element: <CourseDetail />,

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { apiLmsUrl } from "../../../../../shared/config";
-import SiteService from '../../../../../services/site.service';
+import SiteService from '../../../../../services/siteNoAuth.service';
 import TeacherService from '../../../../../services/teacher.service';
 import "./AddCourse.scss"; // Импорт стилей SCSS
 import LmsButton from '../../../../reUseComponents/Button';

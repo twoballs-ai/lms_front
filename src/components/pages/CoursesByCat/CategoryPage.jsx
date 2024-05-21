@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 
 import axios from "axios";
 import { apiLmsUrl } from "../../../shared/config";
-import SiteService from "../../../services/site.service";
+import SiteService from "../../../services/siteNoAuth.service";
 
 function CategoryPage() {
 
