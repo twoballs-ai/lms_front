@@ -1,60 +1,21 @@
 import React, { useState, useEffect } from "react"
 
 import { Link } from "react-router-dom";
+import CustomCard from "../../../reUseComponents/Cards";
 function NewAddedCourse(props) {
-    let allCourseData = props.allCourseData
-    console.log(props)
+    // let allCourseData = props.allCourseData
+    // console.log(props)
     return (
-        <div className="shadow rounded p-3 mt-3 mb-5">
-            <h3 className="mt-5 ">
-                Новые добавленые курсы
-                <Button
-                    className="float-end"
-                    as={Link}
-                    to={"/all-courses"}
-                    variant="outline-info"
-                >
-                    Посмотреть все
-                </Button>{" "}
-                {/* Новые добавленые курсы <Link className='float-end' to={'/all-courses'}>Посмотреть все</Link> */}
-            </h3>
-            <div className="mt-5 gx-0">
-                <hr />
-                {allCourseData &&
-                    allCourseData.map((course, index) => (
-                        <div>
-                            <div style={{ width: "18rem" }} className="shadow-sm">
-                                <Link to={`/detail/${course.id}`}>
-                                    <div.Img
-                                        variant="top"
-                                        src={course.course_image ? course.course_image : "/images/int.svg"}
-                                    // src="/images/int.svg"
-
-                                    />
-                                </Link>
-                                <div>
-                                    <div>
-                                        <Link className="text-decoration-none text-info" to={`/detail/${course.id}`}>
-                                            {course.title}
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div.Footer>
-                                    <span>
-                                        Рейтинг курса:{" "}
-                                        {course.course_rating}
-                                    </span>
-                                    <br />
-                                    <span>
-                                        Просмотров курса:{" "}
-                                        {course.course_views}
-                                    </span>
-                                </div.Footer>
-                            </div>
-                        </div>
-                    ))}
-            </div>
+        <div className="home-container__last-added-course">
+                    <div className="shadow rounded p-3 mt-3 mb-5">
+            <CustomCard
+                title="Another Title"
+                description="Another description"
+                image="https://example.com/another-image.png"
+            />
         </div>
+        </div>
+
     );
 }
 export default NewAddedCourse;

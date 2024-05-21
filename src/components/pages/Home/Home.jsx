@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { apiLmsUrl } from "../../../shared/config";
 import { apiUserUrl } from "../../../shared/config";
-
+import "./Home.scss"
 import NewAddedCourse from "./HomeComponents/NewAddedCourse";
 
 import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
@@ -49,16 +49,16 @@ export default function Home() {
     console.log("sds")
     return (
         <>
-            <div className="fff">
-
+            <div className="main-container__home-container">
+            <NewAddedCourse />
 
             </div>
 
+           
 
-
-            popular courses
-            {/* <HomePopularCourses popularCourseData={popularCourseData} />
-            <HomeTeacherPopular popularTeacherData={popularTeacherData} />
+            {/* popular courses */}
+            {/* <HomePopularCourses popularCourseData={popularCourseData} /> */}
+            {/* <HomeTeacherPopular popularTeacherData={popularTeacherData} />
             <StudentTestimonials studentTestimonialData={studentTestimonialData} /> */}
 
         </>

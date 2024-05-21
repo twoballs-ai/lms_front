@@ -19,14 +19,14 @@ function Footer() {
     return (
         <>
             <footer className="footer">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <h4>About Us</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh.</p>
+                <div className="footer__container">
+                    <div className="container__info-link-row">
+                        <div className="info-link-row__about">
+                            <h4>Intellity code</h4>
+                            <p>Добро пожаловать в систему обучения и преподавания. Желаем достижения успехов.</p>
                         </div>
                         <div className="col-md-4">
-                            <h4>Quick Links</h4>
+                            <h4>Ссылки</h4>
                             <ul className="list-unstyled">
                                 <li><a href="#">Home</a></li>
                                 <li><a href="#">Courses</a></li>
@@ -35,7 +35,7 @@ function Footer() {
                             </ul>
                         </div>
                         <div className="col-md-4">
-                            <h4>Contact Us</h4>
+                            <h4>Свяжитесь с нами</h4>
                             <address>
                                 123 Main Street<br />
                                 City, State ZIP<br />
