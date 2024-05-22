@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 
-export default function LmsModalBase({ open, onClose, content, modalStyles }) {
+export default function LmsModalBase({ open, onClose, content, modalStyles,showCloseIcon }) {
 
     const basicModalStyles = {
         modal: {
@@ -21,7 +21,7 @@ export default function LmsModalBase({ open, onClose, content, modalStyles }) {
     const stylesToUse = modalStyles || basicModalStyles; // Используем modalStyles, если он передан, иначе используем basicModalStyles
 
     return (
-        <Modal open={open} onClose={onClose} center styles={stylesToUse}>
+        <Modal open={open} onClose={onClose}  center showCloseIcon={showCloseIcon} styles={stylesToUse}>
             {content}
         </Modal>
     );

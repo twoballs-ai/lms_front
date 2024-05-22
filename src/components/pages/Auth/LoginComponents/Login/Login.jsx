@@ -3,34 +3,40 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import AuthService from "../../../../../services/auth.service";
 import LmsButton from "../../../../reUseComponents/Button";
-
+import TextInput from "../../../../reUseComponents/TextInput";
+import "./Login.scss"
 function AllProfilesLogin() {
-    const [allProfilesLoginData, setAllProfilesLoginData] = useState({
-        username: "",
-        password: "",
-    });
+    // const [allProfilesLoginData, setAllProfilesLoginData] = useState({
+    //     username: "",
+    //     password: "",
+    // });
     const [errorMsg, setErrorMsg] = useState("");
 
-    const handleChange = (event) => {
-        setAllProfilesLoginData({
-            ...allProfilesLoginData,
-            [event.target.name]: event.target.value,
-        });
+    // const handleChange = (event) => {
+    //     setAllProfilesLoginData({
+    //         ...allProfilesLoginData,
+    //         [event.target.name]: event.target.value,
+    //     });
+    // };
+    const [inputUsernameValue, setInputUsernameValue] = useState('');
+    const [inputPasswordValue, setInputPasswordValue] = useState('');
+    // const [inputDescrValue, setInputDescreValue] = useState('');
+    const handleInputUsernameChange = (e) => {
+        setInputUsernameValue(e.target.value);
     };
-
+    const handleInputPasswordChange = (e) => {
+        setInputPasswordValue(e.target.value);
+    };
     const submitForm = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('username', allProfilesLoginData.username);
-        formData.append('password', allProfilesLoginData.password);
+        formData.append('username', inputUsernameValue);
+        formData.append('password', inputPasswordValue);
 
         await AuthService.login(formData).then((response) => {
             console.log(response)
             if (response.status === 200 || response.status === 201) {
-                setAllProfilesLoginData({
-                    email: "",
-                    password: "",
-                });
+ 
                 localStorage.clear();
                 localStorage.setItem(
                     "access_token",
@@ -61,31 +67,13 @@ function AllProfilesLogin() {
     };
 
     return (
-        <div className="mx-3">
-            <div className="justify-content-md-center">
-                <div md={4}>
-                    {errorMsg && <p className="text-danger">{errorMsg}</p>}
-                    <div>
-                        <input
-                            value={allProfilesLoginData.username}
-                            name="username"
-                            onChange={handleChange}
-                            type="username"
-                            placeholder="Введите ваш email"
-                            className="form-control mb-3"
-                        />
-                        <input
-                            value={allProfilesLoginData.password}
-                            name="password"
-                            onChange={handleChange}
-                            type="password"
-                            placeholder="Введите пароль"
-                            className="form-control mb-3"
-                        />
-                        <LmsButton buttonText={"Войти"} handleClick={submitForm} />
-                    </div>
-                </div>
+        <div className="login-tab__auth-container">
+            <div className="auth-container__log-pass-block">
+
+                <TextInput isTextArea={false} placeholder={"Введите ваш email"} value={inputUsernameValue} onChange={handleInputUsernameChange} />
+                <TextInput type={"password"} placeholder={"Введите пароль"} value={inputPasswordValue} onChange={handleInputPasswordChange} />
             </div>
+            <div className="auth-container__button-confirm"><LmsButton buttonText={"Войти"} handleClick={submitForm} /></div>
         </div>
     );
 }

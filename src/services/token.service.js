@@ -9,15 +9,11 @@ const getLocalRefreshToken = () => {
   };
   
   const updateLocalRefreshToken = (token) => {
-    let refresh_token = JSON.parse(localStorage.getItem("refresh_token"));
-    refresh_token = token;
-    localStorage.setItem("refresh_token", JSON.stringify(refresh_token));
+    localStorage.setItem("refresh_token", JSON.stringify(token));
   };
 
   const updateLocalAccessToken = (token) => {
-    let access_token = JSON.parse(localStorage.getItem("access_token"));
-    access_token = token;
-    localStorage.setItem("access_token", JSON.stringify(access_token));
+    localStorage.setItem("access_token", JSON.stringify(token));
   };
   
   const TokenService = {

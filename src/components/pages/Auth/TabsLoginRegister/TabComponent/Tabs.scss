@@ -5,27 +5,31 @@
   align-items: center;
   height: 100%;
 
-
   .tabs {
-
+    position: relative;
     width: 90%;
     height: auto;
     min-height: 550px;
-    background: #0066ff;
+    background: #167F90;
     margin: auto;
-    /* автоматическое выравнивание по горизонтали */
     margin-top: 0.5rem;
-    /* сохраняем верхний отступ */
     margin-bottom: 1.5rem;
-    /* сохраняем нижний отступ */
     padding: 2rem 1rem;
     color: #e8f0f2;
-    box-shadow: 1px 1px 20px 20px rgb(51, 0, 128);
+    box-shadow: 1px 1px 20px 20px #e591556e;
     border-radius: 2rem;
-
 
     @media (max-width: 769px) {
       padding: 2rem 0;
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 24px;
+      cursor: pointer;
+      color: #e8f0f2;
     }
   }
 
@@ -69,14 +73,11 @@
     background: #39a2db;
   }
 
-  /* First and Second Tab Styles */
   .LoginTab p,
   .RegisterTab p {
     font-size: 2rem;
     text-align: center;
   }
-
-  /* registertabs */
 
   .react-tabs {
     -webkit-tap-highlight-color: transparent;
@@ -105,7 +106,7 @@
   }
 
   .react-tabs__tab--disabled {
-    color: graytext;
+    color: gray;
     cursor: default;
   }
 

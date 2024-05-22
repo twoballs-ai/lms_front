@@ -5,7 +5,7 @@ export const apiUrl = `${serverUrl}/api/`;
 export const apiLmsUrl = `${serverUrl}/api/v1/lms/`;
 export const apiBaseUrl = `${serverUrl}/api/v1/base/`;
 export const restAuthApiUrl = `${serverUrl}/dj-rest-auth/`;
-export const apiUserUrl = `${serverUrl}/api/user/`;
+export const apiUserUrl = `${serverUrl}/api/v1/user/`;
 export const typesApiUrl = `${serverUrl}/api/types/`;
 
 export const quizApiUrl = `${serverUrl}/api-quiz/`;

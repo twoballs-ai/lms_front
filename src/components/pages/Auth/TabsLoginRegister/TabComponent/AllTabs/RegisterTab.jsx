@@ -1,7 +1,7 @@
 import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import StudentRegister from "../../../RegisterComponents/StudentRegister/Register";
-import TeacherRegister from "../../../RegisterComponents/TeacherRegister/Register";
+import RegisterForm from "../../../RegisterComponents/Register";
+
 
 // import "react-tabs/style/react-tabs.css";
 const RegisterTab = () => {
@@ -14,10 +14,10 @@ const RegisterTab = () => {
                     <Tab>Стать учителем</Tab>
                 </TabList>
                 <TabPanel>
-                    <StudentRegister />
+                    <RegisterForm userType="student" />
                 </TabPanel>
                 <TabPanel>
-                    <TeacherRegister />
+                    <RegisterForm userType="teacher" />
                 </TabPanel>
             </Tabs>
         </div>

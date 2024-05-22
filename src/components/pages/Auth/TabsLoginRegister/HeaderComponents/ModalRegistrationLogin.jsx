@@ -13,17 +13,14 @@ function ModalRegisterLogin() {
             height: '100vh',
             padding: '0',
             margin: '0',
-            overflow: 'none'
-
-
-        },
-        overlay: {
-            background: 'rgba(0, 0, 0, 0.5)'
+            overflow: 'none',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)'
         }
     };
 
     const [authState, setAuthState] = useState("");
     function handleShow(breakpoint, auth) {
+   
         // setFullscreen(breakpoint);
         handleOpenModal()
         setAuthState(auth)
@@ -32,7 +29,7 @@ function ModalRegisterLogin() {
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
-    const contentToModal = (<TabsAuth authState={authState} />)
+    const contentToModal = (<TabsAuth authState={authState} handleCloseModal={handleCloseModal}  />)
 
     return (
         <>
@@ -41,6 +38,7 @@ function ModalRegisterLogin() {
                 onClose={handleCloseModal}
                 content={contentToModal}
                 modalStyles={customModalStyles}
+                showCloseIcon={false}
             />
             <LmsButton buttonText={"Регистрация"} handleClick={() => handleShow(true, "register")} />
             <LmsButton buttonText={"Войти"} handleClick={() => handleShow(true, "login")} />

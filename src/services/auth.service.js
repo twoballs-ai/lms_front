@@ -2,6 +2,7 @@ import axios from "axios";
 import { apiUrl, apiUserUrl, restAuthApiUrl } from "../shared/config";
 import api from "./api";
 // const API_URL = "http://localhost:8080/api/auth/";
+import TokenService from "./token.service";
 
 const teacherRegister = async (data) => {
   return await api
@@ -24,22 +25,23 @@ const login = async (formData) => {
   });
   return response;
 };
-// const login = async (data) => {
-//   console.log(data)
-//   const response = await api
-//     .post(apiUrl + "v1/user/token", data);
-//   // if (response.data.accessToken) {
-//   //     localStorage.setItem("user", JSON.stringify(response.data));
 
-//   // }
-//   return response;
-// };
 
-// const { data } = await axios.post(restAuthApiUrl + "login/", allProfilesLoginData, { headers: { "Content-Type": "multipart/form-data" } });
+const refreshToken = async () => {
+  const response = await api.post(apiUrl + "v1/user/token/refresh", formData, {
+    refresh_token : TokenService.getLocalRefreshToken(),
+  });
+
+
+}
 
 const logout = () => {
   localStorage.clear();
   window.location.href = '/';
+};
+
+const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem("user"));
 };
 
 
@@ -49,6 +51,8 @@ const AuthService = {
   studentRegister,
   login,
   logout,
+  getCurrentUser,
+  refreshToken,
 
 };
 

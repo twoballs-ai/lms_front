@@ -1,0 +1,19 @@
+.login-tab__auth-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; /* Center align child elements horizontally */
+    
+    .auth-container__log-pass-block {
+        min-width: 500px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center; /* Center align child elements horizontally */
+    }
+    
+    .auth-container__button-confirm {
+        display: flex;
+        justify-content: center; /* Center align child elements horizontally */
+    }
+}

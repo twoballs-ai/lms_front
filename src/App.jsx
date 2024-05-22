@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -79,11 +79,38 @@ import { Navigate } from 'react-router-dom';
 
 function App() {
 
-  const AuthRoute = ({ children }) => {
-    const isAuthenticated = false; // Replace with actual authentication check
   
-    return isAuthenticated ? children : <Navigate to="/login" />;
+  
+
+  // Создание контекста аутентификации
+const AuthContext = createContext();
+  
+  // Создание провайдера аутентификации
+const AuthProvider = ({ children }) => {
+    const [authenticated, setAuthenticated] = useState(false); // Состояние аутентификации
+  
+    // Функция для изменения статуса аутентификации
+    const toggleAuthentication = () => {
+      setAuthenticated(prevAuth => !prevAuth);
+    };
+  
+    return (
+      // Предоставление информации об аутентификации дочерним компонентам через контекст
+      <AuthContext.Provider value={{ authenticated, toggleAuthentication }}>
+        {children}
+      </AuthContext.Provider>
+    );
   };
+
+
+
+  const AuthRoute = ({ children }) => {
+    const { authenticated } = useContext(AuthContext); // Получение информации об аутентификации из контекста
+  
+    return authenticated ? children : <Navigate to="/" />;
+  };
+
+
 
   const router = createBrowserRouter([
     {
@@ -233,7 +260,9 @@ function App() {
   ])
 
   return (
-    <RouterProvider router={router} />
+    <AuthProvider> {/* Обертка вашего приложения в провайдер аутентификации */}
+      <RouterProvider router={router} />
+    </AuthProvider>
     //     <Routes>
     //       <Route path='course-study/:course_id' element={<CourseStudy />} />
 
