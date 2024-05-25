@@ -56,7 +56,8 @@ function AddCourse() {
     };
     return (
         <div className="add-course-container"> {/* Изменим класс контейнера */}
-            <h2>Добавление курса</h2>
+        <div className="add-course-container__title">Добавление курса</div>
+   
             <div className="add-course-container__add-form">
             <CustomSelect mode="single" options={categories}  placeholder ={"Выберите категорию"} onChange={handleSelectChange} style={{ width: '100%' }}/>
         <p>Название курса:</p>

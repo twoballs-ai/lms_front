@@ -48,14 +48,14 @@ function AllProfilesLogin() {
                 );
                 if (response?.data?.type === "teacher_model") {
                     localStorage.setItem(
-                        "is_teacher",
+                        "role",
                         response?.data?.type
                     );
                     window.location.href = "/teacher-profile/";
                 }
                 if (response?.data?.type === "student_model") {
                     localStorage.setItem(
-                        "is_student",
+                        "role",
                         response?.data?.type
                     );
                     window.location.href = "/student-profile/";

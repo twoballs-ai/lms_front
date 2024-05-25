@@ -3,29 +3,29 @@ import { Link, useParams } from "react-router-dom";
 
 
 
-import axios from "axios";
-import { apiUrl } from "../../../../shared/config";
+// import axios from "axios";
+// import { apiUrl } from "../../../../../shared/config";
 
 function StudentMyCourses() {
-    const [courseData, setCourseData] = useState([]);
-    // const [moduleCourseData, setModuleCourseData] = useState({});
-    const studentId = localStorage.getItem("studentId");
-    useEffect(() => {
-        axios
-            .get(
-                apiUrl + "get-student-courses/" + studentId
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setCourseData(response.data);
-                // setModuleCourseData(response.data.)
-                console.log(response.data);
-            });
-    }, []);
+    // const [courseData, setCourseData] = useState([]);
+    // // const [moduleCourseData, setModuleCourseData] = useState({});
+    // const studentId = localStorage.getItem("studentId");
+    // useEffect(() => {
+    //     axios
+    //         .get(
+    //             apiUrl + "get-stude8nt-courses/" + studentId
+    //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+    //             // ,{headers: { "Content-Type": "multipart/form-data" }}
+    //         )
+    //         .then((response) => {
+    //             setCourseData(response.data);
+    //             // setModuleCourseData(response.data.)
+    //             console.log(response.data);
+    //         });
+    // }, []);
     return (
         <>
-            <div>
+            {/* <div>
                 <div>Мои курсы</div>
                 <div>
                     <Table striped bordered hover>
@@ -63,13 +63,12 @@ function StudentMyCourses() {
                                             Проходить
                                             <br /> курс
                                         </Button>
-                                    </td>
-                                </tr>
+                                    </td>7
                             ))}
                         </tbody>
                     </Table>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

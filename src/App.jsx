@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 import {
   createBrowserRouter,
@@ -19,9 +18,9 @@ import About from './components/pages/About/About';
 // //student pages
 // // import StudentLogin from './components/pages/Student/Login/Login';
 
-// import StudentDashboard from './components/pages/Student/ControlPanel/Dashboard';
-// import StudentMyCourses from './components/pages/Student/ControlPanel/MyCourses';
-// import UserDashmain from './components/pages/Student/ControlPanel/components/DashMain';
+import StudentDashboard from './components/pages/StudentProfile/ControlPanel/Dashboard';
+import StudentMyCourses from './components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses';
+import UserDashmain from './components/pages/StudentProfile/ControlPanel/components/DashMain';
 // import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
 // import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
 // import StudentProfileSettings from './components/pages/Student/ControlPanel/StudentProfileSettings';
@@ -41,8 +40,8 @@ import AddCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCou
 // // import AddChapter from './components/pages/Teacher/ControlPanel/AddChapter';
 // // import EditChapter from './components/pages/Teacher/ControlPanel/EditChapter';
 // // import MyStudents from './components/pages/Teacher/ControlPanel/MyStudents';
-// // import TeacherProfileSettings from './components/pages/Teacher/ControlPanel/ProfileSettings';
-// // import TeacherChangePassword from './components/pages/Teacher/ControlPanel/ChangePassword';
+import TeacherProfileSettings from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ProfileSettings';
+import TeacherChangePassword from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ChangePassword';
 // // import Coursechapter from './components/pages/Teacher/ControlPanel/CourseChapters';
 // // import EditCourse from './components/pages/Teacher/ControlPanel/EditCourse';
 // // import SkillCourses from './components/pages/CoursesByCat/SkillCourses';
@@ -77,275 +76,245 @@ import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 // import TeacherRegister from './components/Auth/TabComponent/RegisterComponents/TeacherRegister/Register';
 import { Navigate } from 'react-router-dom';
 
-function App() {
+import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
+import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 
-  
-  
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "about", element: <About /> },
+      { path: "all-courses", element: <AllCourses /> },
+      { path: "category", element: <CategoryPage /> },
+      { path: "logout", element: <UserLogout /> },
+    ]
+  },
+  {
+    path: "student-profile",
+    element: (
+      <PrivateRoute requiredRole="student_model">
+        <UserDashmain />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true,  element: <StudentDashboard /> },
+      { path: "my-courses", element: <StudentMyCourses /> },
+    ]
+  },
+  {
+    path: "teacher-profile",
+    element: (
+      <PrivateRoute requiredRole="teacher_model">
+        <TeacherDashMain />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <TeacherDashboard /> },
+      { path: "my-courses", element: <MyTeacherCourses /> },
+      { path: "add-course", element: <AddCourse /> },
+      { path: "profile-settings", element: <TeacherProfileSettings /> },
+      { path: "reset-password", element: <TeacherChangePassword /> },
+    ]
+  },
+  {
+    path: "course-editor/:course_id",
+    element: (
+      <PrivateRoute requiredRole="teacher_model">
+        <MainComponent />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <EditorPageInfo /> },
+      { path: "edit", element: <CourseEditor /> },
+    ]
+  },
 
-  // Создание контекста аутентификации
-const AuthContext = createContext();
-  
-  // Создание провайдера аутентификации
-const AuthProvider = ({ children }) => {
-    const [authenticated, setAuthenticated] = useState(false); // Состояние аутентификации
-  
-    // Функция для изменения статуса аутентификации
-    const toggleAuthentication = () => {
-      setAuthenticated(prevAuth => !prevAuth);
-    };
-  
-    return (
-      // Предоставление информации об аутентификации дочерним компонентам через контекст
-      <AuthContext.Provider value={{ authenticated, toggleAuthentication }}>
-        {children}
-      </AuthContext.Provider>
-    );
-  };
+  { path: '*', element: <Navigate to="/" /> },
+]);
 
-
-
-  const AuthRoute = ({ children }) => {
-    const { authenticated } = useContext(AuthContext); // Получение информации об аутентификации из контекста
-  
-    return authenticated ? children : <Navigate to="/" />;
-  };
-
-
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          index: true,
-          // path: "home",
-          element: <Home />,
-        },
-        {
-          path: "logout",
-          element: <UserLogout />,
-        },
-        {
-          path: "about",
-          element: <About />,
-        },
-        {
-          path: "all-courses",
-          element: <AllCourses />,
-        },
-        {
-          path: "category",
-          element: <CategoryPage />,
-        },
-      ]
-    },
-    {
-      path: "teacher-profile/",
-      element: (
-        <AuthRoute>
-          <TeacherDashMain />
-        </AuthRoute>
-      ),
-      children: [
-        {
-          index: true,
-          element: <TeacherDashboard />
-        },
-        {
-          path: "my-courses",
-          element: <MyTeacherCourses />,
-        },
-        {
-          path: "add-course",
-          element: <AddCourse />,
-        },
-      ]
-    },
-    {
-      path: "course-editor/:course_id",
-      element: (
-        <AuthRoute>
-          <MainComponent />
-        </AuthRoute>
-      ),
-      children: [
-        {
-          index: true,
-          element: <EditorPageInfo />
-        },
-        {
-          path: "edit/",
-          element: <CourseEditor />
-        },
-
-      ]
-    },
-    { path: '*', element: <Navigate to="/" /> }, 
-    // {
-    //   path: "detail/:course_id",
-    //   element: <CourseDetail />,
-    // },
-    // {
-    //   path: "search/:searchString",
-    //   element: <SearchByCourse />,
-    // },
-
-
-
-
-    // {
-    //   path: "student-profile/",
-    //   element: <UserDashmain />,
-    //   children: [
-    //     { 
-    //       index: true,
-    //       element: <StudentDashboard /> 
-    //     },
-    //     {
-    //       path: "student-dashboard", 
-    //       element: <StudentDashboard /> 
-    //     },
-    //     {
-    //       path: "my-courses",
-    //       indexelement: <StudentMyCourses />,
-    //     },
-    //   ]
-    // },
-
-
-    // {
-    //   path: "dashboard", 
-    //   element: <TeacherDashboard /> 
-    // },
-    // {
-    //   path: "all-chapters/:course_id",
-    //   element: <Coursechapter />,
-    // },
-
-    // {
-    //   path: "my-courses",
-    //   element: <StudentMyCourses />,
-    // },
-    // {
-    //   path: "my-courses",
-    //   element: <StudentMyCourses />,
-    // },
-    // {
-    //   path: "course-editor/",
-    //   element: <MainComponent />,
-    //   children: [
-    //     { 
-    //       index: true,
-    //       path: "editor-info/:course_id",
-    //       element: <EditorPageInfo /> 
-    //     },
-    //   ]
-    // }
-    //     <Route path='edit-course-full/' element={<MainComponent/>} >
-    //         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
-    //         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
-    //         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
-    //         <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
-    //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
-    //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
-    //       </Route>
-
-    //       ]
-    //     },
-    //   ],
-    // },
-    // other pages....
-
-  ])
-
-  return (
-    <AuthProvider> {/* Обертка вашего приложения в провайдер аутентификации */}
-      <RouterProvider router={router} />
-    </AuthProvider>
-    //     <Routes>
-    //       <Route path='course-study/:course_id' element={<CourseStudy />} />
-
-    //       <Route path='/' element={<Layout />} >
-    //         <Route index element={<Home />} />
-    //         {/* <Route path='about' element={<About />} /> */}
-    //         {/* <Route path='student-login' element={<StudentLogin />} /> */}
-    //         {/* <Route path='student-register' element={<StudentRegister />} /> */}
-    //         {/* <Route path='detail/:course_id' element={<CourseDetail />} /> */}
-    //         {/* <Route path='course-study/:course_id' element={<CourseStudy />} /> */}
-    //         {/* <Route path='search/:searchString' element={<SearchByCourse />} /> */}
-    //         <Route path='all-courses' element={<AllCourses />} />
-    //         <Route path='category' element={<CategoryPage />} />
-    //         <Route path='logout' element={<UserLogout />} />
-
-
-    //         <Route path='popular-courses' element={<PopularCourses />} />
-    //         <Route path='popular-teachers' element={<PopularTeachers />} />
-    //         {/* <Route path='teacher-login' element={<TeacherLogin />} /> */}
-    //         {/* <Route path='teacher-register' element={<TeacherRegister/>} /> */}
-    //         <Route path='verify-teacher/:teacher_id' element={<VerifyOTPTeacher />} />
-    //         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
-    //         <Route path='courses-by-cat/:category_id/:category_slug' element={<CoursesByCat />} />  
-    //         <Route path='courses-by-skills/:skill_slug/:teacher_id' element={<SkillCourses />} />  
-
-
-    //           <Route path='student-profile/' element={<UserDashmain />} >
-    //           <Route index element={<StudentDashboard />} />
-    //             <Route path='my-courses' element={<StudentMyCourses />} />
-    //             <Route path='favorite-courses' element={<StudentFavoriteCourses />} />
-    //             <Route path='recommend-courses' element={<StudentRecommendCourses />} />
-    //             <Route path='incoming-task' element={<StudentIncomingTask />} />
-    //             <Route path='profile-settings' element={<StudentProfileSettings />} />
-    //             <Route path='reset-password' element={<StudentChangePassword />} />
-    //             <Route path='dashboard' element={<StudentDashboard />} />
-    //             <Route path='study-materials/:course_id' element={<StudentStudyMaterials />} />
-    //           </Route>
-
-    //           <Route path='teacher-profile/' element={<TeacherDashmain />} >
-    //             <Route index element={<TeacherDashboard />} />
-    //             <Route path='my-courses' element={<MyTeacherCourses />} />
-    //             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
-    //             <Route path='add-course' element={<AddCourse />} />
-    //             <Route path='study-materials/:course_id' element={<StudyMaterials />} />
-    //             {/* <Route path='edit-study-material/:study_id' element={<EditChapter />} /> */}
-    //             <Route path='add-study-material/:course_id' element={<AddStudyMaterial />} />
-    //             <Route path='teacher-quizes' element={<MyTeacherQuizes />} />
-    //             <Route path='add-quiz' element={<AddQuiz />} />
-    //             <Route path='edit-course/:course_id' element={<EditCourse />} />
-    //             <Route path='edit-quiz/:quiz_id' element={<EditQuiz />} />
-    //             <Route path='all-question/:quiz_id' element={<QuizQuestion />} />
-    //             <Route path='add-quiz-question/:quiz_id' element={<AddQuizQuestion />} />
-    //             <Route path='assign-quiz/:course_id' element={<AssignQuiz />} />
-
-    //             <Route path='add-chapter/:course_id' element={<AddChapter />} />
-    //             <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
-    //             <Route path='my-students' element={<MyStudents />} />
-    //             <Route path='profile-settings' element={<TeacherProfileSettings />} />
-    //             <Route path='reset-password' element={<TeacherChangePassword />} />
-    //             <Route path='dashboard' element={<TeacherDashboard />} />
-    //             <Route path='enrolled-students/:course_id' element={<EnrolledStudents/>} />
-    //             <Route path='add-tasks/:course_id' element={<AddTask/>} />
-    //             <Route path='view-tasks/:course_id' element={<ViewTask/>} />
-    //           </Route>
-
-
-    //         {/* <Route path='cardhouse/:id/' element={<CardhousePage />} /> */}
-    //       </Route>
-    // {/* редактирование курсов */}
-    //     <Route path='edit-course-full/' element={<MainComponent/>} >
-    //         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
-    //         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
-    //         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
-    //         <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
-    //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
-    //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
-    //       </Route>
-    //   {/* прохождение курсов  */}
-    //   <Route path='course-study/' element={<CourseStudy/>} >
-    //         <Route path='course/:course_id/:module_id/stage/:stage_id' index element={<StudentCourseLearn />} />
-    //       </Route>
-    //     </Routes>  
-  );
-}
+const App = () => (
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
+);
 
 export default App;
+
+
+// function App() {
+
+
+
+
+
+//   const router = createBrowserRouter([
+//     {
+//       path: "teacher-profile",
+//       element: (
+//         <PrivateRoute>
+//           <TeacherDashMain />
+//         </PrivateRoute>
+//       ),
+//       children: [
+//         { index: true, element: <TeacherDashboard /> },
+//         { path: "my-courses", element: <MyTeacherCourses /> },
+//         { path: "add-course", element: <AddCourse /> },
+//       ]
+//     },
+//     {
+//       path: "course-editor/:course_id",
+//       element: (
+//         <PrivateRoute>
+//           <MainComponent />
+//         </PrivateRoute>
+//       ),
+//       children: [
+//         { index: true, element: <EditorPageInfo /> },
+//         { path: "edit", element: <CourseEditor /> },
+//       ]
+//     },
+//     { path: '*', element: <Navigate to="/" /> },
+//     // {
+//     //   path: "detail/:course_id",
+//     //   element: <CourseDetail />,
+//     // },
+//     // {
+//     //   path: "search/:searchString",
+//     //   element: <SearchByCourse />,
+//     // },
+//     // {
+//     //   path: "dashboard", 
+//     //   element: <TeacherDashboard /> 
+//     // },
+//     // {
+//     //   path: "all-chapters/:course_id",
+//     //   element: <Coursechapter />,
+//     // },
+
+//     // {
+//     //   path: "my-courses",
+//     //   element: <StudentMyCourses />,
+//     // },
+//     // {
+//     //   path: "my-courses",
+//     //   element: <StudentMyCourses />,
+//     // },
+//     // {
+//     //   path: "course-editor/",
+//     //   element: <MainComponent />,
+//     //   children: [
+//     //     { 
+//     //       index: true,
+//     //       path: "editor-info/:course_id",
+//     //       element: <EditorPageInfo /> 
+//     //     },
+//     //   ]
+//     // }
+//     //     <Route path='edit-course-full/' element={<MainComponent/>} >
+//     //         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
+//     //         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
+//     //         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
+//     //         <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
+//     //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
+//     //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
+//     //       </Route>
+
+//     //       ]
+//     //     },
+//     //   ],
+//     // },
+//     // other pages....
+
+//   ])
+
+//   return (
+//     <AuthProvider> {/* Обертка вашего приложения в провайдер аутентификации */}
+//       <RouterProvider router={router} />
+//     </AuthProvider>
+//     //     <Routes>
+//     //       <Route path='course-study/:course_id' element={<CourseStudy />} />
+
+//     //       <Route path='/' element={<Layout />} >
+//     //         <Route index element={<Home />} />
+//     //         {/* <Route path='about' element={<About />} /> */}
+//     //         {/* <Route path='student-login' element={<StudentLogin />} /> */}
+//     //         {/* <Route path='student-register' element={<StudentRegister />} /> */}
+//     //         {/* <Route path='detail/:course_id' element={<CourseDetail />} /> */}
+//     //         {/* <Route path='course-study/:course_id' element={<CourseStudy />} /> */}
+//     //         {/* <Route path='search/:searchString' element={<SearchByCourse />} /> */}
+//     //         <Route path='all-courses' element={<AllCourses />} />
+//     //         <Route path='category' element={<CategoryPage />} />
+//     //         <Route path='logout' element={<UserLogout />} />
+
+
+//     //         <Route path='popular-courses' element={<PopularCourses />} />
+//     //         <Route path='popular-teachers' element={<PopularTeachers />} />
+//     //         {/* <Route path='teacher-login' element={<TeacherLogin />} /> */}
+//     //         {/* <Route path='teacher-register' element={<TeacherRegister/>} /> */}
+//     //         <Route path='verify-teacher/:teacher_id' element={<VerifyOTPTeacher />} />
+//     //         <Route path='teacher-detail/:teacher_id' element={<TeacherDetail />} />
+//     //         <Route path='courses-by-cat/:category_id/:category_slug' element={<CoursesByCat />} />  
+//     //         <Route path='courses-by-skills/:skill_slug/:teacher_id' element={<SkillCourses />} />  
+
+
+//     //           <Route path='student-profile/' element={<UserDashmain />} >
+//     //           <Route index element={<StudentDashboard />} />
+//     //             <Route path='my-courses' element={<StudentMyCourses />} />
+//     //             <Route path='favorite-courses' element={<StudentFavoriteCourses />} />
+//     //             <Route path='recommend-courses' element={<StudentRecommendCourses />} />
+//     //             <Route path='incoming-task' element={<StudentIncomingTask />} />
+//     //             <Route path='profile-settings' element={<StudentProfileSettings />} />
+//     //             <Route path='reset-password' element={<StudentChangePassword />} />
+//     //             <Route path='dashboard' element={<StudentDashboard />} />
+//     //             <Route path='study-materials/:course_id' element={<StudentStudyMaterials />} />
+//     //           </Route>
+
+//     //           <Route path='teacher-profile/' element={<TeacherDashmain />} >
+//     //             <Route index element={<TeacherDashboard />} />
+//     //             <Route path='my-courses' element={<MyTeacherCourses />} />
+//     //             <Route path='all-chapters/:course_id' element={<Coursechapter />} />
+//     //             <Route path='add-course' element={<AddCourse />} />
+//     //             <Route path='study-materials/:course_id' element={<StudyMaterials />} />
+//     //             {/* <Route path='edit-study-material/:study_id' element={<EditChapter />} /> */}
+//     //             <Route path='add-study-material/:course_id' element={<AddStudyMaterial />} />
+//     //             <Route path='teacher-quizes' element={<MyTeacherQuizes />} />
+//     //             <Route path='add-quiz' element={<AddQuiz />} />
+//     //             <Route path='edit-course/:course_id' element={<EditCourse />} />
+//     //             <Route path='edit-quiz/:quiz_id' element={<EditQuiz />} />
+//     //             <Route path='all-question/:quiz_id' element={<QuizQuestion />} />
+//     //             <Route path='add-quiz-question/:quiz_id' element={<AddQuizQuestion />} />
+//     //             <Route path='assign-quiz/:course_id' element={<AssignQuiz />} />
+
+//     //             <Route path='add-chapter/:course_id' element={<AddChapter />} />
+//     //             <Route path='edit-chapter/:chapter_id' element={<EditChapter />} />
+//     //             <Route path='my-students' element={<MyStudents />} />
+
+//     //             <Route path='dashboard' element={<TeacherDashboard />} />
+//     //             <Route path='enrolled-students/:course_id' element={<EnrolledStudents/>} />
+//     //             <Route path='add-tasks/:course_id' element={<AddTask/>} />
+//     //             <Route path='view-tasks/:course_id' element={<ViewTask/>} />
+//     //           </Route>
+
+
+//     //         {/* <Route path='cardhouse/:id/' element={<CardhousePage />} /> */}
+//     //       </Route>
+//     // {/* редактирование курсов */}
+//     //     <Route path='edit-course-full/' element={<MainComponent/>} >
+//     //         <Route path='editor-info/:course_id' index element={<EditorPageInfo />} />
+//     //         <Route path='add-chapter-full/:course_id' element={<AddChapter />} />
+//     //         <Route path='add-module/:course_id/:chapter_id' element={<AddModule />} />
+//     //         <Route path='edit-module/:course_id/:module_id' element={<EditModuleStage />} />
+//     //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id' element={<EditModuleStage />} />
+//     //         <Route path='edit-module/:course_id/:module_id/stage/:stage_id/new' element={<AddStageLesson />} />
+//     //       </Route>
+//     //   {/* прохождение курсов  */}
+//     //   <Route path='course-study/' element={<CourseStudy/>} >
+//     //         <Route path='course/:course_id/:module_id/stage/:stage_id' index element={<StudentCourseLearn />} />
+//     //       </Route>
+//     //     </Routes>  
+//   );
+// }
+
+// export default App;

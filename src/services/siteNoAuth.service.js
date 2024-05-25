@@ -3,7 +3,7 @@ import { apiLmsUrl, apiUserUrl, restAuthApiUrl, apiBaseUrl } from "../shared/con
 import api from "./api";
 
 const getCategory = async ({ toSelect }) => {
-    return await api.get(apiLmsUrl + "category/", {
+    return await api.get(apiBaseUrl + "category/", {
         params: {
             to_select: toSelect
         }

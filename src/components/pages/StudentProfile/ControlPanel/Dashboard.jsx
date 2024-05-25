@@ -5,11 +5,6 @@ import { Link, useParams } from "react-router-dom";
 
 
 import axios from "axios";
-
-import Image from "react-bootstrap/Image";
-
-// import Form from 'react-bootstrap/Form';
-
 import { apiUrl } from "../../../../shared/config";
 
 function StudentDashboard() {

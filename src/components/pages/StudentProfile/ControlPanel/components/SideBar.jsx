@@ -1,65 +1,49 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
-
-import ListGroup from "react-bootstrap/ListGroup";
-import Badge from "react-bootstrap/Badge";
-import axios from "axios";
-import { apiUrl } from "../../../../../shared/config";
+import React from 'react';
+import { Link } from "react-router-dom"
+import "./SideBar.scss"
 
 function SideBar() {
-    const [notifyData, setNotifyData] = useState([]);
-    const studentId = localStorage.getItem("studentId");
-    useEffect(() => {
-        axios
-            .get(
-                apiUrl + "student/get-all-notify/" + studentId
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                console.log(response.data);
-                setNotifyData(response.data);
-            });
-    }, []);
-    return (
-        <>
-            <div style={{ width: "18rem" }}>
-                <div as={Link} to="student-dashboard">
-                    Личный кабинет
-                </div>
-                <ListGroup variant="flush">
-                    <ListGroup.Item as={Link} to="my-courses">
-                        Мои курсы
-                    </ListGroup.Item>
-                    <ListGroup.Item as={Link} to="favorite-courses">
-                        Избранные курсы
-                    </ListGroup.Item>
-                    <ListGroup.Item as={Link} to="recommend-courses">
-                        Рекомендованные курсы
-                    </ListGroup.Item>
-                    <ListGroup.Item as={Link} to="incoming-task">
-                        Задачи с курсов
-                        <Badge className="ms-2" bg="secondary">
-                            {notifyData.length}
-                        </Badge>
-                    </ListGroup.Item>
-                    <ListGroup.Item as={Link} to="profile-settings">
-                        Настройки профиля
-                    </ListGroup.Item>
-                    <ListGroup.Item as={Link} to="reset-password">
-                        Смена пароля
-                    </ListGroup.Item>
-                    <ListGroup.Item
-                        className="text-danger"
-                        as={Link}
-                        to="/user-login"
-                    >
-                        Выход
-                    </ListGroup.Item>
-                </ListGroup>
-            </div>
-        </>
-    );
+  return (
+    <div className="sidebar">
+      <div className="sidebar__menu">
+        <Link to="my-courses" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Мои курсы</p>
+          </div>
+        </Link>
+        <Link to="favorite-courses" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Избранные курсы</p>
+          </div>
+        </Link>
+        {/* <Link to="teacher-quizes" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Квизы</p>
+          </div>
+        </Link>
+        <Link to="add-quiz" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Добавить квиз</p>
+          </div>
+        </Link> */}
+        <Link to="profile-settings" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Настройки профиля</p>
+          </div>
+        </Link>
+        <Link to="reset-password" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Смена пароля</p>
+          </div>
+        </Link>
+        <Link to="/logout" className="sidebar__menu-item">
+          <div className="sidebar__menu-item-block">
+            <p>Выход</p>
+          </div>
+        </Link>
+      </div>
+    </div>
+  )
 }
 
 export default SideBar;

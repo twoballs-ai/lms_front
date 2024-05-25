@@ -16,11 +16,6 @@ function SideBar() {
             <p>Добавить курс</p>
           </div>
         </Link>
-        <Link to="my-students" className="sidebar__menu-item">
-          <div className="sidebar__menu-item-block">
-            <p>Мои учащиеся</p>
-          </div>
-        </Link>
         {/* <Link to="teacher-quizes" className="sidebar__menu-item">
           <div className="sidebar__menu-item-block">
             <p>Квизы</p>

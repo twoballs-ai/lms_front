@@ -19,7 +19,7 @@ function CategoryPage() {
     // console.log(teacherId)
     useEffect(() => {
         const fetchData = async () => {
-            await SiteService.getCategory().then((response) => {
+            await SiteService.getCategory({ toSelect: false }).then((response) => {
                 if (response.status === 200 || response.status === 201) {
                     console.log(response.data)
                     setCategoryData(response.data.data);
@@ -35,7 +35,6 @@ function CategoryPage() {
             <div className="shadow rounded p-3 mt-3 mb-5">
                 <h3 className="mt-5">Все категории</h3>
                 <div className="mt-5">
-                    <hr />
                     {categoryData &&
                         categoryData.map((row, index) => (
                             <div>

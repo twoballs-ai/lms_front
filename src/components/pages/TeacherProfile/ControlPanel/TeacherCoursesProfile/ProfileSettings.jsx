@@ -5,11 +5,9 @@ import { Link, useParams } from "react-router-dom";
 
 
 import axios from "axios";
-import Image from "react-bootstrap/Image";
 
-// import Form from 'react-bootstrap/Form';
 
-import { apiUserUrl } from "../../../../shared/config";
+import { apiUserUrl } from "../../../../../shared/config";
 
 function ProfileSettings() {
     const teacherId = localStorage.getItem("user");
