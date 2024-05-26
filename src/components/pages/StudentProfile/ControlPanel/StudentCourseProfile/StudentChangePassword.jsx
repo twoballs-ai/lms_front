@@ -9,7 +9,7 @@ import Image from "react-bootstrap/Image";
 
 // import Form from 'react-bootstrap/Form';
 
-import { apiUrl } from "../../../../shared/config";
+import { apiUrl } from "../../../../../shared/config";
 
 function StudentChangePassword() {
     const [studentData, setStudentData] = useState({

@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 
 import axios from "axios";
 import Badge from "react-bootstrap/Badge";
-import { apiUrl } from "../../../../shared/config";
+import { apiUrl } from "../../../../../shared/config";
 
 function StudentIncomingTask() {
     const [upcomingTaskData, setUpcomingTaskData] = useState([]);

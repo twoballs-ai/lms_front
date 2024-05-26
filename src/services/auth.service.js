@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl, apiUserUrl, restAuthApiUrl } from "../shared/config";
+import { apiUrl, apiUserUrl } from "../shared/config";
 import api from "./api";
 // const API_URL = "http://localhost:8080/api/auth/";
 import TokenService from "./token.service";
@@ -31,7 +31,7 @@ const refreshToken = async () => {
   const response = await api.post(apiUrl + "v1/user/token/refresh", formData, {
     refresh_token : TokenService.getLocalRefreshToken(),
   });
-
+  return response;
 
 }
 

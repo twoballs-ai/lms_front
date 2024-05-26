@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 
 
 import axios from "axios";
-import { apiUrl } from "../../../../shared/config";
+import { apiUrl } from "../../../../../shared/config";
 
 function StudentDashboard() {
     const [dashboardData, setDashboardData] = useState([]);

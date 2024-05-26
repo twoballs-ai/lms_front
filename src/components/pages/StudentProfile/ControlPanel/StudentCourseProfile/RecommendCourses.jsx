@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 
 import axios from "axios";
-import { apiUrl } from "../../../../shared/config";
+import { apiUrl } from "../../../../../shared/config";
 
 function RecommendCourses() {
     const [courseData, setCourseData] = useState([]);

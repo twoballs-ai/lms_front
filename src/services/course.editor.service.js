@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiLmsUrl, apiUserUrl, restAuthApiUrl, typesApiUrl } from "../shared/config";
+import { apiLmsUrl, apiUserUrl, typesApiUrl } from "../shared/config";
 import api from "./api";
 
 const editCoursePageGetModuleStage = async (module_id) => {

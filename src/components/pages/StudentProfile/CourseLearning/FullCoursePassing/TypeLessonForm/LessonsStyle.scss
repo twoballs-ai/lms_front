@@ -1,0 +1,47 @@
+.content__classic-lesson {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    height: 100%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .classic-lesson__title {
+        gap: 15px;
+        p {
+            font-size: 2rem;
+            color: #333;
+        }
+    }
+
+    .classic-lesson__add-block {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .add-block__editor {
+            gap: 20px;
+            padding: 10px;
+
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+    }
+}
+
+//   .content__video-lesson {
+
+//     // Добавьте стили для видео урока по вашему выбору
+//   }
+
+//   .content__quiz-lesson {
+//     // Добавьте стили для урока-викторины по вашему выбору
+//   }

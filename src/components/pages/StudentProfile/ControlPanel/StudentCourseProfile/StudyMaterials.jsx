@@ -8,7 +8,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { apiUrl } from "../../../../shared/config";
+import { apiUrl } from "../../../../../shared/config";
 
 
 function StudentStudyMaterials() {

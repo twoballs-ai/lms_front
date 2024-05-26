@@ -18,7 +18,7 @@ import About from './components/pages/About/About';
 // //student pages
 // // import StudentLogin from './components/pages/Student/Login/Login';
 
-import StudentDashboard from './components/pages/StudentProfile/ControlPanel/Dashboard';
+import StudentDashboard from './components/pages/StudentProfile/ControlPanel/StudentCourseProfile/Dashboard';
 import StudentMyCourses from './components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses';
 import UserDashmain from './components/pages/StudentProfile/ControlPanel/components/DashMain';
 // import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
@@ -78,6 +78,9 @@ import { Navigate } from 'react-router-dom';
 
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
+import CoursePassingMainComponent from './components/pages/StudentProfile/CourseLearning/components/MainComponent';
+import CoursePageInfo from './components/pages/StudentProfile/CourseLearning/FullCoursePassing/CoursePageInfo';
+import CourseLearning from './components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning';
 
 const router = createBrowserRouter([
   {
@@ -128,6 +131,18 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <EditorPageInfo /> },
       { path: "edit", element: <CourseEditor /> },
+    ]
+  },
+  {
+    path: "course-learning/:course_id",
+    element: (
+      <PrivateRoute requiredRole="student_model">
+        <CoursePassingMainComponent />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <CoursePageInfo /> },
+      { path: "learning", element: <CourseLearning /> },
     ]
   },
 

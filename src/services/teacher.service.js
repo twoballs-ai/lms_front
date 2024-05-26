@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiLmsUrl, apiUserUrl, restAuthApiUrl } from "../shared/config";
+import { apiLmsUrl, apiUserUrl,  } from "../shared/config";
 import api from "./api";
 // import authHeader from "./auth-header";
 const teacherDashboard = async () => {
