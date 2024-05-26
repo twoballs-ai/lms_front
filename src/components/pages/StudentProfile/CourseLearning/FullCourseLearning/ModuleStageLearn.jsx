@@ -19,6 +19,7 @@ import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
 import CourseEditorService from "../../../../../services/course.editor.service";
 import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
+import LearningClassicLesson from "./TypeLessonForm/ClassicLesson";
 function EditModuleStage({ moduleEditData }) {
 
     const [moduleData, setModuleData] = useState([]);
@@ -147,7 +148,9 @@ function EditModuleStage({ moduleEditData }) {
     };
 
 
-    console.log(selectedStage)
+    const handleShow = async () => {
+console.log("123")
+    };
 
     const Dot = ({ tech, isActive }) => {
 
@@ -187,8 +190,7 @@ function EditModuleStage({ moduleEditData }) {
 
     return (
         <>
-
-            <div className="main__nav-block"><p>Вы перешли на страницу редактирования модуля: "{moduleEditData.title}"</p>
+            <div className="main__nav-block"><p>Вы перешли на страницу прохождения модуля: "{moduleEditData.title}"</p>
                 <div className="nav-block__stages" >
                     <div className="stages__case">
                         {moduleData.map((tech, index) => (
@@ -209,9 +211,10 @@ function EditModuleStage({ moduleEditData }) {
             <div className="main__content">
  
                 {selectedStage && (
-                    (selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />) ||
+                    (selectedStage.type === "classic" && <LearningClassicLesson selectedStage={selectedStage} />) ||
                     (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />)
                     // (selectedStage.items.type === "video" && <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />)
+                
                 )}
                 {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
 
@@ -223,8 +226,8 @@ function EditModuleStage({ moduleEditData }) {
                     ) : null} */}
 
                 {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
-
-
+                <div className="content__learn-buttons"><LmsButton buttonText={"Продолжить"} handleClick={() => handleShow()}/></div>
+                
             </div>
 
 

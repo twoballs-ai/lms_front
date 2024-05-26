@@ -8,6 +8,11 @@ const studentCourses = async () => {
         .get(apiStudyUrl + "student/courses/"
         )
 }
+
+const getLearnLesson = async (stagePk) => {
+    return await api
+        .get(`${apiStudyUrl}stage/${stagePk}`)
+}
 // const deleteTeacherCourse = async (courseId) => {
 //     return await api
 //         .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
@@ -47,7 +52,7 @@ const studentCourses = async () => {
 
 const StudentService = {
     studentCourses,
-    // teacherCourses,
+    getLearnLesson,
     // deleteTeacherCourse,
     // addCourse,
     // teacherStudents,

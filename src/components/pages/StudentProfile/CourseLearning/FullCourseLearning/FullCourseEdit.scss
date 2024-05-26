@@ -86,6 +86,10 @@
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    .content__learn-buttons{
+        display: flex;
+        justify-content: right; 
+    }
 }
 
 .add-lesson {

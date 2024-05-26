@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom";
-import StudentService from "../../../../../services/student.service copy";
+import StudentService from "../../../../../services/student.service";
 import LmsButton from "../../../../reUseComponents/Button";
 import { useLocation, useNavigate } from 'react-router-dom';
 
