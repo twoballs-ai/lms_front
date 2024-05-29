@@ -8,7 +8,8 @@ export default function LmsModalBase({ open, onClose, content, modalStyles,showC
         modal: {
             maxWidth: '40vw',
             width: '40vw',
-            height: '40vh',
+            height: 'auto',
+            minHeight:'45vh',
             padding: '20px',
             margin: '0',
             overflow: 'none'

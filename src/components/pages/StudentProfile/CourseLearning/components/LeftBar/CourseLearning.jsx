@@ -7,7 +7,7 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import "./CourseEditor.scss";
 import { apiLmsUrl } from "../../../../../../shared/config";
 import LmsButton from "../../../../../reUseComponents/Button";
-import EditModuleStage from "../../FullCourseLearning/ModuleStageLearn";
+import EditModuleStage from "../../FullCoursePassing/ModuleStageLearn";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import SortableChapter from "./LearningChapter";
 import LmsModalBase from "../../../../../reUseComponents/ModalBase";

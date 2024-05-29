@@ -79,7 +79,7 @@ import { Navigate } from 'react-router-dom';
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import CoursePassingMainComponent from './components/pages/StudentProfile/CourseLearning/components/MainComponent';
-import CoursePageInfo from './components/pages/StudentProfile/CourseLearning/FullCourseLearning/CoursePageInfo';
+import CoursePageInfo from './components/pages/StudentProfile/CourseLearning/FullCoursePassing/CoursePageInfo';
 import CourseLearning from './components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning';
 
 const router = createBrowserRouter([

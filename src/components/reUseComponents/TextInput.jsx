@@ -5,7 +5,7 @@ const { TextArea, Password } = Input;
 
 const TextInput = ({ type, placeholder, value, onChange, style = {} }) => {
   const defaultStyle = {
-    margin: '10px 0',
+    // margin: '10px 0',
     padding: '8px',
     width: '100%',
   };

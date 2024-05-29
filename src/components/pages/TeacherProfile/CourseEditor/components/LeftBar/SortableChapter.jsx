@@ -9,6 +9,8 @@ import CourseEditorService from "../../../../../../services/course.editor.servic
 import { SettingOutlined } from '@ant-design/icons';
 import { Button } from "antd";
 import PopupMenu from "../../../../../reUseComponents/PopupMenu";
+import ReusableSwitch from "../../../../../reUseComponents/Switcher";
+import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
 const SortableChapter = ({
   id,
   chapter,
@@ -63,18 +65,39 @@ const SortableChapter = ({
   };
 
 
+  const [isExam, setIsExam] = useState(chapter.is_exam || false);
+  const [examDuration, setExamDuration] = useState(chapter.exam_duration || 10);
+  const [inputTitleChapterValue, setInputTitleChapterValue] = useState(chapter.title || '');
+  const [inputDescrChapterValue, setInputDescrChapterValue] = useState(chapter.description || '');
+  const handleInputChapterChange = (e) => {
+    setInputTitleChapterValue(e.target.value);
+  };
 
-  const AddChapterOpenModal = async () => {
+
+  const handleInputDescrChapterChange = (e) => {
+    setInputDescrChapterValue(e.target.value);
+  };
+
+  const handleIsExamChange = (checked) => {
+    setIsExam(checked);
+};
+
+const handleExamDurationChange = (value) => {
+  setExamDuration(value);
+};
+
+
+  const AddModuleOpenModal = async () => {
     handleOpenModal()
   };
-  const contentAddChapterToModal = () =>
+  const contentAddModuleToModal = () =>
   (
     <div>
       <h2>Вы добавляете модуль </h2>
       <p>Название модуля:</p>
-      <TextInput isTextArea={false} placeholder={"Напишите сюда название курса"} value={inputTitleValue} onChange={handleInputChange} />
+      <TextInput isTextArea={false} placeholder={"Напишите сюда название модуля"} value={inputTitleValue} onChange={handleInputChange} />
       <p>Описание модуля:</p>
-      <TextInput isTextArea={true} placeholder={"Напишите сюда описание курса"} value={inputDescrValue} onChange={handleInputDescrChange} />
+      <TextInput isTextArea={true} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
       <LmsButton buttonText={"Создать"} handleClick={addModule} />
 
     </div>
@@ -109,6 +132,20 @@ const SortableChapter = ({
 
   const popupContent = () => {
 
+    const updateChapter = async () => {
+      const dataParams = {
+        course_id: course_id,
+        title: inputTitleChapterValue,
+        description: inputDescrChapterValue,
+      };
+      const response = await CourseEditorService.editCoursePageAddChapter(dataParams);
+      if (response.status === 200 || response.status === 201) {
+        const newData = [...getChapters, response.data.chapters];
+        setGetChapters(newData);
+        handleCloseModal();
+      }
+    };
+
     const deleteChapter = async () => {
 
       const response = await CourseEditorService.editCoursePageDeleteChapter(
@@ -119,17 +156,60 @@ const SortableChapter = ({
         setGetChapters(updatedChapters);
       }
     };
-
+// console.log(chapter)
     return (
       <>
-        <LmsButton
-          buttonText={"Удалить раздел"}
-          handleClick={deleteChapter}
+        <div style={{
+          borderRadius: '10px',
+          backgroundColor: '#e9e9e9',
+          padding: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+        }}>
+                  <p>Название главы:</p>
+                  <TextInput isTextArea={false} placeholder={"Напишите сюда название главы"} value={inputTitleChapterValue} onChange={handleInputChapterChange} />
+          <p>Описание главы:</p>
+          <TextInput isTextArea={true} placeholder={"Напишите сюда описание главы"} value={inputDescrChapterValue} onChange={handleInputDescrChapterChange} />
+
+        <p>Является ли ваша глава экзаменом?</p>
+        <ReusableSwitch
+            defaultChecked={isExam}
+            onChange={handleIsExamChange}
         />
+        {isExam && (
+            <div>
+                <p>Продолжительность экзамена (в часах):</p>
+                <ReusableSliderWithInput
+                    defaultValue={examDuration}
+                    min={0}
+                    max={48}
+                    value={examDuration}
+                    onChange={handleExamDurationChange}
+                    style={{ marginBottom: '20px', width: '50%' }}
+                    inputStyle={{ backgroundColor: '#f0f0f0' }}
+                    sliderStyle={{ marginRight: '10px' }}
+                />
+            </div>
+        )}
+          <p>Название главы:</p>
+
+          <LmsButton buttonText={"Обновить"} handleClick={updateChapter} />
+
+        </div>
+        <div style={{
+          position: 'absolute',
+          bottom: '20px',
+          padding: '10px'
+
+        }}>
+          <LmsButton
+            buttonText={"Удалить раздел"}
+            handleClick={deleteChapter}
+          />
+        </div>
       </>
     )
   }
-
+  // console.log(chapter)
   return (
     <div
       {...attributes}
@@ -144,7 +224,7 @@ const SortableChapter = ({
       onClick={() => setActiveChapterId(chapter.id)}
     >
 
-      <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentAddChapterToModal()} />
+      <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentAddModuleToModal()} />
       <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Найстроки раздела: ${chapter.title}`} popupContent={popupContent()} />
       <div className="block__title"><p>{chapter.title}</p>
         <button {...listeners} className={"title__chapter-drag"}  >
@@ -153,7 +233,7 @@ const SortableChapter = ({
       {/* <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} /> */}
       <LmsButton
         buttonText={"Добавить модуль"}
-        handleClick={AddChapterOpenModal}
+        handleClick={AddModuleOpenModal}
       />
       <div className="chapters__modules">
         {/* {chapter.modules.map((module) => (
