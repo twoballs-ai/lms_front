@@ -229,7 +229,7 @@ console.log(getChapters)
             </DndContext>
             <div className="container__main">
                 {Object.keys(moduleEditData).length > 0 && (
-                    <EditModuleStage moduleEditData={moduleEditData} />
+                    <EditModuleStage moduleEditData={moduleEditData} setModuleEditData={setModuleEditData} getChapters={getChapters} setGetChapters={setGetChapters} />
                 )}
             </div>
         </div>

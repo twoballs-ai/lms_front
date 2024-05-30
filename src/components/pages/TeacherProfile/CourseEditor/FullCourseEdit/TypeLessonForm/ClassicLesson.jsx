@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import axios from "axios";
 import Editor from "../../../../../Editor";
-import { apiLmsUrl, apiUrl, typesApiUrl } from "../../../../../../shared/config";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import LmsButton from "../../../../../reUseComponents/Button";
 import TextInput from "../../../../../reUseComponents/TextInput";
@@ -31,7 +27,7 @@ function AddingClassicLesson(props) {
         if (stagePk) {
             setStageEditorData('')
             const fetchData = async () => {
-                await CourseEditorService.editCoursePageGetClassicLesson(stagePk).then((response) => {
+                await CourseEditorService.editCoursePageGetLesson(stagePk).then((response) => {
                     if (response.status === 200 || response.status === 201) {
                         if (response.data.lesson.html_code_text) {
                             setStageEditorData(response.data.lesson.html_code_text);

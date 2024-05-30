@@ -12,7 +12,8 @@ export default function LmsModalBase({ open, onClose, content, modalStyles,showC
             minHeight:'45vh',
             padding: '20px',
             margin: '0',
-            overflow: 'none'
+            overflow: 'none',
+            borderRadius:'10px',
         },
         overlay: {
             background: 'rgba(0, 0, 0, 0.5)'

@@ -134,15 +134,21 @@ const handleExamDurationChange = (value) => {
 
     const updateChapter = async () => {
       const dataParams = {
-        course_id: course_id,
         title: inputTitleChapterValue,
         description: inputDescrChapterValue,
+        sort_index: 1,
+        is_exam: isExam,
+        exam_duration_minutes: isExam ? examDuration : null,
       };
-      const response = await CourseEditorService.editCoursePageAddChapter(dataParams);
+      const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, dataParams);
       if (response.status === 200 || response.status === 201) {
-        const newData = [...getChapters, response.data.chapters];
-        setGetChapters(newData);
-        handleCloseModal();
+        // console.log(response.data)
+        const updatedChapter = response.data.chapter;
+        const updatedChapters = getChapters.map(chap => 
+          chap.id === chapter.id ? updatedChapter : chap
+        );
+        setGetChapters(updatedChapters);
+        // handleCloseModal();
       }
     };
 

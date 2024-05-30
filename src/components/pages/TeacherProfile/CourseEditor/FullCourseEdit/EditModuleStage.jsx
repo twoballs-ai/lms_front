@@ -20,7 +20,8 @@ import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
 import CourseEditorService from "../../../../../services/course.editor.service";
 import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
-function EditModuleStage({ moduleEditData }) {
+import TextInput from "../../../../reUseComponents/TextInput";
+function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGetChapters }) {
 
     const [moduleData, setModuleData] = useState([]);
 
@@ -31,7 +32,16 @@ function EditModuleStage({ moduleEditData }) {
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
-
+    const [inputTitleValue, setInputTitleValue] = useState(moduleEditData.title || '');
+    const [inputDescrValue, setInputDescreValue] = useState(moduleEditData.description || '');
+    const handleInputChange = (e) => {
+      setInputTitleValue(e.target.value);
+    };
+  console.log(moduleData)
+  
+    const handleInputDescrChange = (e) => {
+      setInputDescreValue(e.target.value);
+    };
     const handleShowClassicLesson = async () => {
         const dataParams = {
             module_id: moduleEditData.id,
@@ -49,10 +59,20 @@ function EditModuleStage({ moduleEditData }) {
 
         handleCloseModal()
     };
-    const handleShowVideoLesson = () => {
-        // Переключаем состояние showClassicLesson
-        // console.log(addVideolesson)
+    const handleShowVideoLesson = async () => {
+        const dataParams = {
+            module_id: moduleEditData.id,
+            title: "",
+            video_link: "",
+        }
+        const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
 
+        if (response.status === 200 || response.status === 201) {
+            // setModuleData();
+            const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
+            setModuleData(prevModuleData => [...prevModuleData, newElement]);
+            setSelectedStage(newElement)
+        }
 
         handleCloseModal()
     };
@@ -66,9 +86,10 @@ function EditModuleStage({ moduleEditData }) {
         const fetchData = async () => {
 
             await CourseEditorService.editCoursePageGetModuleStage(moduleEditData.id).then((response) => {
-                // console.log(response.data.data)
+                // console.log(moduleEditData)
                 if (response.status === 200 || response.status === 201) {
                     setModuleData(response.data.data);
+                    
                     if (response.data.data.length !== 0) {
                         // console.log(response.data.data[0])
                         // console.log(response.data.data[0]);
@@ -104,8 +125,38 @@ function EditModuleStage({ moduleEditData }) {
       setHandlePopupOpen(false);
     };
   
-
+console.log(moduleEditData)
     const popupContent = () => {
+
+        const UpdateModule = async () => {
+
+            const dataParams = {
+              title: inputTitleValue,
+              description: inputDescrValue,
+            };
+            const response = await CourseEditorService.editCoursePageUpdateModule(
+                moduleEditData.id,
+              dataParams
+            );
+            if (response.status === 200 || response.status === 201) {
+                console.log(response.data.data)
+                const updatedModule = response.data.data;
+
+                const newData = getChapters.map(chapter => {
+                    if (chapter.id === updatedModule.chapter_id) {
+                        const updatedModules = chapter.modules.map(module =>
+                            module.id === updatedModule.id ? updatedModule : module
+                        );
+                        return { ...chapter, modules: updatedModules };
+                    }
+                    return chapter;
+                });
+    
+                setGetChapters(newData);
+                setModuleEditData(updatedModule); 
+            }
+          };
+        
 
         const deleteChapter = async () => {
     
@@ -120,10 +171,29 @@ function EditModuleStage({ moduleEditData }) {
     
         return (
           <>
+           <div style={{
+          borderRadius: '10px',
+          backgroundColor: '#e9e9e9',
+          padding: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+        }}>
+          <p>Название модуля:</p>
+      <TextInput isTextArea={false} placeholder={"Напишите сюда название модуля"} value={inputTitleValue} onChange={handleInputChange} />
+      <p>Описание модуля:</p>
+      <TextInput isTextArea={true} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
+      <LmsButton buttonText={"Обновить"} handleClick={UpdateModule} />
+          </div>
+          <div style={{
+          position: 'absolute',
+          bottom: '20px',
+          padding: '10px'
+
+        }}>
             <LmsButton
               buttonText={"Удалить модуль"}
               handleClick={deleteChapter}
             />
+            </div>
           </>
         )
       }
@@ -155,7 +225,6 @@ function EditModuleStage({ moduleEditData }) {
       };
   
 
-console.log(selectedStage)
 
     const Dot = ({ tech, isActive }) => {
 

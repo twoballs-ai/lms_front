@@ -1,17 +1,48 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { apiLmsUrl } from "../../../../../../shared/config";
+import React, { useState, useEffect } from "react";
+
 import LmsButton from "../../../../../reUseComponents/Button";
+import CourseEditorService from "../../../../../../services/course.editor.service";
+import TextInput from "../../../../../reUseComponents/TextInput";
 
 function AddingVideoLesson(props) {
-    console.log(props)
-    const [showVideoLesson, setShowVideoLesson] = useState(false)
-    let stagePk = props.selectedStage.id
-    let addVideolesson = props.addVideolesson
-    const setModuleData = props.setModuleData
 
-    const location = useLocation();
-    const navigate = useNavigate();
+    const [inputTitleValue, setInputTitleValue] = useState('');
+
+    const handleInputChange = (e) => {
+        setInputTitleValue(e.target.value);
+    };
+
+    const [showVideoLesson, setShowVideoLesson] = useState(false)
+    let stagePk = props.selectedStage ? props.selectedStage.id : null;
+
+
+
+
+
+    useEffect(() => {
+        if (stagePk) {
+   
+            const fetchData = async () => {
+                await CourseEditorService.editCoursePageGetLesson(stagePk).then((response) => {
+                    if (response.status === 200 || response.status === 201) {
+                        if (response.data.lesson.video_link) {
+                            // setStageEditorData(response.data.lesson.html_code_text);
+                            setInputTitleValue(response.data.title)
+                            setShowVideoLesson(true);
+                        } else {
+                            setInputTitleValue("")
+                            // setStageEditorData("");
+                            setShowVideoLesson(true);
+                        }
+                    }
+                });
+            };
+            fetchData();
+        }
+    }, [props, stagePk]);
+
+
+
     const [videoLessonData, setVideoLessonData] = useState({
         is_video: true,
         video_lesson: "",
@@ -41,32 +72,29 @@ function AddingVideoLesson(props) {
     };
     console.log(props)
     return (
-        <div>
-            {(showVideoLesson || addVideolesson) && (
-                <div>
-                    <div>
-                        Классический видеоурок
-                    </div>
-
-                    <form>
-                        <div className="" controlId="formBasicCategory">
-                            <label>Добавление ссылки на видео</label>
-                            <input
-                                name="video_lesson"
-                                type="text"
-                                placeholder="Добавление ссылки"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <LmsButton buttonText={"Добавить видеоурок"} handleClick={formSubmit} />
-                    </form>
-
-
+        <>        
+        {(showVideoLesson) && (
+            <div className={`content__${props.selectedStage.type}-lesson`}>
+                <div className={`${props.selectedStage.type}-lesson__title`}>
+                    <p>Видео урок</p>
 
                 </div>
-            )}
+                <div className={`${props.selectedStage.type}-lesson__add-block`}>
+                    <p>Название этапа:</p>
+                    <TextInput isTextArea={false} placeholder={"Напишите сюда название этапа"} value={inputTitleValue} onChange={handleInputChange} />
 
-        </div>
+                    <div className="add-block__editor">
+               
+                    </div>
+                    <div className="add-block__button"><LmsButton buttonText={"сохранить"} handleClick={formSubmit} /></div>
+
+                </div>
+
+            </div>
+
+
+        )}
+        </>
     );
 }
 

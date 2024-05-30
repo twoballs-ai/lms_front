@@ -24,6 +24,10 @@ const editCoursePageAddChapter = async (data) => {
     return await api
         .post(apiLmsUrl + "add_chapter_to_course/", data)
 }
+const editCoursePageUpdateChapter = async (chapterId, data) => {
+    return await api
+        .put(apiLmsUrl + `update-chapter/${chapterId}`, data)
+}
 const editCoursePageDeleteChapter = async (chapter_id) => {
     return await api
         .delete(`${apiLmsUrl}delete-chapter/?chapter_id=${chapter_id}`)
@@ -31,6 +35,10 @@ const editCoursePageDeleteChapter = async (chapter_id) => {
 const editCoursePageAddModule = async (data) => {
     return await api
         .post(apiLmsUrl + "add_module_to_chapter/", data)
+}
+const editCoursePageUpdateModule = async (moduleId, data) => {
+    return await api
+        .put(apiLmsUrl + `update-module/${moduleId}`, data)
 }
 const editCoursePageDeleteModule = async (module_id) => {
     return await api
@@ -41,7 +49,7 @@ const editCoursePageDeleteStage = async (stage_id) => {
         .delete(`${apiLmsUrl}delete-stage/?stage_id=${stage_id}`)
 }
 
-const editCoursePageGetClassicLesson = async (stagePk) => {
+const editCoursePageGetLesson = async (stagePk) => {
     return await api
         .get(`${apiLmsUrl}stage/${stagePk}`)
 }
@@ -53,14 +61,14 @@ const editCoursePageUpdateClassicLesson = async (data) => {
     return await api
         .put(apiLmsUrl + "update/classic_lesson/", data)
 }
-// const editCoursePageAddVideoLesson = async (stagePk, data) => {
-//     return await api
-//         .post(typesApiUrl + "video-lesson/" + stagePk, data)
-// }
-// const editCoursePagePutVideoLesson = async (stagePk, data) => {
-//     return await api
-//         .put(typesApiUrl + "video-lesson-detail/" + stagePk, data)
-// }
+const editCoursePageAddVideoLesson = async (data) => {
+    return await api
+        .post(`${apiLmsUrl}add_stage_to_module/video_lesson/`, data)
+}
+const editCoursePageUpdateVideoLesson = async (stagePk, data) => {
+    return await api
+        .put(typesApiUrl + "video-lesson-detail/" + stagePk, data)
+}
 // const editCoursePageAddQuizLesson = async (stagePk, data) => {
 //     return await api
 //         .post(typesApiUrl + "quiz-lesson/" + stagePk, data)
@@ -74,19 +82,21 @@ const editCoursePageUpdateClassicLesson = async (data) => {
 const CourseEditorService = {
     editCoursePageGetModuleStage,
     // editCoursePageAddModuleStage,
-    editCoursePageGetClassicLesson,
+    editCoursePageGetLesson,
     // editCoursePageDeleteModuleStage,
     // editCoursePageGetCourse,
     editCoursePageGetChapterList,
     editCoursePageAddChapter,
+    editCoursePageUpdateChapter,
     editCoursePageDeleteChapter,
     editCoursePageAddModule,
+    editCoursePageUpdateModule,
     editCoursePageDeleteModule,
     editCoursePageAddClassicLesson,
     editCoursePageUpdateClassicLesson,
     editCoursePageDeleteStage,
-    // editCoursePageAddVideoLesson,
-    // editCoursePagePutVideoLesson,
+    editCoursePageAddVideoLesson,
+    editCoursePageUpdateVideoLesson,
     // editCoursePageAddQuizLesson,
     // editCoursePagePutQuizLesson
 };

@@ -20,7 +20,7 @@ import CourseEditorService from "../../../../../services/course.editor.service";
 import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
 import LearningClassicLesson from "./TypeLessonForm/ClassicLesson";
-function EditModuleStage({ moduleEditData }) {
+function EditModuleStage({ moduleEditData, setModuleEditData }) {
 
     const [moduleData, setModuleData] = useState([]);
 

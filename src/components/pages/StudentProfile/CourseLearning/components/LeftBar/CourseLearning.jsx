@@ -95,7 +95,7 @@ function CourseLearning() {
 
             <div className="container__main">
                 {Object.keys(moduleEditData).length > 0 && (
-                    <EditModuleStage moduleEditData={moduleEditData} />
+                    <EditModuleStage moduleEditData={moduleEditData} setModuleEditData={setModuleEditData} />
                 )}
             </div>
         </div>
