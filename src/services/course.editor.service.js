@@ -65,9 +65,9 @@ const editCoursePageAddVideoLesson = async (data) => {
     return await api
         .post(`${apiLmsUrl}add_stage_to_module/video_lesson/`, data)
 }
-const editCoursePageUpdateVideoLesson = async (stagePk, data) => {
+const editCoursePageUpdateVideoLesson = async (data) => {
     return await api
-        .put(typesApiUrl + "video-lesson-detail/" + stagePk, data)
+    .put(apiLmsUrl + "update/video_lesson/", data)
 }
 // const editCoursePageAddQuizLesson = async (stagePk, data) => {
 //     return await api

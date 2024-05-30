@@ -37,7 +37,7 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
     const handleInputChange = (e) => {
       setInputTitleValue(e.target.value);
     };
-  console.log(moduleData)
+
   
     const handleInputDescrChange = (e) => {
       setInputDescreValue(e.target.value);
@@ -60,22 +60,43 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
         handleCloseModal()
     };
     const handleShowVideoLesson = async () => {
-        const dataParams = {
-            module_id: moduleEditData.id,
-            title: "",
-            video_link: "",
-        }
-        const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
+        // const dataParams = {
+        //     module_id: moduleEditData.id,
+        //     title: "",
+        //     video_link: "",
+        // }
+        // const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
 
-        if (response.status === 200 || response.status === 201) {
-            // setModuleData();
-            const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
-            setModuleData(prevModuleData => [...prevModuleData, newElement]);
-            setSelectedStage(newElement)
-        }
+        // if (response.status === 200 || response.status === 201) {
+        //     // setModuleData();
+        //     const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
+        //     setModuleData(prevModuleData => [...prevModuleData, newElement]);
+        //     setSelectedStage(newElement)
+        // }
 
         handleCloseModal()
     };
+    const handleShowQuizLesson = async () => {
+        console.log("quiz")
+        // const dataParams = {
+        //     module_id: moduleEditData.id,
+        //     title: "",
+        //     video_link: "",
+        // }
+        // const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
+
+        // if (response.status === 200 || response.status === 201) {
+        //     // setModuleData();
+        //     const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
+        //     setModuleData(prevModuleData => [...prevModuleData, newElement]);
+        //     setSelectedStage(newElement)
+        // }
+
+        handleCloseModal()
+    };
+    handleShowQuizLesson
+
+
     const handleSelectStage = (tech) => {
 
 
@@ -86,13 +107,12 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
         const fetchData = async () => {
 
             await CourseEditorService.editCoursePageGetModuleStage(moduleEditData.id).then((response) => {
-                // console.log(moduleEditData)
+
                 if (response.status === 200 || response.status === 201) {
                     setModuleData(response.data.data);
                     
                     if (response.data.data.length !== 0) {
-                        // console.log(response.data.data[0])
-                        // console.log(response.data.data[0]);
+   ;
                         // Устанавливаем selectedStage во второй элемент массива data
                         setSelectedStage(response.data.data[0]);
                     } else {
@@ -112,7 +132,7 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
         handleOpenModal()
     };
 
-    const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} handleShowVideoLesson={handleShowVideoLesson} />)
+    const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} handleShowVideoLesson={handleShowVideoLesson} handleShowQuizLesson={handleShowQuizLesson}/>)
 
 
     const [handlePopupOpen, setHandlePopupOpen] = useState(false);
@@ -125,7 +145,7 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
       setHandlePopupOpen(false);
     };
   
-console.log(moduleEditData)
+
     const popupContent = () => {
 
         const UpdateModule = async () => {
@@ -139,7 +159,7 @@ console.log(moduleEditData)
               dataParams
             );
             if (response.status === 200 || response.status === 201) {
-                console.log(response.data.data)
+
                 const updatedModule = response.data.data;
 
                 const newData = getChapters.map(chapter => {

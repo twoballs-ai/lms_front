@@ -6,29 +6,8 @@ import axios from "axios";
 // import { apiUrl, typesApiUrl } from "../../../../shared/config";
 import { useLocation, useNavigate } from 'react-router-dom';
 import LmsButton from '../../../../reUseComponents/Button';
-function AddStageLesson({ handleShowClassicLesson, handleShowVideoLesson }) {
-    let { module_id } = useParams();
-    let { course_id } = useParams();
-    let { stage_id } = useParams();
-    // const [stageData, setStageData] = useState([]);
-    const navigate = useNavigate();
-    // const addClassicLesson = () => {
-    //     console.log('hi')  
-    //     navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'classicLesson' } });
-    // };
-    // const addQuizLesson = () => {
-    //     console.log('hi')  
-    //     navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'quizLesson' } });
-    // };
-    // const addVideoLesson = () => {
-    //     console.log('hi')  
-    //     navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'videoLesson' } });
-    // };
-    // const addProgrammingLesson = () => {
-    //     console.log('hi')  
-    //     navigate(`/edit-course-full/edit-module/${course_id}/${module_id}/stage/${stage_id}`, { state: { type: 'codingLesson' } });
-    // };
-    console.log("stageData");
+function AddStageLesson({ handleShowClassicLesson, handleShowVideoLesson, handleShowQuizLesson }) {
+
     return (
         <>
 
@@ -69,7 +48,7 @@ function AddStageLesson({ handleShowClassicLesson, handleShowVideoLesson }) {
                         зависимости от выбранного вами типа квиза.
                     </div>
                     <div className='lesson_block__footer'>
-                        <LmsButton buttonText={"Выбрать квиз"} handleClick={"addStage"} />
+                        <LmsButton buttonText={"Выбрать квиз"} handleClick={handleShowQuizLesson} />
                     </div>
 
 

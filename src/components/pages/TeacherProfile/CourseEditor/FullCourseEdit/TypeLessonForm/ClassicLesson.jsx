@@ -29,7 +29,7 @@ function AddingClassicLesson(props) {
             const fetchData = async () => {
                 await CourseEditorService.editCoursePageGetLesson(stagePk).then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        if (response.data.lesson.html_code_text) {
+                        if (response.data.lesson) {
                             setStageEditorData(response.data.lesson.html_code_text);
                             setInputTitleValue(response.data.title)
                             setShowClassicLesson(true);
@@ -54,7 +54,6 @@ function AddingClassicLesson(props) {
 
         const response = await CourseEditorService.editCoursePageUpdateClassicLesson(data)
         if (response.status === 200 || response.status === 201) {
-            // console.log(response.data.data.lesson.html_code_text)
             setStageEditorData(response.data.data.lesson.html_code_text);
             setInputTitleValue(response.data.data.title)
 

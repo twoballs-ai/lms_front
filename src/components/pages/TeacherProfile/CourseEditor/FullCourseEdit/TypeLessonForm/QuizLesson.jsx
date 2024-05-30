@@ -22,7 +22,7 @@ function AddingQuizLesson(props) {
     const [valueEditor, setValueEditor] = useState('')
     const handleChangeContent = (valueEditor) => {
         setValueEditor(valueEditor)
-        console.log(valueEditor)
+
     }
 
     const handleChange = (event) => {
@@ -30,7 +30,7 @@ function AddingQuizLesson(props) {
             ...quizLessonData,
             [event.target.name]: event.target.value,
         });
-        console.log(quizLessonData);
+
     };
 
 
