@@ -22,7 +22,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
 import TextInput from "../../../../reUseComponents/TextInput";
 import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
-function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGetChapters }) {
+function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGetChapters }) {
 
     const [moduleData, setModuleData] = useState([]);
 
@@ -36,12 +36,12 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
     const [inputTitleValue, setInputTitleValue] = useState(moduleEditData.title || '');
     const [inputDescrValue, setInputDescreValue] = useState(moduleEditData.description || '');
     const handleInputChange = (e) => {
-      setInputTitleValue(e.target.value);
+        setInputTitleValue(e.target.value);
     };
 
-  
+
     const handleInputDescrChange = (e) => {
-      setInputDescreValue(e.target.value);
+        setInputDescreValue(e.target.value);
     };
     const handleShowClassicLesson = async () => {
         const dataParams = {
@@ -110,9 +110,9 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
 
                 if (response.status === 200 || response.status === 201) {
                     setModuleData(response.data.data);
-                    
+
                     if (response.data.data.length !== 0) {
-   ;
+                        ;
                         // Устанавливаем selectedStage во второй элемент массива data
                         setSelectedStage(response.data.data[0]);
                     } else {
@@ -132,31 +132,31 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
         handleOpenModal()
     };
 
-    const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} handleShowVideoLesson={handleShowVideoLesson} handleShowQuizLesson={handleShowQuizLesson}/>)
+    const contentToModal = (<AddStageLesson handleShowClassicLesson={handleShowClassicLesson} handleShowVideoLesson={handleShowVideoLesson} handleShowQuizLesson={handleShowQuizLesson} />)
 
 
     const [handlePopupOpen, setHandlePopupOpen] = useState(false);
 
     const showPopupMenu = () => {
-      setHandlePopupOpen(true);
+        setHandlePopupOpen(true);
     };
-  
+
     const handlePopupClose = () => {
-      setHandlePopupOpen(false);
+        setHandlePopupOpen(false);
     };
-  
+
 
     const popupContent = () => {
 
         const UpdateModule = async () => {
 
             const dataParams = {
-              title: inputTitleValue,
-              description: inputDescrValue,
+                title: inputTitleValue,
+                description: inputDescrValue,
             };
             const response = await CourseEditorService.editCoursePageUpdateModule(
                 moduleEditData.id,
-              dataParams
+                dataParams
             );
             if (response.status === 200 || response.status === 201) {
 
@@ -171,79 +171,79 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
                     }
                     return chapter;
                 });
-    
+
                 setGetChapters(newData);
-                setModuleEditData(updatedModule); 
+                setModuleEditData(updatedModule);
             }
-          };
-        
+        };
+
 
         const deleteChapter = async () => {
-    
-          const response = await CourseEditorService.editCoursePageDeleteModule(
-            moduleEditData.id
-          );
-          if (response.status === 200 || response.status === 201) {
-            // const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
-            // setGetChapters(updatedChapters);
-          }
+
+            const response = await CourseEditorService.editCoursePageDeleteModule(
+                moduleEditData.id
+            );
+            if (response.status === 200 || response.status === 201) {
+                // const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
+                // setGetChapters(updatedChapters);
+            }
         };
-    
+
         return (
-          <>
-           <div style={{
-          borderRadius: '10px',
-          backgroundColor: '#e9e9e9',
-          padding: '10px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-        }}>
-          <p>Название модуля:</p>
-      <TextInput isTextArea={false} placeholder={"Напишите сюда название модуля"} value={inputTitleValue} onChange={handleInputChange} />
-      <p>Описание модуля:</p>
-      <TextInput type={'textarea'} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
-      <LmsButton buttonText={"Обновить"} handleClick={UpdateModule} />
-          </div>
-          <div style={{
-          position: 'absolute',
-          bottom: '20px',
-          padding: '10px'
+            <>
+                <div style={{
+                    borderRadius: '10px',
+                    backgroundColor: '#e9e9e9',
+                    padding: '10px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+                }}>
+                    <p>Название модуля:</p>
+                    <TextInput isTextArea={false} placeholder={"Напишите сюда название модуля"} value={inputTitleValue} onChange={handleInputChange} />
+                    <p>Описание модуля:</p>
+                    <TextInput type={'textarea'} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
+                    <LmsButton buttonText={"Обновить"} handleClick={UpdateModule} />
+                </div>
+                <div style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    padding: '10px'
 
-        }}>
-            <LmsButton
-              buttonText={"Удалить модуль"}
-              handleClick={deleteChapter}
-            />
-            </div>
-          </>
+                }}>
+                    <LmsButton
+                        buttonText={"Удалить модуль"}
+                        handleClick={deleteChapter}
+                    />
+                </div>
+            </>
         )
-      }
+    }
 
 
-      const deleteStage = async () => {
-    
+    const deleteStage = async () => {
+
         const response = await CourseEditorService.editCoursePageDeleteStage(
             selectedStage.id
         );
         if (response.status === 200 || response.status === 201) {
-          // const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
-          // setGetChapters(updatedChapters);
-          const updatedModuleData = moduleData.filter(stage => {
-            if (stage.id !== selectedStage.id) {
-                return true; // Оставляем этап, если его id не равен id удаленного этапа
-            } else {
-                // Если это удаленный этап, проверяем, является ли это первый элемент в списке
-                // Если это первый элемент, выбираем следующий за ним
-                // В противном случае, выбираем предыдущий элемент
-                const selectedIndex = moduleData.findIndex(stage => stage.id === selectedStage.id);
-                setSelectedStage(selectedIndex === 0 ? moduleData[1] : moduleData[selectedIndex - 1]);
-                return false; // Исключаем удаленный этап из списка
-            }
-        });
-        // Обновляем состояние moduleData
-        setModuleData(updatedModuleData);
+            // const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
+            // setGetChapters(updatedChapters);
+            const updatedModuleData = moduleData.filter(stage => {
+                if (stage.id !== selectedStage.id) {
+                    return true; // Оставляем этап, если его id не равен id удаленного этапа
+                } else {
+                    // Если это удаленный этап, проверяем, является ли это первый элемент в списке
+                    // Если это первый элемент, выбираем следующий за ним
+                    // В противном случае, выбираем предыдущий элемент
+                    const selectedIndex = moduleData.findIndex(stage => stage.id === selectedStage.id);
+                    setSelectedStage(selectedIndex === 0 ? moduleData[1] : moduleData[selectedIndex - 1]);
+                    return false; // Исключаем удаленный этап из списка
+                }
+            });
+            // Обновляем состояние moduleData
+            setModuleData(updatedModuleData);
         }
-      };
-  
+    };
+
 
 
     const Dot = ({ tech, isActive }) => {
@@ -288,8 +288,8 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
             <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Найстроки модуля: ${moduleEditData.title}`} popupContent={popupContent()} />
 
             <div className="main__nav-block"><p>Вы перешли на страницу редактирования модуля: "{moduleEditData.title}"</p>
-            <div className="nav-block__popup-menu"><button className="popup-menu__button" onClick={showPopupMenu}><SettingOutlined style={{ fontSize: '24px' }} /></button></div>
-            
+                <div className="nav-block__popup-menu"><button className="popup-menu__button" onClick={showPopupMenu}><SettingOutlined style={{ fontSize: '24px' }} /></button></div>
+
                 <div className="nav-block__stages" >
                     {moduleData.length < 20 && (
                         // <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
@@ -313,34 +313,20 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
 
                 </div>
             </div>
-            <div className="main__content">
-<div className="content__mini-menu">
-    {selectedStage &&
-<LmsButton
-            buttonText={"Удалить урок"}
-            handleClick={deleteStage}
-          />}
-</div>
+            {selectedStage && (
+                <div className="main__content">
+                    <div className="content__mini-menu">
+                        <LmsButton
+                            buttonText={"Удалить урок"}
+                            handleClick={deleteStage}
+                        />
+                    </div>
 
-                    {selectedStage && (
-                        (selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />) ||
-                        (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />) ||
-                        (selectedStage.type === "quiz" && <AddingQuizLesson selectedStage={selectedStage} />)
-                        // (selectedStage.items.type === "video" && <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />)
-                    )}
-                    {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
-
-                    {/* {selectedStage ? <AddingClassicLesson addClasiclesson={addClasiclesson} setModuleData={setModuleData} /> : ""} */}
-                    {/* {addClasiclesson ? (
-                        <AddingClassicLesson selectedStage={selectedStage} addClasiclesson={addClasiclesson} setModuleData={setModuleData} />
-                    ) : addVideolesson ? (
-                        <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />
-                    ) : null} */}
-
-                    {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
-
-
-            </div>
+                    {selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />}
+                    {selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />}
+                    {selectedStage.type === "quiz" && <AddingQuizLesson selectedStage={selectedStage} />}
+                </div>
+            )}
 
 
         </>

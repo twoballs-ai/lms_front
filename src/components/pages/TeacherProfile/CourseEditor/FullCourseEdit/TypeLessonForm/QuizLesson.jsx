@@ -3,67 +3,82 @@ import Editor from "../../../../../Editor";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import LmsButton from "../../../../../reUseComponents/Button";
 import TextInput from "../../../../../reUseComponents/TextInput";
-import { Radio } from 'antd';
-import { Button } from 'antd';
-
+import { Radio, Button } from 'antd';
+import { DeleteOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import "./LessonsStyle.scss";
-import { DeleteOutlined } from '@ant-design/icons';
+
 function AddingQuizLesson(props) {
     const [inputTitleValue, setInputTitleValue] = useState('');
     const [quizType, setQuizType] = useState('radio');
-    const [questions, setQuestions] = useState([{ question_text: '', is_true_answer: false }]);
+    const [answers, setAnswers] = useState([{ answer_text: '', is_true_answer: false, order: 0 }]);
+    const [questionValue, setQuestionValue] = useState('');
+    const [showQuizLesson, setShowQuizLesson] = useState(false);
 
-    const [inputDescrValue, setInputDescreValue] = useState('');
-    const handleInputChange = (e) => {
-      setInputTitleValue(e.target.value);
-    };
+    const handleInputChange = (e) => setInputTitleValue(e.target.value);
 
-  
-    const handleInputDescrChange = (e) => {
-      setInputDescreValue(e.target.value);
-    };
+    const handleQuestionValue = (e) => setQuestionValue(e.target.value);
+
     const handleQuizTypeChange = (e) => {
         setQuizType(e.target.value);
-        // Reset is_true_answer for all questions
-        const resetQuestions = questions.map(q => ({ ...q, is_true_answer: false }));
-        setQuestions(resetQuestions);
+        // Reset is_true_answer for all answers
+        const resetAnswers = answers.map(q => ({ ...q, is_true_answer: false }));
+        setAnswers(resetAnswers);
     };
 
     const handleQuestionChange = (index, field, value) => {
-        const newQuestions = [...questions];
+        const newAnswers = [...answers];
         if (field === 'is_true_answer' && quizType === 'radio') {
-            newQuestions.forEach((q, i) => { q.is_true_answer = i === index ? value : false; });
+            newAnswers.forEach((q, i) => { q.is_true_answer = i === index ? value : false; });
         } else {
-            newQuestions[index][field] = value;
+            newAnswers[index][field] = value;
         }
-        setQuestions(newQuestions);
+        setAnswers(newAnswers);
     };
 
     const addQuestion = () => {
-        setQuestions([...questions, { question_text: '', is_true_answer: false }]);
+        setAnswers([...answers, { answer_text: '', is_true_answer: false, order: answers.length }]);
     };
 
     const deleteQuestion = (index) => {
-        const newQuestions = questions.filter((_, i) => i !== index);
-        setQuestions(newQuestions);
+        const newAnswers = answers.filter((_, i) => i !== index).map((q, i) => ({ ...q, order: i }));
+        setAnswers(newAnswers);
     };
 
-    const [stageEditorData, setStageEditorData] = useState('');
-    const [showQuizLesson, setShowQuizLesson] = useState(false);
+    const moveQuestion = (index, direction) => {
+        const newAnswers = [...answers];
+        const [movedAnswers] = newAnswers.splice(index, 1);
+        newAnswers.splice(index + direction, 0, movedAnswers);
+        setAnswers(newAnswers.map((q, i) => ({ ...q, order: i })));
+    };
+
     let stagePk = props.selectedStage ? props.selectedStage.id : null;
 
     useEffect(() => {
         if (stagePk) {
-            setStageEditorData('');
             const fetchData = async () => {
                 await CourseEditorService.editCoursePageGetLesson(stagePk).then((response) => {
                     if (response.status === 200 || response.status === 201) {
                         if (response.data.lesson) {
+                            console.log(response.data)
                             setInputTitleValue(response.data.title);
                             setShowQuizLesson(true);
+                            setQuizType(response.data.lesson.quiz_type)
+                            setQuestionValue(response.data.lesson.question)
+                            const updatedAnswers = response.data.lesson.answers.map((q, index) => ({
+                                // id: q.id,
+                                answer_text: q.answer_text,
+                                order: index,
+                                is_true_answer: q.is_true_answer,
+                                // quiz_id: q.quiz_id
+                            }));
+                            setAnswers(updatedAnswers);
+                            
                         } else {
                             setInputTitleValue("");
                             setShowQuizLesson(true);
+                            setQuestionValue("")
+                            setQuizType('radio')
+                            setAnswers([{ answer_text: '', is_true_answer: false, order: 0 }]);
                         }
                     }
                 });
@@ -75,19 +90,20 @@ function AddingQuizLesson(props) {
     const formSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            stage_id: stagePk,
-            html_code_text: stageEditorData,
+            quiz_id: stagePk,
+            question:questionValue,
             title: inputTitleValue,
             quiz_type: quizType,
-            questions: questions
+            answers: answers
         };
 
-        const response = await CourseEditorService.editCoursePageUpdateClassicLesson(data);
+        const response = await CourseEditorService.editCoursePageUpdateQuizLesson(data);
         if (response.status === 200 || response.status === 201) {
-            setInputTitleValue(response.data.data.title);
+            console.log(response.data)
+            // setInputTitleValue(response.data.data.title);
         }
     };
-
+console.log(answers)
     return (
         <>
             {showQuizLesson && (
@@ -100,7 +116,7 @@ function AddingQuizLesson(props) {
                         <TextInput isTextArea={false} placeholder={"Напишите сюда название этапа"} value={inputTitleValue} onChange={handleInputChange} />
                         <div className="add-block__editor">
                             <p>Напишите сюда ваш вопрос:</p>
-                            <TextInput type={'textarea'} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
+                            <TextInput type={'textarea'} placeholder={"Напишите сюда ваш вопрос"} value={questionValue} onChange={handleQuestionValue} />
 
                             <p>Тип квиза:</p>
                             <Radio.Group defaultValue={quizType} buttonStyle="solid" onChange={handleQuizTypeChange}>
@@ -109,7 +125,7 @@ function AddingQuizLesson(props) {
                             </Radio.Group>
 
                             <p>Ответы:</p>
-                            {questions.map((question, index) => (
+                            {answers.map((question, index) => (
                                 <div key={index} className="question-item">
                                     {quizType === 'radio' ? (
                                         <input
@@ -126,19 +142,31 @@ function AddingQuizLesson(props) {
                                     )}
                                     <TextInput
                                         isTextArea={false}
-                                        placeholder={`Вопрос ${index + 1}`}
-                                        value={question.question_text}
-                                        onChange={(e) => handleQuestionChange(index, 'question_text', e.target.value)}
+                                        placeholder={`Ответ ${index + 1}`}
+                                        value={question.answer_text}
+                                        onChange={(e) => handleQuestionChange(index, 'answer_text', e.target.value)}
                                     />
                                     <Button
                                         type="text"
                                         danger
                                         icon={<DeleteOutlined />}
-                                        onClick={() => deleteQuestion(index)} // добавить функцию для удаления вопроса
+                                        onClick={() => deleteQuestion(index)}
+                                    />
+                                    <Button
+                                        type="text"
+                                        icon={<UpOutlined />}
+                                        onClick={() => moveQuestion(index, -1)}
+                                        disabled={index === 0}
+                                    />
+                                    <Button
+                                        type="text"
+                                        icon={<DownOutlined />}
+                                        onClick={() => moveQuestion(index, 1)}
+                                        disabled={index === answers.length - 1}
                                     />
                                 </div>
                             ))}
-                            <LmsButton buttonText={"Добавить вопрос"} handleClick={addQuestion} />
+                            <LmsButton buttonText={"Добавить ответ"} handleClick={addQuestion} />
                         </div>
 
                         <div className="add-block__button">

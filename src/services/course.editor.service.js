@@ -73,9 +73,9 @@ const editCoursePageAddQuizLesson = async (data) => {
     return await api
         .post(`${apiLmsUrl}add_stage_to_module/quiz_lesson/`, data)
 }
-const editCoursePageUpdateQuizLesson = async (stagePk, data) => {
+const editCoursePageUpdateQuizLesson = async (data) => {
     return await api
-        .put(apiLmsUrl + "quiz-lesson-detail/" + stagePk, data)
+    .put(apiLmsUrl + "update/quiz_lesson/", data)
 }
 
 
