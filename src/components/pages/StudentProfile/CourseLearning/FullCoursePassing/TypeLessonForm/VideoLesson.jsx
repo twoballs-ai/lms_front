@@ -4,7 +4,7 @@ import { apiLmsUrl } from "../../../../../../shared/config";
 import LmsButton from "../../../../../reUseComponents/Button";
 
 function AddingVideoLesson(props) {
-    console.log(props)
+
     const [showVideoLesson, setShowVideoLesson] = useState(false)
     let stagePk = props.selectedStage.id
     let addVideolesson = props.addVideolesson

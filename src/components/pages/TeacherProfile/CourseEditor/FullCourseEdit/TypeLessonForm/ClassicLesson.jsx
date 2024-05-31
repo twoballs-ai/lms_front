@@ -3,6 +3,7 @@ import Editor from "../../../../../Editor";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import LmsButton from "../../../../../reUseComponents/Button";
 import TextInput from "../../../../../reUseComponents/TextInput";
+
 import "./LessonsStyle.scss"
 function AddingClassicLesson(props) {
     const [inputTitleValue, setInputTitleValue] = useState('');
@@ -64,11 +65,11 @@ function AddingClassicLesson(props) {
         {(showClassicLesson) && (
                    <div className={`content__${props.selectedStage.type}-lesson`}>
             <div className={`${props.selectedStage.type}-lesson__title`}>
-                <p>Классический этап с видео, фото, текстом</p>
+                <p>Классический урок с видео, фото, текстом</p>
 
             </div>
             <div className={`${props.selectedStage.type}-lesson__add-block`}>
-                <p>Название этапа:</p>
+                <p>Название урока:</p>
                 <TextInput isTextArea={false} placeholder={"Напишите сюда название этапа"} value={inputTitleValue} onChange={handleInputChange} />
 
                 <div className="add-block__editor">

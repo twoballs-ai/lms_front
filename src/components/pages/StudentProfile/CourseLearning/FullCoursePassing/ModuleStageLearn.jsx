@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { apiLmsUrl } from "../../../../../shared/config";
 import axios from "axios";
 
-import "./FullCourseEdit.scss";
+import "./FullCourseLearn.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -208,7 +208,7 @@ console.log("123")
 
                 </div>
             </div>
-            <div className="main__content">
+            <div className="main-student__content">
  
                 {selectedStage && (
                     (selectedStage.type === "classic" && <LearningClassicLesson selectedStage={selectedStage} />) ||

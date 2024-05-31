@@ -4,7 +4,7 @@ import { Link, Outlet, useParams } from "react-router-dom";
 
 // import { DragEndEvent } from '@dnd-kit/core';
 
-import "./CourseEditor.scss";
+import "./CourseLearner.scss";
 import { apiLmsUrl } from "../../../../../../shared/config";
 import LmsButton from "../../../../../reUseComponents/Button";
 import EditModuleStage from "../../FullCoursePassing/ModuleStageLearn";

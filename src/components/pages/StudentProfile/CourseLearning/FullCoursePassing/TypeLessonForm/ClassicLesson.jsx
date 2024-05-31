@@ -1,12 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import axios from "axios";
-import Editor from "../../../../../Editor";
-import { apiLmsUrl, apiUrl, typesApiUrl } from "../../../../../../shared/config";
-import CourseEditorService from "../../../../../../services/course.editor.service";
-import LmsButton from "../../../../../reUseComponents/Button";
-import TextInput from "../../../../../reUseComponents/TextInput";
 import "./LessonsStyle.scss"
 import StudentService from "../../../../../../services/student.service";
 function LearningClassicLesson(props) {

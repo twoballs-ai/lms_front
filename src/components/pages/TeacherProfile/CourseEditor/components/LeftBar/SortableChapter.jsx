@@ -97,7 +97,7 @@ const handleExamDurationChange = (value) => {
       <p>Название модуля:</p>
       <TextInput isTextArea={false} placeholder={"Напишите сюда название модуля"} value={inputTitleValue} onChange={handleInputChange} />
       <p>Описание модуля:</p>
-      <TextInput isTextArea={true} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
+      <TextInput type={'textarea'} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
       <LmsButton buttonText={"Создать"} handleClick={addModule} />
 
     </div>
@@ -174,7 +174,7 @@ const handleExamDurationChange = (value) => {
                   <p>Название главы:</p>
                   <TextInput isTextArea={false} placeholder={"Напишите сюда название главы"} value={inputTitleChapterValue} onChange={handleInputChapterChange} />
           <p>Описание главы:</p>
-          <TextInput isTextArea={true} placeholder={"Напишите сюда описание главы"} value={inputDescrChapterValue} onChange={handleInputDescrChapterChange} />
+          <TextInput type={'textarea'} placeholder={"Напишите сюда описание главы"} value={inputDescrChapterValue} onChange={handleInputDescrChapterChange} />
 
         <p>Является ли ваша глава экзаменом?</p>
         <ReusableSwitch

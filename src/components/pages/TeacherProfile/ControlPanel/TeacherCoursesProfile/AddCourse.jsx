@@ -63,7 +63,7 @@ function AddCourse() {
         <p>Название курса:</p>
         <TextInput isTextArea={false} placeholder={"Напишите сюда название курса"} value={inputTitleValue} onChange={handleInputChange}/>
         <p>Описание курса:</p>
-        <TextInput isTextArea={true} placeholder={"Напишите сюда описание курса"} value={inputDescrValue} onChange={handleInputDescrChange}/>
+        <TextInput type={'textarea'} placeholder={"Напишите сюда описание курса"} value={inputDescrValue} onChange={handleInputDescrChange}/>
                 <LmsButton buttonText={"Создать"} handleClick={divSubmit} />
             </div>
         </div>

@@ -21,6 +21,7 @@ import CourseEditorService from "../../../../../services/course.editor.service";
 import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
 import TextInput from "../../../../reUseComponents/TextInput";
+import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
 function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGetChapters }) {
 
     const [moduleData, setModuleData] = useState([]);
@@ -60,37 +61,36 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
         handleCloseModal()
     };
     const handleShowVideoLesson = async () => {
-        // const dataParams = {
-        //     module_id: moduleEditData.id,
-        //     title: "",
-        //     video_link: "",
-        // }
-        // const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
+        const dataParams = {
+            module_id: moduleEditData.id,
+            title: "",
+            video_link: "",
+        }
+        const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
 
-        // if (response.status === 200 || response.status === 201) {
-        //     // setModuleData();
-        //     const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
-        //     setModuleData(prevModuleData => [...prevModuleData, newElement]);
-        //     setSelectedStage(newElement)
-        // }
+        if (response.status === 200 || response.status === 201) {
+            // setModuleData();
+            const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
+            setModuleData(prevModuleData => [...prevModuleData, newElement]);
+            setSelectedStage(newElement)
+        }
 
         handleCloseModal()
     };
     const handleShowQuizLesson = async () => {
         console.log("quiz")
-        // const dataParams = {
-        //     module_id: moduleEditData.id,
-        //     title: "",
-        //     video_link: "",
-        // }
-        // const response = await CourseEditorService.editCoursePageAddVideoLesson(dataParams)
+        const dataParams = {
+            module_id: moduleEditData.id,
+            title: "",
+        }
+        const response = await CourseEditorService.editCoursePageAddQuizLesson(dataParams)
 
-        // if (response.status === 200 || response.status === 201) {
-        //     // setModuleData();
-        //     const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
-        //     setModuleData(prevModuleData => [...prevModuleData, newElement]);
-        //     setSelectedStage(newElement)
-        // }
+        if (response.status === 200 || response.status === 201) {
+            // setModuleData();
+            const newElement = response.data.data; // Используем данные из response.data для создания нового элемента
+            setModuleData(prevModuleData => [...prevModuleData, newElement]);
+            setSelectedStage(newElement)
+        }
 
         handleCloseModal()
     };
@@ -200,7 +200,7 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
           <p>Название модуля:</p>
       <TextInput isTextArea={false} placeholder={"Напишите сюда название модуля"} value={inputTitleValue} onChange={handleInputChange} />
       <p>Описание модуля:</p>
-      <TextInput isTextArea={true} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
+      <TextInput type={'textarea'} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
       <LmsButton buttonText={"Обновить"} handleClick={UpdateModule} />
           </div>
           <div style={{
@@ -324,7 +324,8 @@ function EditModuleStage({ moduleEditData,setModuleEditData, getChapters, setGet
 
                     {selectedStage && (
                         (selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />) ||
-                        (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />)
+                        (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />) ||
+                        (selectedStage.type === "quiz" && <AddingQuizLesson selectedStage={selectedStage} />)
                         // (selectedStage.items.type === "video" && <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />)
                     )}
                     {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}

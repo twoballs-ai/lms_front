@@ -46,7 +46,7 @@ const editCoursePageDeleteModule = async (module_id) => {
 }
 const editCoursePageDeleteStage = async (stage_id) => {
     return await api
-        .delete(`${apiLmsUrl}delete-stage/?stage_id=${stage_id}`)
+        .delete(`${apiLmsUrl}delete-stage/${stage_id}`)
 }
 
 const editCoursePageGetLesson = async (stagePk) => {
@@ -69,14 +69,14 @@ const editCoursePageUpdateVideoLesson = async (data) => {
     return await api
     .put(apiLmsUrl + "update/video_lesson/", data)
 }
-// const editCoursePageAddQuizLesson = async (stagePk, data) => {
-//     return await api
-//         .post(typesApiUrl + "quiz-lesson/" + stagePk, data)
-// }
-// const editCoursePagePutQuizLesson = async (stagePk, data) => {
-//     return await api
-//         .put(typesApiUrl + "quiz-lesson-detail/" + stagePk, data)
-// }
+const editCoursePageAddQuizLesson = async (data) => {
+    return await api
+        .post(`${apiLmsUrl}add_stage_to_module/quiz_lesson/`, data)
+}
+const editCoursePageUpdateQuizLesson = async (stagePk, data) => {
+    return await api
+        .put(apiLmsUrl + "quiz-lesson-detail/" + stagePk, data)
+}
 
 
 const CourseEditorService = {
@@ -97,8 +97,8 @@ const CourseEditorService = {
     editCoursePageDeleteStage,
     editCoursePageAddVideoLesson,
     editCoursePageUpdateVideoLesson,
-    // editCoursePageAddQuizLesson,
-    // editCoursePagePutQuizLesson
+    editCoursePageAddQuizLesson,
+    editCoursePageUpdateQuizLesson
 };
 
 export default CourseEditorService;

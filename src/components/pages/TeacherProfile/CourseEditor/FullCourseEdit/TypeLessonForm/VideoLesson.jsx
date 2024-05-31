@@ -58,7 +58,7 @@ function AddingVideoLesson(props) {
                         <p>Видео урок</p>
                     </div>
                     <div className={`${props.selectedStage.type}-lesson__add-block`}>
-                        <p>Название этапа:</p>
+                        <p>Название урока:</p>
                         <TextInput
                             isTextArea={false}
                             placeholder={"Напишите сюда название этапа"}

@@ -26,7 +26,7 @@ const ChapterModalContent = ({
         />
         <p>Описание главы:</p>
         <TextInput
-            isTextArea={true}
+            type={'textarea'}
             placeholder={"Напишите сюда описание главы"}
             value={inputDescrValue}
             onChange={handleInputDescrChange}
