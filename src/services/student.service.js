@@ -13,6 +13,13 @@ const getLearnLesson = async (stagePk) => {
     return await api
         .get(`${apiStudyUrl}stage/${stagePk}`)
 }
+const enrollToCourse = async (course_id) => {
+    return await api
+        .post(`${apiStudyUrl}enroll/${course_id}`,
+
+            // {headers: { "Content-Type": "multipart/form-data" }}
+        )
+}
 // const deleteTeacherCourse = async (courseId) => {
 //     return await api
 //         .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
@@ -32,27 +39,12 @@ const getLearnLesson = async (stagePk) => {
 // }
 
 
-// try {
-//     axios
-//         .get(
-//             apiUserUrl + "teacher/dashboard/" + teacherId, { headers: authHeader() }
-//             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-//             // ,{headers: { "Content-Type": "multipart/form-data" }}
-//         )
-//         .then((response) => {
-//             setDashboardData(response.data);
-//             console.log(response.data);
-//         });
-// } catch (e) {
-//     console.log(e);
-// }
-
-
 
 
 const StudentService = {
     studentCourses,
     getLearnLesson,
+    enrollToCourse,
     // deleteTeacherCourse,
     // addCourse,
     // teacherStudents,

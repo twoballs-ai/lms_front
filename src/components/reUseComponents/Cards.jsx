@@ -9,7 +9,7 @@ const CustomCard = ({ title, description, image }) => (
     style={{
       width: 450,
     }}
-    cover={<img alt="example" src={image} />}
+    cover={<img alt={title} src={image} />}
   >
     <Meta title={title} description={description} />
   </Card>

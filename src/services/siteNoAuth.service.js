@@ -9,6 +9,10 @@ const getCategory = async ({ toSelect }) => {
         }
     });
 }
+const getCourse = async (course_id) => {
+    return await api.get(apiBaseUrl + `course/?course_id=${course_id}`, {
+    });
+}
 const homePageLastAddedCourses = async ({ items }) => {
     return await api
     .get(apiBaseUrl + `recent_courses/?items=${items}`)
@@ -32,6 +36,7 @@ const allCoursesPage = async (url) => {
 
 const SiteService = {
     getCategory,
+    getCourse,
     homePageLastAddedCourses,
     homePagePopularCourses,
     homePagePopularTeachers,

@@ -15,9 +15,7 @@ instance.interceptors.request.use(
   (config) => {
     const token = TokenService.getLocalAccessToken();
     if (token) {
-      config.headers["Authorization"] = 'Bearer ' + token;  // for Spring Boot back-end
-      //   config.headers["x-access-token"] = token; // for Node.js Express back-end
-      // console.log(config)
+      config.headers["Authorization"] = 'Bearer ' + token;
     }
     return config;
   },
@@ -25,8 +23,6 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-
 
 instance.interceptors.response.use(
   (res) => {
@@ -36,37 +32,22 @@ instance.interceptors.response.use(
     const originalConfig = err.config;
 
     if (err.response) {
-      // Access Token was expired
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
-
         try {
           const rs = await AuthService.refreshToken();
-          const { accessToken } = rs.data;
-          const token = rs.data;
-          const currentTime = new Date().getTime();
-          //   console.log(jwtDecode(refreshtoken).exp)
-          //   console.log(currentTime/ 1000)
-          //   console.log(jwtDecode(refreshtoken).exp < currentTime/ 1000)
-          if (jwtDecode(token.refresh).exp < currentTime / 1000) {
-
-            UserLogout()
-          }
-          TokenService.updateLocalAccessToken(token.access);
-          TokenService.updateLocalRefreshToken(token.refresh);
-          instance.defaults.headers.common["x-access-token"] = accessToken;
-
+          const accessToken = rs.access_token;
+          TokenService.updateLocalAccessToken(accessToken);
+          instance.defaults.headers.common["Authorization"] = 'Bearer ' + accessToken;
           return instance(originalConfig);
         } catch (_error) {
-          if (_error.response && _error.response.data) {
-            return Promise.reject(_error.response.data);
-          }
-
+          console.log("errroe ebaniy")
+          // AuthService.logout();
           return Promise.reject(_error);
         }
       }
 
-      if (err.response.status === 403 && err.response.data) {
+      if (err.response.status === 403) {
         return Promise.reject(err.response.data);
       }
     }
@@ -74,7 +55,5 @@ instance.interceptors.response.use(
     return Promise.reject(err);
   }
 );
-
-
 
 export default instance;

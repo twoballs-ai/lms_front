@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // добавляем состояние загрузки
 
   useEffect(() => {
-    const storedRole = localStorage.getItem('role');
+    const storedRole = JSON.parse(localStorage.getItem('role'));
     if (storedRole) {
       setRole(storedRole);
       setAuthenticated(true);
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const toggleAuthentication = () => {
-    const currentRole = localStorage.getItem('role');
+    const currentRole = JSON.parse(localStorage.getItem('role'));
     if (currentRole === 'teacher_model' || currentRole === 'student_model') {
       setAuthenticated(prevAuth => !prevAuth);
     }

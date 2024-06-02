@@ -9,7 +9,7 @@ function Header() {
         search: "",
     });
 
-    const role = localStorage.getItem("role");
+    const role = JSON.parse(localStorage.getItem('role'));
     const handleChange = (event) => {
         setSearchData({
             ...searchData,
@@ -24,7 +24,7 @@ function Header() {
 
     const [isAuth, setIsAuth] = useState(false);
     useEffect(() => {
-        if (localStorage.getItem('access_token') !== null) {
+        if (JSON.parse(localStorage.getItem('access_token')) !== null) {
             setIsAuth(true);
         }
     }, [isAuth]);

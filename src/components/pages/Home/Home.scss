@@ -8,10 +8,13 @@
     }
     .home-container__last-added-course {
         display: flex;
-        flex-direction: row;
-        width: auto;
-        gap: 10px;
-        // width: 500px;
-        // background-color: aquamarine;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    
+        .card-wrapper {
+            flex: 1 0 21%; // This allows four cards per row with some spacing
+            margin: 10px;
+            max-width: 23%; // Ensure that the cards don't exceed 23% of the container width
+        }
     }
 }

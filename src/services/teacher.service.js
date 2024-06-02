@@ -21,7 +21,7 @@ const addCourse = async (...data) => {
     return await api
         .post(apiLmsUrl + "course/",
         ...data,
-            // {headers: { "Content-Type": "multipart/form-data" }}
+            {headers: { "Content-Type": "multipart/form-data" }}
         )
 }
 const teacherStudents = async (teacherId) => {

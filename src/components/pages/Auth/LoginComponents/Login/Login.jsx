@@ -49,15 +49,23 @@ function AllProfilesLogin() {
                 if (response?.data?.type === "teacher_model") {
                     localStorage.setItem(
                         "role",
-                        response?.data?.type
+                        JSON.stringify(response?.data?.type)
                     );
+                    
+                    
                     window.location.href = "/teacher-profile/";
                 }
                 if (response?.data?.type === "student_model") {
                     localStorage.setItem(
                         "role",
-                        response?.data?.type
+                        JSON.stringify(response?.data?.type)
+                        
                     );
+                    localStorage.setItem(
+                        "studentLoginStatus",
+                        JSON.stringify("true")
+                    );
+                    
                     window.location.href = "/student-profile/";
                 }
             }

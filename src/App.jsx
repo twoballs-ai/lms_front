@@ -9,7 +9,7 @@ import Home from './components/pages/Home/Home';
 import MainComponent from './components/pages/TeacherProfile/CourseEditor/components/MainComponent';
 import "./App.scss"
 import About from './components/pages/About/About';
-// // import CourseDetail from './components/pages/Course/CourseDetail';
+import CourseDetail from './components/pages/Course/CourseDetail';
 // // import TeacherDetail from './components/pages/Course/TeacherDetail';
 // // import AllCourses from './components/pages/AllCourses/AllCourses';
 // // import PopularCourses from './components/pages/PopularCourses/PopularCourses';
@@ -88,6 +88,10 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
+      {
+        path: "detail/:course_id",
+        element: <CourseDetail />,
+      },
       { path: "about", element: <About /> },
       { path: "all-courses", element: <AllCourses /> },
       { path: "category", element: <CategoryPage /> },
@@ -191,10 +195,7 @@ export default App;
 //       ]
 //     },
 //     { path: '*', element: <Navigate to="/" /> },
-//     // {
-//     //   path: "detail/:course_id",
-//     //   element: <CourseDetail />,
-//     // },
+
 //     // {
 //     //   path: "search/:searchString",
 //     //   element: <SearchByCourse />,
