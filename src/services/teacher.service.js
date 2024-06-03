@@ -14,7 +14,7 @@ const teacherCourses = async () => {
 }
 const deleteTeacherCourse = async (courseId) => {
     return await api
-        .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
+        .delete(`${apiLmsUrl}delete-course/${courseId}/`
         )
 }
 const addCourse = async (...data) => {

@@ -16,15 +16,15 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-
             .chapters__block {
                 border-radius: 15px;
                 background-color: rgba(240, 248, 255, 0.9);
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
+                padding: 10px;
                 gap: 10px;
-                justify-content: center;
+                justify-content: space-between;
                 transition: background-color 0.3s ease;
 
                 &:hover {
@@ -35,70 +35,99 @@
                     background-color: rgba(212, 236, 252, 0.9);
                 }
 
-                .block__title {
+                .block-left {
                     display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
+                    flex-direction: column;
                     width: 100%;
+                    position: relative; /* Added for absolute positioning */
 
-                    p {
-                        font-weight: 600;
-                        padding-left: 10px;
+                    .block__title {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+
+                        p {
+                            font-weight: 600;
+                        }
                     }
-                    .title__chapter-drag {
-                        margin-left: auto;
-                        border: none; // Убираем границы кнопки
-                        background: none; // Убираем фон кнопки
-                        padding: 0; // Убираем внутренние отступы кнопки
-                        cursor: pointer;
+
+                    .chapters__modules {
+                        width: auto;
+                        min-height: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+
+                        .modules__block {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: rgba(255, 255, 255, 0.432);
+                            padding: 4px;
+                            height: 50px;
+                            border-radius: 5px;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: rgb(236, 236, 236);
+                            }
+
+                            &.active {
+                                background-color: rgba(108, 201, 255, 0.9);
+                            }
+
+                            .block__module-drag {
+                                margin-left: auto;
+                                border: none;
+                                background: none;
+                                padding: 0;
+                                cursor: pointer;
+                            }
+                        }
                     }
                 }
 
-                .chapters__modules {
-                    width: auto;
-                    min-height: 10px;
+                .block-menu {
                     display: flex;
                     flex-direction: column;
-                    gap: 5px;
-
-                    .modules__block {
+                    justify-content: space-between; /* This ensures content is spread from top to bottom */
+                    height: 100%;
+                    align-items: center;
+                    gap: 10px;
+                
+                    .controls {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 10px;
+                
+                      button,
+                      .ant-btn {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        background-color: rgba(255, 255, 255, 0.432);
-                        // border: 0.1rem solid rgba(0, 0, 0, 0.6);
-                        // padding-left: 5px;
-                        padding: 4px;
-                        height: 50px;
-                        border-radius: 5px;
+                        border: none;
+                        background: none;
                         cursor: pointer;
-
-                        &:hover {
-                            background-color: rgb(236, 236, 236);
-                            border-radius: 5px;
-                        }
-
-                        &.active {
-                            background-color: rgba(54, 26, 70, 0.9);
-                            border-radius: 5px;
-                        }
-                        .block__module-drag {
-                            margin-left: auto;
-                            border: none; /* Убираем границы кнопки */
-                            background: none; /* Убираем фон кнопки */
-                            padding: 0; /* Убираем внутренние отступы кнопки */
-                            cursor: pointer;
-                        }
-                        
+                      }
+                
+                      .title__chapter-drag {
+                        border: none;
+                        background: none;
+                        padding: 0;
+                        cursor: pointer;
+                      }
                     }
-                }
-                .block__chapter_menu {
-                    margin-left: auto;
-                    border: none; // Убираем границы кнопки
-                    background: none; // Убираем фон кнопки
-                    padding: 0px; // Убираем внутренние отступы кнопки
-                    cursor: pointer
-                }
+                
+                    .block__chapter_menu {
+                      margin-top: auto; /* Pushes the button to the bottom */
+                      border: none;
+                      background: none;
+                      padding: 0px;
+                      cursor: pointer;
+                    }
+                  }
             }
         }
     }

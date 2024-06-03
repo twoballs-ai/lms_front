@@ -7,6 +7,7 @@ import LmsModalBase from '../../../../../reUseComponents/ModalBase';
 import TextInput from "../../../../../reUseComponents/TextInput";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import { SettingOutlined } from '@ant-design/icons';
+import { DeleteOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import { Button } from "antd";
 import PopupMenu from "../../../../../reUseComponents/PopupMenu";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
@@ -80,11 +81,11 @@ const SortableChapter = ({
 
   const handleIsExamChange = (checked) => {
     setIsExam(checked);
-};
+  };
 
-const handleExamDurationChange = (value) => {
-  setExamDuration(value);
-};
+  const handleExamDurationChange = (value) => {
+    setExamDuration(value);
+  };
 
 
   const AddModuleOpenModal = async () => {
@@ -130,6 +131,40 @@ const handleExamDurationChange = (value) => {
     }
   };
 
+
+  const moveChapter = async (direction) => {
+    console.log(123)
+    // const currentIndex = chapter.sort_index;
+    // let newIndex;
+
+    // if (direction === 'up' && currentIndex > 1) {
+    //   newIndex = currentIndex - 1;
+    // } else if (direction === 'down' && currentIndex < getChapters.length) {
+    //   newIndex = currentIndex + 1;
+    // } else {
+    //   return; // Do nothing if move is not possible
+    // }
+
+    // // Swap sort_index of chapters
+    // const targetChapter = getChapters.find(chap => chap.sort_index === newIndex);
+    // if (targetChapter) {
+    //   targetChapter.sort_index = currentIndex;
+    //   chapter.sort_index = newIndex;
+
+    //   // Update state
+    //   const updatedChapters = getChapters.map(chap =>
+    //     chap.id === chapter.id ? chapter : chap.id === targetChapter.id ? targetChapter : chap
+    //   );
+    //   setGetChapters(updatedChapters);
+
+    //   // Update server
+    //   await CourseEditorService.editCoursePageUpdateChapter(chapter.id, { sort_index: newIndex });
+    //   await CourseEditorService.editCoursePageUpdateChapter(targetChapter.id, { sort_index: currentIndex });
+    // }
+  };
+
+
+
   const popupContent = () => {
 
     const updateChapter = async () => {
@@ -144,7 +179,7 @@ const handleExamDurationChange = (value) => {
       if (response.status === 200 || response.status === 201) {
         // console.log(response.data)
         const updatedChapter = response.data.chapter;
-        const updatedChapters = getChapters.map(chap => 
+        const updatedChapters = getChapters.map(chap =>
           chap.id === chapter.id ? updatedChapter : chap
         );
         setGetChapters(updatedChapters);
@@ -162,7 +197,10 @@ const handleExamDurationChange = (value) => {
         setGetChapters(updatedChapters);
       }
     };
-// console.log(chapter)
+
+
+
+    // console.log(chapter)
     return (
       <>
         <div style={{
@@ -171,31 +209,31 @@ const handleExamDurationChange = (value) => {
           padding: '10px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
         }}>
-                  <p>Название главы:</p>
-                  <TextInput isTextArea={false} placeholder={"Напишите сюда название главы"} value={inputTitleChapterValue} onChange={handleInputChapterChange} />
+          <p>Название главы:</p>
+          <TextInput isTextArea={false} placeholder={"Напишите сюда название главы"} value={inputTitleChapterValue} onChange={handleInputChapterChange} />
           <p>Описание главы:</p>
           <TextInput type={'textarea'} placeholder={"Напишите сюда описание главы"} value={inputDescrChapterValue} onChange={handleInputDescrChapterChange} />
 
-        <p>Является ли ваша глава экзаменом?</p>
-        <ReusableSwitch
+          <p>Является ли ваша глава экзаменом?</p>
+          <ReusableSwitch
             defaultChecked={isExam}
             onChange={handleIsExamChange}
-        />
-        {isExam && (
+          />
+          {isExam && (
             <div>
-                <p>Продолжительность экзамена (в часах):</p>
-                <ReusableSliderWithInput
-                    defaultValue={examDuration}
-                    min={0}
-                    max={48}
-                    value={examDuration}
-                    onChange={handleExamDurationChange}
-                    style={{ marginBottom: '20px', width: '50%' }}
-                    inputStyle={{ backgroundColor: '#f0f0f0' }}
-                    sliderStyle={{ marginRight: '10px' }}
-                />
+              <p>Продолжительность экзамена (в часах):</p>
+              <ReusableSliderWithInput
+                defaultValue={examDuration}
+                min={0}
+                max={48}
+                value={examDuration}
+                onChange={handleExamDurationChange}
+                style={{ marginBottom: '20px', width: '50%' }}
+                inputStyle={{ backgroundColor: '#f0f0f0' }}
+                sliderStyle={{ marginRight: '10px' }}
+              />
             </div>
-        )}
+          )}
           <p>Название главы:</p>
 
           <LmsButton buttonText={"Обновить"} handleClick={updateChapter} />
@@ -232,22 +270,47 @@ const handleExamDurationChange = (value) => {
 
       <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentAddModuleToModal()} />
       <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Найстроки раздела: ${chapter.title}`} popupContent={popupContent()} />
-      <div className="block__title"><p>{chapter.title}</p>
-        <button {...listeners} className={"title__chapter-drag"}  >
-          <DragVerticalIcon />
-        </button></div>
-      {/* <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} /> */}
-      <LmsButton
-        buttonText={"Добавить модуль"}
-        handleClick={AddModuleOpenModal}
-      />
-      <div className="chapters__modules">
-        {/* {chapter.modules.map((module) => (
+
+      <div className="block-left">
+        
+      <div className="block__title">
+        <p>{chapter.title}</p>
+
+      </div>
+        <LmsButton
+          buttonText={"Добавить модуль"}
+          handleClick={AddModuleOpenModal}
+        />
+        <div className="chapters__modules">
+          {/* {chapter.modules.map((module) => (
         <div key={module.id} className="modules__block" onClick={(e) => moduleChange(module)} >{module.title}</div>
     ))} */}
-        {children}
+
+          {children}
+        </div>
+
       </div>
-      <button className="block__chapter_menu" onClick={showPopupMenu}><SettingOutlined style={{ fontSize: '24px' }} /></button>
+      <div className="block-menu">
+
+        <div className="controls">
+          <Button
+            type="text"
+            icon={<UpOutlined />}
+            onClick={() => moveChapter('up')}
+          />
+          <button {...listeners} className="title__chapter-drag">
+            <DragVerticalIcon />
+          </button>
+          <Button
+            type="text"
+            icon={<DownOutlined />}
+            onClick={() => moveChapter('down')}
+          />
+        </div>
+        <button className="block__chapter_menu" onClick={showPopupMenu}><SettingOutlined style={{ fontSize: '24px' }} /></button>
+
+      </div>
+      {/* <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} /> */}
     </div>
 
   );

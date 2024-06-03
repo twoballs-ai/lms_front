@@ -9,7 +9,7 @@ import { apiLmsUrl } from "../../../../../../shared/config";
 import LmsButton from "../../../../../reUseComponents/Button";
 import EditModuleStage from "../../FullCoursePassing/ModuleStageLearn";
 import CourseEditorService from "../../../../../../services/course.editor.service";
-import SortableChapter from "./LearningChapter";
+import Chapter from "./LearningChapter";
 import LmsModalBase from "../../../../../reUseComponents/ModalBase";
 import TextInput from "../../../../../reUseComponents/TextInput";
 import SortableModules from "./LearningModules";
@@ -53,9 +53,9 @@ function CourseLearning() {
                 <div className="leftbar__chapters">
 
                     {getChapters.map((chapter) => (
-                        <SortableChapter
-                            id={chapter.sort_index}
-                            key={chapter.sort_index} // Убедитесь, что уникальный ключ присутствует
+                        <Chapter
+                           
+                            key={chapter.id} // Убедитесь, что уникальный ключ присутствует
                             chapter={chapter}
                             activeChapterId={activeChapterId}
                             setActiveChapterId={setActiveChapterId}
@@ -87,7 +87,7 @@ function CourseLearning() {
                             ))}
 
 
-                        </SortableChapter>
+                        </Chapter>
                     ))}
                 </div>
             </div>

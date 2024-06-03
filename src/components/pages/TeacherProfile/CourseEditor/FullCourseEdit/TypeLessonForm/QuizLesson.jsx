@@ -90,7 +90,7 @@ function AddingQuizLesson(props) {
     const formSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            quiz_id: stagePk,
+            stage_id: stagePk,
             question:questionValue,
             title: inputTitleValue,
             quiz_type: quizType,

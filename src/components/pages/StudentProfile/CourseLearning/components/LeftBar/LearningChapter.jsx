@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const SortableChapter = ({
+const Chapter = ({
   id,
   chapter,
   children,
@@ -9,7 +9,7 @@ const SortableChapter = ({
   getChapters,
   setGetChapters,
 }) => {
-
+console.log()
   return (
     <div
 
@@ -30,4 +30,4 @@ const SortableChapter = ({
 }
 
 
-export default SortableChapter;
+export default Chapter;

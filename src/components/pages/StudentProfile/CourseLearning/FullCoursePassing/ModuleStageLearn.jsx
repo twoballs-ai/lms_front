@@ -148,7 +148,7 @@ function EditModuleStage({ moduleEditData, setModuleEditData }) {
     };
 
 
-    const handleShow = async () => {
+    const handleFinishLesson = async () => {
 console.log("123")
     };
 
@@ -190,7 +190,7 @@ console.log("123")
 
     return (
         <>
-            <div className="main__nav-block"><p>Вы перешли на страницу прохождения модуля: "{moduleEditData.title}"</p>
+            <div className="main__nav-block"><p>Модуль: "{moduleEditData.title}"</p>
                 <div className="nav-block__stages" >
                     <div className="stages__case">
                         {moduleData.map((tech, index) => (
@@ -210,23 +210,17 @@ console.log("123")
             </div>
             <div className="main-student__content">
  
-                {selectedStage && (
-                    (selectedStage.type === "classic" && <LearningClassicLesson selectedStage={selectedStage} />) ||
-                    (selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />)
-                    // (selectedStage.items.type === "video" && <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />)
-                
-                )}
-                {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
+            {selectedStage && (
+                <div className="main__content">
+                    <div className="content__mini-menu">
+                    </div>
 
-                {/* {selectedStage ? <AddingClassicLesson addClasiclesson={addClasiclesson} setModuleData={setModuleData} /> : ""} */}
-                {/* {addClasiclesson ? (
-                        <AddingClassicLesson selectedStage={selectedStage} addClasiclesson={addClasiclesson} setModuleData={setModuleData} />
-                    ) : addVideolesson ? (
-                        <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} />
-                    ) : null} */}
-
-                {/* <AddingVideoLesson selectedStage={selectedStage} addVideolesson={addVideolesson} setModuleData={setModuleData} /> */}
-                <div className="content__learn-buttons"><LmsButton buttonText={"Продолжить"} handleClick={() => handleShow()}/></div>
+                    {selectedStage.type === "classic" && <AddingClassicLesson selectedStage={selectedStage} />}
+                    {selectedStage.type === "video" && <AddingVideoLesson selectedStage={selectedStage} />}
+                    {selectedStage.type === "quiz" && <AddingQuizLesson selectedStage={selectedStage} />}
+                </div>
+            )}
+                <div className="content__learn-buttons"><LmsButton buttonText={"Перейти к следующему"} handleClick={() => handleFinishLesson()}/></div>
                 
             </div>
 

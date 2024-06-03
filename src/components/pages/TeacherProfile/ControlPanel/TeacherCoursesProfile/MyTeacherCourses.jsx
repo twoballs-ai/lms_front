@@ -10,8 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 function MyTeacherCourses() {
-    const [courseData, setCourseData] = useState([]);
-    const [totalResult, setTotalResult] = useState(0);
+    const [courseData, setCourseData] = useState([])
     const navigate = useNavigate();
 
     useEffect(() => {

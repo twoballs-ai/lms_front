@@ -1,4 +1,4 @@
-.course-edit__container {
+.course-learn__container {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -82,13 +82,7 @@
                             background-color: rgba(165, 255, 161, 0.9);
                             border-radius: 5px;
                         }
-                        .block__module-drag {
-                            margin-left: auto;
-                            border: none; /* Убираем границы кнопки */
-                            background: none; /* Убираем фон кнопки */
-                            padding: 0; /* Убираем внутренние отступы кнопки */
-                            cursor: pointer;
-                        }
+
                         
                     }
                 }
