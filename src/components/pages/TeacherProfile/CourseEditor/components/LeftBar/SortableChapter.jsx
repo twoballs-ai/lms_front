@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import LmsButton from "../../../../../reUseComponents/Button";
@@ -12,6 +12,7 @@ import { Button } from "antd";
 import PopupMenu from "../../../../../reUseComponents/PopupMenu";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
 import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
+
 const SortableChapter = ({
   id,
   chapter,
@@ -35,7 +36,6 @@ const SortableChapter = ({
     },
   });
 
-
   const [handlePopupOpen, setHandlePopupOpen] = useState(false);
 
   const showPopupMenu = () => {
@@ -48,9 +48,6 @@ const SortableChapter = ({
 
   const [openModal, setOpenModal] = useState(false);
 
-
-
-
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
@@ -60,11 +57,9 @@ const SortableChapter = ({
     setInputTitleValue(e.target.value);
   };
 
-
   const handleInputDescrChange = (e) => {
     setInputDescreValue(e.target.value);
   };
-
 
   const [isExam, setIsExam] = useState(chapter.is_exam || false);
   const [examDuration, setExamDuration] = useState(chapter.exam_duration || 10);
@@ -73,7 +68,6 @@ const SortableChapter = ({
   const handleInputChapterChange = (e) => {
     setInputTitleChapterValue(e.target.value);
   };
-
 
   const handleInputDescrChapterChange = (e) => {
     setInputDescrChapterValue(e.target.value);
@@ -87,12 +81,11 @@ const SortableChapter = ({
     setExamDuration(value);
   };
 
-
   const AddModuleOpenModal = async () => {
-    handleOpenModal()
+    handleOpenModal();
   };
-  const contentAddModuleToModal = () =>
-  (
+
+  const contentAddModuleToModal = () => (
     <div>
       <h2>Вы добавляете модуль </h2>
       <p>Название модуля:</p>
@@ -100,107 +93,124 @@ const SortableChapter = ({
       <p>Описание модуля:</p>
       <TextInput type={'textarea'} placeholder={"Напишите сюда описание модуля"} value={inputDescrValue} onChange={handleInputDescrChange} />
       <LmsButton buttonText={"Создать"} handleClick={addModule} />
-
     </div>
   );
+
   const addModule = async () => {
-    console.log(chapter.id)
+    // Find the maximum sort_index within the modules of the current chapter
+    const currentChapter = getChapters.find(chap => chap.id === chapter.id);
+    const maxSortIndex = currentChapter?.modules.length > 0
+        ? Math.max(...currentChapter.modules.map(module => module.sort_index))
+        : 0;
+    
+    const newSortIndex = maxSortIndex + 1;
+
+    // Prepare data parameters
     const dataParams = {
-      chapter_id: chapter.id,
-      title: inputTitleValue,
-      description: inputDescrValue,
+        chapter_id: chapter.id,
+        title: inputTitleValue,
+        description: inputDescrValue,
+        sort_index: newSortIndex,
     };
-    const response = await CourseEditorService.editCoursePageAddModule(
-      dataParams
-    );
-    if (response.status === 200 || response.status === 201) {
-      const newModule = response.data.modules;
 
-      const newData = [...getChapters];
-      const existingChapter = newData.find(
-        (chapter) => chapter.id === newModule.chapter_id
+    try {
+        // Send request to add new module
+        const response = await CourseEditorService.editCoursePageAddModule(dataParams);
+        if (response.status === 200 || response.status === 201) {
+            const newModule = response.data.data;
+
+            // Update the state with the new module
+            setGetChapters(prevChapters => {
+                return prevChapters.map(chap => {
+                    if (chap.id === chapter.id) {
+                        return {
+                            ...chap,
+                            modules: [...chap.modules, newModule],
+                        };
+                    }
+                    return chap;
+                });
+            });
+
+            handleCloseModal();
+        }
+    } catch (error) {
+        console.error('Failed to add module:', error);
+    }
+};
+
+  const moveChapter = async (direction) => {
+    const currentIndex = chapter.sort_index;
+    let newIndex;
+
+    if (direction === 'up' && currentIndex > 1) {
+      newIndex = currentIndex - 1;
+    } else if (direction === 'down' && currentIndex < getChapters.length) {
+      newIndex = currentIndex + 1;
+    } else {
+      return; // Do nothing if move is not possible
+    }
+
+    // Swap sort_index of chapters
+    const targetChapter = getChapters.find(chap => chap.sort_index === newIndex);
+    if (targetChapter) {
+      targetChapter.sort_index = currentIndex;
+      chapter.sort_index = newIndex;
+
+      // Update state
+      const updatedChapters = getChapters.map(chap =>
+        chap.id === chapter.id ? { ...chapter, sort_index: newIndex } : chap.id === targetChapter.id ? { ...targetChapter, sort_index: currentIndex } : chap
       );
+      setGetChapters(updatedChapters);
 
-      if (existingChapter) {
-        // Если глава существует, добавляем новый модуль к массиву модулей главы
-        existingChapter.modules.push(newModule);
-      }
-
-      setGetChapters(newData);
-      handleCloseModal()
+      // Update server
+      await CourseEditorService.editCoursePageUpdateChapter(chapter.id, { sort_index: newIndex });
+      await CourseEditorService.editCoursePageUpdateChapter(targetChapter.id, { sort_index: currentIndex });
     }
   };
 
-
-  const moveChapter = async (direction) => {
-    console.log(123)
-    // const currentIndex = chapter.sort_index;
-    // let newIndex;
-
-    // if (direction === 'up' && currentIndex > 1) {
-    //   newIndex = currentIndex - 1;
-    // } else if (direction === 'down' && currentIndex < getChapters.length) {
-    //   newIndex = currentIndex + 1;
-    // } else {
-    //   return; // Do nothing if move is not possible
-    // }
-
-    // // Swap sort_index of chapters
-    // const targetChapter = getChapters.find(chap => chap.sort_index === newIndex);
-    // if (targetChapter) {
-    //   targetChapter.sort_index = currentIndex;
-    //   chapter.sort_index = newIndex;
-
-    //   // Update state
-    //   const updatedChapters = getChapters.map(chap =>
-    //     chap.id === chapter.id ? chapter : chap.id === targetChapter.id ? targetChapter : chap
-    //   );
-    //   setGetChapters(updatedChapters);
-
-    //   // Update server
-    //   await CourseEditorService.editCoursePageUpdateChapter(chapter.id, { sort_index: newIndex });
-    //   await CourseEditorService.editCoursePageUpdateChapter(targetChapter.id, { sort_index: currentIndex });
-    // }
-  };
-
-
-
   const popupContent = () => {
-
     const updateChapter = async () => {
       const dataParams = {
         title: inputTitleChapterValue,
         description: inputDescrChapterValue,
-        sort_index: 1,
+        sort_index: chapter.sort_index,  // Keep the current sort_index
         is_exam: isExam,
         exam_duration_minutes: isExam ? examDuration : null,
       };
       const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, dataParams);
       if (response.status === 200 || response.status === 201) {
-        // console.log(response.data)
-        const updatedChapter = response.data.chapter;
+        const updatedChapter = response.data.data;
         const updatedChapters = getChapters.map(chap =>
           chap.id === chapter.id ? updatedChapter : chap
         );
         setGetChapters(updatedChapters);
-        // handleCloseModal();
       }
     };
 
     const deleteChapter = async () => {
-
-      const response = await CourseEditorService.editCoursePageDeleteChapter(
-        chapter.id
-      );
-      if (response.status === 200 || response.status === 201) {
-        const updatedChapters = getChapters.filter(item => item.id !== chapter.id);
-        setGetChapters(updatedChapters);
+      try {
+        const response = await CourseEditorService.editCoursePageDeleteChapter(chapter.id);
+        if (response.status === 200 || response.status === 201) {
+          let updatedChapters = getChapters.filter(item => item.id !== chapter.id);
+          
+          // Reassign sort_index values
+          updatedChapters = updatedChapters.map((chap, index) => ({
+            ...chap,
+            sort_index: index + 1,
+          }));
+          
+          // Update the sort_index on the server
+          for (const chap of updatedChapters) {
+            await CourseEditorService.editCoursePageUpdateChapter(chap.id, { sort_index: chap.sort_index });
+          }
+    
+          setGetChapters(updatedChapters);
+        }
+      } catch (error) {
+        console.error('Failed to delete chapter:', error);
       }
     };
-
-
-
-    // console.log(chapter)
     return (
       <>
         <div style={{
@@ -234,16 +244,12 @@ const SortableChapter = ({
               />
             </div>
           )}
-          <p>Название главы:</p>
-
           <LmsButton buttonText={"Обновить"} handleClick={updateChapter} />
-
         </div>
         <div style={{
           position: 'absolute',
           bottom: '20px',
           padding: '10px'
-
         }}>
           <LmsButton
             buttonText={"Удалить раздел"}
@@ -251,9 +257,9 @@ const SortableChapter = ({
           />
         </div>
       </>
-    )
-  }
-  // console.log(chapter)
+    );
+  };
+
   return (
     <div
       {...attributes}
@@ -267,36 +273,27 @@ const SortableChapter = ({
       key={chapter.sort_index}
       onClick={() => setActiveChapterId(chapter.id)}
     >
-
       <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentAddModuleToModal()} />
       <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Найстроки раздела: ${chapter.title}`} popupContent={popupContent()} />
-
       <div className="block-left">
-        
-      <div className="block__title">
-        <p>{chapter.title}</p>
-
-      </div>
+        <div className="block__title">
+          <p>{chapter.title}</p>
+        </div>
         <LmsButton
           buttonText={"Добавить модуль"}
           handleClick={AddModuleOpenModal}
         />
         <div className="chapters__modules">
-          {/* {chapter.modules.map((module) => (
-        <div key={module.id} className="modules__block" onClick={(e) => moduleChange(module)} >{module.title}</div>
-    ))} */}
-
           {children}
         </div>
-
       </div>
       <div className="block-menu">
-
         <div className="controls">
           <Button
             type="text"
             icon={<UpOutlined />}
             onClick={() => moveChapter('up')}
+            disabled={chapter.sort_index === 1}
           />
           <button {...listeners} className="title__chapter-drag">
             <DragVerticalIcon />
@@ -305,16 +302,13 @@ const SortableChapter = ({
             type="text"
             icon={<DownOutlined />}
             onClick={() => moveChapter('down')}
+            disabled={chapter.sort_index === getChapters.length}
           />
         </div>
         <button className="block__chapter_menu" onClick={showPopupMenu}><SettingOutlined style={{ fontSize: '24px' }} /></button>
-
       </div>
-      {/* <LmsButton buttonText={"Добавить модуль"} handleClick={(e) => addModule(chapter.id)} /> */}
     </div>
-
   );
-}
-
+};
 
 export default SortableChapter;
