@@ -1,5 +1,4 @@
 ![image](https://github.com/twoballs-ai/lms_front/assets/83840596/485b7df5-d78d-472a-9caf-d1c39fdec9f8)
-Конечно, вот предполагаемое описание для вашего `README.md`:
 
 ---
 
