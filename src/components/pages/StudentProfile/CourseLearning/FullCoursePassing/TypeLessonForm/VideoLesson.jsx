@@ -2,7 +2,8 @@ import React from "react";
 import useLessonData from "./useLessonData";
 import "./LessonsStyle.scss";
 import ReactPlayer from 'react-player';
-function LearningVideoLesson({ selectedStage }) {
+import LmsButton from "../../../../../reUseComponents/Button";
+function LearningVideoLesson({ selectedStage, onComplete }) {
     const { stageData, showVideoLesson } = useLessonData(selectedStage ? selectedStage.id : null);
 
     return (
@@ -20,6 +21,9 @@ function LearningVideoLesson({ selectedStage }) {
                             height="315px"
                         />
                     </div>
+                    <div className="content__learn-buttons">
+                            <LmsButton buttonText={"Следующий этап"} handleClick={onComplete} />
+                        </div>
                 </div>
             )}
         </>

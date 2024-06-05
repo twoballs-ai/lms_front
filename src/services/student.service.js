@@ -25,6 +25,26 @@ const enrollToCourse = async (course_id) => {
             // {headers: { "Content-Type": "multipart/form-data" }}
         )
 }
+const learnGetModuleStages = async (module_id) => {
+    // console.log(course_id)
+    return await api
+        .get(apiStudyUrl + "module-stage-list/" + module_id)
+}
+const updateStage = async (stageId, isCompleted) => {
+    return await api
+        .post(`${apiStudyUrl}update_stage_progress/${stageId}/?is_completed=${isCompleted}`,
+
+            // {headers: { "Content-Type": "multipart/form-data" }}
+        )
+}
+
+const checkQuizLesson = async (stageId, answers) => {
+    return await api
+        .post(`${apiStudyUrl}check_quiz_answers/${stageId}`, answers
+
+            // {headers: { "Content-Type": "multipart/form-data" }}
+        )
+}
 // const deleteTeacherCourse = async (courseId) => {
 //     return await api
 //         .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
@@ -48,9 +68,12 @@ const enrollToCourse = async (course_id) => {
 
 const StudentService = {
     studentCourses,
+    updateStage,
     getLearnLesson,
     checkEnrollment,
     enrollToCourse,
+    learnGetModuleStages,
+    checkQuizLesson,
     // deleteTeacherCourse,
     // addCourse,
     // teacherStudents,

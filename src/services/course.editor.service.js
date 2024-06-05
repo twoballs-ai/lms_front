@@ -5,7 +5,7 @@ import api from "./api";
 const editCoursePageGetModuleStage = async (module_id) => {
     // console.log(course_id)
     return await api
-        .get(apiLmsUrl + "course-chapter-module-stage-list/" + module_id)
+        .get(apiLmsUrl + "module-stage-list/" + module_id)
 }
 
 // const editCoursePageDeleteModuleStage = async (course_id, module_id, data) => {

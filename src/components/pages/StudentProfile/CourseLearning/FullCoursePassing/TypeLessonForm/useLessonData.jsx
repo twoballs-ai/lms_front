@@ -14,7 +14,7 @@ const useLessonData = (stagePk) => {
                 const response = await StudentService.getLearnLesson(stagePk);
                 if (response.status === 200 || response.status === 201) {
                     const data = response.data.data;
-                    console.log(response.data.data)
+                    // console.log(response.data.data)
                     setStageData(data);
                     if (data.type === "classic") {
                         setShowClassicLesson(true);
