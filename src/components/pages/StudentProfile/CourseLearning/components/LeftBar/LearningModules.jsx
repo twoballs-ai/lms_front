@@ -3,7 +3,6 @@ import React from 'react';
 
 const Modules = ({ id, title, module,moduleChange, activeModuleId, setActiveModuleId }) => {
 
-console.log(id)
   return (
     <div
       className={`modules__block ${activeModuleId === id ? "active" : ""}`}   

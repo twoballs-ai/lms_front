@@ -35,7 +35,7 @@ function CourseLearning() {
 
 
     const sortedChapters = [...getChapters].sort((a, b) => a.sort_index - b.sort_index);
-console.log(sortedChapters)
+
     return (
         <div className="course-learn__container">
 
