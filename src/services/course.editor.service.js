@@ -40,6 +40,10 @@ const editCoursePageUpdateModule = async (moduleId, data) => {
     return await api
         .put(apiLmsUrl + `update-module/${moduleId}`, data)
 }
+const editCoursePagePatchModule = async (moduleId, data) => {
+    return await api
+        .patch(apiLmsUrl + `patch-module/${moduleId}`, data)
+}
 const editCoursePageDeleteModule = async (module_id) => {
     return await api
         .delete(`${apiLmsUrl}delete-module/?module_id=${module_id}`)
@@ -83,6 +87,7 @@ const CourseEditorService = {
     editCoursePageGetModuleStage,
     // editCoursePageAddModuleStage,
     editCoursePageGetLesson,
+    editCoursePagePatchModule,
     // editCoursePageDeleteModuleStage,
     // editCoursePageGetCourse,
     editCoursePageGetChapterList,

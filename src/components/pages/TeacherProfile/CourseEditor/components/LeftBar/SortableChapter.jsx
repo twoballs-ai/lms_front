@@ -138,7 +138,7 @@ const SortableChapter = ({
         console.error('Failed to add module:', error);
     }
 };
-
+console.log(chapter.modules)
   const moveChapter = async (direction) => {
     const currentIndex = chapter.sort_index;
     let newIndex;

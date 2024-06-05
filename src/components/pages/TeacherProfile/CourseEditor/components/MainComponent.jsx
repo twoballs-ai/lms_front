@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-function MainComponent() {
+import React from "react";
+import { Outlet } from "react-router-dom";
+// import "./MainComponent.scss"; // Убедитесь, что у вас есть этот файл стилей
 
+function MainComponent() {
     return (
-        <>        
-        <Outlet />
-        
+        <>
+            <Outlet />
+
         </>
     );
 }

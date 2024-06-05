@@ -1,9 +1,9 @@
 import React from 'react';
-import { DragVerticalIcon } from '../../../../../icons/icons';
-
-const SortableModules = ({ id, title, module,moduleChange, activeModuleId, setActiveModuleId }) => {
 
 
+const Modules = ({ id, title, module,moduleChange, activeModuleId, setActiveModuleId }) => {
+
+console.log(id)
   return (
     <div
       className={`modules__block ${activeModuleId === id ? "active" : ""}`}   
@@ -13,11 +13,8 @@ const SortableModules = ({ id, title, module,moduleChange, activeModuleId, setAc
     }}  
     >
         {title}
-        <button className={"block__module-drag"}  >
-        </button>
-
     </div>
   );
 };
 
-export default SortableModules;
+export default Modules;

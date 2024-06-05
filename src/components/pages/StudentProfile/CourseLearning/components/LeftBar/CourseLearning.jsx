@@ -1,101 +1,88 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, Outlet, useParams } from "react-router-dom";
-
-// import { DragEndEvent } from '@dnd-kit/core';
-
-import "./CourseLearner.scss";
-import { apiLmsUrl } from "../../../../../../shared/config";
-import LmsButton from "../../../../../reUseComponents/Button";
-import EditModuleStage from "../../FullCoursePassing/ModuleStageLearn";
+import "./CourseLearning.scss";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import Chapter from "./LearningChapter";
-import LmsModalBase from "../../../../../reUseComponents/ModalBase";
-import TextInput from "../../../../../reUseComponents/TextInput";
-import SortableModules from "./LearningModules";
-
+import Modules from "./LearningModules";
+import ModuleStageLearn from "../../FullCoursePassing/ModuleStageLearn";
 function CourseLearning() {
+    
     const { course_id } = useParams();
     const [getChapters, setGetChapters] = useState([]);
     const [moduleEditData, setModuleEditData] = useState([]);
     const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
-    const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля''
-
-    useEffect(() => {
-        const fetchData = async () => {
-            await CourseEditorService.editCoursePageGetChapterList(
-                course_id
-            ).then((response) => {
-                // console.log(response)
-                if (response.status === 200 || response.status === 201) {
-                    console.log(response.data.data);
-                    setGetChapters(response.data.data);
-                }
-            });
-        };
-        fetchData();
-    }, []);
-
+    const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
 
     const moduleChange = (module) => {
         setModuleEditData(module);
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            await CourseEditorService.editCoursePageGetChapterList(course_id).then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    // Sort the modules within each chapter by sort_index
+                    const sortedChapters = response.data.data.map(chapter => {
+                        const sortedModules = chapter.modules.sort((a, b) => a.sort_index - b.sort_index);
+                        return { ...chapter, modules: sortedModules };
+                    });
+                    setGetChapters(sortedChapters);
+                }
+            });
+        };
+        fetchData();
+    }, [course_id]);
 
 
-
+    const sortedChapters = [...getChapters].sort((a, b) => a.sort_index - b.sort_index);
+console.log(sortedChapters)
     return (
-        <div className="course-edit__container">
+        <div className="course-learn__container">
 
-
-
-            <div className="container__leftbar">
-                <div className="leftbar__chapters">
-
-                    {getChapters.map((chapter) => (
-                        <Chapter
-                           
-                            key={chapter.id} // Убедитесь, что уникальный ключ присутствует
-                            chapter={chapter}
-                            activeChapterId={activeChapterId}
-                            setActiveChapterId={setActiveChapterId}
-
-                            getChapters={getChapters}
-                            setGetChapters={setGetChapters}
-                        >
-
-
-                            {chapter.modules.map((module) => (
-                                // <div
-                                //     key={module.id}
-                                //     className={`modules__block ${activeModuleId === module.id ? "active" : ""}`}
-                                //     onClick={() => {
-                                //         setActiveModuleId(module.id);
-                                //         moduleChange(module);
-                                //     }}
-                                // >
-                                //     {module.title}
-                                // </div>
-                                <SortableModules
-                                    title={module.title}
-                                    moduleChange={moduleChange}
-                                    id={module.id}
-                                    key={module.id}
-                                    module={module}
-                                    activeModuleId={activeModuleId}
-                                    setActiveModuleId={setActiveModuleId} />
+    
+                    <div className="container__leftbar">
+                        <div className="leftbar__chapters">
+                            {sortedChapters.map((chapter) => (
+                                <Chapter
+                                    id={chapter.sort_index}
+                                    key={chapter.sort_index}
+                                    chapter={chapter}
+                                    activeChapterId={activeChapterId}
+                                    setActiveChapterId={setActiveChapterId}
+                                    getChapters={getChapters}
+                                    setGetChapters={setGetChapters}
+                                >
+                
+                                        {chapter.modules.map((module, index) => (
+                                            <Modules
+                                                title={module.title}
+                                                moduleChange={moduleChange}
+                                                id={module.id}
+                                                key={module.sort_index}
+                                                module={module}
+                                                activeModuleId={activeModuleId}
+                                                setActiveModuleId={setActiveModuleId}
+                                                onMoveUp={() => handleMoveModule(chapter.id, module.id, -1)}
+                                                onMoveDown={() => handleMoveModule(chapter.id, module.id, 1)}
+                                                isFirst={index === 0}
+                                                isLast={index === chapter.modules.length - 1}
+                                            />
+                                        ))}
+                             
+                                </Chapter>
                             ))}
-
-
-                        </Chapter>
-                    ))}
-                </div>
-            </div>
-
-
-            <div className="container__main">
+                        </div>
+                    </div>
+            
+            
+            <div className="container__learn-main">
                 {Object.keys(moduleEditData).length > 0 && (
-                    <EditModuleStage moduleEditData={moduleEditData} setModuleEditData={setModuleEditData} />
+                    <ModuleStageLearn
+                        moduleEditData={moduleEditData}
+                        setModuleEditData={setModuleEditData}
+                        getChapters={getChapters}
+                        setGetChapters={setGetChapters}
+                    />
                 )}
             </div>
         </div>

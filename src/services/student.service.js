@@ -8,6 +8,11 @@ const studentCourses = async () => {
         .get(apiStudyUrl + "student/courses/"
         )
 }
+const checkEnrollment = async (course_id) => {
+    return await api
+        .get(apiStudyUrl + "check-enrollment/?course_id="+course_id
+        )
+}
 
 const getLearnLesson = async (stagePk) => {
     return await api
@@ -44,6 +49,7 @@ const enrollToCourse = async (course_id) => {
 const StudentService = {
     studentCourses,
     getLearnLesson,
+    checkEnrollment,
     enrollToCourse,
     // deleteTeacherCourse,
     // addCourse,

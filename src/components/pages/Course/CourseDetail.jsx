@@ -5,7 +5,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-
+import { useLocation, useNavigate } from 'react-router-dom';
 import { apiBaseUrl, apiUrl, serverUrl } from "../../../shared/config";
 import SiteService from "../../../services/siteNoAuth.service";
 import ImageViewer from "../../reUseComponents/ImageViewer";
@@ -13,6 +13,8 @@ import LmsButton from "../../reUseComponents/Button";
 import StudentService from "../../../services/student.service";
 
 function CourseDetail() {
+    const navigate = useNavigate();
+
     let { course_id } = useParams();
     const [show, setShow] = useState(false);
     const [showRate, setShowRate] = useState(false);
@@ -57,7 +59,43 @@ function CourseDetail() {
             });
 
         };
+
+
         fetchData();
+
+        const studentLoginStatus = JSON.parse(localStorage.getItem("studentLoginStatus"));
+        if (studentLoginStatus === "true") {
+            setUserLoggedStatus("success");
+
+            const fetchAuthData = async () => {
+
+                await StudentService.checkEnrollment(course_id).then((response) => {
+                    // console.log(response.data.data)
+                    if (response.status === 200 || response.status === 201) {
+                        console.log(response.data)
+                        if (response.data.enrolled_status==="enrolled"){
+                            setEnrollStatus(response.data.enrolled_status)
+                        }
+                        if (response.data.data.length !== 0) {
+           
+                            // console.log(response.data.data[0])
+                            // console.log(response.data.data[0]);
+                            // Устанавливаем selectedStage во второй элемент массива data
+                            // setSelectedStage(response.data.data[0]);
+                        } else {
+                            // Устанавливаем selectedStage в первый элемент массива data
+                            // setSelectedStage(null);
+                        }
+                    }
+                });
+    
+            };
+    
+    
+            fetchAuthData();
+
+        }
+        
         // try {
         //     axios
         //         .get(
@@ -162,10 +200,7 @@ function CourseDetail() {
         // } catch (error) {
         //     console.log(error);
         // }
-        const studentLoginStatus = JSON.parse(localStorage.getItem("studentLoginStatus"));
-        if (studentLoginStatus === "true") {
-            setUserLoggedStatus("success");
-        }
+
     }, [course_id]);
     document.title = `Курс - ${courseData.title}`;
     const enrollCourse = async () => {
@@ -184,6 +219,8 @@ function CourseDetail() {
                 // }
             }
         });
+
+        
         // try {
         //     axios
         //         .post(
@@ -206,7 +243,10 @@ function CourseDetail() {
         //     console.log(error);
         // }
     };
-
+    const handlePassingCourseClick = async (course_id) => {
+        // Перенаправляем пользователя на другую страницу
+        navigate(`/course-learning/${course_id}/learning`); // Замените '/новый_маршрут' на ваш адрес назначения
+    };
     // функция рейтинг
     const handleChange = (event) => {
         setRatingData({
@@ -488,24 +528,15 @@ function CourseDetail() {
                         Просмотры курса:{" "}
                         <Badge count={courseViews}></Badge>
                     </p>
-                    {/* {enrollStatus === "success" &&
-                        userLoggedStatus === "success" && (
+                    {userLoggedStatus === "success" &&
+                        enrollStatus === "enrolled" && (
                             <p>
                                 <span>Вы уже подписаны на курс</span>
-                                <br />
-                                <LmsButton
-                                    as={Link}
-                                    title="Проходить курс"
-
-                                    to={`/course-study/course/${course_id}/${firstModuleData[0] && firstModuleData[0].id}/stage/1`}
-                                    variant="primary"
-                                >
-                                    Проходить курс
-                                </LmsButton>
+                                <LmsButton buttonText={"Проходить курс"} handleClick={() => handlePassingCourseClick(course_id)} />
                             </p>
-                        )} */}
+                        )}
                     {userLoggedStatus === "success" &&
-                        enrollStatus !== "success" && (
+                        enrollStatus !== "enrolled" && (
                             <LmsButton buttonText={"Подписаться на курс"} handleClick={() => enrollCourse()} />
  
                         )}

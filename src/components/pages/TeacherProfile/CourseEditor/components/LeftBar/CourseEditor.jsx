@@ -5,7 +5,7 @@ import {
     restrictToVerticalAxis,
     restrictToWindowEdges,
 } from "@dnd-kit/modifiers";
-import { 
+import {
     DndContext,
     KeyboardSensor,
     PointerSensor,
@@ -31,8 +31,9 @@ import SortableModules from "./SortableModules";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
 import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
 import ChapterModalContent from "./ChapterModalContent";
-
+import { useLocation, useNavigate } from 'react-router-dom';
 function CourseEditor() {
+    
     const { course_id } = useParams();
     const [getChapters, setGetChapters] = useState([]);
     const [moduleEditData, setModuleEditData] = useState([]);
@@ -47,6 +48,15 @@ function CourseEditor() {
     const [isExam, setIsExam] = useState(false);
     const [examDuration, setExamDuration] = useState(10);
     const [previousChapterId, setPreviousChapterId] = useState(null);
+
+    const navigate = useNavigate();
+
+
+    const handleBackToProfile = async (course_id) => {
+        // Перенаправляем пользователя на другую страницу
+        navigate(`/teacher-profile`); // Замените '/новый_маршрут' на ваш адрес назначения
+    };
+
 
     useEffect(() => {
         if (getChapters.length > 0) {
@@ -110,10 +120,24 @@ function CourseEditor() {
             setGetChapters((chapters) => {
                 const oldIndex = chapters.findIndex((chapter) => chapter.sort_index === active.id);
                 const newIndex = chapters.findIndex((chapter) => chapter.sort_index === over.id);
-                return arrayMove(chapters, oldIndex, newIndex).map((chapter, index) => ({
+                const newChapters = arrayMove(chapters, oldIndex, newIndex).map((chapter, index) => ({
                     ...chapter,
                     sort_index: index + 1,
                 }));
+                // Обновление сортировки на сервере
+                newChapters.forEach(async (chapter) => {
+                    try {
+                        const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, {
+                            sort_index: chapter.sort_index,
+                        });
+                        if (response.status === 200 || response.status === 201) {
+                            console.log("Chapter updated successfully", response.data);
+                        }
+                    } catch (error) {
+                        console.error('Failed to update chapter:', error);
+                    }
+                });
+                return newChapters;
             });
         }
     };
@@ -122,8 +146,12 @@ function CourseEditor() {
         const fetchData = async () => {
             await CourseEditorService.editCoursePageGetChapterList(course_id).then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    // console.log(response.data.data)
-                    setGetChapters(response.data.data);
+                    // Sort the modules within each chapter by sort_index
+                    const sortedChapters = response.data.data.map(chapter => {
+                        const sortedModules = chapter.modules.sort((a, b) => a.sort_index - b.sort_index);
+                        return { ...chapter, modules: sortedModules };
+                    });
+                    setGetChapters(sortedChapters);
                 }
             });
         };
@@ -156,29 +184,45 @@ function CourseEditor() {
         }
     };
 
-    const handleMoveModule = (chapterId, moduleId, direction) => {
-        setGetChapters((chapters) =>
-            chapters.map((chapter) => {
-                if (chapter.id !== chapterId) return chapter;
+    const handleMoveModule = async (chapterId, moduleId, direction) => {
+        const updatedChapters = getChapters.map((chapter) => {
+            if (chapter.id !== chapterId) return chapter;
 
-                const modules = [...chapter.modules];
-                const index = modules.findIndex((module) => module.id === moduleId);
-                const newIndex = index + direction;
+            const modules = [...chapter.modules];
+            const index = modules.findIndex((module) => module.id === moduleId);
+            const newIndex = index + direction;
 
-                if (newIndex < 0 || newIndex >= modules.length) return chapter;
+            if (newIndex < 0 || newIndex >= modules.length) return chapter;
 
-                const [movedModule] = modules.splice(index, 1);
-                modules.splice(newIndex, 0, movedModule);
+            const [movedModule] = modules.splice(index, 1);
+            modules.splice(newIndex, 0, movedModule);
 
-                return {
-                    ...chapter,
-                    modules: modules.map((module, idx) => ({
-                        ...module,
-                        sort_index: idx + 1,
-                    })),
-                };
-            })
-        );
+            return {
+                ...chapter,
+                modules: modules.map((module, idx) => ({
+                    ...module,
+                    sort_index: idx + 1,
+                })),
+            };
+        });
+
+        setGetChapters(updatedChapters);
+
+        // Обновление сортировки модулей на сервере
+        updatedChapters.forEach((chapter) => {
+            chapter.modules.forEach(async (module) => {
+                try {
+                    const response = await CourseEditorService.editCoursePagePatchModule(module.id, {
+                        sort_index: module.sort_index,
+                    });
+                    if (response.status === 200 || response.status === 201) {
+                        console.log("Module updated successfully", response.data);
+                    }
+                } catch (error) {
+                    console.error('Failed to update module:', error);
+                }
+            });
+        });
     };
 
     const sortedChapters = [...getChapters].sort((a, b) => a.sort_index - b.sort_index);
@@ -235,7 +279,7 @@ console.log(sortedChapters)
                                             <SortableModules
                                                 title={module.title}
                                                 moduleChange={moduleChange}
-                                                id={module.sort_index}
+                                                id={module.id}
                                                 key={module.sort_index}
                                                 module={module}
                                                 activeModuleId={activeModuleId}
@@ -262,6 +306,13 @@ console.log(sortedChapters)
                         setGetChapters={setGetChapters}
                     />
                 )}
+            </div>
+            <div className="settings-panel">
+            <LmsButton
+                                buttonText={"Вернуться в профиль"}
+                                handleClick={handleBackToProfile}
+                            />
+                {/* Здесь могут быть различные элементы управления настройками */}
             </div>
         </div>
     );

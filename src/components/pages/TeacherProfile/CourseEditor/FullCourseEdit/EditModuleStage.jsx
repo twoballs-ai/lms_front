@@ -115,17 +115,55 @@ function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGe
         };
 
         const deleteModule = async () => {
-            const response = await CourseEditorService.editCoursePageDeleteModule(moduleEditData.id);
-            if (response.status === 200 || response.status === 201) {
+            // const response = await CourseEditorService.editCoursePageDeleteModule(moduleEditData.id);
+            // if (response.status === 200 || response.status === 201) {
+            //     const updatedChapters = getChapters.map(chapter => {
+            //         if (chapter.id === moduleEditData.chapter_id) {
+            //             const updatedModules = chapter.modules.filter(module => module.id !== moduleEditData.id);
+            //             return { ...chapter, modules: updatedModules };
+            //         }
+            //         return chapter;
+            //     });
+            //     setGetChapters(updatedChapters);
+            //     setModuleEditData({});
+            // }
+            const deleteResponse = await CourseEditorService.editCoursePageDeleteModule(moduleEditData.id);
+            if (deleteResponse.status === 200 || deleteResponse.status === 201) {
+                // Фильтрация удаленного модуля из состояния
                 const updatedChapters = getChapters.map(chapter => {
                     if (chapter.id === moduleEditData.chapter_id) {
-                        const updatedModules = chapter.modules.filter(module => module.id !== moduleEditData.id);
+                        const remainingModules = chapter.modules.filter(module => module.id !== moduleEditData.id);
+                        // Пересчет sort_index для оставшихся модулей
+                        const updatedModules = remainingModules.map((module, index) => ({
+                            ...module,
+                            sort_index: index + 1
+                        }));
                         return { ...chapter, modules: updatedModules };
                     }
                     return chapter;
                 });
                 setGetChapters(updatedChapters);
                 setModuleEditData({});
+        
+                // Обновление sort_index на сервере для каждого модуля
+                for (const chapter of updatedChapters) {
+                    if (chapter.id === moduleEditData.chapter_id) {
+                        for (const module of chapter.modules) {
+                            try {
+                                const updateResponse = await CourseEditorService.editCoursePagePatchModule(module.id, {
+                                    sort_index: module.sort_index
+                                });
+                                if (!(updateResponse.status === 200 || updateResponse.status === 201)) {
+                                    console.error('Failed to update module sort_index:', updateResponse);
+                                }
+                            } catch (error) {
+                                console.error('Error updating module sort_index:', error);
+                            }
+                        }
+                    }
+                }
+            } else {
+                console.error('Failed to delete module:', deleteResponse);
             }
         };
 
