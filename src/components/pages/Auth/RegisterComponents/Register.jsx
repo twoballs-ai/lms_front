@@ -26,6 +26,7 @@ const RegisterForm = ({ userType }) => {
         formData.append("email", email);
         formData.append("password", password);
         formData.append("interested_categories", "");
+        console.log(formData)
       await AuthService.studentRegister(formData).then((response) => {
         if (response.status === 200 || response.status === 201) {
           setEmail("");
@@ -41,6 +42,7 @@ const RegisterForm = ({ userType }) => {
         formData.append("name", "");
         formData.append("lastName", "");
         formData.append("skills", "");
+        console.log(formData)
       await AuthService.teacherRegister(formData).then((response) => {
         if (response.status === 200 || response.status === 201) {
           setEmail("");

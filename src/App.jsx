@@ -81,6 +81,8 @@ import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import CoursePassingMainComponent from './components/pages/StudentProfile/CourseLearning/components/MainComponent';
 import CoursePageInfo from './components/pages/StudentProfile/CourseLearning/FullCoursePassing/CoursePageInfo';
 import CourseLearning from './components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const router = createBrowserRouter([
   {
@@ -156,9 +158,19 @@ const router = createBrowserRouter([
 const App = () => (
   <AuthProvider>
     <RouterProvider router={router} />
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={true}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />  {/* Add the ToastContainer here */}
   </AuthProvider>
 );
-
 export default App;
 
 

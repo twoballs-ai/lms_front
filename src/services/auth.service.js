@@ -6,11 +6,11 @@ import TokenService from "./token.service";
 
 const teacherRegister = async (data) => {
   console.log(data)
-  // return await api
-  //   .post(apiUserUrl + "teacher-register/",
-  //     data
-  //     // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-  //   )
+  return await api
+    .post(apiUserUrl + "teacher-register/",
+      data
+      // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+    )
 }
 const studentRegister = async (data) => {
   return await api
