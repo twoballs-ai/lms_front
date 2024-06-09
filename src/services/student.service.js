@@ -50,13 +50,7 @@ const checkQuizLesson = async (stageId, answers) => {
 //         .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
 //         )
 // }
-// const addCourse = async (...data) => {
-//     return await api
-//         .post(apiLmsUrl + "course/",
-//         ...data,
-//             // {headers: { "Content-Type": "multipart/form-data" }}
-//         )
-// }
+
 // const teacherStudents = async (teacherId) => {
 //     return await api
 //         .get(apiLmsUrl + "teacher-students/" + teacherId

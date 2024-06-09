@@ -16,10 +16,26 @@
         width: calc(50% - 20px); // Width of the card - one third of the container width
         box-sizing: border-box;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Добавляем тень
+        .course-item__course-title{
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            p {
+                margin-left: auto;
+            }
+        }
         .course-item__course-actions{
             display: flex;
             flex-direction: row;
             gap: 10px;
+            .course-actions__button {
+                width: fit-content; /* Занимает только ширину своего содержимого */
+                border: none; /* Убираем границы кнопки */
+                background: none; /* Убираем фон кнопки */
+                padding: 0; /* Убираем внутренние отступы кнопки */
+                cursor: pointer;
+                margin-left: auto;
+            }
         }
       }
       

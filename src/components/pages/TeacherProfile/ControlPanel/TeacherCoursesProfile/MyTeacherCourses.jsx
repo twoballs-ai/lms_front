@@ -7,7 +7,7 @@ import TeacherService from '../../../../../services/teacher.service';
 import './MyTeacherCourses.scss';
 import LmsButton from '../../../../reUseComponents/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { SettingOutlined } from '@ant-design/icons';
 
 function MyTeacherCourses() {
     const [courseData, setCourseData] = useState([])
@@ -17,7 +17,7 @@ function MyTeacherCourses() {
         const fetchData = async () => {
             await TeacherService.teacherCourses().then((response) => {
                 if (response.status === 200 || response.status === 201) {
-                    setCourseData(response.data);
+                    setCourseData(response.data.data);
                 }
             });
         }
@@ -25,7 +25,7 @@ function MyTeacherCourses() {
     }, []);
 
     const handleDeleteClick = async (course_id) => {
-        console.log("fff")
+
         const response = await TeacherService.deleteTeacherCourse(course_id)
         setTotalResult(response.data.length);
     };
@@ -33,19 +33,24 @@ function MyTeacherCourses() {
         // Перенаправляем пользователя на другую страницу
         navigate(`/course-editor/${course_id}/edit`); // Замените '/новый_маршрут' на ваш адрес назначения
     };
+  
+        const handleNavigate = async (courseId) => {
+            navigate(`edit-course/${courseId}`);
+        };
+    
     return (
         <>
             <div className="my-courses-container">
                 <div className="my-courses-container__title">Мои курсы</div>
-                
-                    {courseData.map((course, index) => (
-                        <div key={index} className="my-courses-container__course-item">
-                            <div className="course-item__course-title">
-                       
-                                    {course.title}
-                    
-                                    </div>
-                                {/* {course.course_rating && (
+
+                {courseData.map((course, index) => (
+                    <div key={index} className="my-courses-container__course-item">
+                        <div className="course-item__course-title">
+                            {course.title}
+                            <p>Статус курса: {course.status}</p>
+                        </div>
+
+                        {/* {course.course_rating && (
                                     <span className="course-rating">
                                         рейтинг курса:
                                         {course.course_rating}/5{" "}
@@ -56,15 +61,15 @@ function MyTeacherCourses() {
                                         Ваш курс еще не оценили{" "}
                                     </span>
                                 )} */}
-                            
-                            {/* <div className="course-image-container">
+
+                        {/* <div className="course-image-container">
                                 <img
                                     src={course.course_image}
                                     className="rounded float-start course-image"
                                     alt={course.title}
                                 />
                             </div> */}
-                            {/* <div className="course-enrolled">
+                        {/* <div className="course-enrolled">
                                 <Link
                                     to={
                                         "/teacher-profile/enrolled-students/" +
@@ -75,8 +80,8 @@ function MyTeacherCourses() {
                                     {course.total_enrolled_students}
                                 </Link>{" "}
                             </div> */}
-                            <div className="course-item__course-actions">
-                                {/* <button
+                        <div className="course-item__course-actions">
+                            {/* <button
                                     as={Link}
                                     to={
                                         "/teacher-profile/edit-course/" +
@@ -86,13 +91,17 @@ function MyTeacherCourses() {
                                 >
                                     Редактировать данные курса
                                 </button> */}
-                                <LmsButton buttonText={"Войти в режим редактора курса"} handleClick={() => handleEditCourseClick(course.id)} />
-                                <LmsButton buttonText={"Удалить курс"} handleClick={() => handleDeleteClick(course.id)} />
 
-                            </div>
+                            <LmsButton buttonText={"Войти в режим редактора курса"} handleClick={() => handleEditCourseClick(course.id)} />
+                            <LmsButton buttonText={"Удалить курс"} handleClick={() => handleDeleteClick(course.id)} />
+                            <button className="course-actions__button" onClick={() => handleNavigate(course.id)}>
+                                <SettingOutlined style={{ fontSize: '24px' }} />
+                            </button>
                         </div>
-                    ))}
-             
+
+                    </div>
+                ))}
+
             </div>
         </>
     );

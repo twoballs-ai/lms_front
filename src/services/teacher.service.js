@@ -29,24 +29,12 @@ const teacherStudents = async (teacherId) => {
         .get(apiLmsUrl + "teacher-students/" + teacherId
         )
 }
-
-
-// try {
-//     axios
-//         .get(
-//             apiUserUrl + "teacher/dashboard/" + teacherId, { headers: authHeader() }
-//             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-//             // ,{headers: { "Content-Type": "multipart/form-data" }}
-//         )
-//         .then((response) => {
-//             setDashboardData(response.data);
-//             console.log(response.data);
-//         });
-// } catch (e) {
-//     console.log(e);
-// }
-
-
+const getCourseById = async (courseId) => {
+    return await api
+        .get(`${apiLmsUrl}course/?course_id=${courseId}`
+            // {headers: { "Content-Type": "multipart/form-data" }}
+        )
+}
 
 
 const TeacherService = {
@@ -55,6 +43,7 @@ const TeacherService = {
     deleteTeacherCourse,
     addCourse,
     teacherStudents,
+    getCourseById,
 };
 
 export default TeacherService;

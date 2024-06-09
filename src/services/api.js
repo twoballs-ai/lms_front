@@ -38,8 +38,10 @@ instance.interceptors.response.use(
     if (err.response) {
       console.log(err.response)
       // Show error toast if response contains an error message
-      if (err.response && err.response.statusText) {
-        toast.error("Произошла внутренняя ошибка");
+      if (Array.isArray(err.response.data.detail)) {
+       toast.error(`Ошибка с кодом: ${err.response.status}`);
+      } else if (typeof err.response.data.detail === 'string') {
+        toast.error(err.response.data.detail);
       }
 
       if (err.response.status === 401 && !originalConfig._retry) {

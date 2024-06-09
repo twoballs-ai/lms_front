@@ -83,6 +83,7 @@ import CoursePageInfo from './components/pages/StudentProfile/CourseLearning/Ful
 import CourseLearning from './components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
+import EditCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/EditCourse';
 
 const router = createBrowserRouter([
   {
@@ -122,6 +123,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <TeacherDashboard /> },
       { path: "my-courses", element: <MyTeacherCourses /> },
+      { path: "my-courses/edit-course/:course_id", element: <EditCourse /> },
       { path: "add-course", element: <AddCourse /> },
       { path: "profile-settings", element: <TeacherProfileSettings /> },
       { path: "reset-password", element: <TeacherChangePassword /> },

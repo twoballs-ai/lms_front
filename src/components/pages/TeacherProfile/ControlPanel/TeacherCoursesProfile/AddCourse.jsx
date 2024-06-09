@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { apiLmsUrl } from "../../../../../shared/config";
+import { useNavigate } from "react-router-dom";
 import SiteService from '../../../../../services/siteNoAuth.service';
 import TeacherService from '../../../../../services/teacher.service';
 import "./AddCourse.scss"; // Импорт стилей SCSS
 import LmsButton from '../../../../reUseComponents/Button';
 import CustomSelect from '../../../../reUseComponents/Select';
 import TextInput from '../../../../reUseComponents/TextInput';
-import UppyComponent from '../../../../reUseComponents/FileUpload';
 import FileUpload from '../../../../reUseComponents/FileUpload';
 
 
 function AddCourse() {
+    const navigate = useNavigate();
     // const teacherId = localStorage.getItem("user");
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -61,8 +59,8 @@ function AddCourse() {
 
         const response = await TeacherService.addCourse(formData);
         if (response.status === 200 || response.status === 201) {
-            console.log(response.status);
             // window.location.href = "/teacher-profile/my-courses";
+            navigate("/teacher-profile/my-courses");
         }
     };
 

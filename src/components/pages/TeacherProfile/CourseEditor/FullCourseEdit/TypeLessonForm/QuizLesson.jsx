@@ -103,7 +103,7 @@ function AddingQuizLesson(props) {
             // setInputTitleValue(response.data.data.title);
         }
     };
-console.log(answers)
+console.log(quizType)
     return (
         <>
             {showQuizLesson && (

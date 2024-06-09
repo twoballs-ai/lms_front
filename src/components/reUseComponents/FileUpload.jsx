@@ -29,9 +29,9 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
                 <input {...getInputProps()} />
                 <p>Перетащите {fileType === 'image' ? 'изображения' : (fileType === 'video' ? 'видео' : 'документы')} сюда или нажмите для выбора</p>
                 {isDragActive ? (
-                    <p>Отпустите {selectionMode === 'multiple' ? 'изображения' : 'изображение'} здесь...</p>
+                    <p>Отпустите {selectionMode === 'multiple' ? 'файлы' : 'файл'} здесь...</p>
                 ) : (
-                    <p>Вы можете загрузить {selectionMode === 'multiple' ? 'несколько' : 'одно'} {fileType === 'image' ? 'изображений' : (fileType === 'video' ? 'видео' : 'документов')}.</p>
+                    <p>Вы можете загрузить {selectionMode === 'multiple' ? 'несколько файлов' : 'один файл'} </p>
                 )}
             </div>
             <div className="upload-preview">
@@ -57,7 +57,7 @@ const getFileAcceptType = (fileType) => {
         case 'image':
             return 'image/jpeg, image/png, image/gif, image/webp';
         case 'video':
-            return 'video/mp4, video/x-m4v, video/*';
+            return 'video/mp4, video/x-m4v, video/webm, video/ogg, video/quicktime';
         case 'pdf':
             return 'application/pdf';
         default:
