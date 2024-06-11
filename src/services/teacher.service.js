@@ -24,6 +24,13 @@ const addCourse = async (...data) => {
             {headers: { "Content-Type": "multipart/form-data" }}
         )
 }
+const updateCourse = async (course_id, ...data) => {
+    return await api
+        .put(apiLmsUrl + "course/"+course_id,
+        ...data,
+            {headers: { "Content-Type": "multipart/form-data" }}
+        )
+}
 const teacherStudents = async (teacherId) => {
     return await api
         .get(apiLmsUrl + "teacher-students/" + teacherId
@@ -42,6 +49,7 @@ const TeacherService = {
     teacherCourses,
     deleteTeacherCourse,
     addCourse,
+    updateCourse,
     teacherStudents,
     getCourseById,
 };

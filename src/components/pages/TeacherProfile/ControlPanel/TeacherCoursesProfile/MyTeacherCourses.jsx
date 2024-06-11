@@ -33,11 +33,11 @@ function MyTeacherCourses() {
         // Перенаправляем пользователя на другую страницу
         navigate(`/course-editor/${course_id}/edit`); // Замените '/новый_маршрут' на ваш адрес назначения
     };
-  
-        const handleNavigate = async (courseId) => {
-            navigate(`edit-course/${courseId}`);
-        };
     
+    const handleSettingsCourseClick = async (course_id) => {
+        // Перенаправляем пользователя на другую страницу
+        navigate(`/course-settings/${course_id}`); // Замените '/новый_маршрут' на ваш адрес назначения
+    };
     return (
         <>
             <div className="my-courses-container">
@@ -92,11 +92,9 @@ function MyTeacherCourses() {
                                     Редактировать данные курса
                                 </button> */}
 
-                            <LmsButton buttonText={"Войти в режим редактора курса"} handleClick={() => handleEditCourseClick(course.id)} />
+                            <LmsButton buttonText={"Редактор курса"} handleClick={() => handleEditCourseClick(course.id)} />
+                            <LmsButton buttonText={"Все настройки курса"} handleClick={() => handleSettingsCourseClick(course.id)} />
                             <LmsButton buttonText={"Удалить курс"} handleClick={() => handleDeleteClick(course.id)} />
-                            <button className="course-actions__button" onClick={() => handleNavigate(course.id)}>
-                                <SettingOutlined style={{ fontSize: '24px' }} />
-                            </button>
                         </div>
 
                     </div>

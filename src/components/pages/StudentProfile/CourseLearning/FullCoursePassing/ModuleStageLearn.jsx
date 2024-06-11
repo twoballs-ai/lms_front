@@ -25,9 +25,14 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
             if (response.status === 200 || response.status === 201) {
                 const data = response.data.data;
                 setModuleData(data);
-                if (data.length !== 0) {
+                // Find the first stage that is not completed
+                const firstNonCompletedStage = data.find(stage => !stage.is_completed);
+                if (firstNonCompletedStage) {
+                    setSelectedStage(firstNonCompletedStage);
+                    setLessonCompleted(firstNonCompletedStage.is_completed); // Set the lesson completed state based on the first stage
+                } else if (data.length !== 0) {
                     setSelectedStage(data[0]);
-                    setLessonCompleted(data[0].is_completed); // Set the lesson completed state based on the first stage
+                    setLessonCompleted(data[0].is_completed); // Fallback to the first stage if all are completed
                 } else {
                     setSelectedStage(null);
                     setLessonCompleted(false); // Reset the lesson completed state
@@ -54,24 +59,26 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
         if (!selectedStage) return;
 
         try {
-            // Send update to the backend
             const response = await StudentService.updateStage(selectedStage.id, true);
             if (response.status === 200 || response.status === 201) {
-                // Update moduleData to mark the current stage as completed
                 const updatedModuleData = moduleData.map(stage =>
                     stage.id === selectedStage.id ? { ...stage, is_completed: true } : stage
                 );
                 setModuleData(updatedModuleData);
 
-                // Find the index of the current stage
                 const currentIndex = updatedModuleData.findIndex(stage => stage.id === selectedStage.id);
-                // Move to the next stage if it exists
                 if (currentIndex !== -1 && currentIndex < updatedModuleData.length - 1) {
-                    setSelectedStage(updatedModuleData[currentIndex + 1]);
-                    setLessonCompleted(updatedModuleData[currentIndex + 1].is_completed); // Set the lesson completed state based on the next stage
+                    const nextStage = updatedModuleData.slice(currentIndex + 1).find(stage => !stage.is_completed);
+                    if (nextStage) {
+                        setSelectedStage(nextStage);
+                        setLessonCompleted(nextStage.is_completed);
+                    } else {
+                        setSelectedStage(null);
+                        setLessonCompleted(false);
+                    }
                 } else {
                     setSelectedStage(null);
-                    setLessonCompleted(false); // Reset the lesson completed state if there are no more stages
+                    setLessonCompleted(false);
                 }
             }
         } catch (error) {
@@ -96,7 +103,7 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
             
             {selectedStage && (
                 <div className="main-student__content">
-                                        {lessonCompleted && (
+                    {lessonCompleted && (
                         <div className="completion-message">
                             <p>Вы прошли урок, продолжайте в том же духе!</p>
                         </div>
@@ -104,8 +111,6 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
                     {selectedStage.type === "classic" && <LearningClassicLesson selectedStage={selectedStage} onComplete={handleNextStage}/>}
                     {selectedStage.type === "video" && <LearningVideoLesson selectedStage={selectedStage} onComplete={handleNextStage} />}
                     {selectedStage.type === "quiz" && <LearningQuizLesson selectedStage={selectedStage} onComplete={handleNextStage} />}
-
-
                 </div>
             )}
         </>

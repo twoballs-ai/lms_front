@@ -68,7 +68,6 @@ import CourseEditor from './components/pages/TeacherProfile/CourseEditor/compone
 // // import AddStageLesson from './components/pages/Teacher/CourseEditor/FullCourseEdit/AddStageLesson';
 // // import StudentCourseLearn from './components/pages/Course/StudentCourseLearn';
 import UserLogout from './components/pages/Auth/Logout/Logout';
-import AllCourses from './components/pages/AllCourses/AllCourses';
 import CategoryPage from './components/pages/CoursesByCat/CategoryPage';
 // import MainComponent from './components/pages/Teacher/CourseEditor/components/MainComponent';
 // import Layout from './components/pages/basicComponents/layouts';
@@ -83,7 +82,10 @@ import CoursePageInfo from './components/pages/StudentProfile/CourseLearning/Ful
 import CourseLearning from './components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import EditCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/EditCourse';
+import SettingsOutlet from './components/pages/TeacherProfile/CourseSettings/SettingsOutlet';
+import SettingsCourseInfo from './components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/SettingsCourseInfo';
+import EditCourse from './components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/EditCourse';
+// import EditCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/EditCourse';
 
 const router = createBrowserRouter([
   {
@@ -96,7 +98,7 @@ const router = createBrowserRouter([
         element: <CourseDetail />,
       },
       { path: "about", element: <About /> },
-      { path: "all-courses", element: <AllCourses /> },
+  
       { path: "category", element: <CategoryPage /> },
       { path: "logout", element: <UserLogout /> },
     ]
@@ -123,14 +125,13 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <TeacherDashboard /> },
       { path: "my-courses", element: <MyTeacherCourses /> },
-      { path: "my-courses/edit-course/:course_id", element: <EditCourse /> },
       { path: "add-course", element: <AddCourse /> },
       { path: "profile-settings", element: <TeacherProfileSettings /> },
       { path: "reset-password", element: <TeacherChangePassword /> },
     ]
   },
   {
-    path: "course-editor/:course_id",
+    path: "25647580щ8/:course_id",
     element: (
       <PrivateRoute requiredRole="teacher_model">
         <MainComponent />
@@ -139,6 +140,18 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <EditorPageInfo /> },
       { path: "edit", element: <CourseEditor /> },
+    ]
+  },
+  {
+    path: "course-settings/:course_id",
+    element: (
+      <PrivateRoute requiredRole="teacher_model">
+        <SettingsOutlet />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <SettingsCourseInfo /> },
+      { path: "edit-info", element: <EditCourse /> },
     ]
   },
   {
@@ -196,8 +209,7 @@ export default App;
 //         { path: "add-course", element: <AddCourse /> },
 //       ]
 //     },
-//     {
-//       path: "course-editor/:course_id",
+//     {7//       path: "ъ\:course_id",
 //       element: (
 //         <PrivateRoute>
 //           <MainComponent />
@@ -222,7 +234,7 @@ export default App;
 //     //   path: "all-chapters/:course_id",
 //     //   element: <Coursechapter />,
 //     // },
-
+4
 //     // {
 //     //   path: "my-courses",
 //     //   element: <StudentMyCourses />,

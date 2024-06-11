@@ -7,13 +7,37 @@
     .auth-container__log-pass-block {
         min-width: 500px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 10px;
         justify-content: center; /* Center align child elements horizontally */
+        .auth-container__button-confirm {
+            display: flex;
+            justify-content: center; /* Center align child elements horizontally */
+            .orange-button {
+                padding: 15px 30px;
+                font-size: 1.6rem;
+                color: #ffffff;
+                background-color: #ff7f50;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            
+                &:hover {
+                    background-color: #ff6347;
+                }
+            }
+        }
     }
     
-    .auth-container__button-confirm {
-        display: flex;
-        justify-content: center; /* Center align child elements horizontally */
-    }
+    
 }
+.error {
+    color: rgba(255, 0, 0, 0.753);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .input-error {
+    border: 1px solid red;
+  }

@@ -11,6 +11,7 @@ import SiteService from "../../../services/siteNoAuth.service";
 import ImageViewer from "../../reUseComponents/ImageViewer";
 import LmsButton from "../../reUseComponents/Button";
 import StudentService from "../../../services/student.service";
+import "./CourseDetail.scss"
 
 function CourseDetail() {
     const navigate = useNavigate();
@@ -42,13 +43,12 @@ function CourseDetail() {
         const fetchData = async () => {
 
             await SiteService.getCourse(course_id).then((response) => {
-                // console.log(response.data.data)
+
                 if (response.status === 200 || response.status === 201) {
                     
                     if (response.data.data.length !== 0) {
                         setCourseData(response.data.data);
-                        // console.log(response.data.data[0])
-                        // console.log(response.data.data[0]);
+
                         // Устанавливаем selectedStage во второй элемент массива data
                         // setSelectedStage(response.data.data[0]);
                     } else {
@@ -70,21 +70,16 @@ function CourseDetail() {
             const fetchAuthData = async () => {
 
                 await StudentService.checkEnrollment(course_id).then((response) => {
-                    // console.log(response.data.data)
+
                     if (response.status === 200 || response.status === 201) {
-                        console.log(response.data)
+                        
                         if (response.data.enrolled_status==="enrolled"){
+
                             setEnrollStatus(response.data.enrolled_status)
                         }
-                        if (response.data.data.length !== 0) {
-           
-                            // console.log(response.data.data[0])
-                            // console.log(response.data.data[0]);
-                            // Устанавливаем selectedStage во второй элемент массива data
-                            // setSelectedStage(response.data.data[0]);
-                        } else {
-                            // Устанавливаем selectedStage в первый элемент массива data
-                            // setSelectedStage(null);
+                        else {
+
+                            setEnrollStatus(response.data.enrolled_status)
                         }
                     }
                 });
@@ -118,7 +113,6 @@ function CourseDetail() {
         //                 setAvgRatingStatus(response.data.course_rating);
         //             }
 
-        //             console.log(response.data);
         //             try {
         //                 axios
         //                     .get(
@@ -205,18 +199,13 @@ function CourseDetail() {
     document.title = `Курс - ${courseData.title}`;
     const enrollCourse = async () => {
         await StudentService.enrollToCourse(course_id).then((response) => {
-            console.log(response)
             if (response.status === 200 || response.status === 201) {
                 // setCourseData(response.data.data);
-                // if (response.data.data.length !== 0) {
-                //     // console.log(response.data.data[0])
-                //     // console.log(response.data.data[0]);
-                //     // Устанавливаем selectedStage во второй элемент массива data
-                //     // setSelectedStage(response.data.data[0]);
-                // } else {
-                //     // Устанавливаем selectedStage в первый элемент массива data
-                //     // setSelectedStage(null);
-                // }
+                if (response.data.data.length !== 0) {
+                    setEnrollStatus(response.data.enrolled_status)
+                } else {
+                    setEnrollStatus("not enrolled")
+                }
             }
         });
 
@@ -253,7 +242,6 @@ function CourseDetail() {
             ...ratingData,
             [event.target.name]: event.target.value,
         });
-        console.log(ratingData);
     };
 
     const ratingSubmit = (e) => {
@@ -274,14 +262,11 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        console.log(response.data);
-                        // setShow(false)
-                        // setEnrollStatus('success')
                         window.location.reload();
                     }
                 });
         } catch (error) {
-            console.log(error);
+
         }
     };
     const addToFavorite = () => {
@@ -299,16 +284,14 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        console.log(response.data);
-                        // setShow(false)
-                        // setEnrollStatus('success')
+
                         setFavoriteStatus("success");
                     }
                 });
         } catch (error) {
-            console.log(error);
         }
     };
+    console.log(relatedCourseData)
     const removeFromFavorite = () => {
         try {
             axios
@@ -323,215 +306,43 @@ function CourseDetail() {
                 )
                 .then((response) => {
                     if (response.status === 200 || response.status === 201) {
-                        console.log(response.data);
+
                         // setShow(false)
                         // setEnrollStatus('success')
                         setFavoriteStatus("");
                     }
                 });
         } catch (error) {
-            console.log(error);
+
         }
     };
-    console.log(courseData)
     return (
 
         <div className="main-container__course-detail">
             <div className="course-detail__course-info">
-                <div md={4}>
+                <div className="course-info__image_wrap">
                     <ImageViewer
                         src={`${serverUrl}/${courseData.cover_path}`}
                         alt={courseData.cover_image_name}
-                        width={200}
+                        width={400}
                     />
                 </div>
-                <div md={8}>
-                    <h3>Курс: {courseData.title}</h3>
-                    <h5>Описание:</h5>
-                    <p>{courseData.description}</p>
+                <div className="course-info__info_wrap">
+                    <h1>Курс: {courseData.title}</h1>
+                    <h3>Описание: {courseData.description}</h3>
                     <p>
                         Автор курса:{" "}
                         <Link to={courseData.teacher ? `/teacher-detail/${courseData.teacher.id}` : '#'}>
                             {courseData.teacher ? `${courseData.teacher.name} ${courseData.teacher.lastname}` : 'Loading...'}
                         </Link>
                     </p>
-                    <p>
-                        Технологии:&nbsp;
-                        {/* пофиксить: */}
-                        {technologicalListData.map((tech, index) => (
-                            <Badge
-                                // as={Link} to={`/courses-by-cat/${tech.trim()}`}
-                                pill
-                                bg="success"
-                            >
-                                {tech.trim()}
-                            </Badge>
-                        ))}
-                    </p>
-
                     {/* <p>Длительность курса:</p> */}
-                    <p>
-                        Всего подписавшихся пользователей:{" "}
-                        {/* <Badge bg="success">
-                            {courseData.total_enrolled_students}
-                        </Badge> */}
-                    </p>
-                    <p>
-                        Оценка курса: {avgRatingStatus}/5
-                        {enrollStatus === "success" &&
-                            userLoggedStatus === "success" && (
-                                <>
-                                    {ratingStatus !== "success" && (
-                                        <Button
-                                            onClick={handleShowRate}
-                                            variant="primary"
-                                        >
-                                            {" "}
-                                            Рейтинг{" "}
-                                            <FontAwesomeIcon
-                                                icon={faCirclePlus}
-                                            />
-                                        </Button>
-                                    )}
-                                    {/* {ratingStatus === "success" && (
-                                        <Badge bg="warning">
-                                            {" "}
-                                            Вы уже оценили этот курс
-                                        </Badge>
-                                    )} */}
-                                    <Modal
-                                        show={showRate}
-                                        onHide={handleCloseRate}
-                                    >
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>
-                                                Оценить курс:{" "}
-                                                {courseData.title}
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        {/* <Modal.Body>
-                                            <Form>
-                                                <Form.Group
-                                                    className="mb-3"
-                                                    controlId="formBasicEmail"
-                                                >
-                                                    <Form.Label>
-                                                        Рейтинг
-                                                    </Form.Label>
-                                                    {["radio"].map(
-                                                        (type) => (
-                                                            <div
-                                                                key={`inline-${type}`}
-                                                                className="mb-3"
-                                                            >
-                                                                <Form.Check
-                                                                    inline
-                                                                    value="1"
-                                                                    label="1"
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                    name="rating"
-                                                                    type={
-                                                                        type
-                                                                    }
-                                                                    id={`inline-${type}-1`}
-                                                                />
-                                                                <Form.Check
-                                                                    inline
-                                                                    value="2"
-                                                                    label="2"
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                    name="rating"
-                                                                    type={
-                                                                        type
-                                                                    }
-                                                                    id={`inline-${type}-2`}
-                                                                />
-                                                                <Form.Check
-                                                                    inline
-                                                                    value="3"
-                                                                    label="3"
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                    name="rating"
-                                                                    type={
-                                                                        type
-                                                                    }
-                                                                    id={`inline-${type}-3`}
-                                                                />
-                                                                <Form.Check
-                                                                    inline
-                                                                    value="4"
-                                                                    label="4"
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                    name="rating"
-                                                                    type={
-                                                                        type
-                                                                    }
-                                                                    id={`inline-${type}-4`}
-                                                                />
-                                                                <Form.Check
-                                                                    inline
-                                                                    value="5"
-                                                                    label="5"
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                    name="rating"
-                                                                    type={
-                                                                        type
-                                                                    }
-                                                                    id={`inline-${type}-5`}
-                                                                />
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </Form.Group>
-
-                                                <Form.Group
-                                                    className="mb-3"
-                                                    controlId="formBasicPassword"
-                                                >
-                                                    <Form.Label>
-                                                        написать отзыв
-                                                    </Form.Label>
-                                                    <Form.Control
-                                                        onChange={
-                                                            handleChange
-                                                        }
-                                                        as="textarea"
-                                                        rows={3}
-                                                        name="review"
-                                                        placeholder="review"
-                                                    />
-                                                </Form.Group>
-                                                <Button
-                                                    onClick={ratingSubmit}
-                                                    variant="primary"
-                                                    type="submit"
-                                                >
-                                                    Submit
-                                                </Button>
-                                            </Form>
-                                        </Modal.Body> */}
-                                    </Modal>
-                                </>
-                            )}
-                    </p>
-                    <p>
-                        Просмотры курса:{" "}
-                        <Badge count={courseViews}></Badge>
-                    </p>
+                    <p>Всего подписавшихся пользователей:{courseData.course_subscription}</p>
+                   
                     {userLoggedStatus === "success" &&
                         enrollStatus === "enrolled" && (
                             <p>
-                                <span>Вы уже подписаны на курс</span>
+                                <span>Вы подписаны на курс </span>
                                 <LmsButton buttonText={"Проходить курс"} handleClick={() => handlePassingCourseClick(course_id)} />
                             </p>
                         )}
@@ -540,89 +351,15 @@ function CourseDetail() {
                             <LmsButton buttonText={"Подписаться на курс"} handleClick={() => enrollCourse()} />
  
                         )}
-                    {/* {userLoggedStatus === "success" &&
-                        favoriteStatus !== "success" && (
-                            <LmsButton
-                                as={Link}
-                                title="В избранное"
-                                to={"#"}
-                                onClick={addToFavorite}
-                                variant="danger"
-                            >
-                                Добавить в избранные курсы
-                            </LmsButton>
-                        )}
-                    {userLoggedStatus === "success" &&
-                        favoriteStatus === "success" && (
-                            <LmsButton
-                                as={Link}
-                                title="В избранное"
-                                to={"#"}
-                                onClick={removeFromFavorite}
-                                variant="primary"
-                            >
-                                удалить из избранного
-                            </LmsButton>
-                        )}
-                    {userLoggedStatus !== "success" && (
-                        <p className="text-danger">
-                            Авторизуйтесь что бы записаться на курс
-                            <LmsButton
-                                className="m-2"
-                                as={Link}
-                                to={"/student-login"}
-                                variant="primary"
-                            >
-                                Авторизация{" "}
-                                <FontAwesomeIcon icon={faCirclePlus} />
-                            </LmsButton>
-                        </p>
-                    )} */}
+                
                 </div>
             </div>
-            {/* {enrollStatus === "success" &&
-                    userLoggedStatus === "success" && (
-                        <div className="m-2">
-                            <div>главы курса</div>
-                            <ListGroup variant="flush">
-                                {chapterData.map((chapter, index) => (
-                                    <ListGroup.Item key={index}>
-                                        Глава {index + 1}: {chapter.title}{" "}
-                                        <Button
-                                            variant="primary"
-                                            onClick={handleShow}
-                                        >
-                                            посомтреть видео
-                                        </Button>
-                                        <Modal
-                                            size="xl"
-                                            show={show}
-                                            onHide={handleClose}
-                                        >
-                                            <Modal.Header closeButton>
-                                                <Modal.Title>
-                                                    Modal heading
-                                                </Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <iframe
-                                                    width="1024"
-                                                    height="768"
-                                                    src={chapter.video}
-                                                    title={chapter.title}
-                                                    allowFullScreen
-                                                ></iframe>
-                                            </Modal.Body>
-                                        </Modal>
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
-                        </div>
-                    )} */}
+
             <div className="course-detail__similar-courses">
                 <hr />
                 <h3>Схожие курсы:</h3>
-                {relatedCourseData.map((related, index) => (
+                <p>В разработке</p>
+                {/* {relatedCourseData.map((related, index) => (
                     <div>
                         <div style={{ width: "10rem" }}>
                             <Link
@@ -646,7 +383,7 @@ function CourseDetail() {
                             </div>
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
         </div>
 

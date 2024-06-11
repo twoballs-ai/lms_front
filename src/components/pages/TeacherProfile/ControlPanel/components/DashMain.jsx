@@ -6,7 +6,7 @@ import SideBar from "./SideBar";
 
 function TeacherDashMain() {
     return (
-        <div className="container__dashboard">
+        <div className="container__teacher-dashboard">
             <div className="dashboard-body">
 
                 <aside className="dashboard-body__left-menu">

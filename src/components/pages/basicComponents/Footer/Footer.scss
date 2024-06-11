@@ -1,16 +1,18 @@
-.footer {
-    display: flex;
-    flex-direction: column;
-    background-color: #334658;
-    // align-content: flex-end;
-    flex-shrink: 0;
-    // flex: 1;
+footer {
+    background-color: #333; /* Adjust the background color as needed */
+    color: #fff; /* Adjust the text color as needed */
+    padding: 50px 0; /* Adjust the padding as needed */
+  
     .footer__container {
-        display: flex;
-        flex-direction: column;
-        .container__info-link-row {
-            display: flex;
-            flex-direction: row;
-        }
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+  
+
+
     }
-}
+  }

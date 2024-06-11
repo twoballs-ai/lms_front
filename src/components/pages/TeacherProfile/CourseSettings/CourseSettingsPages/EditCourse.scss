@@ -2,7 +2,9 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+
     gap: 20px;
+
     &__add-form {
       display: flex;
       flex-direction: column;
@@ -13,4 +15,11 @@
     .edit-course-container__title{
       font-size: 2rem;
   }
+        .edit-course-container_block{
+            display: flex;
+            flex-direction: row;
+            .current-image{
+                height: 150px;
+            }
+        }
   }

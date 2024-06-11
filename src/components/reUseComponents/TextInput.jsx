@@ -5,7 +5,6 @@ const { TextArea, Password } = Input;
 
 const TextInput = ({ type, placeholder, value, onChange, style = {} }) => {
   const defaultStyle = {
-    // margin: '10px 0',
     padding: '8px',
     width: '100%',
   };
@@ -67,7 +66,7 @@ const TextInput = ({ type, placeholder, value, onChange, style = {} }) => {
     }
   };
 
-  return <div style={combinedStyle}>{getInputComponent()}</div>;
+  return <div style={{ width: '100%' }}>{getInputComponent()}</div>;
 };
 
 export default TextInput;

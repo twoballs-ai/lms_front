@@ -1,16 +1,16 @@
-.container__dashboard {
+.container__teacher-dashboard {
     display: flex;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    background-color: #ffffe955;
+    background-color: #dbefffb4;
 
     .dashboard-body {
         display: flex;
         flex-direction: row;
         flex: 1;
         /* Растягиваем содержимое по высоте */
-        overflow: hidden;
+        overflow-y: hidden;
         /* Предотвращаем выход за границы экрана */
 
         .dashboard-body__left-menu {
@@ -19,15 +19,16 @@
             width: 25%;
             background-color: #f0f0f0;
             /* Цвет фона для левого меню */
-            padding: 20px;
+            // padding: 20px;
             /* Отступы внутри левого меню */
         }
 
         .dashboard-body__content {
             display: flex;
             flex-direction: column;
-            width: 70%;
+            width: 75%;
             padding: 20px;
+            overflow: auto;
             /* Отступы внутри основного контента */
         }
     }

@@ -27,7 +27,7 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
         <div>
             <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
                 <input {...getInputProps()} />
-                <p>Перетащите {fileType === 'image' ? 'изображения' : (fileType === 'video' ? 'видео' : 'документы')} сюда или нажмите для выбора</p>
+                <p>Перетащите {fileType === 'image' ? 'изображения' : (fileType === 'video' ? 'видео' : 'файлы')} сюда или нажмите для выбора</p>
                 {isDragActive ? (
                     <p>Отпустите {selectionMode === 'multiple' ? 'файлы' : 'файл'} здесь...</p>
                 ) : (
@@ -55,13 +55,13 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
 const getFileAcceptType = (fileType) => {
     switch (fileType) {
         case 'image':
-            return 'image/jpeg, image/png, image/gif, image/webp';
+            return {'image/*': ['.jpeg', '.jpg', '.png']};
         case 'video':
             return 'video/mp4, video/x-m4v, video/webm, video/ogg, video/quicktime';
         case 'pdf':
             return 'application/pdf';
         default:
-            return '*/*';
+            return undefined;
     }
 };
 

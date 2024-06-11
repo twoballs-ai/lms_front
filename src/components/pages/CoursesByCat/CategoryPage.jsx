@@ -1,63 +1,76 @@
 import React, { useState, useEffect } from "react";
-
-
-
-
-
-import { Link, useParams } from "react-router-dom";
-
-
-import axios from "axios";
-import { apiLmsUrl } from "../../../shared/config";
+import { Link } from "react-router-dom";
 import SiteService from "../../../services/siteNoAuth.service";
+import "./CategoryPage.scss";
+import CustomCard from "../../reUseComponents/Cards";
+import { serverUrl } from "../../../shared/config";
 
 function CategoryPage() {
-
     const [categoryData, setCategoryData] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [allCourses, setAllCourses] = useState([]);
 
-    // const teacherId = localStorage.getItem('teacherId')
-    // console.log(teacherId)
     useEffect(() => {
         const fetchData = async () => {
-            await SiteService.getCategory({ toSelect: false }).then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    console.log(response.data)
-                    setCategoryData(response.data.data);
-                }
-            });
+            const categoryResponse = await SiteService.getCategory({ toSelect: false });
+            if (categoryResponse.status === 200 || categoryResponse.status === 201) {
+                setCategoryData(categoryResponse.data.data);
+            }
+
+            fetchCourses();
         };
         fetchData();
     }, []);
 
+    const fetchCourses = async (category_id = null) => {
+        const params = {};
+        if (category_id) {
+            params.category_id = category_id;
+        }
+        const coursesResponse = await SiteService.getCourses(params);
+        if (coursesResponse.status === 200 || coursesResponse.status === 201) {
+            setAllCourses(coursesResponse.data.data);
+        }
+    };
+
+    const handleCategorySelect = (category) => {
+        setSelectedCategory(category);
+        fetchCourses(category ? category.id : null);
+    };
 
     return (
-        <div className="mx-3">
-            <div className="shadow rounded p-3 mt-3 mb-5">
-                <h3 className="mt-5">Все категории</h3>
-                <div className="mt-5">
-                    {categoryData &&
-                        categoryData.map((row, index) => (
-                            <div>
-                                <div style={{ width: "18rem" }}>
-                                    <div>
-                                        <div>
-                                        
-                                            <Link
-                                                className="text-decoration-none text-info"
-                                                to={`/courses-by-cat/${row.id}/${row.title}`}
-                                            >
-                                                Категория {row.title}. кол-во
-                                                курсов: ({row.total_courses})
-                                            </Link>
-                                        </div>
-                                        <div>{row.description}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                </div>
+        <div className="category-page">
+            <div className="category-filter">
+                <button className="category-button" onClick={() => handleCategorySelect(null)}>
+                    Показать все курсы
+                </button>
+                {categoryData.map(category => (
+                    <button
+                        key={category.id}
+                        className="category-button"
+                        onClick={() => handleCategorySelect(category)}
+                    >
+                        {category.title}
+                    </button>
+                ))}
+            </div>
+            <p>Выбрана категория: {selectedCategory ? selectedCategory.title : 'Нет выбранной категории'}</p>
+            <div className="courses-list">
+                {allCourses.map(course => (
+                    <div key={course.id} className={'card-wrapper'}>
+                        <Link to={`/detail/${course.id}`}>
+                            <CustomCard
+                                title={course.title}
+                                description={course.description}
+                                image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available
+                            />
+                        </Link>
+                    </div>
+                ))}
             </div>
         </div>
     );
+    
 }
+
 export default CategoryPage;

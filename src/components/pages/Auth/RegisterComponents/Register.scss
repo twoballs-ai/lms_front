@@ -7,13 +7,36 @@
     .register-container__log-pass-block {
         min-width: 500px;
         display: flex;
-        flex-direction: row;
-        gap: 10px;
+        flex-direction: column;
+        // gap: 10px;
         justify-content: center; /* Center align child elements horizontally */
     }
     
-    .register-containerr__button-confirm {
+    .register-container__button-confirm {
         display: flex;
-        justify-content: center; /* Center align child elements horizontally */
+        // justify-content: center; /* Center align child elements horizontally */
+        .orange-button {
+            padding: 15px 30px;
+            font-size: 1.6rem;
+            color: #ffffff;
+            background-color: #ff7f50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        
+            &:hover {
+                background-color: #ff6347;
+            }
+        }
     }
 }
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .input-error {
+    border: 1px solid red;
+  }
