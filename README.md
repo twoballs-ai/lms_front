@@ -1,3 +1,5 @@
+![image](https://github.com/twoballs-ai/lms_front/assets/83840596/a3d588dd-f26f-4e4c-8bce-f6c050ac150c)
+
 ![image](https://github.com/twoballs-ai/lms_front/assets/83840596/485b7df5-d78d-472a-9caf-d1c39fdec9f8)
 ![image](https://github.com/twoballs-ai/lms_front/assets/83840596/611647c4-90df-4cb0-ac97-9b79ece103ad)
 
