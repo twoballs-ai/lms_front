@@ -42,11 +42,27 @@ const getCourseById = async (courseId) => {
             // {headers: { "Content-Type": "multipart/form-data" }}
         )
 }
-
-
+const getTeacherProfile = async () => {
+    return await api
+        .get(apiUserUrl + "teacher-profile"
+        )
+}
+const updateTeacherProfile = async (data) => {
+    return await api
+        .put(apiUserUrl + "teacher-profile-update",data
+        )
+}
+const updateTeacherPass = async (data) => {
+    return await api
+        .put(apiUserUrl + "reset-password",data
+        )
+}
 const TeacherService = {
     teacherDashboard,
     teacherCourses,
+    updateTeacherPass,
+    getTeacherProfile,
+    updateTeacherProfile,
     deleteTeacherCourse,
     addCourse,
     updateCourse,

@@ -33,7 +33,7 @@ import UserDashmain from './components/pages/StudentProfile/ControlPanel/compone
 // //teacher pages
 // // import TeacherLogin from './components/pages/Teacher/Login/Login';
 
-import TeacherDashboard from './components/pages/TeacherProfile/ControlPanel/Dashboard';
+import TeacherDashboard from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/Dashboard';
 import MyTeacherCourses from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/MyTeacherCourses';
 import TeacherDashMain from './components/pages/TeacherProfile/ControlPanel/components/DashMain';
 import AddCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/AddCourse';
@@ -85,6 +85,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SettingsOutlet from './components/pages/TeacherProfile/CourseSettings/SettingsOutlet';
 import SettingsCourseInfo from './components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/SettingsCourseInfo';
 import EditCourse from './components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/EditCourse';
+import Header from './components/pages/basicComponents/Header/Header';
 // import EditCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/EditCourse';
 
 const router = createBrowserRouter([
@@ -107,6 +108,7 @@ const router = createBrowserRouter([
     path: "student-profile",
     element: (
       <PrivateRoute requiredRole="student_model">
+        <Header />
         <UserDashmain />
       </PrivateRoute>
     ),
@@ -119,6 +121,7 @@ const router = createBrowserRouter([
     path: "teacher-profile",
     element: (
       <PrivateRoute requiredRole="teacher_model">
+          <Header />
         <TeacherDashMain />
       </PrivateRoute>
     ),
@@ -131,9 +134,10 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "25647580щ8/:course_id",
+    path: "course-editor/:course_id",
     element: (
       <PrivateRoute requiredRole="teacher_model">
+             <Header />
         <MainComponent />
       </PrivateRoute>
     ),
@@ -146,6 +150,7 @@ const router = createBrowserRouter([
     path: "course-settings/:course_id",
     element: (
       <PrivateRoute requiredRole="teacher_model">
+             <Header />
         <SettingsOutlet />
       </PrivateRoute>
     ),
@@ -158,6 +163,7 @@ const router = createBrowserRouter([
     path: "course-learning/:course_id",
     element: (
       <PrivateRoute requiredRole="student_model">
+             <Header />
         <CoursePassingMainComponent />
       </PrivateRoute>
     ),
@@ -234,7 +240,7 @@ export default App;
 //     //   path: "all-chapters/:course_id",
 //     //   element: <Coursechapter />,
 //     // },
-4
+
 //     // {
 //     //   path: "my-courses",
 //     //   element: <StudentMyCourses />,
