@@ -1,86 +1,72 @@
-import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import * as Yup from 'yup';
+import { apiUrl } from '../../../../../shared/config';
+import TextInput from '../../../../reUseComponents/TextInput';
+import LmsButton from '../../../../reUseComponents/Button';
+import './StudentChangePassword.scss';
+import TeacherService from '../../../../../services/teacher.service';
+import StudentService from '../../../../../services/student.service';
 
-
-
-
-import axios from "axios";
-import Image from "react-bootstrap/Image";
-
-// import Form from 'react-bootstrap/Form';
-
-import { apiUrl } from "../../../../../shared/config";
+const validationSchema = Yup.object().shape({
+    oldPassword: Yup.string()
+        .required('Старый пароль обязателен'),
+    newPassword: Yup.string()
+        .required('Новый пароль обязателен')
+        .min(8, 'Пароль должен быть не менее 8 символов')
+});
 
 function StudentChangePassword() {
-    const [studentData, setStudentData] = useState({
-        password: "",
-    });
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [errors, setErrors] = useState({});
 
-    const studentId = localStorage.getItem("studentId");
 
-    const handleChange = (event) => {
-        setStudentData({
-            ...studentData,
-            [event.target.name]: event.target.value,
-        });
-        //   console.log("teacherRegisterData : ")
-        // console.log(teacherRegisterData)
-    };
-    const submitForm = (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async (event) => {
+       const data = { old_password: oldPassword, new_password: newPassword }
         try {
-            axios
-                .post(
-                    apiUrl + "student/reset-password/" + studentId + "/",
-                    studentData,
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    { headers: { "Content-Type": "multipart/form-data" } }
-                )
-                .then((response) => {
-                    console.log(response);
-                    if (response.status === 200) {
-                        window.location.href = "/student-logout";
-                    } else {
-                        alert("пароль не сменен");
-                    }
-                    // window.location.href='/teacher-profile/my-courses'
-                    // Handle response
-                });
+            StudentService.updateUserPass(data)
+            .then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                }
+            })
         } catch (error) {
-            console.log(error);
-            setStudentData({ status: "error" });
+            if (error.inner) {
+                const formErrors = error.inner.reduce((acc, currentError) => {
+                    return { ...acc, [currentError.path]: currentError.message };
+                }, {});
+                setErrors(formErrors);
+            } else {
+                console.error("Error changing password:", error);
+            }
         }
     };
+
     return (
-        <>
-            <div>
-                <div>Смена пароля</div>
-                <div>
-                    <Form>
-                        <Form.Group
-                            className="mb-3"
-                            controlId="formBasicpassword"
-                        >
-                            <Form.Label>password</Form.Label>
-                            <Form.Control
-                                name="password"
-                                onChange={handleChange}
-                                type="text"
-                                placeholder="Введите ваш password"
-                            />
-                        </Form.Group>
-                        <Button
-                            onClick={submitForm}
-                            variant="primary"
-                            type="submit"
-                        >
-                            сменить пароль
-                        </Button>
-                    </Form>
+        <div className="change-password__container">
+            <h3>Смена пароля</h3>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <TextInput
+                        type="password"
+                        placeholder="Старый пароль"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.target.value)}
+                    />
+                    {errors.oldPassword && <div className="error">{errors.oldPassword}</div>}
                 </div>
-            </div>
-        </>
+                <div className="form-group">
+                    <TextInput
+                        type="password"
+                        placeholder="Новый пароль"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    {errors.newPassword && <div className="error">{errors.newPassword}</div>}
+                </div>
+                <LmsButton buttonText={"Сменить пароль"} handleClick={handleSubmit} />
+            </form>
+        </div>
     );
 }
 

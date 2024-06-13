@@ -23,8 +23,7 @@ import StudentMyCourses from './components/pages/StudentProfile/ControlPanel/Stu
 import UserDashmain from './components/pages/StudentProfile/ControlPanel/components/DashMain';
 // import StudentFavoriteCourses from './components/pages/Student/ControlPanel/FavoriteCourse';
 // import StudentRecommendCourses from './components/pages/Student/ControlPanel/RecommendCourses';
-// import StudentProfileSettings from './components/pages/Student/ControlPanel/StudentProfileSettings';
-// import StudentChangePassword from './components/pages/Student/ControlPanel/StudentChangePassword';
+
 // import StudentIncomingTask from './components/pages/Student/ControlPanel/StudentTask';
 
 // // quiz pages
@@ -86,6 +85,8 @@ import SettingsOutlet from './components/pages/TeacherProfile/CourseSettings/Set
 import SettingsCourseInfo from './components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/SettingsCourseInfo';
 import EditCourse from './components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/EditCourse';
 import Header from './components/pages/basicComponents/Header/Header';
+import StudentProfileSettings from './components/pages/StudentProfile/ControlPanel/StudentCourseProfile/StudentProfileSettings';
+import StudentChangePassword from './components/pages/StudentProfile/ControlPanel/StudentCourseProfile/StudentChangePassword';
 // import EditCourse from './components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/EditCourse';
 
 const router = createBrowserRouter([
@@ -115,6 +116,8 @@ const router = createBrowserRouter([
     children: [
       { index: true,  element: <StudentDashboard /> },
       { path: "my-courses", element: <StudentMyCourses /> },
+      { path: "profile-settings", element: <StudentProfileSettings /> },
+      { path: "reset-password", element: <StudentChangePassword /> },
     ]
   },
   {
@@ -313,8 +316,7 @@ export default App;
 //     //             <Route path='favorite-courses' element={<StudentFavoriteCourses />} />
 //     //             <Route path='recommend-courses' element={<StudentRecommendCourses />} />
 //     //             <Route path='incoming-task' element={<StudentIncomingTask />} />
-//     //             <Route path='profile-settings' element={<StudentProfileSettings />} />
-//     //             <Route path='reset-password' element={<StudentChangePassword />} />
+
 //     //             <Route path='dashboard' element={<StudentDashboard />} />
 //     //             <Route path='study-materials/:course_id' element={<StudentStudyMaterials />} />
 //     //           </Route>

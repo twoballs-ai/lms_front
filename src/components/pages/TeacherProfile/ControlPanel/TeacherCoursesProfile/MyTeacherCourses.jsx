@@ -53,6 +53,7 @@ function MyTeacherCourses() {
                         <div className="course-item__course-title">
                             {course.title}
                             <p>Статус курса: {course.status}</p>
+                           {course.moderation_status !==null ? <p>Статус модерации: {course.moderation_status}</p>: ""} 
                         </div>
 
                         <div className="course-item__course-actions">

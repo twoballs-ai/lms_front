@@ -39,16 +39,12 @@ function CourseEditor() {
     const [moduleEditData, setModuleEditData] = useState([]);
     const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
     const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
-
     const [openModal, setOpenModal] = useState(false);
-
     const [inputTitleValue, setInputTitleValue] = useState('');
     const [inputDescrValue, setInputDescreValue] = useState('');
     const [sortIndex, setSortIndex] = useState(1);
     const [isExam, setIsExam] = useState(false);
     const [examDuration, setExamDuration] = useState(10);
-    const [previousChapterId, setPreviousChapterId] = useState(null);
-
     const navigate = useNavigate();
 
 
@@ -78,10 +74,6 @@ function CourseEditor() {
         setInputDescreValue(e.target.value);
     };
 
-    const handleSortIndexChange = (e) => {
-        setSortIndex(e.target.value);
-    };
-
     const handleIsExamChange = (checked) => {
         setIsExam(checked);
     };
@@ -90,9 +82,7 @@ function CourseEditor() {
         setExamDuration(value);
     };
 
-    const handlePreviousChapterIdChange = (e) => {
-        setPreviousChapterId(e.target.value);
-    };
+    
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -142,6 +132,7 @@ function CourseEditor() {
         }
     };
 
+
     useEffect(() => {
         const fetchData = async () => {
             await CourseEditorService.editCoursePageGetChapterList(course_id).then((response) => {
@@ -159,18 +150,19 @@ function CourseEditor() {
     }, [course_id]);
 
     const addChapter = async () => {
-        let examDurationValue = isExam ? examDuration : null;
 
+        let examDurationValue = isExam ? examDuration : null;
+    
+        // Если предыдущей главы нет, устанавливаем ID новой главы в качестве предыдущей
         const dataParams = {
             course_id: course_id,
             title: inputTitleValue,
             description: inputDescrValue,
             sort_index: sortIndex,
             is_exam: isExam,
-            exam_duration_minutes: examDurationValue,
-            previous_chapter_id: previousChapterId,
+            exam_duration_minutes: examDurationValue 
         };
-
+    
         try {
             const response = await CourseEditorService.editCoursePageAddChapter(dataParams);
             if (response.status === 200 || response.status === 201) {
@@ -183,7 +175,6 @@ function CourseEditor() {
             console.error('Failed to add chapter:', error);
         }
     };
-
     const handleMoveModule = async (chapterId, moduleId, direction) => {
         const updatedChapters = getChapters.map((chapter) => {
             if (chapter.id !== chapterId) return chapter;
@@ -226,7 +217,7 @@ function CourseEditor() {
     };
 
     const sortedChapters = [...getChapters].sort((a, b) => a.sort_index - b.sort_index);
-console.log(sortedChapters)
+
     return (
         <div className="course-edit__container">
             <LmsModalBase

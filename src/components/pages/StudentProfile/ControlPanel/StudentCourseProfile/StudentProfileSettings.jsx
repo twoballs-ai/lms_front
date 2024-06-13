@@ -2,15 +2,6 @@ import React, { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom";
 
 
-
-
-import axios from "axios";
-import Image from "react-bootstrap/Image";
-
-// import Form from 'react-bootstrap/Form';
-
-import { apiUrl } from "../../../../../shared/config";
-
 function StudentProfileSettings() {
     const studentId = localStorage.getItem("studentId");
     const [studentData, setStudentData] = useState({

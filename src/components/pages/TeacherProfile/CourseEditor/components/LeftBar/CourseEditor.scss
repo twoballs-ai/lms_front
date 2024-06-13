@@ -10,8 +10,10 @@
         min-width: 250px;
         width: auto;
         flex: 1;
-        height: 100vh;
+        height: calc(95vh - 50px); /* Высота leftbar минус высота settings-panel */
         overflow-x: auto;
+        padding-bottom: 50px; /* Отступ снизу для leftbar */
+    
 
         .leftbar__chapters {
             display: flex;
@@ -167,13 +169,13 @@
     .container__main {
         display: flex;
         flex-direction: column;
-        // width: 100%;
         min-width: 80vw;
-        height: 100vh;
+        height: calc(95vh - 50px); /* Высота контейнера минус высота settings-panel */
         background-color: rgba(240, 240, 240, 0.822);
         gap: 10px;
         padding: 10px;
         overflow: auto;
+        padding-bottom: 50px; /* Отступ снизу для контента */
     }
     .settings-panel {
         position: fixed; // Фиксация блока

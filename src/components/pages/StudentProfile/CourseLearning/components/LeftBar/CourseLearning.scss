@@ -16,12 +16,12 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+
             .chapters__block {
                 border-radius: 15px;
                 background-color: rgba(240, 248, 255, 0.9);
                 display: flex;
                 flex-direction: row;
-
                 align-items: flex-start;
                 padding: 10px;
                 gap: 10px;
@@ -36,16 +36,24 @@
                     background-color: rgba(212, 236, 252, 0.9);
                 }
 
+                &.locked {
+                    opacity: 0.5;
+                    pointer-events: none;
+                    cursor: not-allowed;
+
+                    .block__title {
+                        color: #6b6b6b;
+                    }
+                }
+
                 .block-left {
                     display: flex;
-                    gap:15px;
                     flex-direction: column;
                     width: 100%;
-                    position: relative; /* Added for absolute positioning */
+                    position: relative;
 
                     .block__title {
                         display: flex;
-                        justify-content: center;
                         align-items: center;
                         width: 100%;
 
@@ -78,7 +86,9 @@
                             &.active {
                                 background-color: rgba(108, 201, 255, 0.9);
                             }
-
+                            &.completed {
+                                background-color: rgba(255, 152, 56, 0.9);
+                            }
                             .block__module-drag {
                                 margin-left: auto;
                                 border: none;
@@ -86,12 +96,9 @@
                                 padding: 0;
                                 cursor: pointer;
                             }
-                 
                         }
                     }
                 }
-
-               
             }
         }
     }
@@ -100,12 +107,10 @@
         display: flex;
         flex-direction: column;
         width: 85vw;
-        // min-width: 80vw;
         height: 100vh;
         background-color: rgba(240, 240, 240, 0.822);
         gap: 10px;
         padding: 10px;
         overflow: auto;
     }
-
 }
