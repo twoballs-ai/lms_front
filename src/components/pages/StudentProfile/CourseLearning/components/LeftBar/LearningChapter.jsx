@@ -9,19 +9,14 @@ const Chapter = ({
   setActiveChapterId,
   isLocked,
   chapter_is_completed,
-
 }) => {
   const handleChapterClick = () => {
-   
-      setActiveChapterId(chapter.id);
-    
+    setActiveChapterId(chapter.id);
   };
-
-console.log(chapter_is_completed)
 
   return (
     <div
-      className={`chapters__block ${activeChapterId === chapter.id ? "active" : ""} ${isLocked ? "locked" : ""} ${chapter_is_completed ? "completed" : ""}`}
+      className={`chapters__block ${activeChapterId === chapter.id ? "active" : ""} ${chapter_is_completed ? "completed" : isLocked ? "locked" : ""}`}
       onClick={handleChapterClick}
     >
       <div className="block-left">
@@ -47,7 +42,6 @@ Chapter.propTypes = {
   setActiveChapterId: PropTypes.func.isRequired,
   isLocked: PropTypes.bool.isRequired,
   chapter_is_completed: PropTypes.bool.isRequired,
-
 };
 
 export default Chapter;

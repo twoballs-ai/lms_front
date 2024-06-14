@@ -7,7 +7,7 @@ import LearningVideoLesson from "./TypeLessonForm/VideoLesson";
 import LearningQuizLesson from "./TypeLessonForm/QuizLesson";
 import "./FullCourseLearn.scss";
 
-function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChapters, setNextModuleAndChapter, course_id, setShowExamPrompt }) {
+function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChapters, setNextModuleAndChapter, course_id, setShowExamPrompt, checkCompletionStatus }) {
     const [moduleData, setModuleData] = useState([]);
     const [selectedStage, setSelectedStage] = useState(null);
     const [lessonCompleted, setLessonCompleted] = useState(false);
@@ -100,13 +100,7 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChap
                 }
             }
 
-            // Check if all chapters before the exam chapter are completed
-            const examChapterIndex = updatedChapters.findIndex(ch => ch.is_exam);
-            if (examChapterIndex !== -1) {
-                const chaptersBeforeExam = updatedChapters.slice(0, examChapterIndex);
-                const allChaptersBeforeExamCompleted = chaptersBeforeExam.every(ch => ch.chapter_is_completed);
-                setShowExamPrompt(allChaptersBeforeExamCompleted);
-            }
+            checkCompletionStatus(updatedChapters);
         }
     };
 

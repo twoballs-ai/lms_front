@@ -13,6 +13,7 @@ function CourseLearning() {
     const [activeChapterId, setActiveChapterId] = useState(null);
     const [activeModuleId, setActiveModuleId] = useState(null);
     const [showExamPrompt, setShowExamPrompt] = useState(false);
+    const [allCompleted, setAllCompleted] = useState(false);
 
     useEffect(() => {
         fetchChapters();
@@ -35,31 +36,7 @@ function CourseLearning() {
                 firstIncompleteModule ? processedChapters.find(ch => ch.id === firstIncompleteChapter).modules.find(m => m.id === firstIncompleteModule) : {}
             );
 
-            // Check if all chapters before the exam chapter are completed
-            const examChapterIndex = processedChapters.findIndex(ch => ch.is_exam);
-            const chaptersBeforeExam = processedChapters.slice(0, examChapterIndex);
-
-            const allChaptersBeforeExamCompleted = chaptersBeforeExam.every(ch => ch.chapter_is_completed);
-            if (allChaptersBeforeExamCompleted) {
-                setShowExamPrompt(true);
-            } else {
-                setShowExamPrompt(false);
-            }
-
-            // Lock all chapters and modules after the exam
-            if (examChapterIndex !== -1) {
-                const updatedChapters = processedChapters.map((chapter, index) => {
-                    if (index > examChapterIndex) {
-                        chapter.is_locked = true;
-                        chapter.modules = chapter.modules.map(module => ({
-                            ...module,
-                            is_locked: true,
-                        }));
-                    }
-                    return chapter;
-                });
-                setChapters(updatedChapters);
-            }
+            checkCompletionStatus(processedChapters);
         }
     };
 
@@ -71,6 +48,35 @@ function CourseLearning() {
             }
         }
         return [null, null];
+    };
+
+    const checkCompletionStatus = (chapters) => {
+        const allChaptersAndModulesCompleted = chapters.every(ch => ch.chapter_is_completed && ch.modules.every(m => m.is_completed));
+        setAllCompleted(allChaptersAndModulesCompleted);
+
+        const examChapterIndex = chapters.findIndex(ch => ch.is_exam);
+        const chaptersBeforeExam = chapters.slice(0, examChapterIndex);
+
+        const allChaptersBeforeExamCompleted = chaptersBeforeExam.every(ch => ch.chapter_is_completed);
+        if (allChaptersBeforeExamCompleted && !allChaptersAndModulesCompleted) {
+            setShowExamPrompt(true);
+        } else {
+            setShowExamPrompt(false);
+        }
+
+        if (examChapterIndex !== -1) {
+            const updatedChapters = chapters.map((chapter, index) => {
+                if (index > examChapterIndex) {
+                    chapter.is_locked = true;
+                    chapter.modules = chapter.modules.map(module => ({
+                        ...module,
+                        is_locked: true,
+                    }));
+                }
+                return chapter;
+            });
+            setChapters(updatedChapters);
+        }
     };
 
     const setNextModuleAndChapter = (nextChapterId, nextModuleId) => {
@@ -86,7 +92,6 @@ function CourseLearning() {
             try {
                 const response = await StudentService.startExam(examChapter.id);
                 if (response.status === 200 || response.status === 201) {
-                    // Update UI to reflect exam in progress
                     const updatedChapters = chapters.map(chapter => {
                         if (chapter.id === examChapter.id) {
                             chapter.exam_status.exam_in_progress = true;
@@ -95,16 +100,14 @@ function CourseLearning() {
                         return chapter;
                     });
                     setChapters(updatedChapters);
-                    setShowExamPrompt(false); // Hide the exam prompt after starting
+                    setShowExamPrompt(false);
+
+                    fetchChapters();
                 } else {
-                    // Handle error response
                     console.error("Failed to start exam:", response.data.message);
-                    // Optionally show an error message to the user
                 }
             } catch (error) {
                 console.error("Error starting exam:", error.message);
-                // Handle fetch or network error
-                // Optionally show an error message to the user
             }
         }
     };
@@ -140,7 +143,7 @@ function CourseLearning() {
                 </div>
             </div>
             <div className="container__learn-main">
-                {Object.keys(moduleEditData).length > 0 && (
+                {Object.keys(moduleEditData).length > 0 && !allCompleted && (
                     <ModuleStageLearn
                         moduleEditData={moduleEditData}
                         setModuleEditData={setModuleEditData}
@@ -149,13 +152,20 @@ function CourseLearning() {
                         setNextModuleAndChapter={setNextModuleAndChapter}
                         course_id={course_id}
                         setShowExamPrompt={setShowExamPrompt}
+                        checkCompletionStatus={checkCompletionStatus} // Передаем функцию для проверки состояния завершения
                     />
                 )}
 
-                {showExamPrompt && (
+                {showExamPrompt && !allCompleted && (
                     <div className="exam-prompt">
                         <p>Все предыдущие главы завершены. Готовы начать экзамен?</p>
                         <button onClick={handleStartExam}>Начать экзамен</button>
+                    </div>
+                )}
+
+                {allCompleted && (
+                    <div className="congratulations">
+                        <p>Поздравляем! Вы прошли все уроки курса.</p>
                     </div>
                 )}
             </div>
