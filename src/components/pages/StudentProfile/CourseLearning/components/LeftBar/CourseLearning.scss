@@ -10,7 +10,7 @@
         width: 15vw;
         flex: 1;
         height: 100vh;
-        overflow-x: auto;
+        overflow-y: auto;
 
         .leftbar__chapters {
             display: flex;
@@ -27,24 +27,35 @@
                 gap: 10px;
                 justify-content: space-between;
                 transition: background-color 0.3s ease;
-
+            
                 &:hover {
                     background-color: rgba(240, 248, 255, 1);
                 }
-
+            
                 &.active {
                     background-color: rgba(212, 236, 252, 0.9);
                 }
-
+            
+                &.completed {
+                    background-color: rgba(255, 152, 56, 0.342);
+                }
+            
+                &.active.completed {
+                    background-color: rgba(212, 236, 252, 0.9); /* or another color if you want to indicate both states */
+                }
+                &.active.locked {
+                    background-color: rgba(212, 236, 252, 0.9); /* or another color if you want to indicate both states */
+                }
                 &.locked {
                     opacity: 0.5;
-                    pointer-events: none;
-                    cursor: not-allowed;
-
+                    /* pointer-events: none; */
+                    /* cursor: not-allowed; */
+            
                     .block__title {
                         color: #6b6b6b;
                     }
                 }
+            
 
                 .block-left {
                     display: flex;
@@ -69,6 +80,16 @@
                         flex-direction: column;
                         gap: 5px;
 
+                        &.locked {
+                            opacity: 0.5;
+                            pointer-events: none;
+                            cursor: not-allowed;
+
+                            .block__title {
+                                color: #6b6b6b;
+                            }
+                        }
+
                         .modules__block {
                             display: flex;
                             align-items: center;
@@ -89,6 +110,7 @@
                             &.completed {
                                 background-color: rgba(255, 152, 56, 0.9);
                             }
+
                             .block__module-drag {
                                 margin-left: auto;
                                 border: none;

@@ -88,6 +88,7 @@ const CourseEditorService = {
     // editCoursePageAddModuleStage,
     editCoursePageGetLesson,
     editCoursePagePatchModule,
+
     // editCoursePageDeleteModuleStage,
     // editCoursePageGetCourse,
     editCoursePageGetChapterList,

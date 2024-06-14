@@ -1,40 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LockOutlined } from '@ant-design/icons';
-// import './Modules.scss'; // Import the SCSS file for styling
 
-const Modules = ({ module, activeModuleId, setActiveModuleId, moduleChange, isLocked }) => {
-    const { id, title, is_completed } = module;
+const Modules = ({
+  title,
+  id,
+  module,
+  activeModuleId,
+  setActiveModuleId,
+  isLocked
+}) => {
+  const handleModuleClick = () => {
+    if (!isLocked) {
+      moduleChange(module);
+      setActiveModuleId(id);
+    }
+  };
 
-    return (
-        <div
-            className={`modules__block ${activeModuleId === id ? "active" : ""} ${isLocked ? "locked" : ""} ${is_completed ? "completed" : ""}`}
-            onClick={() => {
-                if (!isLocked) {
-                    setActiveModuleId(id);
-                    moduleChange(module);
-                }
-            }}
-        >
-            {title} {isLocked && <LockOutlined />}
-        </div>
-    );
+  return (
+    <div
+      className={`modules__block ${activeModuleId === id ? "active" : ""} ${isLocked ? "locked" : ""} ${module.is_completed ? "completed" : ""}`}
+      onClick={handleModuleClick}
+    >
+      <p>{title}</p>
+    </div>
+  );
 };
 
 Modules.propTypes = {
-    module: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        is_completed: PropTypes.bool.isRequired,
-    }).isRequired,
-    activeModuleId: PropTypes.number,
-    setActiveModuleId: PropTypes.func.isRequired,
-    moduleChange: PropTypes.func.isRequired,
-    isLocked: PropTypes.bool,
-};
-
-Modules.defaultProps = {
-    isLocked: false,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  module: PropTypes.object.isRequired,
+  activeModuleId: PropTypes.number,
+  setActiveModuleId: PropTypes.func.isRequired,
+  isLocked: PropTypes.bool.isRequired
 };
 
 export default Modules;

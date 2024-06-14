@@ -59,7 +59,14 @@ const checkQuizLesson = async (stageId, answers) => {
 //         .get(apiLmsUrl + "teacher-students/" + teacherId
 //         )
 // }
-
+const startExam = async (chapter_id) => {
+    return await api
+        .post(`${apiStudyUrl}start_exam/${chapter_id}`)
+}
+const completeExam = async (chapter_id) => {
+    return await api
+        .post(`${apiStudyUrl}complete_exam/${chapter_id}`)
+}
 
 const updateUserPass = async (data) => {
     return await api
@@ -73,6 +80,8 @@ const StudentService = {
     getLearnLesson,
     checkEnrollment,
     enrollToCourse,
+    startExam,
+    completeExam,
     learnGetModuleStages,
     checkQuizLesson,
     learnCoursePageGetChapterList,

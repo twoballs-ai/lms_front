@@ -8,50 +8,46 @@ const Chapter = ({
   activeChapterId,
   setActiveChapterId,
   isLocked,
-  isCompleted,
-  onExamComplete,
+  chapter_is_completed,
+
 }) => {
   const handleChapterClick = () => {
-    if (!isLocked) {
+   
       setActiveChapterId(chapter.id);
-    }
+    
   };
+
+console.log(chapter_is_completed)
 
   return (
     <div
-      className={`chapters__block ${activeChapterId === chapter.id ? "active" : ""} ${isLocked ? "locked" : ""}`}
+      className={`chapters__block ${activeChapterId === chapter.id ? "active" : ""} ${isLocked ? "locked" : ""} ${chapter_is_completed ? "completed" : ""}`}
       onClick={handleChapterClick}
     >
       <div className="block-left">
         <div className="block__title">
           <p>
-            {chapter.title} {isCompleted && <span>(Пройдено)</span>}{" "}
-            {isLocked && <span><LockOutlined /></span>}
+            {chapter.title}
+            {isLocked && !chapter_is_completed && <span><LockOutlined /></span>}
           </p>
         </div>
 
-        <div className="chapters__modules">
-          {activeChapterId === chapter.id && !isLocked && (
-            <>
-              {chapter.is_exam && !isCompleted && (
-                <button onClick={() => onExamComplete(chapter.id)}>Сдать экзамен</button>
-              )}
-            </>
-          )}
+        <div className={`chapters__modules ${isLocked ? "locked" : ""}`}>
           {children}
         </div>
       </div>
     </div>
   );
 };
+
 Chapter.propTypes = {
   chapter: PropTypes.object.isRequired,
   children: PropTypes.node,
   activeChapterId: PropTypes.number,
   setActiveChapterId: PropTypes.func.isRequired,
   isLocked: PropTypes.bool.isRequired,
-  isCompleted: PropTypes.bool.isRequired,
-  onExamComplete: PropTypes.func.isRequired,
+  chapter_is_completed: PropTypes.bool.isRequired,
+
 };
 
 export default Chapter;
