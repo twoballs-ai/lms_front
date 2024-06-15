@@ -13,7 +13,10 @@ const checkEnrollment = async (course_id) => {
         .get(apiStudyUrl + "check-enrollment/?course_id="+course_id
         )
 }
-
+const learnCoursePageGetChapterList = async (course_id) => {
+    return await api
+        .get(apiStudyUrl + "learning-course-chapter-list/" + course_id)
+}
 const getLearnLesson = async (stagePk) => {
     return await api
         .get(`${apiStudyUrl}stage/${stagePk}`)
@@ -56,9 +59,20 @@ const checkQuizLesson = async (stageId, answers) => {
 //         .get(apiLmsUrl + "teacher-students/" + teacherId
 //         )
 // }
+const startExam = async (chapter_id) => {
+    return await api
+        .post(`${apiStudyUrl}start_exam/${chapter_id}`)
+}
+const completeExam = async (chapter_id) => {
+    return await api
+        .post(`${apiStudyUrl}complete_exam/${chapter_id}`)
+}
 
-
-
+const updateUserPass = async (data) => {
+    return await api
+        .put(apiUserUrl + "reset-password",data
+        )
+}
 
 const StudentService = {
     studentCourses,
@@ -66,8 +80,12 @@ const StudentService = {
     getLearnLesson,
     checkEnrollment,
     enrollToCourse,
+    startExam,
+    completeExam,
     learnGetModuleStages,
     checkQuizLesson,
+    learnCoursePageGetChapterList,
+    updateUserPass,
     // deleteTeacherCourse,
     // addCourse,
     // teacherStudents,

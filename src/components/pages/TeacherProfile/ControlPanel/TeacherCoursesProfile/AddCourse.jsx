@@ -31,9 +31,17 @@ function AddCourse() {
 
     const schema = Yup.object().shape({
         selectedCategories: Yup.string().required('Выберите категорию'),
-        inputTitleValue: Yup.string().required('Введите название курса'),
-        inputDescrValue: Yup.string().required('Введите описание курса'),
-        uploadedFile: Yup.mixed().required('Загрузите изображение курса'),
+        inputTitleValue: Yup.string()
+            .required('Введите название курса')
+            .min(3, 'Название курса должно содержать не менее 3 символов')
+            .max(50, 'Название курса должно содержать не более 50 символов'),
+        inputDescrValue: Yup.string()
+            .required('Введите описание курса')
+            .min(10, 'Описание курса должно содержать не менее 10 символов'),
+        uploadedFile: Yup.mixed()
+            .required('Загрузите изображение курса')
+            .test('fileSize', 'Размер файла слишком большой', value => !value || (value.size <= 5000000)) // max 5MB
+            .test('fileType', 'Неподдерживаемый формат файла', value => !value || ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type)),
     });
 
     const handleInputChange = (e) => {
@@ -54,7 +62,7 @@ function AddCourse() {
             setUploadedFile(files[0].file);
         }
     };
-console.log(categories)
+
     const divSubmit = async (e) => {
         e.preventDefault();
 
@@ -89,16 +97,37 @@ console.log(categories)
         <div className="add-course-container">
             <div className="add-course-container__title">Добавление курса</div>
             <div className="add-course-container__add-form">
-                <CustomSelect mode="single" options={categories} placeholder={"Выберите категорию"} onChange={handleSelectChange} style={{ width: '100%' }} />
+                <CustomSelect 
+                    mode="single" 
+                    options={categories} 
+                    placeholder={"Выберите категорию"} 
+                    onChange={handleSelectChange} 
+                    style={{ width: '100%' }} 
+                />
                 {errors.selectedCategories && <span className="error">{errors.selectedCategories}</span>}
                 <p>Название курса:</p>
-                <TextInput isTextArea={false} placeholder={"Напишите сюда название курса"} value={inputTitleValue} onChange={handleInputChange} />
+                <TextInput 
+                    isTextArea={false} 
+                    placeholder={"Напишите сюда название курса"} 
+                    value={inputTitleValue} 
+                    onChange={handleInputChange} 
+                />
                 {errors.inputTitleValue && <span className="error">{errors.inputTitleValue}</span>}
                 <p>Описание курса:</p>
-                <TextInput type={'textarea'} placeholder={"Напишите сюда описание курса"} value={inputDescrValue} onChange={handleInputDescrChange} />
+                <TextInput 
+                    type={'textarea'} 
+                    placeholder={"Напишите сюда описание курса"} 
+                    value={inputDescrValue} 
+                    onChange={handleInputDescrChange} 
+                />
                 {errors.inputDescrValue && <span className="error">{errors.inputDescrValue}</span>}
                 <p>Изображение курса:</p>
-                <FileUpload fileType="image" selectionMode="single" onFilesChange={handleFileChange} />
+                <FileUpload 
+                    fileType="image" 
+                    selectionMode="single" 
+                    onFilesChange={handleFileChange} 
+                    errors={errors.uploadedFile} 
+                />
                 {errors.uploadedFile && <span className="error">{errors.uploadedFile}</span>}
                 <LmsButton buttonText={"Создать"} handleClick={divSubmit} />
             </div>

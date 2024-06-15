@@ -28,8 +28,8 @@
     }
 
     &.completed {
-        border: rgba(139, 199, 255, 0.9) 0.3rem solid;
-        background-color: rgb(133, 226, 255); /* Цвет для завершенных этапов */
+        border: rgba(255, 87, 9, 0.9) 0.3rem solid;
+        background-color: rgb(255, 166, 65); /* Цвет для завершенных этапов */
     }
 
     &.active.completed {

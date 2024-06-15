@@ -1,62 +1,51 @@
 import React, { useState, useLayoutEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faChalkboardUser, faFilm, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
-import StudentService from "../../../../../services/student.service"; // Adjust the import based on your file structure
+import StudentService from "../../../../../services/student.service";
 import LearningClassicLesson from "./TypeLessonForm/ClassicLesson";
 import LearningVideoLesson from "./TypeLessonForm/VideoLesson";
-import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
-import "./FullCourseLearn.scss";
-import LmsButton from "../../../../reUseComponents/Button"; // Adjust the import based on your file structure
 import LearningQuizLesson from "./TypeLessonForm/QuizLesson";
+import "./FullCourseLearn.scss";
 
-function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setGetChapters }) {
+function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChapters, setNextModuleAndChapter, course_id, setShowExamPrompt, checkCompletionStatus }) {
     const [moduleData, setModuleData] = useState([]);
     const [selectedStage, setSelectedStage] = useState(null);
     const [lessonCompleted, setLessonCompleted] = useState(false);
 
-    const handleSelectStage = (tech) => {
-        setSelectedStage(tech);
-        setLessonCompleted(tech.is_completed); // Set the lesson completed state based on the selected stage
-    };
-
     useLayoutEffect(() => {
-        const fetchData = async () => {
+        const fetchModuleData = async () => {
             const response = await StudentService.learnGetModuleStages(moduleEditData.id);
             if (response.status === 200 || response.status === 201) {
-                const data = response.data.data;
-                setModuleData(data);
-                // Find the first stage that is not completed
-                const firstNonCompletedStage = data.find(stage => !stage.is_completed);
+                const stages = response.data.data;
+                setModuleData(stages);
+
+                const firstNonCompletedStage = stages.find(stage => !stage.is_completed && !stage.is_locked);
                 if (firstNonCompletedStage) {
                     setSelectedStage(firstNonCompletedStage);
-                    setLessonCompleted(firstNonCompletedStage.is_completed); // Set the lesson completed state based on the first stage
-                } else if (data.length !== 0) {
-                    setSelectedStage(data[0]);
-                    setLessonCompleted(data[0].is_completed); // Fallback to the first stage if all are completed
+                    setLessonCompleted(firstNonCompletedStage.is_completed);
+                } else if (stages.length) {
+                    setSelectedStage(stages[0]);
+                    setLessonCompleted(stages[0].is_completed);
                 } else {
                     setSelectedStage(null);
-                    setLessonCompleted(false); // Reset the lesson completed state
+                    setLessonCompleted(false);
                 }
             }
         };
-        fetchData();
+
+        fetchModuleData();
     }, [moduleEditData]);
 
-    const Dot = ({ tech, isActive }) => {
-        const activeClass = isActive ? "active" : "";
-        const completedClass = tech.is_completed ? "completed" : "";
-        return (
-            <div className={`learn_dot ${activeClass} ${completedClass}`} onClick={() => handleSelectStage(tech)}>
-                {tech.type === "video" && <FontAwesomeIcon icon={faFilm} transform="down-6 grow-3" />}
-                {tech.type === "classic" && <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />}
-                {tech.type === "quiz" && <FontAwesomeIcon icon={faSquareCheck} transform="down-6 grow-3" />}
-                {!["video", "classic", "quiz"].includes(tech.type) && <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />}
-            </div>
-        );
+    const handleSelectStage = (stage) => {
+        const chapter = chapters.find(ch => ch.id === moduleEditData.chapter_id);
+        if (!stage.is_locked && !chapter.is_locked) {
+            setSelectedStage(stage);
+            setLessonCompleted(stage.is_completed);
+        }
     };
 
     const handleNextStage = async () => {
-        if (!selectedStage) return;
+        if (!selectedStage || selectedStage.is_locked) return;
 
         try {
             const response = await StudentService.updateStage(selectedStage.id, true);
@@ -67,11 +56,40 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
                 setModuleData(updatedModuleData);
 
                 const currentIndex = updatedModuleData.findIndex(stage => stage.id === selectedStage.id);
-                if (currentIndex !== -1 && currentIndex < updatedModuleData.length - 1) {
-                    const nextStage = updatedModuleData.slice(currentIndex + 1).find(stage => !stage.is_completed);
-                    if (nextStage) {
-                        setSelectedStage(nextStage);
-                        setLessonCompleted(nextStage.is_completed);
+                const nextStage = updatedModuleData.slice(currentIndex + 1).find(stage => !stage.is_completed && !stage.is_locked);
+
+                if (nextStage) {
+                    setSelectedStage(nextStage);
+                    setLessonCompleted(nextStage.is_completed);
+                } else {
+                    await updateChapterProgress();
+                }
+            }
+        } catch (error) {
+            console.error("Failed to update stage", error);
+        }
+    };
+
+    const updateChapterProgress = async () => {
+        const chaptersResponse = await StudentService.learnCoursePageGetChapterList(course_id);
+        if (chaptersResponse.status === 200 || chaptersResponse.status === 201) {
+            const updatedChapters = chaptersResponse.data.data;
+            setChapters(updatedChapters);
+
+            const currentChapter = updatedChapters.find(ch => ch.id === moduleEditData.chapter_id);
+            const currentModuleIndex = currentChapter.modules.findIndex(m => m.id === moduleEditData.id);
+            const nextModuleIndex = currentModuleIndex + 1;
+
+            if (nextModuleIndex < currentChapter.modules.length) {
+                const nextModule = currentChapter.modules[nextModuleIndex];
+                setNextModuleAndChapter(currentChapter.id, nextModule.id);
+            } else {
+                const nextChapterIndex = updatedChapters.findIndex(ch => ch.id === currentChapter.id) + 1;
+                if (nextChapterIndex < updatedChapters.length) {
+                    const nextChapter = updatedChapters[nextChapterIndex];
+                    const nextModule = nextChapter.modules.find(m => !m.is_locked) || null;
+                    if (nextModule) {
+                        setNextModuleAndChapter(nextChapter.id, nextModule.id);
                     } else {
                         setSelectedStage(null);
                         setLessonCompleted(false);
@@ -81,9 +99,24 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
                     setLessonCompleted(false);
                 }
             }
-        } catch (error) {
-            console.error("Failed to update stage", error);
+
+            checkCompletionStatus(updatedChapters);
         }
+    };
+
+    const Dot = ({ stage, isActive }) => {
+        const handleClick = () => handleSelectStage(stage);
+        return (
+            <div
+                className={`learn_dot ${isActive ? "active" : ""} ${stage.is_completed ? "completed" : ""} ${stage.is_locked ? "locked" : ""}`}
+                onClick={handleClick}
+            >
+                {stage.type === "video" && <FontAwesomeIcon icon={faFilm} transform="down-6 grow-3" />}
+                {stage.type === "classic" && <FontAwesomeIcon icon={faChalkboardUser} transform="down-6 grow-3" />}
+                {stage.type === "quiz" && <FontAwesomeIcon icon={faSquareCheck} transform="down-6 grow-3" />}
+                {!["video", "classic", "quiz"].includes(stage.type) && <FontAwesomeIcon icon={faGhost} transform="down-6 grow-3" />}
+            </div>
+        );
     };
 
     return (
@@ -92,15 +125,15 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
                 <p>Вы проходите модуль: "{moduleEditData.title}"</p>
                 <div className="nav-block__stages">
                     <div className="stages__case">
-                        {moduleData.map((tech) => (
-                            <div key={tech.id}>
-                                <Dot tech={tech} isActive={selectedStage && tech.id === selectedStage.id} />
+                        {moduleData.map((stage) => (
+                            <div key={stage.id}>
+                                <Dot stage={stage} isActive={selectedStage && stage.id === selectedStage.id} />
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
-            
+
             {selectedStage && (
                 <div className="main-student__content">
                     {lessonCompleted && (
@@ -108,7 +141,8 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, getChapters, setG
                             <p>Вы прошли урок, продолжайте в том же духе!</p>
                         </div>
                     )}
-                    {selectedStage.type === "classic" && <LearningClassicLesson selectedStage={selectedStage} onComplete={handleNextStage}/>}
+
+                    {selectedStage.type === "classic" && <LearningClassicLesson selectedStage={selectedStage} onComplete={handleNextStage} />}
                     {selectedStage.type === "video" && <LearningVideoLesson selectedStage={selectedStage} onComplete={handleNextStage} />}
                     {selectedStage.type === "quiz" && <LearningQuizLesson selectedStage={selectedStage} onComplete={handleNextStage} />}
                 </div>

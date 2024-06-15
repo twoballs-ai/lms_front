@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import './FileUpload.scss';
 
-const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesChange }) => {
+const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesChange, errors }) => {
     const [files, setFiles] = useState([]);
 
     const onDrop = useCallback(acceptedFiles => {
@@ -34,6 +34,7 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
                     <p>Вы можете загрузить {selectionMode === 'multiple' ? 'несколько файлов' : 'один файл'} </p>
                 )}
             </div>
+            {errors && <div className="error-message">{errors}</div>}
             <div className="upload-preview">
                 {files.map(({ file, preview, name, size, type }, index) => (
                     <div key={index}>

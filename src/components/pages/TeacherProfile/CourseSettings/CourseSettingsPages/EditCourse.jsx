@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
 import TeacherService from '../../../../../services/teacher.service';
 import "./EditCourse.scss"; // Импорт стилей SCSS
 import LmsButton from '../../../../reUseComponents/Button';
 import TextInput from '../../../../reUseComponents/TextInput';
 import FileUpload from '../../../../reUseComponents/FileUpload';
 import { serverUrl } from '../../../../../shared/config';
+
+// Define the validation schema using Yup
+const validationSchema = Yup.object().shape({
+    title: Yup.string()
+        .required('Название курса обязательно')
+        .min(3, 'Название курса должно содержать не менее 3 символов')
+        .max(50, 'Название курса должно содержать не более 50 символов'),
+    description: Yup.string()
+        .required('Описание курса обязательно')
+        .min(10, 'Описание курса должно содержать не менее 10 символов'),
+    file: Yup.mixed()
+        .test('fileSize', 'Размер файла слишком большой', value => !value || (value.size <= 5000000)) // max 5MB
+        .test('fileType', 'Неподдерживаемый формат файла', value => !value || ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type))
+});
 
 function EditCourse() {
     const navigate = useNavigate();
@@ -14,6 +29,7 @@ function EditCourse() {
     const [inputDescrValue, setInputDescrValue] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
     const [courseImage, setCourseImage] = useState('');
+    const [errors, setErrors] = useState({});
     let { course_id } = useParams();
 
     const handleInputChange = (e) => {
@@ -46,17 +62,38 @@ function EditCourse() {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('title', inputTitleValue);
-        formData.append('description', inputDescrValue);
-        formData.append('file', uploadedFile);
 
-        const response = await TeacherService.updateCourse(course_id,formData);
-        if (response.status === 200 || response.status === 201) {
+        // Create a form data object
+        const formData = {
+            title: inputTitleValue,
+            description: inputDescrValue,
+            file: uploadedFile
+        };
 
+        // Validate form data using Yup
+        try {
+            await validationSchema.validate(formData, { abortEarly: false });
+            setErrors({});
+
+            const formDataObj = new FormData();
+            formDataObj.append('title', inputTitleValue);
+            formDataObj.append('description', inputDescrValue);
+            if (uploadedFile) {
+                formDataObj.append('file', uploadedFile);
+            }
+
+            const response = await TeacherService.updateCourse(course_id, formDataObj);
+            if (response.status === 200 || response.status === 201) {
+                // Handle success response
+            }
+        } catch (validationErrors) {
+            const formattedErrors = validationErrors.inner.reduce((acc, error) => {
+                return { ...acc, [error.path]: error.message };
+            }, {});
+            setErrors(formattedErrors);
         }
     };
-console.log(chaptersData)
+
     return (
         <div className="edit-course-container">
             <div className="edit-course-container__title">Редактирование курса</div>
@@ -69,6 +106,7 @@ console.log(chaptersData)
                         value={inputTitleValue}
                         onChange={handleInputChange}
                     />
+                    {errors.title && <div className="error-message">{errors.title}</div>}
                     <p>Описание курса:</p>
                     <TextInput
                         type={'textarea'}
@@ -76,6 +114,7 @@ console.log(chaptersData)
                         value={inputDescrValue}
                         onChange={handleInputDescrChange}
                     />
+                    {errors.description && <div className="error-message">{errors.description}</div>}
                     <p>Изображение курса:</p>
                     {courseImage && (
                         <div className="current-image">
@@ -89,7 +128,12 @@ console.log(chaptersData)
                         </div>
                     )}
                     <div style={{ padding: 24 }}>
-                        <FileUpload fileType="image" selectionMode="single" onFilesChange={handleFileChange} />
+                        <FileUpload 
+                            fileType="image" 
+                            selectionMode="single" 
+                            onFilesChange={handleFileChange}
+                            errors={errors.file} 
+                        />
                     </div>
                     <LmsButton buttonText={"Обновить"} handleClick={handleUpdate} />
                 </div>
