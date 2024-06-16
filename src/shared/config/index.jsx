@@ -3,7 +3,7 @@
 // dev 
 // export const serverUrl = "http://127.0.0.1:8001";
 // prod 
-export const serverUrl = "http://intellity.ru:8000/";
+export const serverUrl = "https://backend.intellity.ru/";
 export const apiUrl = `${serverUrl}/api/`;
 export const apiLmsUrl = `${serverUrl}/api/v1/lms/`;
 export const apiBaseUrl = `${serverUrl}/api/v1/base/`;
