@@ -20,7 +20,7 @@ function Footer() {
         <div className="container__contacts">
         <p>Контакты</p>
           {/* Добавляем контактный адрес электронной почты */}
-          <p>Email: <a href="mailto:manager@intellity.ru">manager@intellity.ru</a></p>
+          <p>Email: <a href="mailto:manage@intellity.ru">manager@intellity.ru</a></p>
         </div>
         <div className="container__social-links">
           <p>Мы в социальных сетях</p>

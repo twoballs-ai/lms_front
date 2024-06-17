@@ -1,8 +1,13 @@
 .license-container {
-    margin: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin: 1.5rem;
 }
 
 .license-card {
+    flex: 1;
+    // max-width: 800px;
     padding: 2rem;
     margin-top: 1.5rem;
     margin-bottom: 3rem;
@@ -12,7 +17,7 @@
 }
 
 .license-content {
-    padding: 3rem 4rem;
+    // padding: 3rem 4rem;
 
     h5, h6 {
         font-size: 2rem;
@@ -23,5 +28,20 @@
         font-size: 1.5rem;
         line-height: 1.5;
         margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        // padding: 1.5rem 2rem;
+
+        h5, h6 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
     }
 }

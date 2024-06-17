@@ -4,7 +4,7 @@ import "./About.scss"; // Импортируем стили
 function About() {
     return (
         <div className="about-container">
-            <div className="about-card shadow rounded">
+            <div className="about-card">
                 <div className="about-content">
                     <h5>Немного о компании</h5>
                     <p>
