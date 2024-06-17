@@ -4,12 +4,13 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  padding: 0 1rem;
 
   .tabs {
     position: relative;
-    width: 90%;
-    height: auto;
-    min-height: 550px;
+    width: 100%;
+    max-width: 500px;
+    min-height: 600px; // Ensure the container has a fixed minimum height
     background: #007cc4;
     margin: auto;
     margin-top: 0.5rem;
@@ -19,8 +20,9 @@
     box-shadow: 1px 1px 20px 20px #e591556e;
     border-radius: 2rem;
 
-    @media (max-width: 769px) {
-      padding: 2rem 0;
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+      min-height: 700px; // Adjust for smaller screens if necessary
     }
 
     .close-icon {
@@ -30,11 +32,16 @@
       font-size: 24px;
       cursor: pointer;
       color: #e8f0f2;
+
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
     }
   }
 
   ul.tabsNav {
-    width: 60%;
+    width: 100%;
+    max-width: 400px;
     margin: 0 auto 2rem;
     display: flex;
     align-items: center;
@@ -50,14 +57,18 @@
 
   ul.tabsNav li {
     width: 50%;
-    padding: .5em;
+    padding: 0.5em;
     list-style: none;
     text-align: center;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.6rem;
     transition: all 0.7s;
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
   }
 
   ul.tabsNav li:nth-child(2) {
@@ -76,8 +87,12 @@
 
   .LoginTab p,
   .RegisterTab p {
-    font-size: 2rem;
+    font-size: 1.6rem;
     text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
   }
 
   .react-tabs {
@@ -91,6 +106,10 @@
     align-items: center;
     justify-content: space-between;
     padding-left: 0px;
+
+    @media (max-width: 768px) {
+      width: 90%;
+    }
   }
 
   .react-tabs__tab {
@@ -131,7 +150,10 @@
 
   .react-tabs__tab-panel--selected {
     display: block;
-    font-size: 2rem;
-    // text-align: center;
+    font-size: 1.6rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
   }
 }
