@@ -11,6 +11,7 @@ import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import Loader from './components/reUseComponents/Loader';
 import License from './components/pages/License/License';
+import NotFound from './components/pages/NotFound/NotFound'; // Import NotFound component
 
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
@@ -128,7 +129,7 @@ const router = createBrowserRouter([
       { path: "learning", element: <CourseLearning /> },
     ]
   },
-  { path: '*', element: <Navigate to="/" /> },
+  { path: '*', element: <NotFound /> }, // Route for handling 404 errors
 ]);
 
 const App = () => {
