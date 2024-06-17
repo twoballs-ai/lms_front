@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import Loader from './components/reUseComponents/Loader';
+import License from './components/pages/License/License';
 
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
         element: <CourseDetail />,
       },
       { path: "about", element: <About /> },
+      { path: "license", element: <License /> },
       { path: "category", element: <CategoryPage /> },
       { path: "logout", element: <UserLogout /> },
     ]
