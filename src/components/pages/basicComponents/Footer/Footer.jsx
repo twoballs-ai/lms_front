@@ -23,6 +23,7 @@ function Footer() {
           <p>Email: <a href="mailto:manager@intellity.ru">manager@intellity.ru</a></p>
         </div>
         <div className="container__social-links">
+          <p>Мы в социальных сетях</p>
           <a href="https://vk.com/intellity" target="_blank" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faVk} className="social-icon" />
           </a>

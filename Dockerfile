@@ -1,16 +1,15 @@
-# Use Node.js image for building the React Vite application
+# Установка этапа сборки
 FROM node:latest AS builder
-
-# Set working directory
 WORKDIR /app
-
-# Install dependencies
-COPY package.json yarn.lock ./
-RUN yarn install
-
-# Copy source code and build the application
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN yarn build
+RUN npm run build
 
-# Serve the built application
-CMD ["yarn", "dev"]
+# Установка этапа сервера
+FROM node:latest-alpine
+WORKDIR /app
+COPY --from=builder /app/dist /app
+RUN npm install -g serve
+EXPOSE 3000
+CMD ["serve", "-s", "/app", "-l", "3000"]
