@@ -11,7 +11,8 @@ import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import Loader from './components/reUseComponents/Loader';
 import License from './components/pages/License/License';
-import NotFound from './components/pages/NotFound/NotFound'; // Import NotFound component
+import NotFound from './components/reUseComponents/NotFound';
+
 
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
