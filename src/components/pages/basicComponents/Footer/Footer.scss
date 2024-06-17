@@ -1,6 +1,7 @@
 .footer__container {
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
   align-items: center;
   padding: 20px;
   background-color: #f8f8f8;
@@ -11,6 +12,8 @@
 
   .container__links {
     // Ваши стили для блока ссылок
+    display: flex;
+    flex-direction: column;
   }
 
   .container__social-links {

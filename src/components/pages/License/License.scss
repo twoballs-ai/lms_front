@@ -1,0 +1,27 @@
+.license-container {
+    margin: 1.5rem;
+}
+
+.license-card {
+    padding: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.license-content {
+    padding: 3rem 4rem;
+
+    h5, h6 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+}
