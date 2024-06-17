@@ -53,7 +53,7 @@ export default function Home() {
             <div className="main-container__home-container">
             <p>Недавно добавленные курсы</p>
             <NewAddedCourse lastAddedCourses={lastAddedCourses}/>
-
+            <p>Популярные курсы</p>
             </div>
 
            

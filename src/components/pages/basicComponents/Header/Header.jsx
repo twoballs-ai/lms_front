@@ -7,7 +7,6 @@ import TabsAuth from "../../Auth/TabsLoginRegister/TabComponent/Tabs";
 import LmsModalBase from "../../../reUseComponents/ModalBase";
 
 function Header() {
-
     const customModalStyles = {
         modal: {
             maxWidth: '100vw',

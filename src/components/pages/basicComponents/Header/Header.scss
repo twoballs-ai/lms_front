@@ -5,7 +5,7 @@
     align-items: center;
     padding: 10px;
     background-color: #ffffff;
-    border-bottom: 0.1rem solid #ff634756;;
+    border-bottom: 0.1rem solid #ff634756;
 
     .header-container__logo {
         font-size: 2rem;
@@ -79,41 +79,41 @@
 
         .nav-dropdown {
             position: relative;
-          
+
             .nav-dropdown-toggle {
                 padding: 10px 20px;
                 font-size: 1.8rem;
-              cursor: pointer;
+                cursor: pointer;
             }
-          
+
             .nav-dropdown-menu {
-              display: none;
-              position: absolute;
-              top: 100%;
-              left: 0;
-              z-index: 100;
-              background-color: #fff; /* Цвет фона */
-              border: 1px solid #ccc; /* Граница */
-              padding: 10px;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 100;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
-          
+
             &:hover .nav-dropdown-menu {
-              display: block;
+                display: block;
             }
-          
+
             .nav-dropdown-item {
-              display: block;
-              color: #333; /* Цвет текста */
-              text-decoration: none;
-              padding: 5px 0;
-              transition: background-color 0.3s;
-          
-              &:hover {
-                background-color: #f0f0f0; /* Цвет фона при наведении */
-              }
+                display: block;
+                color: #333;
+                text-decoration: none;
+                padding: 5px 0;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
             }
-          }
+        }
 
         .nav-link__button,
         .nav-link__register-btn,
@@ -146,6 +146,76 @@
 
             &:hover {
                 background-color: #0056b3;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container__header-container {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .header-container__navbar {
+            flex-direction: column;
+            width: 100%;
+
+            .navbar__buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 15px 0;
+            }
+
+            .nav-link__login-btn,
+            .nav-link__register-btn {
+                width: 100%;
+                text-align: center;
+                padding: 15px 0;
+            }
+
+            .nav-dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border: none;
+                background-color: transparent;
+
+                .nav-dropdown-item {
+                    padding: 10px 20px;
+                }
+            }
+
+            .nav-dropdown-toggle {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .container__header-container {
+        .header-container__logo {
+            font-size: 1.5rem;
+        }
+
+        .header-container__navbar {
+            .nav-link {
+                font-size: 1.5rem;
+            }
+
+            .nav-link__login-btn,
+            .nav-link__register-btn {
+                font-size: 1.5rem;
+            }
+
+            .nav-dropdown-toggle {
+                font-size: 1.5rem;
             }
         }
     }
