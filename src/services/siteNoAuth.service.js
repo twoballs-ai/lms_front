@@ -14,7 +14,7 @@ const getCourse = async (course_id) => {
 }
 const getCourses = async (params) => {
     console.log(params)
-    return await api.get(apiBaseUrl + `courses-by-cat`,{params} );
+    return await api.get(apiBaseUrl + `courses-by-cat/`,{params} );
 }
 
 const homePageLastAddedCourses = async ({ items }) => {

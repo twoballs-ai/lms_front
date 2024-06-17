@@ -1,14 +1,16 @@
-# Используйте Node.js образ для сборки React Vite приложения
+# Use Node.js image for building the React Vite application
 FROM node:latest AS builder
 
-# Установка зависимостей
+# Set working directory
 WORKDIR /app
+
+# Install dependencies
 COPY package.json yarn.lock ./
 RUN yarn install
 
-# Копирование исходного кода и сборка приложения
+# Copy source code and build the application
 COPY . .
 RUN yarn build
 
-# Запуск Vite dev server
+# Serve the built application
 CMD ["yarn", "dev"]
