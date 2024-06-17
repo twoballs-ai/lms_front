@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
+import Loader from './components/reUseComponents/Loader';
 
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
@@ -128,23 +129,43 @@ const router = createBrowserRouter([
   { path: '*', element: <Navigate to="/" /> },
 ]);
 
-const App = () => (
-  <AuthProvider>
-    <Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={router} />
-    </Suspense>
-    <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={true}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-    /> 
-  </AuthProvider>
-);
+const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial app loading
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust as needed based on your actual loading time
+
+    // Clean up if needed
+    return () => {
+      // Clean-up code here if necessary
+    };
+  }, []);
+
+  return (
+    <AuthProvider>
+      {loading ? (
+        <Loader /> // Show loader while app is loading
+      ) : (
+        <Suspense fallback={<Loader />}>
+          <RouterProvider router={router} />
+        </Suspense>
+      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      /> 
+    </AuthProvider>
+  );
+};
 
 export default App;
