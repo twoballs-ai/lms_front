@@ -62,8 +62,8 @@ function Header() {
             <div className="header-container__navbar">
                 <div className="navbar__buttons">
                     <Link to="/category" className="nav-link">Курсы</Link>
+                    <Link to="/news-blog" className="nav-link">Новости</Link>   
                     <Link to="/about" className="nav-link">О нас</Link>
-
                     {isAuth ? (
                         <div className="nav-dropdown">
                             <div className="nav-dropdown-toggle">Профиль</div>

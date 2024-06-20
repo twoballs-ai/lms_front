@@ -12,6 +12,7 @@ import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import Loader from './components/reUseComponents/Loader';
 import License from './components/pages/License/License';
 import NotFound from './components/reUseComponents/NotFound';
+import ViewBlogs from './components/pages/Blog/ViewBlogs';
 
 
 // Lazy load components
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
       { path: "license", element: <License /> },
       { path: "category", element: <CategoryPage /> },
       { path: "logout", element: <UserLogout /> },
+      { path: "news-blog", element: <ViewBlogs /> },
     ]
   },
   {
