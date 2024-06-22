@@ -37,10 +37,16 @@ const allCoursesPage = async (url) => {
     return await api
     .get(url)
 }
-const getNewsBlog = async () => {
-    return await api
-    .get(apiBlogUrl + "news/")
-}
+const getNewsBlog = async (items) => {
+    if (items) {
+      return await api.get(`${apiBlogUrl}news/?limit=${items}`);
+    }
+    return await api.get(`${apiBlogUrl}news/`);
+  };
+  
+const getBlogById = (id) => {
+    return axios.get(`${apiBlogUrl}news/${id}`);
+  };
 const SiteService = {
     getCategory,
     getCourse,
@@ -51,6 +57,7 @@ const SiteService = {
     homePageStudentsreviews,
     allCoursesPage,
     getNewsBlog,
+    getBlogById,
 };
 
 export default SiteService;

@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import SiteService from '../../../services/siteNoAuth.service';
-import './ViewBlogs.scss';
+import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
+import SiteService from '../../../../services/siteNoAuth.service';
 
-const ViewBlogs = () => {
+import './LatestNews.scss';
+
+const LatestNews = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await SiteService.getNewsBlog().then((response) => {
+        
+        
+        const items =3
+      await SiteService.getNewsBlog(items).then((response) => {
         if (response.status === 200 || response.status === 201) {
-          setBlogs(response.data.data);
+          setBlogs(response.data.data); // Limit to 3 blogs
         }
       });
     };
@@ -22,9 +28,13 @@ const ViewBlogs = () => {
     return new Date(dateString).toLocaleString(undefined, options);
   };
 
+  const truncateContent = (content) => {
+    const lines = content.split(/<br\s*\/?>|<\/p>|<\/div>|<\/li>/).slice(0, 2).join(' ') + '...';
+    return parse(lines);
+  };
+
   return (
-    <div className="blog-posts">
-      <h2>Добро пожаловать в наш блог, здесь будут отображаться новости проекта и новости тьюторов</h2>
+    <div className="news-blog-posts">
       {blogs.length === 0 ? (
         <p>No blogs available.</p>
       ) : (
@@ -32,11 +42,16 @@ const ViewBlogs = () => {
           {blogs.map((blog) => (
             <li className="blog-card" key={blog.id}>
               <h3>{blog.title}</h3>
-              <p>{blog.content}</p>
-              {blog.updated_at && (
+              <div className="content">
+                {truncateContent(blog.content)}
+                <Link to={`/news-blog/${blog.id}`} className="read-more">
+                  Читать далее
+                </Link>
+              </div>
+              <p className="author">Автор: {blog.author}</p>
+              {blog.updated_at ? (
                 <p className="date">Обновлено: {formatDate(blog.updated_at)}</p>
-              )}
-              {!blog.updated_at && (
+              ) : (
                 <p className="date">Создано: {formatDate(blog.created_at)}</p>
               )}
             </li>
@@ -47,4 +62,4 @@ const ViewBlogs = () => {
   );
 };
 
-export default ViewBlogs;
+export default LatestNews;

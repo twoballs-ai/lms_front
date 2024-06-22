@@ -1,3 +1,7 @@
+/* index.css или App.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
 /* Указываем box sizing */
 *,
 *::before,
@@ -35,16 +39,12 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-
+  font-family: 'Roboto', 'Open Sans', sans-serif;
+  font-variation-settings: "wght" 400;
   font-style: normal;
-  font-variation-settings:
-    "width" 100;
 }
 
-/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class */
 ul[class],
 ol[class] {
   list-style: none;
@@ -61,7 +61,7 @@ img {
   display: block;
 }
 
-/* Указываем понятную периодичность в потоке данных у article*/
+/* Указываем понятную периодичность в потоке данных у article */
 article > * + * {
   margin-top: 1em;
 }
@@ -74,7 +74,7 @@ select {
   font: inherit;
 }
 
-/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+/* Удаляем все анимации и переходы для людей, которые предпочитают их не использовать */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

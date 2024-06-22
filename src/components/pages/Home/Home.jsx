@@ -12,6 +12,7 @@ import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
 import HomePopularCourses from "./HomeComponents/HomePopularCourses";
 import StudentTestimonials from "./HomeComponents/StudentTestiomonials";
 import SiteService from "../../../services/siteNoAuth.service";
+import LatestNews from "./HomeComponents/LatestNews";
 
 export default function Home() {
     const [lastAddedCourses, setlastAddedCourses] = useState([]);
@@ -54,6 +55,8 @@ export default function Home() {
             <p>Недавно добавленные курсы</p>
             <NewAddedCourse lastAddedCourses={lastAddedCourses}/>
             <p>Популярные курсы</p>
+            <p>Последние новости</p>
+            <LatestNews />
             </div>
 
            

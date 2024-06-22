@@ -12,7 +12,8 @@ import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import Loader from './components/reUseComponents/Loader';
 import License from './components/pages/License/License';
 import NotFound from './components/reUseComponents/NotFound';
-import ViewBlogs from './components/pages/Blog/ViewBlogs';
+import ViewBlogs from './components/pages/Blog/ViewNews.jsx';
+import BlogDetail from './components/pages/Blog/NewsDetail.jsx';
 
 
 // Lazy load components
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       { path: "category", element: <CategoryPage /> },
       { path: "logout", element: <UserLogout /> },
       { path: "news-blog", element: <ViewBlogs /> },
+      {
+        path: "news-blog/:id",
+        element: <BlogDetail />,
+      },
     ]
   },
   {

@@ -1,0 +1,52 @@
+.news-blog-posts {
+    margin: 20px auto;
+    padding: 20px;
+
+
+  
+    .blog-list {
+      list-style: none;
+      padding: 0;
+  
+      .blog-card {
+        padding: 20px;
+        // margin-bottom: 20px;
+
+        h3 {
+        //   margin: 0 0 10px;
+          font-size: 1.6rem;
+        }
+  
+        .content {
+        //   margin-bottom: 10px;
+        p{
+            color:#00418b;
+            font-size: 1rem;
+        }
+            
+          .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+  
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+  
+        .author {
+          margin: 10px 0;
+          font-style: italic;
+          color: #555;
+        }
+  
+        .date {
+          font-size: 0.9em;
+          color: #888;
+        }
+      }
+    }
+  }
+  
