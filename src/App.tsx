@@ -7,44 +7,44 @@ import {
 import "./App.scss";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
-import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
-import Loader from './components/reUseComponents/Loader';
-import License from './components/pages/License/License';
-import NotFound from './components/reUseComponents/NotFound';
+import PrivateRoute from './Commons/PrivateRouter/PrivateRoute.jsx';
+import { AuthProvider } from './Commons/PrivateRouter/AuthProvider.jsx';
+import Loader from './components/reUseComponents/Loader.jsx';
+import License from './components/pages/License/License.jsx';
+import NotFound from './components/reUseComponents/NotFound.jsx';
 import ViewBlogs from './components/pages/Blog/ViewNews.jsx';
 import BlogDetail from './components/pages/Blog/NewsDetail.jsx';
 
 
 // Lazy load components
-const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
-const Home = lazy(() => import('./components/pages/Home/Home'));
-const MainComponent = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/components/MainComponent'));
-const About = lazy(() => import('./components/pages/About/About'));
-const CourseDetail = lazy(() => import('./components/pages/Course/CourseDetail'));
-const StudentDashboard = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/Dashboard'));
-const StudentMyCourses = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses'));
-const UserDashmain = lazy(() => import('./components/pages/StudentProfile/ControlPanel/components/DashMain'));
-const TeacherDashboard = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/Dashboard'));
-const MyTeacherCourses = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/MyTeacherCourses'));
-const TeacherDashMain = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/components/DashMain'));
-const AddCourse = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/AddCourse'));
-const TeacherProfileSettings = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ProfileSettings'));
-const TeacherChangePassword = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ChangePassword'));
-const EditorPageInfo = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditorPageInfo'));
-const EditModuleStage = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditModuleStage'));
-const CourseEditor = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/components/LeftBar/CourseEditor'));
-const UserLogout = lazy(() => import('./components/pages/Auth/Logout/Logout'));
-const CategoryPage = lazy(() => import('./components/pages/CoursesByCat/CategoryPage'));
-const Header = lazy(() => import('./components/pages/basicComponents/Header/Header'));
-const StudentProfileSettings = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/StudentProfileSettings'));
-const StudentChangePassword = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/StudentChangePassword'));
-const CoursePassingMainComponent = lazy(() => import('./components/pages/StudentProfile/CourseLearning/components/MainComponent'));
-const CoursePageInfo = lazy(() => import('./components/pages/StudentProfile/CourseLearning/FullCoursePassing/CoursePageInfo'));
-const CourseLearning = lazy(() => import('./components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning'));
-const SettingsOutlet = lazy(() => import('./components/pages/TeacherProfile/CourseSettings/SettingsOutlet'));
-const SettingsCourseInfo = lazy(() => import('./components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/SettingsCourseInfo'));
-const EditCourse = lazy(() => import('./components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/EditCourse'));
+const Layout = lazy(() => import('./components/pages/basicComponents/layouts.jsx'));
+const Home = lazy(() => import('./components/pages/Home/Home.jsx'));
+const MainComponent = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/components/MainComponent.jsx'));
+const About = lazy(() => import('./components/pages/About/About.jsx'));
+const CourseDetail = lazy(() => import('./components/pages/Course/CourseDetail.jsx'));
+const StudentDashboard = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/Dashboard.jsx'));
+const StudentMyCourses = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses.jsx'));
+const UserDashmain = lazy(() => import('./components/pages/StudentProfile/ControlPanel/components/DashMain.jsx'));
+const TeacherDashboard = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/Dashboard.jsx'));
+const MyTeacherCourses = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/MyTeacherCourses.jsx'));
+const TeacherDashMain = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/components/DashMain.jsx'));
+const AddCourse = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/AddCourse.jsx'));
+const TeacherProfileSettings = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ProfileSettings.jsx'));
+const TeacherChangePassword = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ChangePassword.jsx'));
+const EditorPageInfo = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditorPageInfo.jsx'));
+const EditModuleStage = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditModuleStage.jsx'));
+const CourseEditor = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/components/LeftBar/CourseEditor.jsx'));
+const UserLogout = lazy(() => import('./components/pages/Auth/Logout/Logout.jsx'));
+const CategoryPage = lazy(() => import('./components/pages/CoursesByCat/CategoryPage.jsx'));
+const Header = lazy(() => import('./components/pages/basicComponents/Header/Header.jsx'));
+const StudentProfileSettings = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/StudentProfileSettings.jsx'));
+const StudentChangePassword = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/StudentChangePassword.jsx'));
+const CoursePassingMainComponent = lazy(() => import('./components/pages/StudentProfile/CourseLearning/components/MainComponent.jsx'));
+const CoursePageInfo = lazy(() => import('./components/pages/StudentProfile/CourseLearning/FullCoursePassing/CoursePageInfo.jsx'));
+const CourseLearning = lazy(() => import('./components/pages/StudentProfile/CourseLearning/components/LeftBar/CourseLearning.jsx'));
+const SettingsOutlet = lazy(() => import('./components/pages/TeacherProfile/CourseSettings/SettingsOutlet.jsx'));
+const SettingsCourseInfo = lazy(() => import('./components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/SettingsCourseInfo.jsx'));
+const EditCourse = lazy(() => import('./components/pages/TeacherProfile/CourseSettings/CourseSettingsPages/EditCourse.jsx'));
 
 const router = createBrowserRouter([
   {
