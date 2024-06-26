@@ -7,7 +7,7 @@ import TabsAuth from "../../Auth/TabsLoginRegister/TabComponent/Tabs";
 import LmsModalBase from "../../../reUseComponents/ModalBase";
 
 function Header() {
-    const customModalStyles = {
+    const customModalStyles: Record<string, React.CSSProperties> = {
         modal: {
             maxWidth: '100vw',
             width: '100vw',
@@ -19,23 +19,26 @@ function Header() {
         }
     };
 
-    const [authState, setAuthState] = useState("");
-    function handleShow(breakpoint, auth) {
+    const [authState, setAuthState] = useState<string>("");
+
+    function handleShow(breakpoint: boolean, auth: string) {
         handleOpenModal();
         setAuthState(auth);
     }
-    const [openModal, setOpenModal] = useState(false);
+
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
+
     const contentToModal = (<TabsAuth authState={authState} handleCloseModal={handleCloseModal} />);
 
-    const [searchData, setSearchData] = useState({
+    const [searchData, setSearchData] = useState<{ search: string }>({
         search: "",
     });
 
-    const role = JSON.parse(localStorage.getItem('role'));
-    const handleChange = (event) => {
+    const role = JSON.parse(localStorage.getItem('role') || 'null');
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchData({
             ...searchData,
             [event.target.name]: event.target.value,
@@ -47,12 +50,13 @@ function Header() {
             window.location.href = "/search/" + searchData.search;
     };
 
-    const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState<boolean>(false);
+
     useEffect(() => {
-        if (JSON.parse(localStorage.getItem('access_token')) !== null) {
+        if (JSON.parse(localStorage.getItem('access_token') || 'null') !== null) {
             setIsAuth(true);
         }
-    }, [isAuth]);
+    }, []);
 
     return (
         <div className="container__header-container">
