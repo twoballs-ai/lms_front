@@ -18,6 +18,8 @@ import { SettingOutlined } from '@ant-design/icons';
 import PopupMenu from "../../../../reUseComponents/PopupMenu";
 import TextInput from "../../../../reUseComponents/TextInput";
 import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
+import AddChapter from "../../ControlPanel/AddChapter";
+import IntellyButton from "@/components/reUseComponents/IntellyButton";
 
 function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGetChapters }) {
     const [moduleData, setModuleData] = useState([]);
@@ -220,7 +222,13 @@ function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGe
                     </button>
                 </div>
                 <div className="nav-block__stages">
-                    {moduleData.length < 20 && <div className="stages__add"><LmsButton buttonText={"Добавить урок"} handleClick={addStage} /></div>}
+                    {moduleData.length < 20 && <div className="stages__add">
+                        <IntellyButton
+                                buttonText="Добавить урок"
+                                handleClick={addStage}
+                                styleType="secondary"
+                                showIcon={true}
+                            /></div>}
                     <div className="stages__case">
                         {moduleData.map((tech) => (
                             <div key={tech.id}>

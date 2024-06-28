@@ -1,79 +1,81 @@
 import axios from "axios";
-import { apiLmsUrl, apiUserUrl,  } from "../shared/config";
+import { apiLmsUrl, apiUserUrl } from "../shared/config";
 import api from "./api";
-// import authHeader from "./auth-header";
-const teacherDashboard = async () => {
-    return await api
-        .get(apiUserUrl + "teacher/dashboard/"
-        )
+
+// Define interfaces for the data where applicable
+export interface CourseData {
+  [key: string]: any;
 }
-const teacherCourses = async () => {
-    return await api
-        .get(apiLmsUrl + "teacher-courses/"
-        )
+
+export interface ProfileData {
+  [key: string]: any;
 }
-const deleteTeacherCourse = async (courseId) => {
-    return await api
-        .delete(`${apiLmsUrl}delete-course/${courseId}/`
-        )
+
+export interface PasswordData {
+  [key: string]: any;
 }
-const addCourse = async (...data) => {
-    return await api
-        .post(apiLmsUrl + "course/",
-        ...data,
-            {headers: { "Content-Type": "multipart/form-data" }}
-        )
+
+// Define the return types for the service functions
+const teacherDashboard = async (): Promise<any> => {
+  return await api.get(apiUserUrl + "teacher/dashboard/");
 }
-const updateCourse = async (course_id, ...data) => {
-    return await api
-        .put(apiLmsUrl + "course/"+course_id,
-        ...data,
-            {headers: { "Content-Type": "multipart/form-data" }}
-        )
+
+const teacherCourses = async (): Promise<any> => {
+  return await api.get(apiLmsUrl + "teacher-courses/");
 }
-const sentToPublish = async (course_id) => {
-    return await api
-        .put(apiLmsUrl + `courses/${course_id}/send_for_moderation`
-        )
+
+const deleteTeacherCourse = async (courseId: string): Promise<any> => {
+  return await api.delete(`${apiLmsUrl}delete-course/${courseId}/`);
 }
-const teacherStudents = async (teacherId) => {
-    return await api
-        .get(apiLmsUrl + "teacher-students/" + teacherId
-        )
+
+const addCourse = async (data: FormData): Promise<any> => {
+  return await api.post(apiLmsUrl + "course/", data, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
 }
-const getCourseById = async (courseId) => {
-    return await api
-        .get(`${apiLmsUrl}course/?course_id=${courseId}`
-            // {headers: { "Content-Type": "multipart/form-data" }}
-        )
+
+const updateCourse = async (course_id: string, data: FormData): Promise<any> => {
+  return await api.put(apiLmsUrl + "course/" + course_id, data, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
 }
-const getTeacherProfile = async () => {
-    return await api
-        .get(apiUserUrl + "teacher-profile"
-        )
+
+const sentToPublish = async (course_id: string): Promise<any> => {
+  return await api.put(apiLmsUrl + `courses/${course_id}/send_for_moderation`);
 }
-const updateTeacherProfile = async (data) => {
-    return await api
-        .put(apiUserUrl + "teacher-profile-update",data
-        )
+
+const teacherStudents = async (teacherId: string): Promise<any> => {
+  return await api.get(apiLmsUrl + "teacher-students/" + teacherId);
 }
-const updateTeacherPass = async (data) => {
-    return await api
-        .put(apiUserUrl + "reset-password",data
-        )
+
+const getCourseById = async (courseId: string): Promise<any> => {
+  return await api.get(`${apiLmsUrl}course/?course_id=${courseId}`);
 }
+
+const getTeacherProfile = async (): Promise<any> => {
+  return await api.get(apiUserUrl + "teacher-profile");
+}
+
+const updateTeacherProfile = async (data: ProfileData): Promise<any> => {
+  return await api.put(apiUserUrl + "teacher-profile-update", data);
+}
+
+const updateTeacherPass = async (data: PasswordData): Promise<any> => {
+  return await api.put(apiUserUrl + "reset-password", data);
+}
+
 const TeacherService = {
-    teacherDashboard,
-    teacherCourses,
-    updateTeacherPass,
-    getTeacherProfile,
-    updateTeacherProfile,
-    deleteTeacherCourse,
-    addCourse,
-    updateCourse,
-    sentToPublish,
-    teacherStudents,
-    getCourseById,
+  teacherDashboard,
+  teacherCourses,
+  updateTeacherPass,
+  getTeacherProfile,
+  updateTeacherProfile,
+  deleteTeacherCourse,
+  addCourse,
+  updateCourse,
+  sentToPublish,
+  teacherStudents,
+  getCourseById,
 };
 
 export default TeacherService;

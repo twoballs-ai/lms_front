@@ -14,9 +14,9 @@
     "noEmit": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"]
     },
-    "allowImportingTsExtensions": true // Enable this option
+    // "allowImportingTsExtensions": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]

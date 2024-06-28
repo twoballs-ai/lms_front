@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, Outlet, useParams } from "react-router-dom";
+// src/components/CourseEditor/CourseEditor.tsx
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import {
     restrictToVerticalAxis,
     restrictToWindowEdges,
-} from "@dnd-kit/modifiers";
+} from '@dnd-kit/modifiers';
 import {
     DndContext,
     KeyboardSensor,
@@ -12,216 +13,148 @@ import {
     closestCorners,
     useSensor,
     useSensors,
-} from "@dnd-kit/core";
+    DragEndEvent,
+} from '@dnd-kit/core';
 import {
     SortableContext,
     arrayMove,
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import "./CourseEditor.scss";
-import { apiLmsUrl } from "../../../../../../shared/config";
-import LmsButton from "../../../../../reUseComponents/Button";
-import EditModuleStage from "../../FullCourseEdit/EditModuleStage";
-import CourseEditorService from "../../../../../../services/course.editor.service";
-import SortableChapter from "./SortableChapter";
-import LmsModalBase from "../../../../../reUseComponents/ModalBase";
-import TextInput from "../../../../../reUseComponents/TextInput";
-import SortableModules from "./SortableModules";
-import ReusableSwitch from "../../../../../reUseComponents/Switcher";
-import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
-import ChapterModalContent from "./ChapterModalContent";
-import { useLocation, useNavigate } from 'react-router-dom';
-function CourseEditor() {
-    
-    const { course_id } = useParams();
-    const [getChapters, setGetChapters] = useState([]);
-    const [moduleEditData, setModuleEditData] = useState([]);
-    const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
-    const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
-    const [openModal, setOpenModal] = useState(false);
-    const [inputTitleValue, setInputTitleValue] = useState('');
-    const [inputDescrValue, setInputDescreValue] = useState('');
-    const [sortIndex, setSortIndex] = useState(1);
-    const [isExam, setIsExam] = useState(false);
-    const [examDuration, setExamDuration] = useState(10);
+} from '@dnd-kit/sortable';
+import './CourseEditor.scss';
+import { RootState, AppDispatch } from '../../../../../../store/store';
+import LmsButton from '../../../../../reUseComponents/Button';
+import EditModuleStage from '../../FullCourseEdit/EditModuleStage';
+import {
+    fetchChapters,
+    addChapter,
+    setModuleEditData,
+    setActiveChapterId,
+    setActiveModuleId,
+    setModalOpen,
+    setInputTitleValue,
+    setInputDescrValue,
+    setSortIndex,
+    setIsExam,
+    setExamDuration,
+    setChapters, // Добавлено, чтобы можно было установить новые главы после сортировки
+} from '../../../../../../store/slices/courseEditorSlice';
+import SortableChapter from './SortableChapter';
+import LmsModalBase from '../../../../../reUseComponents/ModalBase';
+import TextInput from '../../../../../reUseComponents/TextInput';
+import SortableModules from './SortableModules';
+import ReusableSwitch from '../../../../../reUseComponents/Switcher';
+import ReusableSliderWithInput from '../../../../../reUseComponents/Slider';
+import ChapterModalContent from './ChapterModalContent';
+import { useNavigate } from 'react-router-dom';
+import IntellyButton from '@/components/reUseComponents/IntellyButton';
+import Module from 'module';
+
+const CourseEditor: React.FC = () => {
+    const { course_id } = useParams<{ course_id: string }>();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const {
+        chapters,
+        moduleEditData,
+        activeChapterId,
+        activeModuleId,
+        isModalOpen,
+        inputTitleValue,
+        inputDescrValue,
+        sortIndex,
+        isExam,
+        examDuration,
+    } = useSelector((state: RootState) => state.courseEditor);
 
-
-    const handleBackToProfile = async (course_id) => {
-        // Перенаправляем пользователя на другую страницу
-        navigate(`/teacher-profile`); // Замените '/новый_маршрут' на ваш адрес назначения
-    };
-
-
+    // Получение данных при монтировании компонента
     useEffect(() => {
-        if (getChapters.length > 0) {
-            const maxSortIndex = Math.max(...getChapters.map(chapter => chapter.sort_index));
-            setSortIndex(maxSortIndex + 1);
-        } else {
-            setSortIndex(1);
+        if (course_id) {
+            dispatch(fetchChapters(course_id));
         }
-    }, [getChapters]);
+    }, [course_id, dispatch]);
 
-    const handleOpenModal = () => setOpenModal(true);
-    const handleCloseModal = () => setOpenModal(false);
-
-    const handleInputChange = (e) => {
-        setInputTitleValue(e.target.value);
+    // Функция для навигации обратно к профилю учителя
+    const handleBackToProfile = async () => {
+        navigate(`/teacher-profile`);
     };
 
-    const handleInputDescrChange = (e) => {
-        setInputDescreValue(e.target.value);
+    // Функции для управления модальным окном
+    const handleOpenModal = () => dispatch(setModalOpen(true));
+    const handleCloseModal = () => dispatch(setModalOpen(false));
+
+    // Функции для обработки изменений инпутов
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setInputTitleValue(e.target.value));
     };
 
-    const handleIsExamChange = (checked) => {
-        setIsExam(checked);
+    const handleInputDescrChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        dispatch(setInputDescrValue(e.target.value));
     };
 
-    const handleExamDurationChange = (value) => {
-        setExamDuration(value);
+    const handleIsExamChange = (checked: boolean) => {
+        dispatch(setIsExam(checked));
     };
 
-    
+    const handleExamDurationChange = (value: number) => {
+        dispatch(setExamDuration(value));
+    };
 
+    // Настройка сенсоров для DnD
     const sensors = useSensors(
         useSensor(PointerSensor, {
-            // Установите ось перемещения как вертикальную
-            axis: "y",
+            axis: 'y',
         }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
-        })
+        }),
     );
 
-    const moduleChange = (module) => {
-        setModuleEditData(module);
+    const moduleChange = (module: Module) => {
+        dispatch(setModuleEditData(module));
     };
 
     const AddChapterOpenModal = async () => {
         handleOpenModal();
     };
 
-    const handleDragStart = (event) => {};
-    const handleDragMove = (event) => {};
-    const handleDragEnd = (event) => {
+    // Обработчики для начала и завершения перетаскивания
+    const handleDragStart = (event: any) => {};
+    const handleDragMove = (event: any) => {};
+    const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
-        if (active.id !== over.id) {
-            setGetChapters((chapters) => {
-                const oldIndex = chapters.findIndex((chapter) => chapter.sort_index === active.id);
-                const newIndex = chapters.findIndex((chapter) => chapter.sort_index === over.id);
-                const newChapters = arrayMove(chapters, oldIndex, newIndex).map((chapter, index) => ({
-                    ...chapter,
-                    sort_index: index + 1,
-                }));
-                // Обновление сортировки на сервере
-                newChapters.forEach(async (chapter) => {
-                    try {
-                        const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, {
-                            sort_index: chapter.sort_index,
-                        });
-                        if (response.status === 200 || response.status === 201) {
-                            console.log("Chapter updated successfully", response.data);
-                        }
-                    } catch (error) {
-                        console.error('Failed to update chapter:', error);
-                    }
-                });
-                return newChapters;
-            });
-        }
-    };
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            await CourseEditorService.editCoursePageGetChapterList(course_id).then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    // Sort the modules within each chapter by sort_index
-                    const sortedChapters = response.data.data.map(chapter => {
-                        const sortedModules = chapter.modules.sort((a, b) => a.sort_index - b.sort_index);
-                        return { ...chapter, modules: sortedModules };
-                    });
-                    setGetChapters(sortedChapters);
-                }
-            });
-        };
-        fetchData();
-    }, [course_id]);
-
-    const addChapter = async () => {
-
-        let examDurationValue = isExam ? examDuration : null;
-    
-        // Если предыдущей главы нет, устанавливаем ID новой главы в качестве предыдущей
-        const dataParams = {
-            course_id: course_id,
-            title: inputTitleValue,
-            description: inputDescrValue,
-            sort_index: sortIndex,
-            is_exam: isExam,
-            exam_duration_minutes: examDurationValue 
-        };
-    
-        try {
-            const response = await CourseEditorService.editCoursePageAddChapter(dataParams);
-            if (response.status === 200 || response.status === 201) {
-                console.log(response.data);
-                const newData = [...getChapters, response.data.data];
-                setGetChapters(newData);
-                handleCloseModal();
-            }
-        } catch (error) {
-            console.error('Failed to add chapter:', error);
-        }
-    };
-    const handleMoveModule = async (chapterId, moduleId, direction) => {
-        const updatedChapters = getChapters.map((chapter) => {
-            if (chapter.id !== chapterId) return chapter;
-
-            const modules = [...chapter.modules];
-            const index = modules.findIndex((module) => module.id === moduleId);
-            const newIndex = index + direction;
-
-            if (newIndex < 0 || newIndex >= modules.length) return chapter;
-
-            const [movedModule] = modules.splice(index, 1);
-            modules.splice(newIndex, 0, movedModule);
-
-            return {
+        if (active.id !== over?.id) {
+            const oldIndex = chapters.findIndex(chapter => chapter.sort_index === active.id);
+            const newIndex = chapters.findIndex(chapter => chapter.sort_index === over?.id);
+            const newChapters = arrayMove(chapters, oldIndex, newIndex).map((chapter, index) => ({
                 ...chapter,
-                modules: modules.map((module, idx) => ({
-                    ...module,
-                    sort_index: idx + 1,
-                })),
-            };
-        });
-
-        setGetChapters(updatedChapters);
-
-        // Обновление сортировки модулей на сервере
-        updatedChapters.forEach((chapter) => {
-            chapter.modules.forEach(async (module) => {
+                sort_index: index + 1,
+            }));
+            newChapters.forEach(async chapter => {
                 try {
-                    const response = await CourseEditorService.editCoursePagePatchModule(module.id, {
-                        sort_index: module.sort_index,
+                    const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, {
+                        sort_index: chapter.sort_index,
                     });
                     if (response.status === 200 || response.status === 201) {
-                        console.log("Module updated successfully", response.data);
+                        console.log('Chapter updated successfully', response.data);
                     }
                 } catch (error) {
-                    console.error('Failed to update module:', error);
+                    console.error('Failed to update chapter:', error);
                 }
             });
-        });
+            dispatch(setChapters(newChapters));
+        }
     };
 
-    const sortedChapters = [...getChapters].sort((a, b) => a.sort_index - b.sort_index);
+    // Сортировка глав
+    const sortedChapters = [...chapters].sort(
+        (a, b) => a.sort_index - b.sort_index,
+    );
 
     return (
         <div className="course-edit__container">
             <LmsModalBase
-                open={openModal}
+                open={isModalOpen}
                 onClose={handleCloseModal}
                 content={
                     <ChapterModalContent
@@ -233,7 +166,14 @@ function CourseEditor() {
                         handleInputDescrChange={handleInputDescrChange}
                         handleIsExamChange={handleIsExamChange}
                         handleExamDurationChange={handleExamDurationChange}
-                        addChapter={addChapter}
+                        addChapter={() => dispatch(addChapter({
+                            course_id: course_id!,
+                            title: inputTitleValue,
+                            description: inputDescrValue,
+                            sort_index: sortIndex,
+                            is_exam: isExam,
+                            exam_duration_minutes: isExam ? examDuration : null,
+                        }))}
                     />
                 }
             />
@@ -246,41 +186,59 @@ function CourseEditor() {
                 modifiers={[restrictToVerticalAxis]}
             >
                 <SortableContext
-                    items={sortedChapters.map((chapter) => chapter.sort_index)}
+                    items={sortedChapters.map(chapter => chapter.sort_index)}
                     strategy={verticalListSortingStrategy}
                 >
                     <div className="container__leftbar">
                         <div className="leftbar__chapters">
-                            <LmsButton
-                                buttonText={"Добавить раздел"}
+                            <IntellyButton
+                                buttonText="Добавить раздел"
                                 handleClick={AddChapterOpenModal}
+                                styleType="primary"
+                                showIcon={true}
                             />
-                            {sortedChapters.map((chapter) => (
+                            {sortedChapters.map(chapter => (
                                 <SortableChapter
                                     id={chapter.sort_index}
                                     key={chapter.sort_index}
                                     chapter={chapter}
                                     activeChapterId={activeChapterId}
-                                    setActiveChapterId={setActiveChapterId}
-                                    getChapters={getChapters}
-                                    setGetChapters={setGetChapters}
+                                    setActiveChapterId={(id) => dispatch(setActiveChapterId(id))}
+                                    getChapters={chapters}
+                                    setGetChapters={(chapters) => dispatch(setChapters(chapters))}
                                 >
-                                    <SortableContext items={chapter.modules.map((i) => i.id)}>
-                                        {chapter.modules.map((module, index) => (
-                                            <SortableModules
-                                                title={module.title}
-                                                moduleChange={moduleChange}
-                                                id={module.id}
-                                                key={module.sort_index}
-                                                module={module}
-                                                activeModuleId={activeModuleId}
-                                                setActiveModuleId={setActiveModuleId}
-                                                onMoveUp={() => handleMoveModule(chapter.id, module.id, -1)}
-                                                onMoveDown={() => handleMoveModule(chapter.id, module.id, 1)}
-                                                isFirst={index === 0}
-                                                isLast={index === chapter.modules.length - 1}
-                                            />
-                                        ))}
+                                    <SortableContext
+                                        items={chapter.modules.map(i => i.id)}
+                                    >
+                                        {chapter.modules.map(
+                                            (module, index) => (
+                                                <SortableModules
+                                                    title={module.title}
+                                                    moduleChange={moduleChange}
+                                                    id={module.id}
+                                                    key={module.sort_index}
+                                                    module={module}
+                                                    activeModuleId={activeModuleId}
+                                                    setActiveModuleId={(id) => dispatch(setActiveModuleId(id))}
+                                                    onMoveUp={() =>
+                                                        handleMoveModule(
+                                                            chapter.id,
+                                                            module.id,
+                                                            -1,
+                                                        )
+                                                    }
+                                                    onMoveDown={() =>
+                                                        handleMoveModule(
+                                                            chapter.id,
+                                                            module.id,
+                                                            1,
+                                                        )
+                                                    }
+                                                    isFirst={index === 0}
+                                                    isLast={index === chapter.modules.length - 1}
+                                                />
+                                            ),
+                                        )}
                                     </SortableContext>
                                 </SortableChapter>
                             ))}
@@ -289,24 +247,26 @@ function CourseEditor() {
                 </SortableContext>
             </DndContext>
             <div className="container__main">
-                {Object.keys(moduleEditData).length > 0 && (
+                {moduleEditData && (
                     <EditModuleStage
                         moduleEditData={moduleEditData}
-                        setModuleEditData={setModuleEditData}
-                        getChapters={getChapters}
-                        setGetChapters={setGetChapters}
+                        setModuleEditData={(module) => dispatch(setModuleEditData(module))}
+                        getChapters={chapters}
+                        setGetChapters={(chapters) => dispatch(setChapters(chapters))}
                     />
                 )}
             </div>
-            <div className="settings-panel">
-            <LmsButton
-                                buttonText={"Вернуться в профиль"}
-                                handleClick={handleBackToProfile}
-                            />
-                {/* Здесь могут быть различные элементы управления настройками */}
+            <div className="course-edit__footer">
+                <Link to={`/teacher-profile`} className="course-edit__footer-item">
+                    <LmsButton
+                        title="Назад к профилю"
+                        onClick={handleBackToProfile}
+                        bgColor="primary"
+                    />
+                </Link>
             </div>
         </div>
     );
-}
+};
 
 export default CourseEditor;

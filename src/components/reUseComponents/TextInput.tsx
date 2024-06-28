@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Input } from 'antd';
 
 const { TextArea, Password } = Input;
 
-const TextInput = ({ type, placeholder, value, onChange, style = {} }) => {
-  const defaultStyle = {
+interface TextInputProps {
+  type?: 'textarea' | 'email' | 'phone' | 'text' | 'password';
+  placeholder: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void;
+  style?: React.CSSProperties;
+}
+
+const TextInput: React.FC<TextInputProps> = ({
+  type = 'text',
+  placeholder,
+  value,
+  onChange,
+  style = {},
+}) => {
+  const defaultStyle: React.CSSProperties = {
     padding: '8px',
     width: '100%',
   };
 
-  const combinedStyle = { ...defaultStyle, ...style };
+  const combinedStyle: React.CSSProperties = { ...defaultStyle, ...style };
 
   const getInputComponent = () => {
     switch (type) {

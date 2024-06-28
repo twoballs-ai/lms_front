@@ -5,26 +5,31 @@ import LmsButton from "../../../../reUseComponents/Button";
 import TextInput from "../../../../reUseComponents/TextInput";
 import "./Login.scss";
 
-function AllProfilesLogin() {
-  const [inputUsernameValue, setInputUsernameValue] = useState('');
-  const [inputPasswordValue, setInputPasswordValue] = useState('');
-  const [errors, setErrors] = useState({});
-  const [errorMsg, setErrorMsg] = useState('');
+interface Errors {
+  username?: string;
+  password?: string;
+}
+
+const AllProfilesLogin: React.FC = () => {
+  const [inputUsernameValue, setInputUsernameValue] = useState<string>('');
+  const [inputPasswordValue, setInputPasswordValue] = useState<string>('');
+  const [errors, setErrors] = useState<Errors>({});
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().email("Некорректный email, пожалуйста добавьте корректный").required("Обязательно"),
     password: Yup.string().min(8, "Пароль должен содержать минимум 8 символов").required("Обязательно"),
   });
 
-  const handleInputUsernameChange = (e) => {
+  const handleInputUsernameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputUsernameValue(e.target.value);
   };
 
-  const handleInputPasswordChange = (e) => {
+  const handleInputPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputPasswordValue(e.target.value);
   };
 
-  const validateForm = async () => {
+  const validateForm = async (): Promise<boolean> => {
     try {
       await validationSchema.validate({
         username: inputUsernameValue,
@@ -33,8 +38,8 @@ function AllProfilesLogin() {
       setErrors({});
       return true;
     } catch (err) {
-      const validationErrors = {};
-      err.inner.forEach((error) => {
+      const validationErrors: Errors = {};
+      (err as Yup.ValidationError).inner.forEach((error) => {
         validationErrors[error.path] = error.message;
       });
       setErrors(validationErrors);
@@ -42,7 +47,7 @@ function AllProfilesLogin() {
     }
   };
 
-  const submitForm = async (e) => {
+  const submitForm = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     const isValid = await validateForm();
     if (!isValid) return;
@@ -51,24 +56,24 @@ function AllProfilesLogin() {
     formData.append('username', inputUsernameValue);
     formData.append('password', inputPasswordValue);
 
-    await AuthService.login(formData).then((response) => {
+    try {
+      const response = await AuthService.login(formData);
       if (response.status === 200 || response.status === 201) {
         localStorage.clear();
-        localStorage.setItem("access_token", JSON.stringify(response?.data?.access_token));
-        localStorage.setItem("refresh_token", JSON.stringify(response?.data?.refresh_token));
-        if (response?.data?.type === "teacher_model") {
-          localStorage.setItem("role", JSON.stringify(response?.data?.type));
+        localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
+        localStorage.setItem("refresh_token", JSON.stringify(response.data.refresh_token));
+        if (response.data.type === "teacher_model") {
+          localStorage.setItem("role", JSON.stringify(response.data.type));
           window.location.href = "/teacher-profile/";
-        }
-        if (response?.data?.type === "student_model") {
-          localStorage.setItem("role", JSON.stringify(response?.data?.type));
+        } else if (response.data.type === "student_model") {
+          localStorage.setItem("role", JSON.stringify(response.data.type));
           localStorage.setItem("studentLoginStatus", JSON.stringify("true"));
           window.location.href = "/student-profile/";
         }
       }
-    }).catch((error) => {
+    } catch (error: any) {
       setErrorMsg(error.response.data.message);
-    });
+    }
   };
 
   return (
@@ -101,6 +106,6 @@ function AllProfilesLogin() {
       </form>
     </div>
   );
-}
+};
 
 export default AllProfilesLogin;

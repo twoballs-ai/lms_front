@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import * as Yup from 'yup';
 import TextInput from '../../../../../reUseComponents/TextInput';
 import ReusableSwitch from '../../../../../reUseComponents/Switcher';
@@ -13,7 +13,20 @@ const ChapterSchema = Yup.object().shape({
     examDuration: Yup.number()
 });
 
-const ChapterModalContent = ({
+interface ChapterModalContentProps {
+    inputTitleValue: string;
+    inputDescrValue: string;
+    isExam: boolean;
+    examDuration: number;
+    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleInputDescrChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+    handleIsExamChange: (checked: boolean) => void;
+    handleExamDurationChange: (value: number) => void;
+    addChapter: () => void;
+    previousChapterId?: string;
+}
+
+const ChapterModalContent: React.FC<ChapterModalContentProps> = ({
     inputTitleValue,
     inputDescrValue,
     isExam,
@@ -25,7 +38,7 @@ const ChapterModalContent = ({
     addChapter,
     previousChapterId,
 }) => {
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const validate = async () => {
         try {
@@ -37,9 +50,9 @@ const ChapterModalContent = ({
             }, { abortEarly: false });
             setErrors({});
             return true;
-        } catch (err) {
-            const newErrors = {};
-            err.inner.forEach(error => {
+        } catch (err: any) {
+            const newErrors: { [key: string]: string } = {};
+            err.inner.forEach((error: any) => {
                 newErrors[error.path] = error.message;
             });
             setErrors(newErrors);
@@ -68,7 +81,7 @@ const ChapterModalContent = ({
             
             <p>Описание главы:</p>
             <TextInput
-                type="textarea"
+                isTextArea={true}
                 placeholder="Напишите сюда описание главы"
                 value={inputDescrValue}
                 onChange={handleInputDescrChange}
