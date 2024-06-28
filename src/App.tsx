@@ -24,7 +24,7 @@ const About = lazy(() => import('./components/pages/About/About.tsx'));
 const CourseDetail = lazy(() => import('./components/pages/Course/CourseDetail.tsx'));
 const StudentDashboard = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/Dashboard.tsx'));
 const StudentMyCourses = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses.tsx'));
-const UserDashmain = lazy(() => import('./components/pages/StudentProfile/ControlPanel/components/DashMain.tsx'));
+const UserDashmain = lazy(() => import('./components/pages/StudentProfile/ControlPanel/components/DashMain'));
 const TeacherDashboard = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/Dashboard.tsx'));
 const MyTeacherCourses = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/MyTeacherCourses.tsx'));
 const TeacherDashMain = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/components/DashMain.tsx'));
