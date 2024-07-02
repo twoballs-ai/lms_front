@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
 import LmsButton from "../../../../../reUseComponents/Button";
 import { DragVerticalIcon } from '../../../../../icons/icons';
 import LmsModalBase from '../../../../../reUseComponents/ModalBase';
@@ -13,37 +12,16 @@ import { Button } from "antd";
 import PopupMenu from "../../../../../reUseComponents/PopupMenu";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
 import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
-import IntellyButton from "@/components/reUseComponents/IntellyButton";
-import { RootState, AppDispatch } from "../../../../../../store";
-import { setActiveChapterId, addModule as addModuleAction, updateChapter as updateChapterAction, deleteChapter as deleteChapterAction } from "@/store/slices/chaptersSlice";
 
-interface Module {
-  id: number;
-  title: string;
-  description: string;
-  sort_index: number;
-}
-
-interface Chapter {
-  id: number;
-  title: string;
-  description: string;
-  sort_index: number;
-  is_exam: boolean;
-  exam_duration: number;
-  modules: Module[];
-}
-
-interface SortableChapterProps {
-  id: string | number;
-  chapter: Chapter;
-  children: React.ReactNode;
-}
-
-const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { activeChapterId, chapters } = useSelector((state: RootState) => state.chapters);
-
+const SortableChapter = ({
+  id,
+  chapter,
+  children,
+  activeChapterId,
+  setActiveChapterId,
+  getChapters,
+  setGetChapters,
+}) => {
   const {
     attributes,
     setNodeRef,
@@ -52,17 +30,17 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
     transition,
     isDragging,
   } = useSortable({
-    id: id.toString(),
+    id: id,
     data: {
       type: 'container',
     },
   });
 
-  const [handlePopupOpen, setHandlePopupOpen] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [inputTitleValue, setInputTitleValue] = useState<string>('');
-  const [inputDescrValue, setInputDescrValue] = useState<string>('');
-  const [errors, setErrors] = useState<{ [key: string]: string }>({}); // State to store validation errors
+  const [handlePopupOpen, setHandlePopupOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [inputTitleValue, setInputTitleValue] = useState('');
+  const [inputDescrValue, setInputDescrValue] = useState('');
+  const [errors, setErrors] = useState({}); // State to store validation errors
 
   const schema = Yup.object().shape({
     inputTitleValue: Yup.string().required('Введите название модуля'),
@@ -80,18 +58,18 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
     setErrors({});
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputTitleValue(e.target.value);
-  const handleInputDescrChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setInputDescrValue(e.target.value);
+  const handleInputChange = (e) => setInputTitleValue(e.target.value);
+  const handleInputDescrChange = (e) => setInputDescrValue(e.target.value);
 
-  const [isExam, setIsExam] = useState<boolean>(chapter.is_exam || false);
-  const [examDuration, setExamDuration] = useState<number>(chapter.exam_duration || 10);
-  const [inputTitleChapterValue, setInputTitleChapterValue] = useState<string>(chapter.title || '');
-  const [inputDescrChapterValue, setInputDescrChapterValue] = useState<string>(chapter.description || '');
+  const [isExam, setIsExam] = useState(chapter.is_exam || false);
+  const [examDuration, setExamDuration] = useState(chapter.exam_duration || 10);
+  const [inputTitleChapterValue, setInputTitleChapterValue] = useState(chapter.title || '');
+  const [inputDescrChapterValue, setInputDescrChapterValue] = useState(chapter.description || '');
 
-  const handleInputChapterChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputTitleChapterValue(e.target.value);
-  const handleInputDescrChapterChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setInputDescrChapterValue(e.target.value);
-  const handleIsExamChange = (checked: boolean) => setIsExam(checked);
-  const handleExamDurationChange = (value: number) => setExamDuration(value);
+  const handleInputChapterChange = (e) => setInputTitleChapterValue(e.target.value);
+  const handleInputDescrChapterChange = (e) => setInputDescrChapterValue(e.target.value);
+  const handleIsExamChange = (checked) => setIsExam(checked);
+  const handleExamDurationChange = (value) => setExamDuration(value);
 
   const AddModuleOpenModal = () => handleOpenModal();
 
@@ -115,7 +93,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
         inputDescrValue,
       }, { abortEarly: false });
 
-      const currentChapter = chapters.find(chap => chap.id === chapter.id);
+      const currentChapter = getChapters.find(chap => chap.id === chapter.id);
       const maxSortIndex = currentChapter?.modules.length > 0
         ? Math.max(...currentChapter.modules.map(module => module.sort_index))
         : 0;
@@ -132,18 +110,19 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
       const response = await CourseEditorService.editCoursePageAddModule(dataParams);
       if (response.status === 200 || response.status === 201) {
         const newModule = response.data.data;
-        dispatch(addModuleAction({ chapterId: chapter.id, module: newModule }));
+        setGetChapters(prevChapters => prevChapters.map(chap => {
+          if (chap.id === chapter.id) {
+            return { ...chap, modules: [...chap.modules, newModule] };
+          }
+          return chap;
+        }));
         handleCloseModal();
       }
     } catch (validationErrors) {
-      const validationErrorsObj: { [key: string]: string } = {};
-      if (validationErrors instanceof Yup.ValidationError) {
-        validationErrors.inner.forEach(error => {
-          if (error.path) {
-            validationErrorsObj[error.path] = error.message;
-          }
-        });
-      }
+      const validationErrorsObj = {};
+      validationErrors.inner.forEach(error => {
+        validationErrorsObj[error.path] = error.message;
+      });
       setErrors(validationErrorsObj);
     }
   };
@@ -159,7 +138,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
     const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, dataParams);
     if (response.status === 200 || response.status === 201) {
       const updatedChapter = response.data.data;
-      dispatch(updateChapterAction(updatedChapter));
+      setGetChapters(prevChapters => prevChapters.map(chap => (chap.id === chapter.id ? updatedChapter : chap)));
     }
   };
 
@@ -167,12 +146,12 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
     try {
       const response = await CourseEditorService.editCoursePageDeleteChapter(chapter.id);
       if (response.status === 200 || response.status === 201) {
-        let updatedChapters = chapters.filter(item => item.id !== chapter.id);
+        let updatedChapters = getChapters.filter(item => item.id !== chapter.id);
         updatedChapters = updatedChapters.map((chap, index) => ({ ...chap, sort_index: index + 1 }));
         for (const chap of updatedChapters) {
           await CourseEditorService.editCoursePageUpdateChapter(chap.id, { sort_index: chap.sort_index });
-          dispatch(deleteChapterAction(chap.id));
         }
+        setGetChapters(updatedChapters);
       }
     } catch (error) {
       console.error('Failed to delete chapter:', error);
@@ -221,7 +200,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
       }}
       className={`chapters__block ${activeChapterId === chapter.id ? 'active' : ''}${isDragging ? 'opacity-50' : ''}`}
       key={chapter.sort_index}
-      onClick={() => dispatch(setActiveChapterId(chapter.id))}
+      onClick={() => setActiveChapterId(chapter.id)}
     >
       <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentAddModuleToModal()} />
       <PopupMenu handlePopupOpen={handlePopupOpen} handlePopupClose={handlePopupClose} title={`Настройки раздела: ${chapter.title}`} popupContent={popupContent()} />
@@ -230,12 +209,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({ id, chapter, children
           <p>{chapter.title}</p>
           {chapter.is_exam && <FieldTimeOutlined />}
         </div>
-        <IntellyButton
-          buttonText="Добавить модуль"
-          handleClick={AddModuleOpenModal}
-          styleType="secondary"
-          showIcon={false}
-        />
+        <LmsButton buttonText={"Добавить модуль"} handleClick={AddModuleOpenModal} />
         <div className="chapters__modules">
           {children}
         </div>
