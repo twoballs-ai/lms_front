@@ -11,6 +11,10 @@ import PrivateRoute from './Commons/PrivateRouter/PrivateRoute';
 import { AuthProvider } from './Commons/PrivateRouter/AuthProvider';
 import Loader from './components/reUseComponents/Loader';
 import License from './components/pages/License/License';
+import NotFound from './components/reUseComponents/NotFound';
+import ViewBlogs from './components/pages/Blog/ViewNews.jsx';
+import BlogDetail from './components/pages/Blog/NewsDetail.jsx';
+
 
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
@@ -56,6 +60,11 @@ const router = createBrowserRouter([
       { path: "license", element: <License /> },
       { path: "category", element: <CategoryPage /> },
       { path: "logout", element: <UserLogout /> },
+      { path: "news-blog", element: <ViewBlogs /> },
+      {
+        path: "news-blog/:id",
+        element: <BlogDetail />,
+      },
     ]
   },
   {
@@ -128,7 +137,7 @@ const router = createBrowserRouter([
       { path: "learning", element: <CourseLearning /> },
     ]
   },
-  { path: '*', element: <Navigate to="/" /> },
+  { path: '*', element: <NotFound /> }, // Route for handling 404 errors
 ]);
 
 const App = () => {

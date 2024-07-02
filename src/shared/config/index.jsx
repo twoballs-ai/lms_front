@@ -10,7 +10,7 @@ export const apiBaseUrl = `${serverUrl}/api/v1/base/`;
 export const apiStudyUrl = `${serverUrl}/api/v1/study/`;
 export const apiUserUrl = `${serverUrl}/api/v1/user/`;
 export const typesApiUrl = `${serverUrl}/api/types/`;
-
+export const apiBlogUrl = `${serverUrl}/api/v1/blog/`;
 export const quizApiUrl = `${serverUrl}/api-quiz/`;
 
 export const teacherApiUrl = `${serverUrl}/api/teacher/`;

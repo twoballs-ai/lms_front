@@ -2,36 +2,48 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
 
     .course-detail__course-info {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        gap: 100px;
+        gap: 20px;
         margin-bottom: 20px;
+        width: 100%;
 
         .course-info__image_wrap {
-            width: auto;
+            max-width: 400px;
+            width: 100%;
         }
-        .course-info__info_wrap{
+        
+        .course-info__info_wrap {
             display: flex;
             flex-direction: column;
-            gap:10px;
+            gap: 10px;
+            flex: 1;
+
+            h1, h3, p {
+                color: #00c3ff;
+            }
+
             h1 {
-                color:#00c3ff;
-                // font-size: 2rem;
+                font-size: 2rem;
             }
+
             h3 {
-                color:#00c3ff;
-                // font-size: 2rem;
+                font-size: 1.5rem;
             }
+
             p {
-                color:#00c3ff;
+                font-size: 1rem;
             }
         }
     }
 
     .course-detail__similar-courses {
+        width: 100%;
+        max-width: 800px;
         margin-top: 20px;
 
         hr {
@@ -41,20 +53,77 @@
         h3 {
             margin-bottom: 10px;
         }
+    }
 
-        .course {
-            margin-bottom: 20px;
+    @media (max-width: 768px) {
+        .course-detail__course-info {
+            flex-direction: column;
+            align-items: center;
 
-            img {
+            .course-info__image_wrap {
                 width: 100%;
-                height: auto;
+                max-width: 100%;
+                margin-bottom: 20px;
             }
 
-            h4 {
-                margin-top: 0;
+            .course-info__info_wrap {
+                align-items: center;
+                text-align: center;
+
+                h1 {
+                    font-size: 1.75rem;
+                }
+
+                h3 {
+                    font-size: 1.25rem;
+                }
+
+                p {
+                    font-size: 0.875rem;
+                }
+            }
+        }
+
+        .course-detail__similar-courses {
+            max-width: 100%;
+
+            hr {
+                margin: 10px 0;
             }
 
-            p {
+            h3 {
+                font-size: 1.25rem;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .course-detail__course-info {
+            gap: 10px;
+
+            .course-info__info_wrap {
+                h1 {
+                    font-size: 1.5rem;
+                }
+
+                h3 {
+                    font-size: 1rem;
+                }
+
+                p {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+
+        .course-detail__similar-courses {
+            hr {
+                margin: 5px 0;
+            }
+
+            h3 {
+                font-size: 1rem;
                 margin-bottom: 5px;
             }
         }

@@ -9,26 +9,48 @@
         display: flex;
         flex-direction: row;
         flex: 1;
-        /* Растягиваем содержимое по высоте */
         overflow: hidden;
-        /* Предотвращаем выход за границы экрана */
 
         .dashboard-body__left-menu {
             display: flex;
             flex-direction: column;
             width: 25%;
             background-color: #f0f0f0;
-            /* Цвет фона для левого меню */
-            // padding: 20px;
-            /* Отступы внутри левого меню */
         }
 
         .dashboard-body__content {
             display: flex;
             flex-direction: column;
-            width: 70%;
+            width: 75%;
             padding: 20px;
-            /* Отступы внутри основного контента */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-body {
+            flex-direction: column;
+
+            .dashboard-body__left-menu {
+                width: 100%;
+                height: auto;
+                background-color: #f0f0f0;
+            }
+
+            .dashboard-body__content {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .dashboard-body__left-menu {
+            display: none;
+        }
+
+        .dashboard-body__content {
+            width: 100%;
+            padding: 10px;
         }
     }
 }

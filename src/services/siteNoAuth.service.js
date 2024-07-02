@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiLmsUrl, apiUserUrl,  apiBaseUrl } from "../shared/config";
+import { apiLmsUrl, apiUserUrl,  apiBaseUrl, apiBlogUrl } from "../shared/config";
 import api from "./api";
 
 const getCategory = async ({ toSelect }) => {
@@ -37,7 +37,16 @@ const allCoursesPage = async (url) => {
     return await api
     .get(url)
 }
-
+const getNewsBlog = async (items) => {
+    if (items) {
+      return await api.get(`${apiBlogUrl}news/?limit=${items}`);
+    }
+    return await api.get(`${apiBlogUrl}news/`);
+  };
+  
+const getBlogById = (id) => {
+    return axios.get(`${apiBlogUrl}news/${id}`);
+  };
 const SiteService = {
     getCategory,
     getCourse,
@@ -47,6 +56,8 @@ const SiteService = {
     homePagePopularTeachers,
     homePageStudentsreviews,
     allCoursesPage,
+    getNewsBlog,
+    getBlogById,
 };
 
 export default SiteService;

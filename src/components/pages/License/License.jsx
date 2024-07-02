@@ -4,7 +4,7 @@ import "./License.scss"; // Импортируем стили
 function License() {
     return (
         <div className="license-container">
-            <div className="license-card shadow rounded">
+            <div className="license-card">
                 <div className="license-content">
                     <h5>Лицензионное соглашение</h5>
                     <p>

@@ -19,7 +19,7 @@ import PopupMenu from "../../../../reUseComponents/PopupMenu";
 import TextInput from "../../../../reUseComponents/TextInput";
 import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
 
-function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGetChapters }) {
+function EditModuleStage({ moduleEditData, setModuleEditData }) {
     const [moduleData, setModuleData] = useState([]);
     const [selectedStage, setSelectedStage] = useState(null);
     const [openModal, setOpenModal] = useState(false);
@@ -31,7 +31,7 @@ function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGe
         setInputTitleValue(moduleEditData.title);
         setInputDescreValue(moduleEditData.description);
     }, [moduleEditData]);
-
+    console.log(moduleEditData)
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
@@ -100,7 +100,7 @@ function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGe
             const response = await CourseEditorService.editCoursePageUpdateModule(moduleEditData.id, dataParams);
             if (response.status === 200 || response.status === 201) {
                 const updatedModule = response.data.data;
-                const newData = getChapters.map(chapter => {
+                const newData = chapters.map(chapter => {
                     if (chapter.id === updatedModule.chapter_id) {
                         const updatedModules = chapter.modules.map(module =>
                             module.id === updatedModule.id ? updatedModule : module
@@ -115,22 +115,11 @@ function EditModuleStage({ moduleEditData, setModuleEditData, getChapters, setGe
         };
 
         const deleteModule = async () => {
-            // const response = await CourseEditorService.editCoursePageDeleteModule(moduleEditData.id);
-            // if (response.status === 200 || response.status === 201) {
-            //     const updatedChapters = getChapters.map(chapter => {
-            //         if (chapter.id === moduleEditData.chapter_id) {
-            //             const updatedModules = chapter.modules.filter(module => module.id !== moduleEditData.id);
-            //             return { ...chapter, modules: updatedModules };
-            //         }
-            //         return chapter;
-            //     });
-            //     setGetChapters(updatedChapters);
-            //     setModuleEditData({});
-            // }
+
             const deleteResponse = await CourseEditorService.editCoursePageDeleteModule(moduleEditData.id);
             if (deleteResponse.status === 200 || deleteResponse.status === 201) {
                 // Фильтрация удаленного модуля из состояния
-                const updatedChapters = getChapters.map(chapter => {
+                const updatedChapters = chapters.map(chapter => {
                     if (chapter.id === moduleEditData.chapter_id) {
                         const remainingModules = chapter.modules.filter(module => module.id !== moduleEditData.id);
                         // Пересчет sort_index для оставшихся модулей
