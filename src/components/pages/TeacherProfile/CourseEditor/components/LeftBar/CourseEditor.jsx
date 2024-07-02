@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 import {
     restrictToVerticalAxis,
     restrictToWindowEdges,
@@ -20,7 +19,6 @@ import {
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import "./CourseEditor.scss";
-import { apiLmsUrl } from "../../../../../../shared/config";
 import LmsButton from "../../../../../reUseComponents/Button";
 import EditModuleStage from "../../FullCourseEdit/EditModuleStage";
 import CourseEditorService from "../../../../../../services/course.editor.service";
@@ -30,60 +28,44 @@ import TextInput from "../../../../../reUseComponents/TextInput";
 import SortableModules from "./SortableModules";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
 import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
-import ChapterModalContent from "./ChapterModalContent";
-import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addChapter, fetchChapters } from "../../../../../../store/slices/courseEditorChapterSlice";
+import AddChapterToCourse from "./AddChapterToCourse";
+
+
 function CourseEditor() {
-    
+
     const { course_id } = useParams();
-    const [getChapters, setGetChapters] = useState([]);
     const [moduleEditData, setModuleEditData] = useState([]);
     const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
     const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
     const [openModal, setOpenModal] = useState(false);
-    const [inputTitleValue, setInputTitleValue] = useState('');
-    const [inputDescrValue, setInputDescreValue] = useState('');
     const [sortIndex, setSortIndex] = useState(1);
-    const [isExam, setIsExam] = useState(false);
-    const [examDuration, setExamDuration] = useState(10);
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+    const { chapters, status, error } = useSelector((state) => state.course);
 
-    const handleBackToProfile = async (course_id) => {
+    const handleBackToProfile = async () => {
         // Перенаправляем пользователя на другую страницу
         navigate(`/teacher-profile`); // Замените '/новый_маршрут' на ваш адрес назначения
     };
 
-
+    console.log(chapters)
     useEffect(() => {
-        if (getChapters.length > 0) {
-            const maxSortIndex = Math.max(...getChapters.map(chapter => chapter.sort_index));
+        if (chapters.length > 0) {
+            const maxSortIndex = Math.max(...chapters.map(chapter => chapter.sort_index));
             setSortIndex(maxSortIndex + 1);
         } else {
             setSortIndex(1);
         }
-    }, [getChapters]);
+    }, [chapters]);
 
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
-    const handleInputChange = (e) => {
-        setInputTitleValue(e.target.value);
-    };
-
-    const handleInputDescrChange = (e) => {
-        setInputDescreValue(e.target.value);
-    };
-
-    const handleIsExamChange = (checked) => {
-        setIsExam(checked);
-    };
-
-    const handleExamDurationChange = (value) => {
-        setExamDuration(value);
-    };
-
-    
-
+ 
     const sensors = useSensors(
         useSensor(PointerSensor, {
             // Установите ось перемещения как вертикальную
@@ -134,49 +116,15 @@ function CourseEditor() {
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            await CourseEditorService.editCoursePageGetChapterList(course_id).then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    // Sort the modules within each chapter by sort_index
-                    const sortedChapters = response.data.data.map(chapter => {
-                        const sortedModules = chapter.modules.sort((a, b) => a.sort_index - b.sort_index);
-                        return { ...chapter, modules: sortedModules };
-                    });
-                    setGetChapters(sortedChapters);
-                }
-            });
-        };
-        fetchData();
-    }, [course_id]);
-
-    const addChapter = async () => {
-
-        let examDurationValue = isExam ? examDuration : null;
-    
-        // Если предыдущей главы нет, устанавливаем ID новой главы в качестве предыдущей
-        const dataParams = {
-            course_id: course_id,
-            title: inputTitleValue,
-            description: inputDescrValue,
-            sort_index: sortIndex,
-            is_exam: isExam,
-            exam_duration_minutes: examDurationValue 
-        };
-    
-        try {
-            const response = await CourseEditorService.editCoursePageAddChapter(dataParams);
-            if (response.status === 200 || response.status === 201) {
-                console.log(response.data);
-                const newData = [...getChapters, response.data.data];
-                setGetChapters(newData);
-                handleCloseModal();
-            }
-        } catch (error) {
-            console.error('Failed to add chapter:', error);
+        if (course_id) {
+            dispatch(fetchChapters(course_id));
         }
-    };
+    }, [course_id, dispatch]);
+
+
+
     const handleMoveModule = async (chapterId, moduleId, direction) => {
-        const updatedChapters = getChapters.map((chapter) => {
+        const updatedChapters = chapters.map((chapter) => {
             if (chapter.id !== chapterId) return chapter;
 
             const modules = [...chapter.modules];
@@ -216,7 +164,7 @@ function CourseEditor() {
         });
     };
 
-    const sortedChapters = [...getChapters].sort((a, b) => a.sort_index - b.sort_index);
+    const sortedChapters = [...chapters].sort((a, b) => a.sort_index - b.sort_index);
 
     return (
         <div className="course-edit__container">
@@ -224,16 +172,10 @@ function CourseEditor() {
                 open={openModal}
                 onClose={handleCloseModal}
                 content={
-                    <ChapterModalContent
-                        inputTitleValue={inputTitleValue}
-                        inputDescrValue={inputDescrValue}
-                        isExam={isExam}
-                        examDuration={examDuration}
-                        handleInputChange={handleInputChange}
-                        handleInputDescrChange={handleInputDescrChange}
-                        handleIsExamChange={handleIsExamChange}
-                        handleExamDurationChange={handleExamDurationChange}
-                        addChapter={addChapter}
+                    <AddChapterToCourse
+                    course_id={course_id}
+                    handleCloseModal={handleCloseModal}
+                    sortIndex={sortIndex}
                     />
                 }
             />
@@ -262,8 +204,8 @@ function CourseEditor() {
                                     chapter={chapter}
                                     activeChapterId={activeChapterId}
                                     setActiveChapterId={setActiveChapterId}
-                                    getChapters={getChapters}
-                                    setGetChapters={setGetChapters}
+                                    chapters={chapters}
+                                    
                                 >
                                     <SortableContext items={chapter.modules.map((i) => i.id)}>
                                         {chapter.modules.map((module, index) => (
@@ -277,8 +219,6 @@ function CourseEditor() {
                                                 setActiveModuleId={setActiveModuleId}
                                                 onMoveUp={() => handleMoveModule(chapter.id, module.id, -1)}
                                                 onMoveDown={() => handleMoveModule(chapter.id, module.id, 1)}
-                                                isFirst={index === 0}
-                                                isLast={index === chapter.modules.length - 1}
                                             />
                                         ))}
                                     </SortableContext>
@@ -286,6 +226,7 @@ function CourseEditor() {
                             ))}
                         </div>
                     </div>
+
                 </SortableContext>
             </DndContext>
             <div className="container__main">
@@ -293,8 +234,7 @@ function CourseEditor() {
                     <EditModuleStage
                         moduleEditData={moduleEditData}
                         setModuleEditData={setModuleEditData}
-                        getChapters={getChapters}
-                        setGetChapters={setGetChapters}
+
                     />
                 )}
             </div>

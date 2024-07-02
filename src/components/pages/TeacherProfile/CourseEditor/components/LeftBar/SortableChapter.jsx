@@ -12,6 +12,8 @@ import { Button } from "antd";
 import PopupMenu from "../../../../../reUseComponents/PopupMenu";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
 import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteChapter, updateChapter, addModuleToChapter } from "../../../../../../store/slices/courseEditorChapterSlice";
 
 const SortableChapter = ({
   id,
@@ -19,8 +21,6 @@ const SortableChapter = ({
   children,
   activeChapterId,
   setActiveChapterId,
-  getChapters,
-  setGetChapters,
 }) => {
   const {
     attributes,
@@ -35,12 +35,13 @@ const SortableChapter = ({
       type: 'container',
     },
   });
-
+  
+  const dispatch = useDispatch();
   const [handlePopupOpen, setHandlePopupOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [inputTitleValue, setInputTitleValue] = useState('');
   const [inputDescrValue, setInputDescrValue] = useState('');
-  const [errors, setErrors] = useState({}); // State to store validation errors
+  const [errors, setErrors] = useState({});
 
   const schema = Yup.object().shape({
     inputTitleValue: Yup.string().required('Введите название модуля'),
@@ -93,12 +94,9 @@ const SortableChapter = ({
         inputDescrValue,
       }, { abortEarly: false });
 
-      const currentChapter = getChapters.find(chap => chap.id === chapter.id);
-      const maxSortIndex = currentChapter?.modules.length > 0
-        ? Math.max(...currentChapter.modules.map(module => module.sort_index))
+      const newSortIndex = chapter.modules.length > 0
+        ? Math.max(...chapter.modules.map(module => module.sort_index)) + 1
         : 0;
-
-      const newSortIndex = maxSortIndex + 1;
 
       const dataParams = {
         chapter_id: chapter.id,
@@ -107,17 +105,8 @@ const SortableChapter = ({
         sort_index: newSortIndex,
       };
 
-      const response = await CourseEditorService.editCoursePageAddModule(dataParams);
-      if (response.status === 200 || response.status === 201) {
-        const newModule = response.data.data;
-        setGetChapters(prevChapters => prevChapters.map(chap => {
-          if (chap.id === chapter.id) {
-            return { ...chap, modules: [...chap.modules, newModule] };
-          }
-          return chap;
-        }));
-        handleCloseModal();
-      }
+      await dispatch(addModuleToChapter(dataParams)).unwrap();
+      handleCloseModal();
     } catch (validationErrors) {
       const validationErrorsObj = {};
       validationErrors.inner.forEach(error => {
@@ -127,32 +116,21 @@ const SortableChapter = ({
     }
   };
 
-  const updateChapter = async () => {
+  const handleUpdateChapter = async () => {
     const dataParams = {
+      id: chapter.id,
       title: inputTitleChapterValue,
       description: inputDescrChapterValue,
       sort_index: chapter.sort_index,
       is_exam: isExam,
       exam_duration_minutes: isExam ? examDuration : null,
     };
-    const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, dataParams);
-    if (response.status === 200 || response.status === 201) {
-      const updatedChapter = response.data.data;
-      setGetChapters(prevChapters => prevChapters.map(chap => (chap.id === chapter.id ? updatedChapter : chap)));
-    }
+    await dispatch(updateChapter(dataParams)).unwrap();
   };
 
-  const deleteChapter = async () => {
+  const handleDeleteChapter = async () => {
     try {
-      const response = await CourseEditorService.editCoursePageDeleteChapter(chapter.id);
-      if (response.status === 200 || response.status === 201) {
-        let updatedChapters = getChapters.filter(item => item.id !== chapter.id);
-        updatedChapters = updatedChapters.map((chap, index) => ({ ...chap, sort_index: index + 1 }));
-        for (const chap of updatedChapters) {
-          await CourseEditorService.editCoursePageUpdateChapter(chap.id, { sort_index: chap.sort_index });
-        }
-        setGetChapters(updatedChapters);
-      }
+      await dispatch(deleteChapter(chapter.id)).unwrap();
     } catch (error) {
       console.error('Failed to delete chapter:', error);
     }
@@ -182,10 +160,10 @@ const SortableChapter = ({
             />
           </div>
         )}
-        <LmsButton buttonText={"Обновить"} handleClick={updateChapter} />
+        <LmsButton buttonText={"Обновить"} handleClick={handleUpdateChapter} />
       </div>
       <div style={{ position: 'absolute', bottom: '20px', padding: '10px' }}>
-        <LmsButton buttonText={"Удалить раздел"} handleClick={deleteChapter} />
+        <LmsButton buttonText={"Удалить раздел"} handleClick={handleDeleteChapter} />
       </div>
     </>
   );
