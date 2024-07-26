@@ -7,7 +7,7 @@ import { DragVerticalIcon } from '../../../../../icons/icons';
 import LmsModalBase from '../../../../../reUseComponents/ModalBase';
 import TextInput from "../../../../../reUseComponents/TextInput";
 import CourseEditorService from "../../../../../../services/course.editor.service";
-import { SettingOutlined, DeleteOutlined, UpOutlined, DownOutlined, FieldTimeOutlined } from '@ant-design/icons';
+import { SettingOutlined, DeleteOutlined, UpOutlined, DownOutlined, FieldTimeOutlined, LockOutlined } from '@ant-design/icons'; // Import the lock icon
 import { Button } from "antd";
 import PopupMenu from "../../../../../reUseComponents/PopupMenu";
 import ReusableSwitch from "../../../../../reUseComponents/Switcher";
@@ -186,6 +186,7 @@ const SortableChapter = ({
         <div className="block__title">
           <p>{chapter.title}</p>
           {chapter.is_exam && <FieldTimeOutlined />}
+          {chapter.is_blocked && <LockOutlined />} {/* Conditionally render the lock icon */}
         </div>
         <LmsButton buttonText={"Добавить модуль"} handleClick={AddModuleOpenModal} />
         <div className="chapters__modules">
