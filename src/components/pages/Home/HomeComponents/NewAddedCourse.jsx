@@ -9,17 +9,20 @@ function NewAddedCourse(props) {
 
     return (
         <div className={'home-container__last-added-course'}>
-            {lastAddedCourses && lastAddedCourses.map((course) => (
-                <div key={course.id} className={'card-wrapper'}>
-                    <Link to={`/detail/${course.id}`}>
-                        <CustomCard
-                            title={course.title}
-                            description={course.description}
-                            image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available
-                        />
-                    </Link>
-                </div>
-            ))}
+{lastAddedCourses.length !== 0 ? (
+    lastAddedCourses.map((course) => (
+        <div key={course.id} className="card-wrapper">
+            <Link to={`/detail/${course.id}`}>
+                <CustomCard
+                    title={course.title}
+                    description={course.description}
+                    image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available
+                />
+            </Link>
+        </div>
+    ))
+) : <p>Ожидайте появления курсов</p>}
+
         </div>
     );
 }

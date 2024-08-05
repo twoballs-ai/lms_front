@@ -17,6 +17,11 @@ const deleteTeacherCourse = async (courseId) => {
         .delete(`${apiLmsUrl}delete-course/${courseId}/`
         )
 }
+const archiveTeacherCourse = async (courseId) => {
+    return await api
+        .delete(`${apiLmsUrl}archive-course/${courseId}/`
+        )
+}
 const addCourse = async (...data) => {
     return await api
         .post(apiLmsUrl + "course/",
@@ -69,6 +74,7 @@ const TeacherService = {
     getTeacherProfile,
     updateTeacherProfile,
     deleteTeacherCourse,
+    archiveTeacherCourse,
     addCourse,
     updateCourse,
     sentToPublish,

@@ -33,9 +33,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addChapter, fetchChapters } from "../../../../../../store/slices/courseEditorChapterSlice";
 import AddChapterToCourse from "./AddChapterToCourse";
 
+const getSortedChapters = (chapters) => {
+    return [...chapters].sort((a, b) => a.sort_index - b.sort_index);
+};
 
 function CourseEditor() {
-
     const { course_id } = useParams();
     const [moduleEditData, setModuleEditData] = useState([]);
     const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
@@ -52,7 +54,6 @@ function CourseEditor() {
         navigate(`/teacher-profile`); // Замените '/новый_маршрут' на ваш адрес назначения
     };
 
-    console.log(chapters)
     useEffect(() => {
         if (chapters.length > 0) {
             const maxSortIndex = Math.max(...chapters.map(chapter => chapter.sort_index));
@@ -65,7 +66,6 @@ function CourseEditor() {
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
- 
     const sensors = useSensors(
         useSensor(PointerSensor, {
             // Установите ось перемещения как вертикальную
@@ -114,14 +114,11 @@ function CourseEditor() {
         }
     };
 
-
     useEffect(() => {
         if (course_id) {
             dispatch(fetchChapters(course_id));
         }
     }, [course_id, dispatch]);
-
-
 
     const handleMoveModule = async (chapterId, moduleId, direction) => {
         const updatedChapters = chapters.map((chapter) => {
@@ -164,7 +161,7 @@ function CourseEditor() {
         });
     };
 
-    const sortedChapters = [...chapters].sort((a, b) => a.sort_index - b.sort_index);
+    const sortedChapters = getSortedChapters(chapters);
 
     return (
         <div className="course-edit__container">
