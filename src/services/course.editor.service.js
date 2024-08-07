@@ -28,6 +28,10 @@ const editCoursePageUpdateChapter = async (chapterId, data) => {
     return await api
         .put(apiLmsUrl + `update-chapter/${chapterId}`, data)
 }
+const editCourseUpdateChapterSortIndexes = async (course_id, chapters) => {
+    return await api
+        .put(`${apiLmsUrl}update_chapters_sort_indexes/${course_id}`, chapters);
+}
 const editCoursePageDeleteChapter = async (chapter_id) => {
     return await api
         .delete(`${apiLmsUrl}delete-chapter/?chapter_id=${chapter_id}`)
@@ -94,6 +98,7 @@ const CourseEditorService = {
     editCoursePageGetChapterList,
     editCoursePageAddChapter,
     editCoursePageUpdateChapter,
+    editCourseUpdateChapterSortIndexes,
     editCoursePageDeleteChapter,
     editCoursePageAddModule,
     editCoursePageUpdateModule,

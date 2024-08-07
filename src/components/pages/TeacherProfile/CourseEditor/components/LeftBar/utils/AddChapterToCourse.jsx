@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import TextInput from '../../../../../reUseComponents/TextInput';
-import ReusableSwitch from '../../../../../reUseComponents/Switcher';
-import ReusableSliderWithInput from '../../../../../reUseComponents/Slider';
-import LmsButton from '../../../../../reUseComponents/Button';
-import { addChapter } from '../../../../../../store/slices/courseEditorChapterSlice';
+import TextInput from '../../../../../../reUseComponents/TextInput';
+import ReusableSwitch from '../../../../../../reUseComponents/Switcher';
+import ReusableSliderWithInput from '../../../../../../reUseComponents/Slider';
+import LmsButton from '../../../../../../reUseComponents/Button';
+import { addChapter } from '../../../../../../../store/slices/courseEditorChapterSlice';
 
 // Yup validation schema
 const ChapterSchema = Yup.object().shape({
@@ -15,7 +15,7 @@ const ChapterSchema = Yup.object().shape({
 
 });
 
-const AddChapterToCourse = ({ course_id, handleCloseModal, sortIndex }) => {
+const AddChapterToCourse = ({ course_id, handleCloseModal }) => {
     console.log()
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
@@ -23,7 +23,6 @@ const AddChapterToCourse = ({ course_id, handleCloseModal, sortIndex }) => {
     const [inputDescrValue, setInputDescrValue] = useState('');
     const [isExam, setIsExam] = useState(false);
     const [examDuration, setExamDuration] = useState(10);
-
     const validate = async () => {
         try {
             await ChapterSchema.validate({
@@ -51,12 +50,12 @@ const AddChapterToCourse = ({ course_id, handleCloseModal, sortIndex }) => {
                 course_id,
                 inputTitleValue,
                 inputDescrValue,
-                sortIndex, // Adjust sortIndex as needed
                 isExam,
                 examDuration
             })).then(handleCloseModal);
         }
     };
+
 
     return (
         <>

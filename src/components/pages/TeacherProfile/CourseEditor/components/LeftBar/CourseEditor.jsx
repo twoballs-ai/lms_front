@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import {
-    restrictToVerticalAxis,
-    restrictToWindowEdges,
-} from "@dnd-kit/modifiers";
+import { useParams, useNavigate } from "react-router-dom";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
     DndContext,
     KeyboardSensor,
@@ -14,7 +11,6 @@ import {
 } from "@dnd-kit/core";
 import {
     SortableContext,
-    arrayMove,
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -24,51 +20,38 @@ import EditModuleStage from "../../FullCourseEdit/EditModuleStage";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import SortableChapter from "./SortableChapter";
 import LmsModalBase from "../../../../../reUseComponents/ModalBase";
-import TextInput from "../../../../../reUseComponents/TextInput";
-import SortableModules from "./SortableModules";
-import ReusableSwitch from "../../../../../reUseComponents/Switcher";
-import ReusableSliderWithInput from "../../../../../reUseComponents/Slider";
-
-import { useDispatch, useSelector } from 'react-redux';
-import { addChapter, fetchChapters } from "../../../../../../store/slices/courseEditorChapterSlice";
-import AddChapterToCourse from "./AddChapterToCourse";
-
-const getSortedChapters = (chapters) => {
-    return [...chapters].sort((a, b) => a.sort_index - b.sort_index);
-};
+import AddChapterToCourse from "./utils/AddChapterToCourse";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    fetchChapters,
+    updateChaptersSortIndexes,
+} from "../../../../../../store/slices/courseEditorChapterSlice";
 
 function CourseEditor() {
     const { course_id } = useParams();
     const [moduleEditData, setModuleEditData] = useState([]);
-    const [activeChapterId, setActiveChapterId] = useState(null); // Состояние для хранения ID активной главы
-    const [activeModuleId, setActiveModuleId] = useState(null); // Состояние для хранения ID активного модуля
+    const [activeChapterId, setActiveChapterId] = useState(null);
+    const [activeModuleId, setActiveModuleId] = useState(null);
     const [openModal, setOpenModal] = useState(false);
-    const [sortIndex, setSortIndex] = useState(1);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const { chapters, status, error } = useSelector((state) => state.course);
+    const courseChapters = useSelector((state) => state.course.chapters);
 
     const handleBackToProfile = async () => {
-        // Перенаправляем пользователя на другую страницу
-        navigate(`/teacher-profile`); // Замените '/новый_маршрут' на ваш адрес назначения
+        navigate(`/teacher-profile`);
     };
 
     useEffect(() => {
-        if (chapters.length > 0) {
-            const maxSortIndex = Math.max(...chapters.map(chapter => chapter.sort_index));
-            setSortIndex(maxSortIndex + 1);
-        } else {
-            setSortIndex(1);
+        if (course_id) {
+            dispatch(fetchChapters(course_id));
         }
-    }, [chapters]);
-
+    }, [course_id, dispatch]);
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
-            // Установите ось перемещения как вертикальную
             axis: "y",
         }),
         useSensor(KeyboardSensor, {
@@ -80,48 +63,48 @@ function CourseEditor() {
         setModuleEditData(module);
     };
 
-    const AddChapterOpenModal = async () => {
-        handleOpenModal();
-    };
-
-    const handleDragStart = (event) => {};
-    const handleDragMove = (event) => {};
     const handleDragEnd = (event) => {
         const { active, over } = event;
-        if (active.id !== over.id) {
-            setGetChapters((chapters) => {
-                const oldIndex = chapters.findIndex((chapter) => chapter.sort_index === active.id);
-                const newIndex = chapters.findIndex((chapter) => chapter.sort_index === over.id);
-                const newChapters = arrayMove(chapters, oldIndex, newIndex).map((chapter, index) => ({
-                    ...chapter,
-                    sort_index: index + 1,
-                }));
-                // Обновление сортировки на сервере
-                newChapters.forEach(async (chapter) => {
-                    try {
-                        const response = await CourseEditorService.editCoursePageUpdateChapter(chapter.id, {
-                            sort_index: chapter.sort_index,
-                        });
-                        if (response.status === 200 || response.status === 201) {
-                            console.log("Chapter updated successfully", response.data);
-                        }
-                    } catch (error) {
-                        console.error('Failed to update chapter:', error);
-                    }
-                });
-                return newChapters;
-            });
+    
+        if (active.id !== over.id && courseChapters) {
+            // Create a copy of the sorted chapters
+            const sortedChaptersCopy = [...sortedChapters];
+            const activeIndex = sortedChaptersCopy.findIndex(chapter => chapter.sort_index === active.id);
+            const overIndex = sortedChaptersCopy.findIndex(chapter => chapter.sort_index === over.id);
+    
+            // Remove the active item from its original position
+            const [removed] = sortedChaptersCopy.splice(activeIndex, 1);
+            
+            // Insert the removed item at the new position
+            sortedChaptersCopy.splice(overIndex, 0, removed);
+    
+            // Update sort_index based on new positions
+            const updatedChapters = sortedChaptersCopy.map((chapter, index) => ({
+                ...chapter,
+                sort_index: index + 1,
+            }));
+    
+            // Dispatch actions to update the backend
+            dispatch(
+                updateChaptersSortIndexes({
+                    course_id,
+                    chapters: updatedChapters.map((chapter) => ({
+                        id: chapter.id,
+                        sort_index: chapter.sort_index,
+                    })),
+                })
+            );
+    
+            // Optionally refresh chapters from the server
+            dispatch(fetchChapters(course_id));
+        } else {
+            console.error('courseChapters is undefined or invalid');
         }
     };
-
-    useEffect(() => {
-        if (course_id) {
-            dispatch(fetchChapters(course_id));
-        }
-    }, [course_id, dispatch]);
+    
 
     const handleMoveModule = async (chapterId, moduleId, direction) => {
-        const updatedChapters = chapters.map((chapter) => {
+        const updatedChapters = courseChapters.map((chapter) => {
             if (chapter.id !== chapterId) return chapter;
 
             const modules = [...chapter.modules];
@@ -142,26 +125,37 @@ function CourseEditor() {
             };
         });
 
-        setGetChapters(updatedChapters);
+        // Обновляем состояние в Redux и отправляем обновления на сервер
+        try {
+            dispatch(fetchChapters(course_id)); // Сбросить состояние или заново загрузить главы
 
-        // Обновление сортировки модулей на сервере
-        updatedChapters.forEach((chapter) => {
-            chapter.modules.forEach(async (module) => {
-                try {
-                    const response = await CourseEditorService.editCoursePagePatchModule(module.id, {
-                        sort_index: module.sort_index,
-                    });
-                    if (response.status === 200 || response.status === 201) {
-                        console.log("Module updated successfully", response.data);
+            updatedChapters.forEach((chapter) => {
+                chapter.modules.forEach(async (module) => {
+                    try {
+                        await CourseEditorService.editCoursePagePatchModule(
+                            module.id,
+                            {
+                                sort_index: module.sort_index,
+                            }
+                        );
+                    } catch (error) {
+                        console.error("Failed to update module:", error);
                     }
-                } catch (error) {
-                    console.error('Failed to update module:', error);
-                }
+                });
             });
-        });
+        } catch (error) {
+            console.error("Failed to update chapter sort indexes:", error);
+        }
     };
-
-    const sortedChapters = getSortedChapters(chapters);
+console.log(courseChapters)
+    const sortedChapters = courseChapters
+        .map((chapter) => ({
+            ...chapter,
+            modules: chapter.modules.sort(
+                (a, b) => a.sort_index - b.sort_index
+            ),
+        }))
+        .sort((a, b) => a.sort_index - b.sort_index);
 
     return (
         <div className="course-edit__container">
@@ -170,17 +164,14 @@ function CourseEditor() {
                 onClose={handleCloseModal}
                 content={
                     <AddChapterToCourse
-                    course_id={course_id}
-                    handleCloseModal={handleCloseModal}
-                    sortIndex={sortIndex}
+                        course_id={course_id}
+                        handleCloseModal={handleCloseModal}
                     />
                 }
             />
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCorners}
-                onDragStart={handleDragStart}
-                onDragMove={handleDragMove}
                 onDragEnd={handleDragEnd}
                 modifiers={[restrictToVerticalAxis]}
             >
@@ -192,7 +183,7 @@ function CourseEditor() {
                         <div className="leftbar__chapters">
                             <LmsButton
                                 buttonText={"Добавить раздел"}
-                                handleClick={AddChapterOpenModal}
+                                handleClick={handleOpenModal}
                             />
                             {sortedChapters.map((chapter) => (
                                 <SortableChapter
@@ -201,11 +192,11 @@ function CourseEditor() {
                                     chapter={chapter}
                                     activeChapterId={activeChapterId}
                                     setActiveChapterId={setActiveChapterId}
-                                    chapters={chapters}
-                                    
                                 >
-                                    <SortableContext items={chapter.modules.map((i) => i.id)}>
-                                        {chapter.modules.map((module, index) => (
+                                    <SortableContext
+                                        items={chapter.modules.map((i) => i.id)}
+                                    >
+                                        {chapter.modules.map((module) => (
                                             <SortableModules
                                                 title={module.title}
                                                 moduleChange={moduleChange}
@@ -213,9 +204,23 @@ function CourseEditor() {
                                                 key={module.sort_index}
                                                 module={module}
                                                 activeModuleId={activeModuleId}
-                                                setActiveModuleId={setActiveModuleId}
-                                                onMoveUp={() => handleMoveModule(chapter.id, module.id, -1)}
-                                                onMoveDown={() => handleMoveModule(chapter.id, module.id, 1)}
+                                                setActiveModuleId={
+                                                    setActiveModuleId
+                                                }
+                                                onMoveUp={() =>
+                                                    handleMoveModule(
+                                                        chapter.id,
+                                                        module.id,
+                                                        -1
+                                                    )
+                                                }
+                                                onMoveDown={() =>
+                                                    handleMoveModule(
+                                                        chapter.id,
+                                                        module.id,
+                                                        1
+                                                    )
+                                                }
                                             />
                                         ))}
                                     </SortableContext>
@@ -223,7 +228,6 @@ function CourseEditor() {
                             ))}
                         </div>
                     </div>
-
                 </SortableContext>
             </DndContext>
             <div className="container__main">
@@ -231,16 +235,14 @@ function CourseEditor() {
                     <EditModuleStage
                         moduleEditData={moduleEditData}
                         setModuleEditData={setModuleEditData}
-
                     />
                 )}
             </div>
             <div className="settings-panel">
-            <LmsButton
-                                buttonText={"Вернуться в профиль"}
-                                handleClick={handleBackToProfile}
-                            />
-                {/* Здесь могут быть различные элементы управления настройками */}
+                <LmsButton
+                    buttonText={"Вернуться в профиль"}
+                    handleClick={handleBackToProfile}
+                />
             </div>
         </div>
     );
