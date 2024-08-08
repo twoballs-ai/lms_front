@@ -30,7 +30,7 @@ const SortableModules = ({ id, title, module, moduleChange, activeModuleId, setA
       <div className="module__content">
 
         <div className="controls">
-        <button {...listeners} className="title__module-drag">
+          <button {...listeners} className="title__module-drag">
             <DragVerticalIcon />
           </button>
           <Button

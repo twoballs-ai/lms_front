@@ -44,6 +44,10 @@ const editCoursePageUpdateModule = async (moduleId, data) => {
     return await api
         .put(apiLmsUrl + `update-module/${moduleId}`, data)
 }
+const editCourseUpdateModuleSortIndexes = async (chapter_id, modules) => {
+    return await api
+        .put(`${apiLmsUrl}update_modules_sort_indexes/${chapter_id}`, modules);
+}
 const editCoursePagePatchModule = async (moduleId, data) => {
     return await api
         .patch(apiLmsUrl + `patch-module/${moduleId}`, data)
@@ -102,6 +106,7 @@ const CourseEditorService = {
     editCoursePageDeleteChapter,
     editCoursePageAddModule,
     editCoursePageUpdateModule,
+    editCourseUpdateModuleSortIndexes,
     editCoursePageDeleteModule,
     editCoursePageAddClassicLesson,
     editCoursePageUpdateClassicLesson,

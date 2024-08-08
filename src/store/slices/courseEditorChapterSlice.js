@@ -117,7 +117,21 @@ export const addModuleToChapter = createAsyncThunk(
         }
     }
 );
-
+export const updateModulesSortIndexes = createAsyncThunk(
+    'course/updateModulesSortIndexes',
+    async ({ chapter_id, modules }, { rejectWithValue }) => {
+        try {
+            const response = await CourseEditorService.editCourseUpdateModuleSortIndexes(chapter_id, modules);
+            if (response.status === 200 || response.status === 201) {
+                return response.data.data;
+            } else {
+                return rejectWithValue(response.statusText);
+            }
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 const courseEditorChapterSlice = createSlice({
     name: 'course',
     initialState: {
@@ -179,7 +193,17 @@ const courseEditorChapterSlice = createSlice({
             })
             .addCase(addModuleToChapter.rejected, (state, action) => {
                 state.error = action.payload;
-            });
+            })
+            .addCase(updateModulesSortIndexes.fulfilled, (state, action) => {
+                const { chapter_id, modules } = action.payload;
+                const chapter = state.chapters.find(chapter => chapter.id === chapter_id);
+                if (chapter) {
+                    chapter.modules = modules;
+                }
+            })
+            .addCase(updateModulesSortIndexes.rejected, (state, action) => {
+                state.error = action.payload;
+            })
     },
 });
 
