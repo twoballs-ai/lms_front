@@ -117,6 +117,39 @@ export const addModuleToChapter = createAsyncThunk(
         }
     }
 );
+export const deleteModule = createAsyncThunk(
+    'course/deleteModule',
+    async (module_id, { rejectWithValue }) => {
+        try {
+            const response = await CourseEditorService.editCoursePageDeleteModule(module_id);
+            if (response.status === 200 || response.status === 201) {
+                return module_id;
+            } else {
+                return rejectWithValue(response.statusText);
+            }
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+// Add the updateModule async thunk
+export const updateModule = createAsyncThunk(
+    'course/updateModule',
+    async ({ module_id, data }, { rejectWithValue }) => {
+        try {
+            const response = await CourseEditorService.editCoursePageUpdateModule(module_id, data);
+            if (response.status === 200 || response.status === 201) {
+                return response.data.data;
+            } else {
+                return rejectWithValue(response.statusText);
+            }
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 export const updateModulesSortIndexes = createAsyncThunk(
     'course/updateModulesSortIndexes',
     async ({ chapter_id, modules }, { rejectWithValue }) => {
@@ -204,6 +237,28 @@ const courseEditorChapterSlice = createSlice({
             .addCase(updateModulesSortIndexes.rejected, (state, action) => {
                 state.error = action.payload;
             })
+                    .addCase(deleteModule.fulfilled, (state, action) => {
+                state.chapters = state.chapters.map(chapter => ({
+                    ...chapter,
+                    modules: chapter.modules.filter(module => module.id !== action.payload),
+                }));
+            })
+            .addCase(deleteModule.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+
+            // Handle updateModule
+            .addCase(updateModule.fulfilled, (state, action) => {
+                state.chapters = state.chapters.map(chapter => ({
+                    ...chapter,
+                    modules: chapter.modules.map(module =>
+                        module.id === action.payload.id ? action.payload : module
+                    ),
+                }));
+            })
+            .addCase(updateModule.rejected, (state, action) => {
+                state.error = action.payload;
+            });
     },
 });
 
