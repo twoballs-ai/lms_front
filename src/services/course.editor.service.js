@@ -60,7 +60,9 @@ const editCoursePageDeleteStage = async (stage_id) => {
     return await api
         .delete(`${apiLmsUrl}delete-stage/${stage_id}`)
 }
-
+const editCourseUpdateStageSortIndexes = async (moduleId, stages) => {
+    return await api.put(`${apiLmsUrl}update_stages_sort_indexes/${moduleId}`, stages);
+}
 const editCoursePageGetLesson = async (stagePk) => {
     return await api
         .get(`${apiLmsUrl}stage/${stagePk}`)
@@ -107,6 +109,7 @@ const CourseEditorService = {
     editCoursePageAddModule,
     editCoursePageUpdateModule,
     editCourseUpdateModuleSortIndexes,
+    editCourseUpdateStageSortIndexes,
     editCoursePageDeleteModule,
     editCoursePageAddClassicLesson,
     editCoursePageUpdateClassicLesson,

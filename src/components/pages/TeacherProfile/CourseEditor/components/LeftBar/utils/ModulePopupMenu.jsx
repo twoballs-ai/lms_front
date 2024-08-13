@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import TextInput from "../../../../../../reUseComponents/TextInput";
+import React, { useState, useEffect } from 'react';
+import PopupMenu from "../../../../../../reUseComponents/PopupMenu";
 import LmsButton from "../../../../../../reUseComponents/Button";
-import { updateModule, deleteModule } from "../../../../../../../store/slices/courseEditorChapterSlice";
+import TextInput from "../../../../../../reUseComponents/TextInput";
 
+import { useDispatch } from 'react-redux';
+import { deleteModule, fetchChapters, updateModule } from '../../../../../../../store/slices/courseEditorChapterSlice';
 
-function ModulePopupMenu({ moduleEditData, setModuleEditData, chapters, setGetChapters, handlePopupClose }) {
-    const dispatch = useDispatch();
+const ModulePopupMenu = ({ course_id, moduleEditData, setModuleEditData, handlePopupOpen, handlePopupClose }) => {
     const [inputTitleValue, setInputTitleValue] = useState(moduleEditData.title || '');
     const [inputDescrValue, setInputDescrValue] = useState(moduleEditData.description || '');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setInputTitleValue(moduleEditData.title);
+        setInputDescrValue(moduleEditData.description);
+    }, [moduleEditData]);
 
     const handleInputChange = (e) => setInputTitleValue(e.target.value);
     const handleInputDescrChange = (e) => setInputDescrValue(e.target.value);
@@ -18,18 +24,8 @@ function ModulePopupMenu({ moduleEditData, setModuleEditData, chapters, setGetCh
         dispatch(updateModule(dataParams))
             .unwrap()
             .then((updatedModule) => {
-                const newData = chapters.map(chapter => {
-                    if (chapter.id === updatedModule.chapter_id) {
-                        const updatedModules = chapter.modules.map(module =>
-                            module.id === updatedModule.id ? updatedModule : module
-                        );
-                        return { ...chapter, modules: updatedModules };
-                    }
-                    return chapter;
-                });
-                setGetChapters(newData);
                 setModuleEditData(updatedModule);
-                handlePopupClose();  // Close the popup after updating
+
             })
             .catch((error) => {
                 console.error("Failed to update module:", error);
@@ -40,18 +36,9 @@ function ModulePopupMenu({ moduleEditData, setModuleEditData, chapters, setGetCh
         dispatch(deleteModule(moduleEditData.id))
             .unwrap()
             .then(() => {
-                const updatedChapters = chapters.map(chapter => {
-                    if (chapter.id === moduleEditData.chapter_id) {
-                        const remainingModules = chapter.modules.filter(module => module.id !== moduleEditData.id);
-                        const updatedModules = remainingModules.map((module, index) => ({
-                            ...module,
-                            sort_index: index + 1
-                        }));
-                        return { ...chapter, modules: updatedModules };
-                    }
-                    return chapter;
-                });
-                setGetChapters(updatedChapters);
+                console.log("start")
+                dispatch(fetchChapters(course_id));
+                console.log("stop")
                 setModuleEditData({});
                 handlePopupClose();  // Close the popup after deletion
             })
@@ -60,7 +47,7 @@ function ModulePopupMenu({ moduleEditData, setModuleEditData, chapters, setGetCh
             });
     };
 
-    return (
+    const popupContent = () => (
         <>
             <div style={{ borderRadius: '10px', backgroundColor: '#e9e9e9', padding: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                 <p>Название модуля:</p>
@@ -74,6 +61,15 @@ function ModulePopupMenu({ moduleEditData, setModuleEditData, chapters, setGetCh
             </div>
         </>
     );
-}
+
+    return (
+        <PopupMenu
+            handlePopupOpen={handlePopupOpen}
+            handlePopupClose={handlePopupClose}
+            title={`Настройки модуля: ${moduleEditData.title}`}
+            popupContent={popupContent()}
+        />
+    );
+};
 
 export default ModulePopupMenu;
