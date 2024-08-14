@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faPlus,
@@ -11,7 +11,6 @@ import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
     arrayMove,
     SortableContext,
-    sortableKeyboardCoordinates,
     horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useSortable } from "@dnd-kit/sortable";
@@ -27,19 +26,28 @@ import "./FullCourseEdit.scss";
 import CourseEditorService from "../../../../../services/course.editor.service";
 import { SettingOutlined } from "@ant-design/icons";
 import ModulePopupMenu from "../components/LeftBar/utils/ModulePopupMenu";
+import { DragVerticalIcon } from "../../../../icons/icons";
 
-function SortableItem(props) {
+function SortableItem({ tech, DotComponent, isActive }) {
     const { attributes, listeners, setNodeRef, transform, transition } =
-        useSortable({ id: props.tech.id });
+        useSortable({ id: tech.id });
+
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
-        cursor: "grab",
     };
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            <props.DotComponent tech={props.tech} isActive={props.isActive} />
+        <div
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+            className="sortable-item"
+        >
+            <button {...listeners} className="drag-handle">
+                <DragVerticalIcon style={{ cursor: "grab" }} />
+            </button>
+            <DotComponent tech={tech} isActive={isActive} />
         </div>
     );
 }
@@ -98,16 +106,17 @@ function EditModuleStage({ course_id, moduleEditData, setModuleEditData }) {
         handleCloseModal();
     };
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             const response =
                 await CourseEditorService.editCoursePageGetModuleStage(
                     moduleEditData.id
                 );
             if (response.status === 200 || response.status === 201) {
-                setModuleData(response.data.data);
-                if (response.data.data.length !== 0) {
-                    setSelectedStage(response.data.data[0]);
+                const sortedData = response.data.data.sort((a, b) => a.sort_index - b.sort_index);
+                setModuleData(sortedData);
+                if (sortedData.length !== 0) {
+                    setSelectedStage(sortedData[0]);
                 } else {
                     setSelectedStage(null);
                 }
@@ -149,24 +158,42 @@ function EditModuleStage({ course_id, moduleEditData, setModuleEditData }) {
         }
     };
 
-const handleDragEnd = async (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-        setModuleData((items) => {
-            const oldIndex = items.findIndex(item => item.id === active.id);
-            const newIndex = items.findIndex(item => item.id === over.id);
-            const newOrder = arrayMove(items, oldIndex, newIndex);
+    const handleDragEnd = async (event) => {
+        const { active, over } = event;
+        if (active.id !== over.id) {
+            let newOrder;
+    
+            setModuleData((items) => {
+                const oldIndex = items.findIndex((item) => item.id === active.id);
+                const newIndex = items.findIndex((item) => item.id === over.id);
+                newOrder = arrayMove(items, oldIndex, newIndex)
+                    .map((item, index) => ({
+                        ...item,
+                        sort_index: index + 1, // Update sort_index locally
+                    }));
+    
+                return newOrder;
+            });
+    
+            try {
+                // Use the updated newOrder instead of moduleData
+                const response = await CourseEditorService.editCourseUpdateStageSortIndexes(
+                    moduleEditData.id,
+                    newOrder.map((item) => ({
+                        id: item.id,
+                        sort_index: item.sort_index,
+                    }))
+                );
+    
+                if (response.status !== 200) {
+                    console.error("Failed to update sort indexes on the server.");
+                }
+            } catch (error) {
+                console.error("Error updating sort indexes:", error);
+            }
+        }
+    };
 
-            // Update the sort indexes in the backend, starting from 1
-            CourseEditorService.editCourseUpdateStageSortIndexes(moduleEditData.id, newOrder.map((item, index) => ({
-                id: item.id,
-                sort_index: index + 1 // Start index from 1 instead of 0
-            })));
-
-            return newOrder;
-        });
-    }
-};
     const Dot = ({ tech, isActive }) => {
         const activeClass = isActive ? "active" : "";
         return (
@@ -247,10 +274,7 @@ const handleDragEnd = async (event) => {
                                         key={tech.id}
                                         tech={tech}
                                         DotComponent={Dot}
-                                        isActive={
-                                            selectedStage &&
-                                            tech.id === selectedStage.id
-                                        }
+                                        isActive={selectedStage && tech.id === selectedStage.id}
                                     />
                                 ))}
                             </div>

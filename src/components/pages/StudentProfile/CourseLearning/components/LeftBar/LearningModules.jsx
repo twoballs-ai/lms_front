@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const Modules = ({
   title,
@@ -7,12 +6,13 @@ const Modules = ({
   module,
   activeModuleId,
   setActiveModuleId,
-  isLocked
+  isLocked,
+  moduleChange // Получаем функцию moduleChange
 }) => {
   const handleModuleClick = () => {
     if (!isLocked) {
-      moduleChange(module);
       setActiveModuleId(id);
+      moduleChange(module); // Вызываем moduleChange при клике
     }
   };
 
@@ -24,15 +24,6 @@ const Modules = ({
       <p>{title}</p>
     </div>
   );
-};
-
-Modules.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  module: PropTypes.object.isRequired,
-  activeModuleId: PropTypes.number,
-  setActiveModuleId: PropTypes.func.isRequired,
-  isLocked: PropTypes.bool.isRequired
 };
 
 export default Modules;

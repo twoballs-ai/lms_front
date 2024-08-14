@@ -11,7 +11,7 @@ function Footer() {
     <footer>
       <div className="footer__container">
         <div className="container__logo">
-          2024. intellity code, LMS - современная система обучения.
+          2024. courserio, LMS - современная система обучения.
         </div>
         <div className="container__links">
           <p>Ссылки</p>
@@ -20,11 +20,11 @@ function Footer() {
         <div className="container__contacts">
         <p>Контакты</p>
           {/* Добавляем контактный адрес электронной почты */}
-          <p>Email: <a href="mailto:manage@intellity.ru">manager@intellity.ru</a></p>
+          <p>Email: <a href="mailto:manage@courserio.ru">manager@courserio.ru</a></p>
         </div>
         <div className="container__social-links">
           <p>Мы в социальных сетях</p>
-          <a href="https://vk.com/intellity" target="_blank" rel="noopener noreferrer">
+          <a href="https://vk.com/courserio" target="_blank" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faVk} className="social-icon" />
           </a>
           <a href="https://t.me/intellity" target="_blank" rel="noopener noreferrer">

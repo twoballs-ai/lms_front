@@ -121,7 +121,7 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChap
 
     return (
         <>
-            <div className="main__nav-block">
+            <div className="learn-main__nav-block">
                 <p>Вы проходите модуль: "{moduleEditData.title}"</p>
                 <div className="nav-block__stages">
                     <div className="stages__case">
