@@ -50,7 +50,6 @@ function AddingCodeLesson(props) {
                 navigate(-2);
             });
     };
-    console.log(props)
     return (
         <div>
             {location.state.type === "codingLesson" && (

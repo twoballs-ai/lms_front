@@ -12,7 +12,6 @@ const SortableModules = ({ id, title, module, moduleChange, activeModuleId, setA
       type: 'item',
     },
   });
-
   return (
     <div
       ref={setNodeRef}
@@ -21,7 +20,7 @@ const SortableModules = ({ id, title, module, moduleChange, activeModuleId, setA
         transition,
         transform: CSS.Translate.toString(transform),
       }}
-      className={`modules__block ${activeModuleId === id ? "active" : ""}${isDragging ? ' opacity-50' : ''}`}   
+      className={`modules__block ${activeModuleId === module.id ? "active" : ""}${isDragging ? ' opacity-50' : ''}`}   
       onClick={() => {
         setActiveModuleId(module.id);
         moduleChange(module);
@@ -30,7 +29,7 @@ const SortableModules = ({ id, title, module, moduleChange, activeModuleId, setA
       <div className="module__content">
 
         <div className="controls">
-        <button {...listeners} className="title__module-drag">
+          <button {...listeners} className="title__module-drag">
             <DragVerticalIcon />
           </button>
           <Button

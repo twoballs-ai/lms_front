@@ -57,7 +57,7 @@ function Header() {
     return (
         <div className="container__header-container">
             <Link to="/" className="header-container__logo">
-                Intellity code
+                Courserio
             </Link>
             <div className="header-container__navbar">
                 <div className="navbar__buttons">

@@ -1,35 +1,49 @@
-import React from "react";
-import { Outlet ,Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Outlet, Link, useParams } from "react-router-dom";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Menu, Button } from 'antd';
+import { Menu, Button, Modal } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
 import "./SettingsOutlet.scss";
 import TeacherService from "../../../../services/teacher.service";
 
 function SettingsOutlet() {
   const { course_id } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const onClick = (e) => {
     console.log('click ', e);
   };
 
   const handleUpdate = async (e) => {
-    console.log("dsds")
-    // e.preventDefault();
-    // const formData = new FormData();
-    // formData.append('title', inputTitleValue);
-    // formData.append('description', inputDescrValue);
-    // formData.append('file', uploadedFile);
-  
+    console.log("dsds");
     const response = await TeacherService.sentToPublish(course_id);
     if (response.status === 200 || response.status === 201) {
-  
+      // Handle successful publish
     }
   };
-  
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async () => {
+    const response = await TeacherService.deleteTeacherCourse(course_id);
+    if (response.status === 200 || response.status === 201) {
+      setIsModalOpen(false);
+      navigate(`/teacher-profile/my-courses`); 
+    }
+    
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const items = [
     {
       key: 'publish',
       label: (
-        <Button type="primary" onClick={() => console.log(handleUpdate())} block>
+        <Button type="primary" onClick={() => handleUpdate()} block>
           Опубликовать
         </Button>
       ),
@@ -42,86 +56,17 @@ function SettingsOutlet() {
         {
           key: 'edit-info',
           label: <Link to="edit-info">Обновить описание и обложку</Link>,
-  
-          
         },
-      //   {
-      //     key: 'g2',
-      //     label: 'Item 2',
-  
-      //   },
       ],
     },
-  //   {
-  //     key: 'sub2',
-  //     label: 'Navigation Two',
-  //     icon: <AppstoreOutlined />,
-  //     children: [
-  //       {
-  //         key: '5',
-  //         label: 'Option 5',
-  //       },
-  //       {
-  //         key: '6',
-  //         label: 'Option 6',
-  //       },
-  //       {
-  //         key: 'sub3',
-  //         label: 'Submenu',
-  //         children: [
-  //           {
-  //             key: '7',
-  //             label: 'Option 7',
-  //           },
-  //           {
-  //             key: '8',
-  //             label: 'Option 8',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     type: 'divider',
-  //   },
-  //   {
-  //     key: 'sub4',
-  //     label: 'Navigation Three',
-  //     icon: <SettingOutlined />,
-  //     children: [
-  //       {
-  //         key: '9',
-  //         label: 'Option 9',
-  //       },
-  //       {
-  //         key: '10',
-  //         label: 'Option 10',
-  //       },
-  //       {
-  //         key: '11',
-  //         label: 'Option 11',
-  //       },
-  //       {
-  //         key: '12',
-  //         label: 'Option 12',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     key: 'grp',
-  //     label: 'Group',
-  //     type: 'group',
-  //     children: [
-  //       {
-  //         key: '13',
-  //         label: 'Option 13',
-  //       },
-  //       {
-  //         key: '14',
-  //         label: 'Option 14',
-  //       },
-  //     ],
-  //   },
+    {
+      key: 'delete',
+      label: (
+        <Button onClick={showModal} danger block>
+          Удалить курс
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -141,6 +86,16 @@ function SettingsOutlet() {
           <Outlet />
         </div>
       </div>
+      <Modal
+        title="Подтверждение удаления"
+        open={isModalOpen}
+        onOk={handleDelete}
+        onCancel={handleCancel}
+        okText="Подтвердить удаление"
+        cancelText="Отмена"
+      >
+        <p>Вы уверены, что хотите удалить этот курс? Все данные курса будут потеряны.</p>
+      </Modal>
     </>
   );
 }

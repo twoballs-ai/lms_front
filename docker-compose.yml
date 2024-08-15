@@ -10,16 +10,16 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`intellity.ru`)"
+      - "traefik.http.routers.frontend.rule=Host(`courserio.ru`)"
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.routers.frontend.middlewares=https-redirect"
-      - "traefik.http.routers.frontend-secure.rule=Host(`intellity.ru`)"
+      - "traefik.http.routers.frontend-secure.rule=Host(`courserio.ru`)"
       - "traefik.http.routers.frontend-secure.entrypoints=websecure"
       - "traefik.http.routers.frontend-secure.tls.certresolver=myresolver"
       - "traefik.http.services.frontend.loadbalancer.server.port=3000"
     networks:
-      - intellity_network
+      - courserio_network
 
 networks:
-  intellity_network:
+  courserio_network:
     external: true

@@ -11,28 +11,31 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChap
     const [moduleData, setModuleData] = useState([]);
     const [selectedStage, setSelectedStage] = useState(null);
     const [lessonCompleted, setLessonCompleted] = useState(false);
-
     useLayoutEffect(() => {
         const fetchModuleData = async () => {
             const response = await StudentService.learnGetModuleStages(moduleEditData.id);
             if (response.status === 200 || response.status === 201) {
                 const stages = response.data.data;
-                setModuleData(stages);
-
-                const firstNonCompletedStage = stages.find(stage => !stage.is_completed && !stage.is_locked);
+    
+                // Сортируем stages по sort_index от малого к большому
+                const sortedStages = stages.sort((a, b) => a.sort_index - b.sort_index);
+    
+                setModuleData(sortedStages);
+    
+                const firstNonCompletedStage = sortedStages.find(stage => !stage.is_completed && !stage.is_locked);
                 if (firstNonCompletedStage) {
                     setSelectedStage(firstNonCompletedStage);
                     setLessonCompleted(firstNonCompletedStage.is_completed);
-                } else if (stages.length) {
-                    setSelectedStage(stages[0]);
-                    setLessonCompleted(stages[0].is_completed);
+                } else if (sortedStages.length) {
+                    setSelectedStage(sortedStages[0]);
+                    setLessonCompleted(sortedStages[0].is_completed);
                 } else {
                     setSelectedStage(null);
                     setLessonCompleted(false);
                 }
             }
         };
-
+    
         fetchModuleData();
     }, [moduleEditData]);
 
@@ -121,7 +124,7 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChap
 
     return (
         <>
-            <div className="main__nav-block">
+            <div className="learn-main__nav-block">
                 <p>Вы проходите модуль: "{moduleEditData.title}"</p>
                 <div className="nav-block__stages">
                     <div className="stages__case">

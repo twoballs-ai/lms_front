@@ -27,6 +27,7 @@ export default function Home() {
         const fetchData = async () => {
             await SiteService.homePageLastAddedCourses({items}).then((response) => {
                 if (response.status === 200 || response.status === 201) {
+                    console.log(response.data.data)
                     setlastAddedCourses(response.data.data);
                 }
             });
@@ -54,7 +55,7 @@ export default function Home() {
             <div className="main-container__home-container">
             <p>Недавно добавленные курсы</p>
             <NewAddedCourse lastAddedCourses={lastAddedCourses}/>
-            <p>Популярные курсы</p>
+            {/* <p>Популярные курсы</p> */}
             <p>Последние новости</p>
             <LatestNews />
             </div>

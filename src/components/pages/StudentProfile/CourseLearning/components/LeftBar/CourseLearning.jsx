@@ -23,20 +23,16 @@ function CourseLearning() {
         const response = await StudentService.learnCoursePageGetChapterList(course_id);
         if (response.status === 200 || response.status === 201) {
             const fetchedChapters = response.data.data;
-            const processedChapters = fetchedChapters.map((chapter) => {
-                chapter.modules = chapter.modules.sort((a, b) => a.sort_index - b.sort_index);
-                return chapter;
-            });
-
-            setChapters(processedChapters);
-            const [firstIncompleteChapter, firstIncompleteModule] = findFirstIncomplete(processedChapters);
+            console.log(fetchedChapters);
+            setChapters(fetchedChapters);
+            const [firstIncompleteChapter, firstIncompleteModule] = findFirstIncomplete(fetchedChapters);
             setActiveChapterId(firstIncompleteChapter);
             setActiveModuleId(firstIncompleteModule);
             setModuleEditData(
-                firstIncompleteModule ? processedChapters.find(ch => ch.id === firstIncompleteChapter).modules.find(m => m.id === firstIncompleteModule) : {}
+                firstIncompleteModule ? fetchedChapters.find(ch => ch.id === firstIncompleteChapter).modules.find(m => m.id === firstIncompleteModule) : {}
             );
 
-            checkCompletionStatus(processedChapters);
+            checkCompletionStatus(fetchedChapters);
         }
     };
 
@@ -55,27 +51,12 @@ function CourseLearning() {
         setAllCompleted(allChaptersAndModulesCompleted);
 
         const examChapterIndex = chapters.findIndex(ch => ch.is_exam);
-        const chaptersBeforeExam = chapters.slice(0, examChapterIndex);
-
-        const allChaptersBeforeExamCompleted = chaptersBeforeExam.every(ch => ch.chapter_is_completed);
-        if (allChaptersBeforeExamCompleted && !allChaptersAndModulesCompleted) {
-            setShowExamPrompt(true);
-        } else {
-            setShowExamPrompt(false);
-        }
 
         if (examChapterIndex !== -1) {
-            const updatedChapters = chapters.map((chapter, index) => {
-                if (index > examChapterIndex) {
-                    chapter.is_locked = true;
-                    chapter.modules = chapter.modules.map(module => ({
-                        ...module,
-                        is_locked: true,
-                    }));
-                }
-                return chapter;
-            });
-            setChapters(updatedChapters);
+            const allChaptersBeforeExamCompleted = chapters.slice(0, examChapterIndex).every(ch => ch.chapter_is_completed);
+            setShowExamPrompt(allChaptersBeforeExamCompleted && !allChaptersAndModulesCompleted);
+        } else {
+            setShowExamPrompt(false);
         }
     };
 
@@ -92,17 +73,8 @@ function CourseLearning() {
             try {
                 const response = await StudentService.startExam(examChapter.id);
                 if (response.status === 200 || response.status === 201) {
-                    const updatedChapters = chapters.map(chapter => {
-                        if (chapter.id === examChapter.id) {
-                            chapter.exam_status.exam_in_progress = true;
-                            chapter.exam_status.exam_start_time = new Date().toISOString();
-                        }
-                        return chapter;
-                    });
-                    setChapters(updatedChapters);
-                    setShowExamPrompt(false);
-
                     fetchChapters();
+                    setShowExamPrompt(false);
                 } else {
                     console.error("Failed to start exam:", response.data.message);
                 }
@@ -112,13 +84,16 @@ function CourseLearning() {
         }
     };
 
-    const sortedChapters = [...chapters].sort((a, b) => a.sort_index - b.sort_index);
+    // Функция для изменения данных модуля
+    const moduleChange = (module) => {
+        setModuleEditData(module);
+    };
 
     return (
         <div className="course-learn__container">
             <div className="container__leftbar">
                 <div className="leftbar__chapters">
-                    {sortedChapters.map((chapter, index) => (
+                    {chapters.map((chapter, index) => (
                         <Chapter
                             key={chapter.id}
                             chapter={chapter}
@@ -135,7 +110,8 @@ function CourseLearning() {
                                     module={module}
                                     activeModuleId={activeModuleId}
                                     setActiveModuleId={setActiveModuleId}
-                                    isLocked={chapter.is_locked || module.is_locked}
+                                    isLocked={module.is_locked}
+                                    moduleChange={moduleChange} // Передаем функцию moduleChange
                                 />
                             ))}
                         </Chapter>
@@ -152,7 +128,7 @@ function CourseLearning() {
                         setNextModuleAndChapter={setNextModuleAndChapter}
                         course_id={course_id}
                         setShowExamPrompt={setShowExamPrompt}
-                        checkCompletionStatus={checkCompletionStatus} // Передаем функцию для проверки состояния завершения
+                        checkCompletionStatus={checkCompletionStatus}
                     />
                 )}
 

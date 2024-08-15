@@ -28,6 +28,10 @@ const editCoursePageUpdateChapter = async (chapterId, data) => {
     return await api
         .put(apiLmsUrl + `update-chapter/${chapterId}`, data)
 }
+const editCourseUpdateChapterSortIndexes = async (course_id, chapters) => {
+    return await api
+        .put(`${apiLmsUrl}update_chapters_sort_indexes/${course_id}`, chapters);
+}
 const editCoursePageDeleteChapter = async (chapter_id) => {
     return await api
         .delete(`${apiLmsUrl}delete-chapter/?chapter_id=${chapter_id}`)
@@ -39,6 +43,10 @@ const editCoursePageAddModule = async (data) => {
 const editCoursePageUpdateModule = async (moduleId, data) => {
     return await api
         .put(apiLmsUrl + `update-module/${moduleId}`, data)
+}
+const editCourseUpdateModuleSortIndexes = async (chapter_id, modules) => {
+    return await api
+        .put(`${apiLmsUrl}update_modules_sort_indexes/${chapter_id}`, modules);
 }
 const editCoursePagePatchModule = async (moduleId, data) => {
     return await api
@@ -52,7 +60,9 @@ const editCoursePageDeleteStage = async (stage_id) => {
     return await api
         .delete(`${apiLmsUrl}delete-stage/${stage_id}`)
 }
-
+const editCourseUpdateStageSortIndexes = async (moduleId, stages) => {
+    return await api.put(`${apiLmsUrl}update_stages_sort_indexes/${moduleId}`, stages);
+}
 const editCoursePageGetLesson = async (stagePk) => {
     return await api
         .get(`${apiLmsUrl}stage/${stagePk}`)
@@ -94,9 +104,12 @@ const CourseEditorService = {
     editCoursePageGetChapterList,
     editCoursePageAddChapter,
     editCoursePageUpdateChapter,
+    editCourseUpdateChapterSortIndexes,
     editCoursePageDeleteChapter,
     editCoursePageAddModule,
     editCoursePageUpdateModule,
+    editCourseUpdateModuleSortIndexes,
+    editCourseUpdateStageSortIndexes,
     editCoursePageDeleteModule,
     editCoursePageAddClassicLesson,
     editCoursePageUpdateClassicLesson,

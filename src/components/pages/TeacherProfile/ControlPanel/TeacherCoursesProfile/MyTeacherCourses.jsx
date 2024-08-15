@@ -25,8 +25,8 @@ function MyTeacherCourses() {
         });
     }
 
-    const handleDeleteClick = async (course_id) => {
-        const response = await TeacherService.deleteTeacherCourse(course_id)
+    const handleArchiveClick = async (course_id) => {
+        const response = await TeacherService.archiveTeacherCourse(course_id)
         if (response.status === 200 || response.status === 201) {
             // Если удаление прошло успешно, обновляем список курсов
             fetchData();
@@ -59,7 +59,7 @@ function MyTeacherCourses() {
                         <div className="course-item__course-actions">
                             <LmsButton buttonText={"Редактор курса"} handleClick={() => handleEditCourseClick(course.id)} />
                             <LmsButton buttonText={"Все настройки курса"} handleClick={() => handleSettingsCourseClick(course.id)} />
-                            <LmsButton buttonText={"Удалить курс"} handleClick={() => handleDeleteClick(course.id)} />
+                            <LmsButton buttonText={"Архивировать курс"} handleClick={() => handleArchiveClick(course.id)} />
                         </div>
                     </div>
                 ))}

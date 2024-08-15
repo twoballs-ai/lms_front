@@ -192,3 +192,7 @@
         }
     }
 }
+.dragging {
+    z-index: 9999; // Ensure it's above other items
+    position: relative; // Ensure z-index is applied
+}

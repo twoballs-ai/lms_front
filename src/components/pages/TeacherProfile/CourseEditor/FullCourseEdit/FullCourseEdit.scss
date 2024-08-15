@@ -63,6 +63,23 @@
             display: flex;
             flex-direction: row;
             gap: 10px;
+            .sortable-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                // margin-bottom: 10px;
+            
+                .drag-handle {
+                    // margin-right: 10px;
+                    background: transparent;
+                    border: none;
+                    cursor: grab;
+                }
+            
+                .drag-handle:active {
+                    cursor: grabbing;
+                }
+            }
         }
     }
 }
