@@ -1,0 +1,22 @@
+.custom-card {
+    width: 300px;
+  
+    .card-image {
+      height: 200px;
+      object-fit: cover;
+    }
+  
+    .card-meta {
+      .ant-card-meta-title {
+        color: #333;  // Dark gray color
+        font-weight: bold;
+        text-decoration: none;
+      }
+  
+      .ant-card-meta-description {
+        color: #666;  // Slightly lighter gray for description
+        text-decoration: none;
+      }
+    }
+  }
+  

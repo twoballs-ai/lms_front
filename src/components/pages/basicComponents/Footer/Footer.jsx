@@ -27,7 +27,7 @@ function Footer() {
           <a href="https://vk.com/courserio" target="_blank" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faVk} className="social-icon" />
           </a>
-          <a href="https://t.me/intellity" target="_blank" rel="noopener noreferrer">
+          <a href="https://t.me/courserio" target="_blank" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faTelegramPlane} className="social-icon" />
           </a>
         </div>
