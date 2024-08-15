@@ -6,7 +6,7 @@ import LmsButton from "../../../../../reUseComponents/Button";
 
 function LearningClassicLesson({ selectedStage, onComplete }) {
     const { stageData, showClassicLesson } = useLessonData(selectedStage ? selectedStage.id : null);
-
+    console.log(stageData)
     return (
         <>
             {showClassicLesson && stageData && (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LmsButton from "../../../../../reUseComponents/Button";
 import CourseEditorService from "../../../../../../services/course.editor.service";
 import TextInput from "../../../../../reUseComponents/TextInput";
-import YouTubeLinkForm from "../../../../../reUseComponents/YoutubeForm";
+import VideoLinkForm from "../../../../../reUseComponents/VideoLinkForm"; // Update to VideoLinkForm
 
 function AddingVideoLesson(props) {
     const [inputTitleValue, setInputTitleValue] = useState('');
@@ -13,19 +13,18 @@ function AddingVideoLesson(props) {
     useEffect(() => {
         if (stagePk) {
             const fetchData = async () => {
-                await CourseEditorService.editCoursePageGetLesson(stagePk).then((response) => {
-                    if (response.status === 200 || response.status === 201) {
-                        if (response.data.lesson) {
-                            setVideoUrl(response.data.lesson.video_link);
-                            setInputTitleValue(response.data.title);
-                            setShowVideoLesson(true);
-                        } else {
-                            setInputTitleValue("");
-                            setVideoUrl("");
-                            setShowVideoLesson(true);
-                        }
+                const response = await CourseEditorService.editCoursePageGetLesson(stagePk);
+                if (response.status === 200 || response.status === 201) {
+                    if (response.data.lesson) {
+                        setVideoUrl(response.data.lesson.video_link);
+                        setInputTitleValue(response.data.title);
+                        setShowVideoLesson(true);
+                    } else {
+                        setInputTitleValue("");
+                        setVideoUrl("");
+                        setShowVideoLesson(true);
                     }
-                });
+                }
             };
             fetchData();
         }
@@ -65,8 +64,9 @@ function AddingVideoLesson(props) {
                             value={inputTitleValue}
                             onChange={handleInputChange}
                         />
+                        <p>Пока поддерживается только ютуб и рутуб</p>
                         <div className="add-block__editor">
-                            <YouTubeLinkForm videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
+                            <VideoLinkForm videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
                         </div>
                         <div className="add-block__button">
                             <LmsButton buttonText={"сохранить"} handleClick={formSubmit} />
