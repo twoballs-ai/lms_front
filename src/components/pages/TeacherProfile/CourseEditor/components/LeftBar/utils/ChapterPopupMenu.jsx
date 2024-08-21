@@ -21,7 +21,9 @@ const ChapterPopupMenu = ({
     const [errors, setErrors] = useState({});
 
     const schema = Yup.object().shape({
-        inputTitleChapterValue: Yup.string().required("Введите название главы"),
+        inputTitleChapterValue: Yup.string()
+            .max(100, "Название главы должно быть не длиннее 30 символов")
+            .required("Введите название главы"),
         inputDescrChapterValue: Yup.string().required("Введите описание главы"),
     });
 
