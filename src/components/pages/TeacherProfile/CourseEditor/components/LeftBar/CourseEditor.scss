@@ -7,64 +7,63 @@
         display: flex;
         flex-direction: column;
         padding: 10px;
-        min-width: 250px;
-        width: auto;
-        flex: 1;
+        width: 350px; /* Фиксированная ширина для левого меню */
+        min-width: 350px; /* Минимальная ширина, чтобы зафиксировать размер */
+        max-width: 350px; /* Максимальная ширина, чтобы зафиксировать размер */
         height: calc(95vh - 50px); /* Высота leftbar минус высота settings-panel */
-        overflow-x: auto;
+        overflow-y: auto; /* Вертикальная прокрутка, если контент не помещается */
         padding-bottom: 50px; /* Отступ снизу для leftbar */
-    
-
         .leftbar__chapters {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            width: 100%; /* Занимает всю ширину leftbar */
+            
             .chapters__block {
                 border-radius: 15px;
                 background-color: rgba(240, 248, 255, 0.9);
                 display: flex;
                 flex-direction: row;
-
                 align-items: flex-start;
                 padding: 10px;
                 gap: 10px;
                 justify-content: space-between;
                 transition: background-color 0.3s ease;
-
+        
                 &:hover {
                     background-color: rgba(240, 248, 255, 1);
                 }
-
+        
                 &.active {
                     background-color: rgba(212, 236, 252, 0.9);
                 }
-
+        
                 .block-left {
                     display: flex;
-                    gap:15px;
+                    gap: 15px;
                     flex-direction: column;
-                    width: 100%;
-                    position: relative; /* Added for absolute positioning */
-
+                    width: 100%; /* Ensure it takes full width of parent container */
+                    position: relative; /* For absolute positioning */
+        
                     .block__title {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        width: 100%;
-                        gap:10px;
-
+                        width: 100%; /* Ensure it takes full width of parent container */
+                        gap: 10px;
+        
                         p {
                             font-weight: 600;
                         }
                     }
-
+        
                     .chapters__modules {
-                        width: auto;
+                        width: 100%; /* Ensure it takes full width of parent container */
                         min-height: 10px;
                         display: flex;
                         flex-direction: column;
                         gap: 5px;
-
+        
                         .modules__block {
                             display: flex;
                             align-items: center;
@@ -74,15 +73,15 @@
                             height: 50px;
                             border-radius: 5px;
                             cursor: pointer;
-
+        
                             &:hover {
                                 background-color: rgb(236, 236, 236);
                             }
-
+        
                             &.active {
                                 background-color: rgba(108, 201, 255, 0.9);
                             }
-
+        
                             .block__module-drag {
                                 margin-left: auto;
                                 border: none;
@@ -90,11 +89,12 @@
                                 padding: 0;
                                 cursor: pointer;
                             }
+        
                             .module__content {
                                 display: flex;
-                                margin-left: auto; // Ensure space between title and controls
+                                margin-left: auto; /* Ensure space between title and controls */
                                 align-items: center;
-                                width: 100%;  // Ensure it takes full width of parent container
+                                width: 100%; /* Ensure it takes full width of parent container */
                             
                                 .controls {
                                     display: flex;
@@ -122,7 +122,7 @@
                         }
                     }
                 }
-
+        
                 .block-menu {
                     display: flex;
                     flex-direction: column;
@@ -132,37 +132,37 @@
                     gap: 10px;
                 
                     .controls {
-                      display: flex;
-                      flex-direction: column;
-                      align-items: center;
-                      gap: 10px;
-                
-                      button,
-                      .ant-btn {
                         display: flex;
+                        flex-direction: column;
                         align-items: center;
-                        justify-content: center;
-                        border: none;
-                        background: none;
-                        cursor: pointer;
-                      }
+                        gap: 10px;
                 
-                      .title__chapter-drag {
-                        border: none;
-                        background: none;
-                        padding: 0;
-                        cursor: pointer;
-                      }
+                        button,
+                        .ant-btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border: none;
+                            background: none;
+                            cursor: pointer;
+                        }
+                
+                        .title__chapter-drag {
+                            border: none;
+                            background: none;
+                            padding: 0;
+                            cursor: pointer;
+                        }
                     }
                 
                     .block__chapter_menu {
-                      margin-top: auto; /* Pushes the button to the bottom */
-                      border: none;
-                      background: none;
-                      padding: 0px;
-                      cursor: pointer;
+                        margin-top: auto; /* Pushes the button to the bottom */
+                        border: none;
+                        background: none;
+                        padding: 0px;
+                        cursor: pointer;
                     }
-                  }
+                }
             }
         }
     }
@@ -170,7 +170,7 @@
     .container__main {
         display: flex;
         flex-direction: column;
-        min-width: 80vw;
+        flex-grow: 1; /* Контейнер будет занимать все оставшееся пространство */
         height: calc(95vh - 50px); /* Высота контейнера минус высота settings-panel */
         background-color: rgba(240, 240, 240, 0.822);
         gap: 10px;
@@ -178,6 +178,7 @@
         overflow: auto;
         padding-bottom: 50px; /* Отступ снизу для контента */
     }
+
     .settings-panel {
         position: fixed; // Фиксация блока
         bottom: 0; // Позиционирование в нижней части экрана
@@ -192,7 +193,10 @@
         }
     }
 }
+
+
+
 .dragging {
-    z-index: 9999; // Ensure it's above other items
-    position: relative; // Ensure z-index is applied
+    z-index: 9999; /* Ensure it's above other items */
+    position: relative; /* Ensure z-index is applied */
 }
