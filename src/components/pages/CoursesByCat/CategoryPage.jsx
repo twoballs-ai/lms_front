@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SiteService from "../../../services/siteNoAuth.service";
 import "./CategoryPage.scss";
 import CustomCard from "../../reUseComponents/Cards";
 import { serverUrl } from "../../../shared/config";
-import { useNavigate } from "react-router-dom";
 
 function CategoryPage() {
     const [categoryData, setCategoryData] = useState([]);
@@ -12,27 +11,29 @@ function CategoryPage() {
     const [allCourses, setAllCourses] = useState([]);
     const navigate = useNavigate();
 
-
     const handleCardClick = (courseId) => {
         navigate(`/detail/${courseId}`);
     };
 
     useEffect(() => {
         const fetchData = async () => {
-            const categoryResponse = await SiteService.getCategory({
-                toSelect: false,
-            });
-            if (
-                categoryResponse.status === 200 ||
-                categoryResponse.status === 201
-            ) {
+            const categoryResponse = await SiteService.getCategory({ toSelect: false });
+            if (categoryResponse.status === 200 || categoryResponse.status === 201) {
                 setCategoryData(categoryResponse.data.data);
             }
-
             fetchCourses();
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        // Update the document title when selectedCategory changes
+        if (selectedCategory) {
+            document.title = `Курсы по категории - ${selectedCategory.title}`;
+        } else {
+            document.title = 'Курсы по категории - Все категории';
+        }
+    }, [selectedCategory]);
 
     const fetchCourses = async (category_id = null) => {
         const params = {};
@@ -85,7 +86,7 @@ function CategoryPage() {
                         <CustomCard
                             title={course.title}
                             description={course.description}
-                            image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available
+                            image={`${serverUrl}/${course.cover_path}`} 
                         />
                     </div>
                 ))}

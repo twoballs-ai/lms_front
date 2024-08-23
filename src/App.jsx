@@ -15,12 +15,12 @@ import NotFound from './components/reUseComponents/NotFound';
 import ViewBlogs from './components/pages/Blog/ViewNews.jsx';
 import BlogDetail from './components/pages/Blog/NewsDetail.jsx';
 
-
+import About from './components/pages/About/About';
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
 const Home = lazy(() => import('./components/pages/Home/Home'));
 const MainComponent = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/components/MainComponent'));
-const About = lazy(() => import('./components/pages/About/About'));
+// const About = lazy(() => import('./components/pages/About/About'));
 const CourseDetail = lazy(() => import('./components/pages/Course/CourseDetail'));
 const StudentDashboard = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/Dashboard'));
 const StudentMyCourses = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses'));
@@ -91,7 +91,8 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { index: true, element: <TeacherDashboard /> },
+      { index: true, element: <TeacherDashboard /> }, // Этот маршрут будет открываться по умолчанию
+      { path: "dashboard", element: <TeacherDashboard /> }, // Этот маршрут будет открываться по пути "dashboard"
       { path: "my-courses", element: <MyTeacherCourses /> },
       { path: "add-course", element: <AddCourse /> },
       { path: "profile-settings", element: <TeacherProfileSettings /> },

@@ -14,10 +14,13 @@ function SideBar() {
         defaultSelectedKeys={['1']}
         // style={{ width: 200 }}
       >
-        <Menu.Item key="1" icon={<UserOutlined />}>
+        <Menu.Item key="1">
+          <Link to="dashboard">Дашборд</Link>
+        </Menu.Item>
+        <Menu.Item key="2" icon={<UserOutlined />}>
           <Link to="my-courses">Мои курсы</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<PlusCircleOutlined />}>
+        <Menu.Item key="3" icon={<PlusCircleOutlined />}>
           <Link to="add-course">Добавить курс</Link>
         </Menu.Item>
         {/* <Menu.Item key="3" icon={<FormOutlined />}>
