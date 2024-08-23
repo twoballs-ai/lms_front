@@ -17,7 +17,9 @@ function AddCourse() {
     const [inputDescrValue, setInputDescrValue] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
     const [errors, setErrors] = useState({}); // State to store validation errors
-
+    useEffect(() => {
+        document.title = 'Профиль учителя - добавление курса - coursero.ru';
+      }, []);
     useEffect(() => {
         const fetchData = async () => {
             await SiteService.getCategory({ toSelect: true }).then((response) => {

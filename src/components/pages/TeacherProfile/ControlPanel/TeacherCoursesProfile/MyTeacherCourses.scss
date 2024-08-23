@@ -33,6 +33,9 @@
             display: flex;
             flex-direction: row;
             gap: 10px;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap; 
             @media (max-width: 768px) {
 
             

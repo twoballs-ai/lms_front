@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { apiUrl } from '../../../../../shared/config';
@@ -20,7 +20,9 @@ function ChangePassword() {
     const [newPassword, setNewPassword] = useState('');
     const [errors, setErrors] = useState({});
 
-
+    useEffect(() => {
+        document.title = 'Профиль учителя - смена пароля - coursero.ru';
+      }, []);
     const handleSubmit = async (event) => {
        const data = { old_password: oldPassword, new_password: newPassword }
         try {
