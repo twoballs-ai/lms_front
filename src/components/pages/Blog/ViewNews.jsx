@@ -6,6 +6,9 @@ import './ViewBlogs.scss';
 
 const ViewBlogs = () => {
   const [blogs, setBlogs] = useState([]);
+  useEffect(() => {
+    document.title = 'Новости учебного портала courserio';
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +35,14 @@ const ViewBlogs = () => {
 
   return (
     <div className="blog-posts">
-      <h2>Добро пожаловать в наш блог, здесь будут отображаться новости проекта и новости тьюторов</h2>
+      <h1>Новостной блог Courserio и наших тьюторов</h1>
       {blogs.length === 0 ? (
         <p>No blogs available.</p>
       ) : (
         <ul className="blog-list">
           {blogs.map((blog) => (
             <li className="blog-card" key={blog.id}>
+              <p className="news-category">{blog.category}</p>
               <h3>{blog.title}</h3>
               <div className="content">
                 {truncateContent(blog.content)}
@@ -46,6 +50,7 @@ const ViewBlogs = () => {
                   Читать далее
                 </Link>
               </div>
+  
               <p className="author">Автор: {blog.author}</p>
               {blog.updated_at ? (
                 <p className="date">Обновлено: {formatDate(blog.updated_at)}</p>

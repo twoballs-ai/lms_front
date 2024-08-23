@@ -24,6 +24,9 @@ export default function Home() {
 
     const items ="8"
     useEffect(() => {
+        document.title = 'Сourserio - Lms - цифровая платформа обучения';
+      }, []);
+    useEffect(() => {
         const fetchData = async () => {
             await SiteService.homePageLastAddedCourses({items}).then((response) => {
                 if (response.status === 200 || response.status === 201) {

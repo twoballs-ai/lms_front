@@ -2,16 +2,24 @@
     margin: 20px auto;
     padding: 20px;
 
-
+    max-width: 1200px;
   
     .blog-list {
       list-style: none;
       padding: 0;
   
+      p{
+        font-size: 0.9em;
+        color: #333;
+      }
+
       .blog-card {
         padding: 20px;
         // margin-bottom: 20px;
-
+.news-category{
+  font-size: 0.9em;
+  color: #333;
+}
         h3 {
         //   margin: 0 0 10px;
           font-size: 1.6rem;
@@ -20,8 +28,8 @@
         .content {
         //   margin-bottom: 10px;
         p{
-            color:#00418b;
-            font-size: 1rem;
+          font-size: 0.9em;
+          color: #333;
         }
             
           .read-more {

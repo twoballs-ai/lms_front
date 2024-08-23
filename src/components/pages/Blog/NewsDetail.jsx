@@ -1,5 +1,3 @@
-// src/components/BlogDetail/BlogDetail.js
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import parse from 'html-react-parser';
@@ -20,6 +18,12 @@ const BlogDetail = () => {
     };
     fetchBlogDetail();
   }, [id]);
+console.log(blog)
+  useEffect(() => {
+    if (blog && blog.title) {
+      document.title = (`${blog.title} - courserio.ru`);  // Устанавливаем title страницы после загрузки данных блога
+    }
+  }, [blog]);
 
   const formatDate = (dateString) => {
     if (!dateString) return null;
@@ -34,6 +38,7 @@ const BlogDetail = () => {
       <h1>{blog.title}</h1>
       <p className="author">Автор: {blog.author}</p>
       <div className="content">{parse(blog.content)}</div>
+      <p className="news-category">{blog.category}</p>
       {blog.updated_at ? (
         <p className="date">Обновлено: {formatDate(blog.updated_at)}</p>
       ) : (

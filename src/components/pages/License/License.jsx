@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./License.scss"; // Импортируем стили
 
 function License() {
+    useEffect(() => {
+        document.title = 'Лицензионное соглашение - Courserio.ru';
+      }, []);
+    
     return (
         <div className="license-container">
             <div className="license-card">

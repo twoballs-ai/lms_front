@@ -41,6 +41,7 @@ const LatestNews = () => {
         <ul className="blog-list">
           {blogs.map((blog) => (
             <li className="blog-card" key={blog.id}>
+              <p className="news-category">{blog.category}</p>
               <h3>{blog.title}</h3>
               <div className="content">
                 {truncateContent(blog.content)}
