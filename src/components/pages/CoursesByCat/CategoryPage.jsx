@@ -4,16 +4,28 @@ import SiteService from "../../../services/siteNoAuth.service";
 import "./CategoryPage.scss";
 import CustomCard from "../../reUseComponents/Cards";
 import { serverUrl } from "../../../shared/config";
+import { useNavigate } from "react-router-dom";
 
 function CategoryPage() {
     const [categoryData, setCategoryData] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [allCourses, setAllCourses] = useState([]);
+    const navigate = useNavigate();
+
+
+    const handleCardClick = (courseId) => {
+        navigate(`/detail/${courseId}`);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
-            const categoryResponse = await SiteService.getCategory({ toSelect: false });
-            if (categoryResponse.status === 200 || categoryResponse.status === 201) {
+            const categoryResponse = await SiteService.getCategory({
+                toSelect: false,
+            });
+            if (
+                categoryResponse.status === 200 ||
+                categoryResponse.status === 201
+            ) {
                 setCategoryData(categoryResponse.data.data);
             }
 
@@ -41,10 +53,13 @@ function CategoryPage() {
     return (
         <div className="category-page">
             <div className="category-filter">
-                <button className="category-button" onClick={() => handleCategorySelect(null)}>
+                <button
+                    className="category-button"
+                    onClick={() => handleCategorySelect(null)}
+                >
                     Показать все курсы
                 </button>
-                {categoryData.map(category => (
+                {categoryData.map((category) => (
                     <button
                         key={category.id}
                         className="category-button"
@@ -54,23 +69,29 @@ function CategoryPage() {
                     </button>
                 ))}
             </div>
-            <p>Выбрана категория: {selectedCategory ? selectedCategory.title : 'Нет выбранной категории'}</p>
+            <p>
+                Выбрана категория:{" "}
+                {selectedCategory
+                    ? selectedCategory.title
+                    : "Нет выбранной категории"}
+            </p>
             <div className="courses-list">
-                {allCourses.map(course => (
-                    <div key={course.id} className={'card-wrapper'}>
-                        <Link to={`/detail/${course.id}`}>
-                            <CustomCard
-                                title={course.title}
-                                description={course.description}
-                                image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available
-                            />
-                        </Link>
+                {allCourses.map((course) => (
+                    <div
+                        key={course.id}
+                        className="card-wrapper"
+                        onClick={() => handleCardClick(course.id)}
+                    >
+                        <CustomCard
+                            title={course.title}
+                            description={course.description}
+                            image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available
+                        />
                     </div>
                 ))}
             </div>
         </div>
     );
-    
 }
 
 export default CategoryPage;
