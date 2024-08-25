@@ -16,6 +16,7 @@ import ViewBlogs from './components/pages/Blog/ViewNews.jsx';
 import BlogDetail from './components/pages/Blog/NewsDetail.jsx';
 
 import About from './components/pages/About/About';
+import TeacherDetail from './components/pages/Course/TeacherDetail.jsx';
 // Lazy load components
 const Layout = lazy(() => import('./components/pages/basicComponents/layouts'));
 const Home = lazy(() => import('./components/pages/Home/Home'));
@@ -32,7 +33,6 @@ const AddCourse = lazy(() => import('./components/pages/TeacherProfile/ControlPa
 const TeacherProfileSettings = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ProfileSettings'));
 const TeacherChangePassword = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/ChangePassword'));
 const EditorPageInfo = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditorPageInfo'));
-const EditModuleStage = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/FullCourseEdit/EditModuleStage'));
 const CourseEditor = lazy(() => import('./components/pages/TeacherProfile/CourseEditor/components/LeftBar/CourseEditor'));
 const UserLogout = lazy(() => import('./components/pages/Auth/Logout/Logout'));
 const CategoryPage = lazy(() => import('./components/pages/CoursesByCat/CategoryPage'));
@@ -56,6 +56,10 @@ const router = createBrowserRouter([
         path: "detail/:course_id",
         element: <CourseDetail />,
       },
+      {
+        path: "teacher-detail/:teacher_id",
+        element: <TeacherDetail />,
+      },
       { path: "about", element: <About /> },
       { path: "license", element: <License /> },
       { path: "category", element: <CategoryPage /> },
@@ -76,7 +80,8 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { index: true, element: <StudentDashboard /> },
+      { index: true, element: <StudentDashboard /> }, // Этот маршрут будет открываться по умолчанию
+      { path: "dashboard", element: <StudentDashboard /> }, // Этот маршрут будет открываться по пути "dashboard"
       { path: "my-courses", element: <StudentMyCourses /> },
       { path: "profile-settings", element: <StudentProfileSettings /> },
       { path: "reset-password", element: <StudentChangePassword /> },

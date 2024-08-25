@@ -45,7 +45,7 @@ function CourseDetail() {
             await SiteService.getCourse(course_id).then((response) => {
 
                 if (response.status === 200 || response.status === 201) {
-                    
+
                     if (response.data.data.length !== 0) {
                         setCourseData(response.data.data);
 
@@ -72,8 +72,8 @@ function CourseDetail() {
                 await StudentService.checkEnrollment(course_id).then((response) => {
 
                     if (response.status === 200 || response.status === 201) {
-                        
-                        if (response.data.enrolled_status==="enrolled"){
+
+                        if (response.data.enrolled_status === "enrolled") {
 
                             setEnrollStatus(response.data.enrolled_status)
                         }
@@ -83,14 +83,14 @@ function CourseDetail() {
                         }
                     }
                 });
-    
+
             };
-    
-    
+
+
             fetchAuthData();
 
         }
-        
+
         // try {
         //     axios
         //         .get(
@@ -195,8 +195,15 @@ function CourseDetail() {
         //     console.log(error);
         // }
 
-    }, [course_id]);
-    document.title = `Курс - ${courseData.title}`;
+    }, [course_id, enrollStatus]);
+
+    useEffect(() => {
+        if (courseData && courseData.title) {
+            document.title = (`${courseData.title} - courserio.ru`);
+        }
+    }, [courseData]);
+
+
     const enrollCourse = async () => {
         await StudentService.enrollToCourse(course_id).then((response) => {
             if (response.status === 200 || response.status === 201) {
@@ -208,29 +215,15 @@ function CourseDetail() {
                 }
             }
         });
+    };
 
-        
-        // try {
-        //     axios
-        //         .post(
-        //             apiUrl + "student-course-enroll/",
-        //             {
-        //                 student: studentId,
-        //                 course: course_id,
-        //             },
-        //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-        //             { headers: { "Content-Type": "multipart/form-data" } }
-        //         )
-        //         .then((response) => {
-        //             if (response.status === 200 || response.status === 201) {
-        //                 setEnrollStatus("success");
 
-        //                 // window.location.reload()
-        //             }
-        //         });
-        // } catch (error) {
-        //     console.log(error);
-        // }
+    const unsubscribeFromCourse = async () => {
+        await StudentService.unenrollStudentLight(course_id).then((response) => {
+            if (response.status === 200 || response.status === 201) {
+                setEnrollStatus("not enrolled");
+            }
+        });
     };
     const handlePassingCourseClick = async (course_id) => {
         // Перенаправляем пользователя на другую страницу
@@ -338,20 +331,35 @@ function CourseDetail() {
                     </p>
                     {/* <p>Длительность курса:</p> */}
                     <p>Всего подписавшихся пользователей:{courseData.course_subscription}</p>
-                   
-                    {userLoggedStatus === "success" &&
-                        enrollStatus === "enrolled" && (
-                            <p>
-                                <span>Вы подписаны на курс </span>
-                                <LmsButton buttonText={"Проходить курс"} handleClick={() => handlePassingCourseClick(course_id)} />
-                            </p>
+                    <div className="info-wrap__enrol-buttons">
+                        {userLoggedStatus === "success" && (
+                            <>
+                                {enrollStatus === "enrolled" ? (
+                                    <>
+                                        <p>
+                                            <span>Вы подписаны на курс </span>
+                                            <LmsButton
+                                                buttonText="Проходить курс"
+                                                handleClick={handlePassingCourseClick}
+                                            />
+                                        </p>
+                                        <LmsButton
+                                            buttonText="Отписаться от курса"
+                                            handleClick={unsubscribeFromCourse}
+                                        />
+                                    </>
+                                ) : (
+                                    <LmsButton
+                                        buttonText="Подписаться на курс"
+                                        handleClick={enrollCourse}
+                                    />
+                                )}
+                            </>
                         )}
-                    {userLoggedStatus === "success" &&
-                        enrollStatus !== "enrolled" && (
-                            <LmsButton buttonText={"Подписаться на курс"} handleClick={() => enrollCourse()} />
- 
-                        )}
-                
+
+                    </div>
+
+
                 </div>
             </div>
 

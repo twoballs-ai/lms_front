@@ -1,32 +1,47 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { Menu } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
+import { Link } from "react-router-dom";
 import "./SideBar.scss";
 
-const { SubMenu } = Menu;
+const items = [
+  {
+    key: 'dashboard',
+    label: <Link to="dashboard">Дашборд</Link>,
+  },
+  {
+    key: 'my-courses',
+    icon: <AppstoreOutlined />,
+    label: <Link to="my-courses">Мои курсы</Link>,
+  },
+  {
+    key: 'profile',
+    icon: <SettingOutlined />,
+    label: 'Профиль',
+    children: [
+      {
+        key: 'reset-password',
+        label: <Link to="reset-password">Смена пароля</Link>,
+      },
+    ],
+  },
+  {
+    key: 'logout',
+    icon: <MailOutlined />,
+    label: <Link to="/logout">Выход</Link>,
+  },
+];
 
 function SideBar() {
+
   return (
     <div className="sidebar">
-      <Menu mode="inline">
-        <Menu.Item key="my-courses" icon={<AppstoreOutlined />}>
-          <Link to="my-courses">Мои курсы</Link>
-        </Menu.Item>
-        
-        <SubMenu key="profile" icon={<SettingOutlined />} title="Профиль">
-          {/* <Menu.Item key="profile-settings">
-            <Link to="profile-settings">Настройки профиля</Link>
-          </Menu.Item> */}
-          <Menu.Item key="reset-password">
-            <Link to="reset-password">Смена пароля</Link>
-          </Menu.Item>
-        </SubMenu>
-
-        <Menu.Item key="logout" icon={<MailOutlined />}>
-          <Link to="/logout">Выход</Link>
-        </Menu.Item>
-      </Menu>
+      <Menu
+        style={{ width: 256 }}
+        defaultSelectedKeys={['my-courses']}
+        mode="inline"
+        items={items}
+      />
     </div>
   );
 }

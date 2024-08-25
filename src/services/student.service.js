@@ -28,6 +28,13 @@ const enrollToCourse = async (course_id) => {
             // {headers: { "Content-Type": "multipart/form-data" }}
         )
 }
+const unenrollStudent = async (course_id) => {
+    return await api.delete(`${apiStudyUrl}unenroll/${course_id}`);
+}
+
+const unenrollStudentLight = async (course_id) => {
+    return await api.patch(`${apiStudyUrl}unenroll/light/${course_id}`);
+}
 const learnGetModuleStages = async (module_id) => {
     // console.log(course_id)
     return await api
@@ -80,6 +87,8 @@ const StudentService = {
     getLearnLesson,
     checkEnrollment,
     enrollToCourse,
+    unenrollStudent,
+    unenrollStudentLight,
     startExam,
     completeExam,
     learnGetModuleStages,
