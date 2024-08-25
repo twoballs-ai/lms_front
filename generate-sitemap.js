@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Основной URL вашего сайта
-const baseUrl = 'http://yourdomain.com';
+const baseUrl = 'https://courserio.ru';
 
 // Список всех URL для карты сайта
 const urls = [
@@ -23,6 +23,12 @@ const urls = [
   '/course-editor/:course_id',
   '/course-settings/:course_id',
   '/course-learning/:course_id',
+  '/license',
+  '/news-blog',
+  '/news-blog/:id',
+  '/teacher-profile/dashboard',
+  '/course-settings/:course_id/edit-info',
+  '/course-learning/:course_id/learning',
 ];
 
 // Текущая дата в формате ISO 8601
