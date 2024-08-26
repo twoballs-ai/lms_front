@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Badge } from 'antd';
+import { Tooltip } from 'antd';
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -48,7 +49,7 @@ function CourseDetail() {
 
                     if (response.data.data.length !== 0) {
                         setCourseData(response.data.data);
-
+                        console.log(response.data.data)
                         // Устанавливаем selectedStage во второй элемент массива data
                         // setSelectedStage(response.data.data[0]);
                     } else {
@@ -68,22 +69,17 @@ function CourseDetail() {
             setUserLoggedStatus("success");
 
             const fetchAuthData = async () => {
-
-                await StudentService.checkEnrollment(course_id).then((response) => {
-
+                try {
+                    const response = await StudentService.checkEnrollment(course_id);
+            
                     if (response.status === 200 || response.status === 201) {
-
-                        if (response.data.enrolled_status === "enrolled") {
-
-                            setEnrollStatus(response.data.enrolled_status)
-                        }
-                        else {
-
-                            setEnrollStatus(response.data.enrolled_status)
-                        }
+                        const enrolledStatus = response.data.enrolled_status;
+                        console.log(response.data);
+                        setEnrollStatus(enrolledStatus);
                     }
-                });
-
+                } catch (error) {
+                    console.error("Failed to fetch enrollment status:", error);
+                }
             };
 
 
@@ -337,16 +333,23 @@ function CourseDetail() {
                                 {enrollStatus === "enrolled" ? (
                                     <>
                                         <p>
-                                            <span>Вы подписаны на курс </span>
+                                          
                                             <LmsButton
                                                 buttonText="Проходить курс"
                                                 handleClick={handlePassingCourseClick}
                                             />
+                                              <span> Вы подписаны на курс и можете проходить курс</span>
                                         </p>
+                                        <p>
+
+             
                                         <LmsButton
                                             buttonText="Отписаться от курса"
                                             handleClick={unsubscribeFromCourse}
                                         />
+                                            <span> Вы не потеряете ваш прогресс просто перестанете получать оповещения по курсу</span>
+                                        </p>
+
                                     </>
                                 ) : (
                                     <LmsButton
