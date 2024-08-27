@@ -8,7 +8,9 @@ import TeacherService from '../../../../../services/teacher.service'
 function Dashboard() {
     const [dashboardData, setDashboardData] = useState([]);
     // const teacherId = localStorage.getItem("user");
-
+    useEffect(() => {
+        document.title = 'Профиль учителя - dashboard - coursero.ru';
+      }, []);
 
     return (
         <>

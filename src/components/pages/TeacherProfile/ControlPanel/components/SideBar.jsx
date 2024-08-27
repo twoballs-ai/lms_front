@@ -1,48 +1,56 @@
 import React from 'react';
-import { Link } from "react-router-dom"
+import { UserOutlined, PlusCircleOutlined, SettingOutlined, LockOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
-import { UserOutlined, PlusCircleOutlined, SettingOutlined, LockOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
 import "./SideBar.scss";
 
-const { SubMenu } = Menu;
+const items = [
+  {
+    key: '1',
+    label: <Link to="dashboard">Дашборд</Link>,
+  },
+  {
+    key: '2',
+    label: <Link to="my-courses">Мои курсы</Link>,
+    icon: <UserOutlined />,
+  },
+  {
+    key: '3',
+    label: <Link to="add-course">Добавить курс</Link>,
+    icon: <PlusCircleOutlined />,
+  },
+  {
+    key: 'sub1',
+    label: 'Настройки',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        key: '5',
+        label: <Link to="profile-settings">Настройки профиля</Link>,
+      },
+      {
+        key: '6',
+        label: <Link to="reset-password">Смена пароля</Link>,
+      },
+    ],
+  },
+  {
+    key: '7',
+    label: <Link to="/logout">Выход</Link>,
+    icon: <LockOutlined />,
+  },
+];
 
-function SideBar() {
+const SideBar = () => {
   return (
     <div className="teacher-sidebar">
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}
-        // style={{ width: 200 }}
-      >
-        <Menu.Item key="1">
-          <Link to="dashboard">Дашборд</Link>
-        </Menu.Item>
-        <Menu.Item key="2" icon={<UserOutlined />}>
-          <Link to="my-courses">Мои курсы</Link>
-        </Menu.Item>
-        <Menu.Item key="3" icon={<PlusCircleOutlined />}>
-          <Link to="add-course">Добавить курс</Link>
-        </Menu.Item>
-        {/* <Menu.Item key="3" icon={<FormOutlined />}>
-          <Link to="teacher-quizes">Квизы</Link>
-        </Menu.Item>
-        <Menu.Item key="4" icon={<FileAddOutlined />}>
-          <Link to="add-quiz">Добавить квиз</Link>
-        </Menu.Item> */}
-        <SubMenu key="sub1" icon={<SettingOutlined />} title="Настройки">
-          <Menu.Item key="5">
-            <Link to="profile-settings">Настройки профиля</Link>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <Link to="reset-password">Смена пароля</Link>
-          </Menu.Item>
-        </SubMenu>
-        <Menu.Item key="7" icon={<LockOutlined />}>
-          <Link to="/logout">Выход</Link>
-        </Menu.Item>
-      </Menu>
+        items={items}
+      />
     </div>
   );
-}
+};
 
 export default SideBar;

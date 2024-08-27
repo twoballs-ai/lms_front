@@ -11,26 +11,27 @@ function StudentDashboard() {
     const [dashboardData, setDashboardData] = useState([]);
     const studentId = localStorage.getItem("studentId");
 
-    useEffect(() => {
-        try {
-            axios
-                .get(
-                    apiUrl + "student/dashboard/" + studentId
-                    // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                    // ,{headers: { "Content-Type": "multipart/form-data" }}
-                )
-                .then((response) => {
-                    setDashboardData(response.data);
-                    console.log(response.data);
-                });
-        } catch (e) {
-            console.log(e);
-        }
-    }, []);
+    // useEffect(() => {
+    //     try {
+    //         axios
+    //             .get(
+    //                 apiUrl + "student/dashboard/" + studentId
+    //                 // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+    //                 // ,{headers: { "Content-Type": "multipart/form-data" }}
+    //             )
+    //             .then((response) => {
+    //                 setDashboardData(response.data);
+    //                 console.log(response.data);
+    //             });
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }, []);
 
     return (
         <>
-            <div className="row">
+        <p>В стадии разработки</p>
+            {/* <div className="row">
                 <span>Общее количество баллов за прохождение курсов: {dashboardData.total_student_score}</span>
                 <span>Общее количество энергии: {dashboardData.total_student_energy}</span>
                 <div className="col-4">
@@ -72,7 +73,7 @@ function StudentDashboard() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

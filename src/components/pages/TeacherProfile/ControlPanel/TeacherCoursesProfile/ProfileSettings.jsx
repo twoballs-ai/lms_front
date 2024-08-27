@@ -21,7 +21,9 @@ function ProfileSettings() {
         };
         fetchData();
     }, []);
-
+    useEffect(() => {
+        document.title = 'Профиль учителя - обновление данных профиля - coursero.ru';
+      }, []);
     const handleSubmit = () => {
         const data = {
             name,

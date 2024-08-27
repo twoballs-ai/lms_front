@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Badge } from 'antd';
+import { Tooltip } from 'antd';
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -45,10 +46,10 @@ function CourseDetail() {
             await SiteService.getCourse(course_id).then((response) => {
 
                 if (response.status === 200 || response.status === 201) {
-                    
+
                     if (response.data.data.length !== 0) {
                         setCourseData(response.data.data);
-
+                        console.log(response.data.data)
                         // Устанавливаем selectedStage во второй элемент массива data
                         // setSelectedStage(response.data.data[0]);
                     } else {
@@ -68,29 +69,24 @@ function CourseDetail() {
             setUserLoggedStatus("success");
 
             const fetchAuthData = async () => {
-
-                await StudentService.checkEnrollment(course_id).then((response) => {
-
+                try {
+                    const response = await StudentService.checkEnrollment(course_id);
+            
                     if (response.status === 200 || response.status === 201) {
-                        
-                        if (response.data.enrolled_status==="enrolled"){
-
-                            setEnrollStatus(response.data.enrolled_status)
-                        }
-                        else {
-
-                            setEnrollStatus(response.data.enrolled_status)
-                        }
+                        const enrolledStatus = response.data.enrolled_status;
+                        console.log(response.data);
+                        setEnrollStatus(enrolledStatus);
                     }
-                });
-    
+                } catch (error) {
+                    console.error("Failed to fetch enrollment status:", error);
+                }
             };
-    
-    
+
+
             fetchAuthData();
 
         }
-        
+
         // try {
         //     axios
         //         .get(
@@ -195,8 +191,15 @@ function CourseDetail() {
         //     console.log(error);
         // }
 
-    }, [course_id]);
-    document.title = `Курс - ${courseData.title}`;
+    }, [course_id, enrollStatus]);
+
+    useEffect(() => {
+        if (courseData && courseData.title) {
+            document.title = (`${courseData.title} - courserio.ru`);
+        }
+    }, [courseData]);
+
+
     const enrollCourse = async () => {
         await StudentService.enrollToCourse(course_id).then((response) => {
             if (response.status === 200 || response.status === 201) {
@@ -208,29 +211,15 @@ function CourseDetail() {
                 }
             }
         });
+    };
 
-        
-        // try {
-        //     axios
-        //         .post(
-        //             apiUrl + "student-course-enroll/",
-        //             {
-        //                 student: studentId,
-        //                 course: course_id,
-        //             },
-        //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-        //             { headers: { "Content-Type": "multipart/form-data" } }
-        //         )
-        //         .then((response) => {
-        //             if (response.status === 200 || response.status === 201) {
-        //                 setEnrollStatus("success");
 
-        //                 // window.location.reload()
-        //             }
-        //         });
-        // } catch (error) {
-        //     console.log(error);
-        // }
+    const unsubscribeFromCourse = async () => {
+        await StudentService.unenrollStudentLight(course_id).then((response) => {
+            if (response.status === 200 || response.status === 201) {
+                setEnrollStatus("not enrolled");
+            }
+        });
     };
     const handlePassingCourseClick = async (course_id) => {
         // Перенаправляем пользователя на другую страницу
@@ -338,20 +327,42 @@ function CourseDetail() {
                     </p>
                     {/* <p>Длительность курса:</p> */}
                     <p>Всего подписавшихся пользователей:{courseData.course_subscription}</p>
-                   
-                    {userLoggedStatus === "success" &&
-                        enrollStatus === "enrolled" && (
-                            <p>
-                                <span>Вы подписаны на курс </span>
-                                <LmsButton buttonText={"Проходить курс"} handleClick={() => handlePassingCourseClick(course_id)} />
-                            </p>
+                    <div className="info-wrap__enrol-buttons">
+                        {userLoggedStatus === "success" && (
+                            <>
+                                {enrollStatus === "enrolled" ? (
+                                    <>
+                                        <p>
+                                          
+                                            <LmsButton
+                                                buttonText="Проходить курс"
+                                                handleClick={handlePassingCourseClick}
+                                            />
+                                              <span> Вы подписаны на курс и можете проходить курс</span>
+                                        </p>
+                                        <p>
+
+             
+                                        <LmsButton
+                                            buttonText="Отписаться от курса"
+                                            handleClick={unsubscribeFromCourse}
+                                        />
+                                            <span> Вы не потеряете ваш прогресс просто перестанете получать оповещения по курсу</span>
+                                        </p>
+
+                                    </>
+                                ) : (
+                                    <LmsButton
+                                        buttonText="Подписаться на курс"
+                                        handleClick={enrollCourse}
+                                    />
+                                )}
+                            </>
                         )}
-                    {userLoggedStatus === "success" &&
-                        enrollStatus !== "enrolled" && (
-                            <LmsButton buttonText={"Подписаться на курс"} handleClick={() => enrollCourse()} />
- 
-                        )}
-                
+
+                    </div>
+
+
                 </div>
             </div>
 

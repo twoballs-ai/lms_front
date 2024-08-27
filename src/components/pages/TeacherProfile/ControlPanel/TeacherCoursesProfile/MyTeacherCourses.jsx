@@ -16,7 +16,9 @@ function MyTeacherCourses() {
     useEffect(() => {
         fetchData();
     }, []);
-
+    useEffect(() => {
+        document.title = 'Профиль учителя - мои курсы - coursero.ru';
+      }, []);
     const fetchData = async () => {
         await TeacherService.teacherCourses().then((response) => {
             if (response.status === 200 || response.status === 201) {

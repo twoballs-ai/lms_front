@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Container, div, div, div, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import ListGroup from "react-bootstrap/ListGroup";
-
-import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
-import Badge from "react-bootstrap/Badge";
-import { apiUrl } from "../../../shared/config";
 
 function TeacherDetail() {
     let { teacher_id } = useParams();
@@ -15,23 +9,24 @@ function TeacherDetail() {
     const [courseData, setCourseData] = useState([]);
     const [skillListData, setSkillListData] = useState([]);
     const [teacherData, setTeacherData] = useState([]);
-    useEffect(() => {
-        axios
-            .get(
-                apiUrl + "teacher/" + teacher_id
-                // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-                // ,{headers: { "Content-Type": "multipart/form-data" }}
-            )
-            .then((response) => {
-                setCourseData(response.data.teacher_course);
-                setTeacherData(response.data);
-                setSkillListData(response.data.skill_list);
-                console.log(response.data);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios
+    //         .get(
+    //             apiUrl + "teacher/" + teacher_id
+    //             // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
+    //             // ,{headers: { "Content-Type": "multipart/form-data" }}
+    //         )
+    //         .then((response) => {
+    //             setCourseData(response.data.teacher_course);
+    //             setTeacherData(response.data);
+    //             setSkillListData(response.data.skill_list);
+    //             console.log(response.data);
+    //         });
+    // }, []);
     return (
         <div className="mx-3">
-            <div className="shadow rounded p-3 mt-3 mb-5">
+            <p>В разработке</p>
+            {/* <div className="shadow rounded p-3 mt-3 mb-5">
                 <div className="mt-5">
                     <div md={4}>
                         <Image variant="top" src="/images/code.jpg" thumbnail />
@@ -73,7 +68,7 @@ function TeacherDetail() {
                         ))}
                     </ListGroup>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
