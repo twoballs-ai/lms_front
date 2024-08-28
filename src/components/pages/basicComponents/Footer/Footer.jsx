@@ -20,7 +20,7 @@ function Footer() {
         <div className="container__contacts">
         <p>Контакты</p>
           {/* Добавляем контактный адрес электронной почты */}
-          <p>Email: <a href="mailto:manage@courserio.ru">manager@courserio.ru</a></p>
+          <p>Email: <a href="mailto:manage@courserio.ru">manage@courserio.ru</a></p>
         </div>
         <div className="container__social-links">
           <p>Мы в социальных сетях</p>
