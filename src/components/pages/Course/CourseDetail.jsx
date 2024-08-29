@@ -17,7 +17,7 @@ import "./CourseDetail.scss"
 function CourseDetail() {
     const navigate = useNavigate();
 
-    let { course_id } = useParams();
+    const { course_id } = useParams();
     const [show, setShow] = useState(false);
     const [showRate, setShowRate] = useState(false);
     const [courseData, setCourseData] = useState([]);
@@ -213,7 +213,6 @@ function CourseDetail() {
         });
     };
 
-
     const unsubscribeFromCourse = async () => {
         await StudentService.unenrollStudentLight(course_id).then((response) => {
             if (response.status === 200 || response.status === 201) {
@@ -221,7 +220,8 @@ function CourseDetail() {
             }
         });
     };
-    const handlePassingCourseClick = async (course_id) => {
+    const handlePassingCourseClick = async () => {
+       
         // Перенаправляем пользователя на другую страницу
         navigate(`/course-learning/${course_id}/learning`); // Замените '/новый_маршрут' на ваш адрес назначения
     };
