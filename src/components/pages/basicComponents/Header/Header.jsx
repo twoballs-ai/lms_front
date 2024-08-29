@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Header.scss"; // Import SCSS file
-// import ModalRegisterLogin from "../../Auth/TabsLoginRegister/HeaderComponents/ModalRegistrationLogin";
 import LmsButton from "../../../reUseComponents/Button";
 import TabsAuth from "../../Auth/TabsLoginRegister/TabComponent/Tabs";
 import LmsModalBase from "../../../reUseComponents/ModalBase";
+import { MenuOutlined } from '@ant-design/icons';
 
 function Header() {
     const customModalStyles = {
@@ -20,20 +20,16 @@ function Header() {
     };
 
     const [authState, setAuthState] = useState("");
-    function handleShow(breakpoint, auth) {
+    function handleShow(auth) {
         handleOpenModal();
         setAuthState(auth);
     }
     const [openModal, setOpenModal] = useState(false);
-
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const contentToModal = (<TabsAuth authState={authState} handleCloseModal={handleCloseModal} />);
 
-    const [searchData, setSearchData] = useState({
-        search: "",
-    });
-
+    const [searchData, setSearchData] = useState({ search: "" });
     const role = JSON.parse(localStorage.getItem('role'));
     const handleChange = (event) => {
         setSearchData({
@@ -41,7 +37,6 @@ function Header() {
             [event.target.name]: event.target.value,
         });
     };
-
     const searchByCourse = () => {
         if (searchData.search !== "")
             window.location.href = "/search/" + searchData.search;
@@ -54,12 +49,21 @@ function Header() {
         }
     }, [isAuth]);
 
+    const [menuOpen, setMenuOpen] = useState(false);
+    const toggleMenu = () => setMenuOpen(!menuOpen);
+
     return (
         <div className="container__header-container">
-            <Link to="/" className="header-container__logo">
+            <div className="header-container__logo-and-menu">
+            <Link to="/" className="logo-an-menu__logo">
                 Courserio
             </Link>
-            <div className="header-container__navbar">
+            <button className="menu-toggle" onClick={toggleMenu}>
+                <MenuOutlined />
+            </button>
+            </div>
+
+            <div className={`header-container__navbar ${menuOpen ? 'open' : ''}`}>
                 <div className="navbar__buttons">
                     <Link to="/category" className="nav-link">Курсы</Link>
                     <Link to="/news-blog" className="nav-link">Новости</Link>   
@@ -86,9 +90,8 @@ function Header() {
                                 modalStyles={customModalStyles}
                                 showCloseIcon={false}
                             />
-                            <button className="nav-link__login-btn" onClick={() => handleShow(true, "login")}>Войти</button>
-
-                            <button className="nav-link__register-btn" onClick={() => handleShow(true, "register")}>Зарегистрироваться</button>
+                            <button className="nav-link__login-btn" onClick={() => handleShow("login")}>Войти</button>
+                            <button className="nav-link__register-btn" onClick={() => handleShow("register")}>Зарегистрироваться</button>
                         </>
                     )}
                 </div>

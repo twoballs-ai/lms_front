@@ -6,15 +6,28 @@
     padding: 10px;
     background-color: #ffffff;
     border-bottom: 0.1rem solid #ff634756;
-
-    .header-container__logo {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #00c3ff;
-        text-decoration: none;
-
-        &:hover, &:active, &:focus {
+    .header-container__logo-and-menu {
+        display: flex;
+        flex-direction: row;
+        .logo-an-menu__logo {
+            font-size: 2rem;
+            font-weight: 800;
             color: #00c3ff;
+            text-decoration: none;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: #00c3ff;
+                cursor: pointer;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 2rem;
             cursor: pointer;
         }
     }
@@ -155,10 +168,24 @@
     .container__header-container {
         flex-direction: column;
         align-items: flex-start;
-
+    
+        .header-container__logo-and-menu {
+            align-items: flex-start;
+            width: 100%;
+            .menu-toggle {
+                display: block;
+                margin-left: auto; /* Сдвигает элемент вправо */
+            }
+        }
+    
         .header-container__navbar {
+            display: none;
             flex-direction: column;
             width: 100%;
+
+            &.open {
+                display: flex;
+            }
 
             .navbar__buttons {
                 flex-direction: column;
