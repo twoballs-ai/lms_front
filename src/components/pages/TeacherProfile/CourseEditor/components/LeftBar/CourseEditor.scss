@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     width: 100vw;
+    background-color: rgba(240, 240, 240, 0.822);
 
     .container__leftbar {
         display: flex;
@@ -172,7 +173,6 @@
         flex-direction: column;
         flex-grow: 1; /* Контейнер будет занимать все оставшееся пространство */
         height: calc(95vh - 50px); /* Высота контейнера минус высота settings-panel */
-        background-color: rgba(240, 240, 240, 0.822);
         gap: 10px;
         padding: 10px;
         overflow: auto;

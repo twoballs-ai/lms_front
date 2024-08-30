@@ -17,7 +17,7 @@ function LearningClassicLesson({ selectedStage, onComplete }) {
     return (
         <>
             {showClassicLesson && stageData && (
-                <div className={`content__${selectedStage.type}-lesson`}>
+                <div className={`study-content__${selectedStage.type}-lesson`}>
                     <div className={`${selectedStage.type}-lesson__title`}>
                         <p>Урок: {stageData.title}</p>
                     </div>
