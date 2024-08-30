@@ -1,12 +1,12 @@
-.content__classic-lesson {
+.study-content__classic-lesson {
     display: flex;
     gap: 15px;
     flex-direction: column;
     height: 100%;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    // border-radius: 8px;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .classic-lesson__title {
         gap: 15px;
@@ -26,7 +26,7 @@
             font-size: 16px;
             color: #555;
         }
-
+        
         .add-block__editor {
             gap: 20px;
             padding: 10px;
@@ -37,7 +37,7 @@
     }
 }
 
-.content__video-lesson {
+.study-content__video-lesson {
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
