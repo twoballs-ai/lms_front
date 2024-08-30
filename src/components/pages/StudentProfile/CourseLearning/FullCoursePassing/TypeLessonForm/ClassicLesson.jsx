@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useLessonData from "./useLessonData";
 import parse from 'html-react-parser';
+import hljs from 'highlight.js';  // Import highlight.js
+import 'highlight.js/styles/default.css';  // Import default highlight.js styles
 import "./LessonsStyle.scss";
 import LmsButton from "../../../../../reUseComponents/Button";
 
 function LearningClassicLesson({ selectedStage, onComplete }) {
     const { stageData, showClassicLesson } = useLessonData(selectedStage ? selectedStage.id : null);
-    console.log(stageData)
+
+    useEffect(() => {
+        // Highlight all code blocks on component mount/update
+        hljs.highlightAll();
+    }, [stageData]);
+
     return (
         <>
             {showClassicLesson && stageData && (
@@ -18,8 +25,8 @@ function LearningClassicLesson({ selectedStage, onComplete }) {
                         {parse(stageData.lesson?.html_code_text)}
                     </div>
                     <div className="content__learn-buttons">
-                            <LmsButton buttonText={"Следующий этап"} handleClick={onComplete} />
-                        </div>
+                        <LmsButton buttonText={"Следующий этап"} handleClick={onComplete} />
+                    </div>
                 </div>
             )}
         </>
