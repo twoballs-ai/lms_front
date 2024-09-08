@@ -1,0 +1,45 @@
+.container__teacher-dashboard {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: #dbefffb4;
+
+    .dashboard-body {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        overflow-y: hidden;
+
+        .dashboard-body__left-menu {
+            display: flex;
+            flex-direction: column;
+            width: 25%;
+            background-color: #f0f0f0;
+        }
+
+        .dashboard-body__content {
+            display: flex;
+            flex-direction: column;
+            width: 75%;
+            padding: 20px;
+            overflow: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-body {
+            flex-direction: column;
+
+            .dashboard-body__left-menu {
+                width: 100%;
+                height: auto;
+            }
+
+            .dashboard-body__content {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    }
+}

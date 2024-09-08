@@ -1,0 +1,25 @@
+.custom-card {
+    width: 300px;  // Fixed width for the card
+  
+    .card-image {
+        height: 200px;  // Fixed height for the image
+        object-fit: contain;  // Show the whole image, but ensure it fits within the dimensions
+        width: 100%;  // Ensure the image spans the full width of the card
+        max-height: 100%;  // Ensure the image does not exceed the height of the card
+        display: block;  // Ensure proper spacing and alignment
+        margin: 0 auto;  // Center the image horizontally
+    }
+  
+    .card-meta {
+        .ant-card-meta-title {
+            color: #333;  // Dark gray color for the title
+            font-weight: bold;
+            text-decoration: none;  // Remove underline
+        }
+  
+        .ant-card-meta-description {
+            color: #666;  // Slightly lighter gray for description
+            text-decoration: none;  // Remove underline
+        }
+    }
+}

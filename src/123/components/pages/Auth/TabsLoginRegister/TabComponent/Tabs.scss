@@ -1,0 +1,159 @@
+.modal__tabs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+
+  .tabs {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    min-height: 600px; // Ensure the container has a fixed minimum height
+    background: #007cc4;
+    margin: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 2rem 1rem;
+    color: #e8f0f2;
+    box-shadow: 1px 1px 20px 20px #e591556e;
+    border-radius: 2rem;
+
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+      min-height: 500px; // Adjust for smaller screens if necessary
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 24px;
+      cursor: pointer;
+      color: #e8f0f2;
+
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  ul.tabsNav {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #39a2db;
+    border-radius: 2rem;
+    padding-left: 0px;
+
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+  }
+
+  ul.tabsNav li {
+    width: 50%;
+    padding: 0.5em;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: all 0.7s;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  ul.tabsNav li:nth-child(2) {
+    border-radius: 0;
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+
+  ul.tabsNav li:hover {
+    background: rgba(50, 224, 196, 0.15);
+  }
+
+  ul.tabsNav li.active {
+    background: #39a2db;
+  }
+
+  .LoginTab p,
+  .RegisterTab p {
+    font-size: 1.6rem;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
+  }
+
+  .react-tabs {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .react-tabs__tab-list {
+    width: 40%;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0px;
+
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+  }
+
+  .react-tabs__tab {
+    width: 50%;
+    padding: 0.5rem;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s;
+  }
+
+  .react-tabs__tab--selected {
+    background: #39a2db;
+  }
+
+  .react-tabs__tab--disabled {
+    color: gray;
+    cursor: default;
+  }
+
+  .react-tabs__tab:hover {
+    background: rgba(50, 224, 196, 0.15);
+  }
+
+  .react-tabs__tab:first-child {
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+
+  .react-tabs__tab:last-child {
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+
+  .react-tabs__tab-panel {
+    display: none;
+  }
+
+  .react-tabs__tab-panel--selected {
+    display: block;
+    font-size: 1.6rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
+  }
+}

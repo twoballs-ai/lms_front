@@ -1,0 +1,65 @@
+.login-tab__register-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  
+    .register-container__log-pass-block {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+  
+      @media (max-width: 768px) {
+        width: 90%;
+      }
+    }
+  
+    .register-container__button-confirm {
+      display: flex;
+      justify-content: center;
+  
+      .orange-button {
+        padding: 15px 30px;
+        font-size: 1.6rem;
+        color: #ffffff;
+        background-color: #ff7f50;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #ff6347;
+        }
+  
+        @media (max-width: 768px) {
+          font-size: 1.4rem;
+          padding: 12px 24px;
+        }
+      }
+    }
+  
+    .auth_reg_text {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.2rem;
+  
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .input-error {
+    border: 1px solid red;
+  }
+  

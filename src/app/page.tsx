@@ -1,3 +1,4 @@
+"use client"; // This directive must be at the top
 import React, { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
@@ -5,27 +6,32 @@ import axios from "axios";
 
 import { apiLmsUrl } from "../../../shared/config";
 import { apiUserUrl } from "../../../shared/config";
-import "./Home.scss"
-import NewAddedCourse from "./HomeComponents/NewAddedCourse";
+import "./app.scss"
+import NewAddedCourse from "../components/HomeComponents/NewAddedCourse";
+import LatestNews from "../components/HomeComponents/LatestNews";
+// import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
+// import HomePopularCourses from "./HomeComponents/HomePopularCourses";
+// import StudentTestimonials from "./HomeComponents/StudentTestiomonials";
+import SiteService from "../services/siteNoAuth.service";
 
-import HomeTeacherPopular from "./HomeComponents/HomeTeacherPopular";
-import HomePopularCourses from "./HomeComponents/HomePopularCourses";
-import StudentTestimonials from "./HomeComponents/StudentTestiomonials";
-import SiteService from "../../../services/siteNoAuth.service";
-import LatestNews from "./HomeComponents/LatestNews";
 
 export default function Home() {
     const [lastAddedCourses, setlastAddedCourses] = useState([]);
     const [popularCourseData, setPopularCourseData] = useState([]);
     const [popularTeacherData, setPopularTeacherData] = useState([]);
     const [studentTestimonialData, setStudentTestimonialData] = useState([]);
-
-    const teacherId = localStorage.getItem("teacherId");
+    const [teacherId, setteacherId] = useState([]);
+    
 
     const items ="8"
     useEffect(() => {
         document.title = 'Сourserio - Lms - цифровая платформа обучения';
       }, []);
+      useEffect(() => {
+        if (JSON.parse(localStorage.getItem('access_token')) !== null) {
+            setteacherId(true);
+        }
+    }, [teacherId]);
     useEffect(() => {
         const fetchData = async () => {
             await SiteService.homePageLastAddedCourses({items}).then((response) => {

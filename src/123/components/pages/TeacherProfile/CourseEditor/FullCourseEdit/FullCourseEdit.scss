@@ -1,0 +1,146 @@
+.dot {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+        rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    cursor: pointer;
+
+    &:hover {
+        border: #000000 0.1rem solid;
+        background-color: rgba(113, 222, 255, 0.13);
+    }
+
+    &:active {
+        background-color: #90c5fd;
+    }
+
+    &.active {
+        background-color: rgba(161, 228, 255, 0.9);
+        text-align: center;
+    }
+}
+
+.main__nav-block {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    gap: 10px;
+    padding: 10px;
+
+    p {
+        align-self: center;
+        margin: 0; // Убирает внешние отступы
+        font-size: 16px; // Размер шрифта
+        color: #333; // Цвет текста
+        font-weight: 600;
+        font-size: 1.5rem;
+        // Дополнительные стили по вашему выбору
+    }
+    .nav-block__popup-menu {
+        display: flex;
+        justify-content: center; /* Выравниваем элемент по центру горизонтально */
+        .popup-menu__button {
+            width: fit-content; /* Занимает только ширину своего содержимого */
+            border: none; /* Убираем границы кнопки */
+            background: none; /* Убираем фон кнопки */
+            padding: 0; /* Убираем внутренние отступы кнопки */
+            cursor: pointer;
+        }
+    }
+    .nav-block__stages {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .stages__case {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            .sortable-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                // margin-bottom: 10px;
+            
+                .drag-handle {
+                    // margin-right: 10px;
+                    background: transparent;
+                    border: none;
+                    cursor: grab;
+                }
+            
+                .drag-handle:active {
+                    cursor: grabbing;
+                }
+            }
+        }
+    }
+}
+
+.main__content {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    gap: 10px;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+.add-lesson {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    p {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .add-lesson__lesson_block {
+        background-color: #d8d8d8;
+        display: flex;
+        padding: 10px;
+        flex-direction: column;
+        align-items: center;
+        width: auto;
+        border-radius: 10px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        transition: transform 0.2s, box-shadow 0.2s;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: rgba(100, 100, 111, 0.3) 0px 10px 30px 0px;
+        }
+
+        .lesson_block__icon {
+            font-size: 2.5rem;
+            color: #80c2ff;
+            margin-bottom: 10px;
+        }
+
+        .lesson_block__title {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .lesson_block__body {
+            text-align: center;
+            font-weight: 400;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .lesson_block__footer {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

@@ -1,0 +1,96 @@
+.study-content__classic-lesson {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    height: 100%;
+    background-color: #ffffff;
+    padding: 20px;
+    // border-radius: 8px;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .classic-lesson__title {
+        gap: 15px;
+        p {
+            font-size: 2rem;
+            color: #333;
+        }
+    }
+
+    .classic-lesson__add-block {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        
+        .add-block__editor {
+            gap: 20px;
+            padding: 10px;
+
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+    }
+}
+
+.study-content__video-lesson {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
+    .video-lesson__title {
+        gap: 15px;
+        p {
+            font-size: 2rem;
+            color: #333;
+        }
+    }
+
+    &__add-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .react-player {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+
+            iframe {
+                border-radius: 8px;
+            }
+        }
+
+        .content__learn-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+
+            button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #45a049;
+                }
+            }
+        }
+    }
+}
+
+
+// //   .content__quiz-lesson {
+// //     // Добавьте стили для урока-викторины по вашему выбору
+// //   }
