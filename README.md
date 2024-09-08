@@ -1,40 +1,36 @@
-![image](https://github.com/twoballs-ai/lms_front/assets/83840596/a3d588dd-f26f-4e4c-8bce-f6c050ac150c)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-![image](https://github.com/twoballs-ai/lms_front/assets/83840596/485b7df5-d78d-472a-9caf-d1c39fdec9f8)
-![image](https://github.com/twoballs-ai/lms_front/assets/83840596/611647c4-90df-4cb0-ac97-9b79ece103ad)
+## Getting Started
 
----
+First, run the development server:
 
-# courserio LMS
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## О проекте
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Добро пожаловать в courserio LMS (Learning Management System) – систему управления обучением на основе React. Этот проект находится в активной разработке и представляет собой платформу для обучения, обеспечивающую доступ к курсам, урокам с автоматической проверкой, менторству и дополнительным модулям для улучшения опыта обучения.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Основные функции
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-- **Курсы и уроки**: Структурированные курсы с возможностью прохождения уроков, предоставляющих автоматическую проверку результатов и мгновенную обратную связь.
-- **Менторство**: Возможность общения с менторами для получения помощи, задавая вопросы и получая обратную связь.
-- **Дополнительные модули**: Расширенные функциональные возможности для преподавателей, позволяющие улучшить процесс обучения и взаимодействия с учениками.
+## Learn More
 
-## В разработке
+To learn more about Next.js, take a look at the following resources:
 
-Проект находится в стадии активной разработки, и мы продолжаем добавлять новые функции, улучшать производительность и обеспечивать безопасность.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Как начать
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-1. **Установка зависимостей**: Убедитесь, что на вашем компьютере установлен Node.js. Затем выполните команду `npm install` для установки всех необходимых зависимостей.
-2. **Настройка окружения**: Создайте файл `.env` и укажите необходимые переменные окружения, такие как URL API и ключи доступа.
-3. **Запуск проекта**: После установки зависимостей выполните команду `npm start`, чтобы запустить проект в режиме разработки.
+## Deploy on Vercel
 
-## Вклад в проект
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Если у вас есть предложения по улучшению проекта или вы нашли ошибку, пожалуйста, создайте issue или отправьте pull request. Мы приветствуем ваш вклад!
-
-## Лицензия
-
-Этот проект лицензируется на основе лицензии MIT. Подробности смотрите в файле [LICENSE](LICENSE).
-
----
-
-Это простое описание, которое можно дополнить более подробной информацией о структуре проекта, технологиях, используемых в разработке, и т. д. Вам также стоит добавить инструкции по развертыванию и другие полезные ресурсы.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
