@@ -22,7 +22,7 @@ const NewAddedCourse: React.FC<NewAddedCourseProps> = ({ lastAddedCourses }) => 
   const router = useRouter(); // Use Next.js router instead of react-router-dom
 
   const handleCardClick = (courseId: number) => {
-    router.push(`/detail/${courseId}`);
+    router.push(`/course-detail/${courseId}`);
   };
 
   return (

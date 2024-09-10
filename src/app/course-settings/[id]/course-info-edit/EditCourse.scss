@@ -1,0 +1,25 @@
+.edit-course-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    gap: 20px;
+
+    &__add-form {
+      display: flex;
+      flex-direction: column;
+      width: 600px; /* Ширина формы */
+      gap: 20px; /* Отступ сверху */
+    }
+  
+    .edit-course-container__title{
+      font-size: 2rem;
+  }
+        .edit-course-container_block{
+            display: flex;
+            flex-direction: row;
+            .current-image{
+                height: 150px;
+            }
+        }
+  }

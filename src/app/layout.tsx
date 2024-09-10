@@ -1,7 +1,7 @@
 import Header from '@/components/basicComponents/Header/Header';
 import Footer from '@/components/basicComponents/Footer/Footer';
 import "../styles/globals.css"
-
+import styles from '../styles/app.module.scss'
 export default function RootLayout({
   children,
 }: {
@@ -10,9 +10,9 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body>
-        <div className="container">
+        <div className={styles.container}>
           <Header />
-          <div className="container__main-container">{children}</div>
+          <div className={styles.mainСontainer}>{children}</div>
           <Footer />
         </div>
       </body>
