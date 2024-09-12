@@ -16,17 +16,17 @@ import {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
-import LmsButton from "../../../../reUseComponents/Button";
-import LmsModalBase from "../../../../reUseComponents/ModalBase";
+import LmsButton from "@/components/reUseComponents/Button";
+import LmsModalBase from "@/components/reUseComponents/ModalBase";
 import AddStageLesson from "./AddStageLesson";
 import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";
 import AddingVideoLesson from "./TypeLessonForm/VideoLesson";
 import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
 import "./FullCourseEdit.scss";
-import CourseEditorService from "../../../../../services/course.editor.service";
+import CourseEditorService from "@/services/course.editor.service";
 import { SettingOutlined } from "@ant-design/icons";
 import ModulePopupMenu from "../components/LeftBar/utils/ModulePopupMenu";
-import { DragVerticalIcon } from "../../../../icons/icons";
+import { DragVerticalIcon } from "@/components/icons/icons";
 
 function SortableItem({ tech, DotComponent, isActive }) {
     const { attributes, listeners, setNodeRef, transform, transition } =

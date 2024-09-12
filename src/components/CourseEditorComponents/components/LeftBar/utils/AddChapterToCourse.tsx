@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import TextInput from '../../../../../../reUseComponents/TextInput';
-import ReusableSwitch from '../../../../../../reUseComponents/Switcher';
-import ReusableSliderWithInput from '../../../../../../reUseComponents/Slider';
-import LmsButton from '../../../../../../reUseComponents/Button';
-import { addChapter } from '../../../../../../../store/slices/courseEditorChapterSlice';
+import TextInput from '@/components/reUseComponents/TextInput';
+import ReusableSwitch from '@/components/reUseComponents/Switcher';
+import ReusableSliderWithInput from '@/components/reUseComponents/Slider';
+import LmsButton from '@/components/reUseComponents/Button';
+import { addChapter } from '@/store/slices/courseEditorChapterSlice';
 
 // Yup validation schema
 const ChapterSchema = Yup.object().shape({

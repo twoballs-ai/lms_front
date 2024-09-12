@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Editor from "../../../../../Editor";
-import CourseEditorService from "../../../../../../services/course.editor.service";
-import LmsButton from "../../../../../reUseComponents/Button";
-import TextInput from "../../../../../reUseComponents/TextInput";
+import Editor from "@/utils/Editor";
+import CourseEditorService from "@/services/course.editor.service";
+import LmsButton from "@/components/reUseComponents/Button";
+import TextInput from "@/components/reUseComponents/TextInput";
 
 import "./LessonsStyle.scss"
 function AddingClassicLesson(props) {

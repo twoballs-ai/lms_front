@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import LmsButton from "../../../../../reUseComponents/Button";
-import CourseEditorService from "../../../../../../services/course.editor.service";
-import TextInput from "../../../../../reUseComponents/TextInput";
-import VideoLinkForm from "../../../../../reUseComponents/VideoLinkForm"; // Update to VideoLinkForm
+import LmsButton from "@/components/reUseComponents/Button";
+import CourseEditorService from "@/services/course.editor.service";
+import TextInput from "@/components/reUseComponents/TextInput";
+import VideoLinkForm from "@/components/reUseComponents/VideoLinkForm"; // Update to VideoLinkForm
 
 function AddingVideoLesson(props) {
     const [inputTitleValue, setInputTitleValue] = useState('');

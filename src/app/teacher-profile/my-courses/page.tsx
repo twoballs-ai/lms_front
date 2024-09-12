@@ -50,7 +50,7 @@ const MyTeacherCourses: React.FC = () => {
 
   const handleEditCourseClick = (course_id: number) => {
     // Перенаправляем пользователя на страницу редактирования курса
-    router.push(`/course-editor/${course_id}/edit`);
+    router.push(`/course-editor/${course_id}`);
   };
 
   const handleSettingsCourseClick = (course_id: number) => {

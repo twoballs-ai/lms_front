@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import PopupMenu from "../../../../../../reUseComponents/PopupMenu";
-import LmsButton from "../../../../../../reUseComponents/Button";
-import TextInput from "../../../../../../reUseComponents/TextInput";
-import ReusableSwitch from "../../../../../../reUseComponents/Switcher";
-import ReusableSliderWithInput from "../../../../../../reUseComponents/Slider";
+import PopupMenu from "@/components/reUseComponents/PopupMenu";
+import LmsButton from "@/components/reUseComponents/Button";
+import TextInput from "@/components/reUseComponents/TextInput";
+import ReusableSwitch from "@/components/reUseComponents/Switcher";
+import ReusableSliderWithInput from "@/components/reUseComponents/Slider";
 import * as Yup from "yup";
 import { useDispatch } from 'react-redux';
-import { deleteChapter, updateChapter, fetchChapters } from "../../../../../../../store/slices/courseEditorChapterSlice";
+import { deleteChapter, updateChapter, fetchChapters } from "@/store/slices/courseEditorChapterSlice";
 
 const ChapterPopupMenu = ({
     chapter,

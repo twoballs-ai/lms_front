@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation"; // Используем useRouter вместо useNavigate
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
     DndContext,
@@ -8,6 +10,7 @@ import {
     closestCorners,
     useSensor,
     useSensors,
+    DragEndEvent,
 } from "@dnd-kit/core";
 import {
     SortableContext,
@@ -15,34 +18,57 @@ import {
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import "./CourseEditor.scss";
-import LmsButton from "../../../../../reUseComponents/Button";
-import EditModuleStage from "../../FullCourseEdit/EditModuleStage";
-import CourseEditorService from "../../../../../../services/course.editor.service";
-import SortableChapter from "./SortableChapter";
-import LmsModalBase from "../../../../../reUseComponents/ModalBase";
-import AddChapterToCourse from "./utils/AddChapterToCourse";
+import LmsButton from "@/components/reUseComponents/Button";
+import EditModuleStage from "@/components/CourseEditorComponents/FullCourseEdit/EditModuleStage";
 import { useDispatch, useSelector } from "react-redux";
 import {
     fetchChapters,
     updateChaptersSortIndexes,
     updateModulesSortIndexes,
-} from "../../../../../../store/slices/courseEditorChapterSlice";
-import SortableModules from "./SortableModules";
+} from "../../../store/slices/courseEditorChapterSlice";
+import SortableChapter from "@/components/CourseEditorComponents/components/LeftBar/SortableChapter";
+import LmsModalBase from "@/components/reUseComponents/ModalBase";
+import AddChapterToCourse from "@/components/CourseEditorComponents/components/LeftBar/utils/AddChapterToCourse";
+import SortableModules from "@/components/CourseEditorComponents/components/LeftBar/SortableModules";
 
-function CourseEditor() {
-    const { course_id } = useParams();
+// Define types
+interface Module {
+    id: string;
+    title: string;
+    sort_index: number;
+}
+
+interface Chapter {
+    id: string;
+    title: string;
+    sort_index: number;
+    modules: Module[];
+}
+
+interface CourseState {
+    chapters: Chapter[];
+}
+
+const CourseEditor: React.FC = () => {
     const [moduleEditData, setModuleEditData] = useState([]);
-    const [activeChapterId, setActiveChapterId] = useState(null);
-    const [activeModuleId, setActiveModuleId] = useState(null);
+
+    // const [moduleEditData, setModuleEditData] = useState<Module | null>(null);
+    const [activeChapterId, setActiveChapterId] = useState<string | null>(null);
+    const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
     const [openModal, setOpenModal] = useState(false);
-    const [draggingItemId, setDraggingItemId] = useState(null); // New state for dragging item
-    const navigate = useNavigate();
+    const [draggingItemId, setDraggingItemId] = useState<string | null>(null);
 
+    const router = useRouter();
     const dispatch = useDispatch();
-    const courseChapters = useSelector((state) => state.course.chapters);
+    const courseChapters = useSelector((state: { courseEditor: CourseState }) => state.courseEditor.chapters);
 
-    const handleBackToProfile = async () => {
-        navigate(`/teacher-profile`);
+
+    // Get course_id from the URL using useRouter hook
+    const params = useParams();
+    const course_id = params.id; // Получение course_id через useParams Next.js
+
+    const handleBackToProfile = () => {
+        router.push(`/teacher-profile`);
     };
 
     useEffect(() => {
@@ -122,6 +148,7 @@ function CourseEditor() {
             console.error("courseChapters is undefined or invalid");
         }
     };
+
     const moveChapter = (chapterId, direction) => {
         const currentIndex = courseChapters.findIndex(
             (chapter) => chapter.id === chapterId
@@ -154,7 +181,6 @@ function CourseEditor() {
             dispatch(fetchChapters(course_id));
         });
     };
-
     const handleMoveModule = async (chapterId, moduleId, direction) => {
         const chapterIndex = courseChapters.findIndex((chapter) => chapter.id === chapterId);
         if (chapterIndex === -1) return;
@@ -365,6 +391,6 @@ function CourseEditor() {
             </div>
         </div>
     );
-}
+};
 
 export default CourseEditor;

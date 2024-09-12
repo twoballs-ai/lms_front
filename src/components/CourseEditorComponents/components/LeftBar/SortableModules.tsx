@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
-import { DragVerticalIcon } from '../../../../../icons/icons';
+import { DragVerticalIcon } from '@/components/icons/icons';
 import { Button } from 'antd';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
 

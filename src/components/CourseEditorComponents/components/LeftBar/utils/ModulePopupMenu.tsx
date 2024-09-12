@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import PopupMenu from "../../../../../../reUseComponents/PopupMenu";
-import LmsButton from "../../../../../../reUseComponents/Button";
-import TextInput from "../../../../../../reUseComponents/TextInput";
+import PopupMenu from "@/components/reUseComponents/PopupMenu";
+import LmsButton from "@/components/reUseComponents/Button";
+import TextInput from "@/components/reUseComponents/TextInput";
 
 import { useDispatch } from 'react-redux';
-import { deleteModule, fetchChapters, updateModule } from '../../../../../../../store/slices/courseEditorChapterSlice';
+import { deleteModule, fetchChapters, updateModule } from '@/store/slices/courseEditorChapterSlice';
 
 const ModulePopupMenu = ({ course_id, moduleEditData, setModuleEditData, handlePopupOpen, handlePopupClose }) => {
     const [inputTitleValue, setInputTitleValue] = useState(moduleEditData.title || '');

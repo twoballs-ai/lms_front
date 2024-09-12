@@ -1,17 +1,17 @@
-"use client"; // Required for client-side rendering in Next.js
-// app/settings/layout.tsx
-import React, { useState } from "react";
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+"use client"; // Для client-side рендеринга в Next.js
+import { useParams, useRouter } from 'next/navigation'; // Не забываем импортировать useRouter для навигации
+import { useState } from 'react';
 import { Menu, Button, Modal } from 'antd';
-import { useRouter, usePathname } from 'next/navigation'; // Используем Next.js роутер
-import TeacherService from "@/services/teacher.service";
-import "./SettingsOutlet.scss"; // Оставляем SCSS стили
+import { SettingOutlined } from '@ant-design/icons';
+import Link from 'next/link';
+import TeacherService from '@/services/teacher.service'; // Импортируйте ваш сервис с правильным путём
 
-const SettingsOutlet: React.FC = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const course_id = pathname?.split('/').pop(); // Извлекаем идентификатор курса из URL
+import './SettingsOutlet.scss'; // Если используете SCSS
 
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const params = useParams();
+  const router = useRouter(); // Используем useRouter для перенаправления
+  const course_id = params.id; 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onClick = (e: any) => {
@@ -19,11 +19,9 @@ const SettingsOutlet: React.FC = ({ children }: { children: React.ReactNode }) =
   };
 
   const handleUpdate = async () => {
-    if (course_id) {
-      const response = await TeacherService.sentToPublish(course_id as string);
-      if (response.status === 200 || response.status === 201) {
-        // Handle successful publish
-      }
+    const response = await TeacherService.sentToPublish(course_id as string);
+    if (response.status === 200 || response.status === 201) {
+      // Обработка успешной публикации
     }
   };
 
@@ -32,12 +30,10 @@ const SettingsOutlet: React.FC = ({ children }: { children: React.ReactNode }) =
   };
 
   const handleDelete = async () => {
-    if (course_id) {
-      const response = await TeacherService.deleteTeacherCourse(course_id as string);
-      if (response.status === 200 || response.status === 201) {
-        setIsModalOpen(false);
-        router.push('/teacher-profile/my-courses'); 
-      }
+    const response = await TeacherService.deleteTeacherCourse(course_id as string);
+    if (response.status === 200 || response.status === 201) {
+      setIsModalOpen(false);
+      router.push('/teacher-profile/my-courses'); // Перенаправление на другую страницу
     }
   };
 
@@ -61,7 +57,7 @@ const SettingsOutlet: React.FC = ({ children }: { children: React.ReactNode }) =
       children: [
         {
           key: 'edit-info',
-          label: <a href={`${course_id}/course-info-edit`}>Обновить описание и обложку</a>,
+          label: <Link href={`/course-settings/${course_id}/edit-info`}>Обновить описание и обложку</Link>, // Маршрут для обновления
         },
       ],
     },
@@ -89,9 +85,11 @@ const SettingsOutlet: React.FC = ({ children }: { children: React.ReactNode }) =
           />
         </div>
         <div className="container__outlet">
-          {children} {/* Рендерим дочерние компоненты */}
+          {children} {/* Это будет содержимое текущего роута */}
         </div>
       </div>
+
+      {/* Модальное окно для удаления */}
       <Modal
         title="Подтверждение удаления"
         open={isModalOpen}
@@ -104,6 +102,4 @@ const SettingsOutlet: React.FC = ({ children }: { children: React.ReactNode }) =
       </Modal>
     </>
   );
-};
-
-export default SettingsOutlet;
+}
