@@ -1,0 +1,27 @@
+.container {
+    // background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    // width: 100vw;
+    height: 100vh;
+    gap:10px;
+    
+    min-height: 100vh;
+    flex-flow: column nowrap;
+    height: 100%;
+    .mainСontainer {
+        flex-grow: 1;
+        height: auto; // вы можете изменить это значение в зависимости от потребностей
+        // height: 100px; // оставлено на случай, если нужно будет переключаться между значениями
+    
+    
+        @media (max-width: 768px) {
+            height: auto; // высота будет авто на мобильных устройствах
+            padding: 15px; // уменьшение внутреннего отступа на мобильных устройствах
+        }
+    
+        @media (max-width: 480px) {
+            padding: 10px; // еще больше уменьшение внутреннего отступа на очень маленьких экранах
+        }
+    }
+}

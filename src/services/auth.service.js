@@ -50,10 +50,6 @@ const refreshToken = async () => {
   }
 };
 
-const logout = () => {
-  localStorage.clear();
-  window.location.href = '/';
-};
 
 const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
@@ -65,7 +61,6 @@ const AuthService = {
   teacherRegister,
   studentRegister,
   login,
-  logout,
   getCurrentUser,
   refreshToken,
 
