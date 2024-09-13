@@ -1,10 +1,11 @@
+"use client"; // This directive must be at the top
 import React, { useEffect, useState } from "react";
 
 import "./CourseLearning.scss";
-import StudentService from "../../../../../../services/student.service";
-import Chapter from "./LearningChapter";
-import Modules from "./LearningModules";
-import ModuleStageLearn from "../../FullCoursePassing/ModuleStageLearn";
+import StudentService from "@/services/student.service";
+import Chapter from "@/components/CourseLearningComponents/LeftBar/LearningChapter";
+import Modules from "@/components/CourseLearningComponents/LeftBar/LearningModules";
+import ModuleStageLearn from "@/components/CourseLearningComponents/FullCoursePassing/ModuleStageLearn";
 import { useParams } from "next/navigation";
 
 // Define types for your chapter and module data

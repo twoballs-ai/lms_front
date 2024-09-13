@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost, faChalkboardUser, faFilm, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
-import StudentService from "../../../../../services/student.service";
+import StudentService from "@/services/student.service";
 import LearningClassicLesson from "./TypeLessonForm/ClassicLesson";
 import LearningVideoLesson from "./TypeLessonForm/VideoLesson";
 import LearningQuizLesson from "./TypeLessonForm/QuizLesson";

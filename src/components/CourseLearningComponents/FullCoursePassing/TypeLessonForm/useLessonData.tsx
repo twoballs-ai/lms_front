@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import CourseEditorService from "../../../../../../services/course.editor.service";
-import StudentService from "../../../../../../services/student.service";
+import CourseEditorService from "@/services/course.editor.service";
+import StudentService from "@/services/student.service";
 
 const useLessonData = (stagePk) => {
     const [stageData, setStageData] = useState(null);
