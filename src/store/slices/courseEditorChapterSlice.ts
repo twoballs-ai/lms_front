@@ -1,18 +1,27 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import CourseEditorService from '@/services/course.editor.service';
+import CourseEditorService from '../../services/course.editor.service';
 
-// Определение интерфейсов для данных
+// Определение типов для данных
 interface Module {
-    id: string;
-    title: string;
+    id: number;
     sort_index: number;
+    [key: string]: any;
 }
 
 interface Chapter {
-    id: string;
-    title: string;
+    id: number;
     sort_index: number;
     modules: Module[];
+    [key: string]: any;
+}
+
+interface AddChapterParams {
+    course_id: number;
+    inputTitleValue: string;
+    inputDescrValue: string;
+    sortIndex: number;
+    isExam: boolean;
+    examDuration: number | null;
 }
 
 interface CourseState {
@@ -28,9 +37,9 @@ const initialState: CourseState = {
     error: null,
 };
 
-// AsyncThunk для получения глав
-export const fetchChapters = createAsyncThunk<Chapter[], string, { rejectValue: string }>(
-    'courseEditor/fetchChapters',
+// Thunks
+export const fetchChapters = createAsyncThunk<Chapter[], number, { rejectValue: string }>(
+    'course/fetchChapters',
     async (course_id, { rejectWithValue }) => {
         try {
             const response = await CourseEditorService.editCoursePageGetChapterList(course_id);
@@ -52,14 +61,24 @@ export const fetchChapters = createAsyncThunk<Chapter[], string, { rejectValue: 
     }
 );
 
-// AsyncThunk для добавления главы
-export const addChapter = createAsyncThunk<Chapter, Partial<Chapter>, { rejectValue: string }>(
-    'courseEditor/addChapter',
-    async (chapterData, { rejectWithValue }) => {
+export const addChapter = createAsyncThunk<Chapter, AddChapterParams, { rejectValue: string }>(
+    'course/addChapter',
+    async ({ course_id, inputTitleValue, inputDescrValue, sortIndex, isExam, examDuration }, { rejectWithValue }) => {
+        let examDurationValue = isExam ? examDuration : null;
+
+        const dataParams = {
+            course_id,
+            title: inputTitleValue,
+            description: inputDescrValue,
+            sort_index: sortIndex,
+            is_exam: isExam,
+            exam_duration_minutes: examDurationValue
+        };
+
         try {
-            const response = await CourseEditorService.addChapter(chapterData);
+            const response = await CourseEditorService.editCoursePageAddChapter(dataParams);
             if (response.status === 200 || response.status === 201) {
-                return response.data;
+                return response.data.data;
             } else {
                 return rejectWithValue(response.statusText);
             }
@@ -69,14 +88,13 @@ export const addChapter = createAsyncThunk<Chapter, Partial<Chapter>, { rejectVa
     }
 );
 
-// AsyncThunk для удаления главы
-export const deleteChapter = createAsyncThunk<string, string, { rejectValue: string }>(
-    'courseEditor/deleteChapter',
-    async (chapterId, { rejectWithValue }) => {
+export const deleteChapter = createAsyncThunk<number, number, { rejectValue: string }>(
+    'course/deleteChapter',
+    async (chapter_id, { rejectWithValue }) => {
         try {
-            const response = await CourseEditorService.deleteChapter(chapterId);
-            if (response.status === 200 || response.status === 204) {
-                return chapterId;
+            const response = await CourseEditorService.editCoursePageDeleteChapter(chapter_id);
+            if (response.status === 200 || response.status === 201) {
+                return chapter_id;
             } else {
                 return rejectWithValue(response.statusText);
             }
@@ -86,14 +104,13 @@ export const deleteChapter = createAsyncThunk<string, string, { rejectValue: str
     }
 );
 
-// AsyncThunk для обновления главы
 export const updateChapter = createAsyncThunk<Chapter, Chapter, { rejectValue: string }>(
-    'courseEditor/updateChapter',
-    async (chapterData, { rejectWithValue }) => {
+    'course/updateChapter',
+    async (dataParams, { rejectWithValue }) => {
         try {
-            const response = await CourseEditorService.updateChapter(chapterData);
+            const response = await CourseEditorService.editCoursePageUpdateChapter(dataParams.id, dataParams);
             if (response.status === 200 || response.status === 201) {
-                return response.data;
+                return response.data.data;
             } else {
                 return rejectWithValue(response.statusText);
             }
@@ -103,14 +120,13 @@ export const updateChapter = createAsyncThunk<Chapter, Chapter, { rejectValue: s
     }
 );
 
-// AsyncThunk для обновления индексов сортировки глав
-export const updateChaptersSortIndexes = createAsyncThunk<Chapter[], Chapter[], { rejectValue: string }>(
-    'courseEditor/updateChaptersSortIndexes',
-    async (updatedChapters, { rejectWithValue }) => {
+export const updateChaptersSortIndexes = createAsyncThunk<Chapter[], { course_id: number; chapters: Chapter[] }, { rejectValue: string }>(
+    'course/updateChaptersSortIndexes',
+    async ({ course_id, chapters }, { rejectWithValue }) => {
         try {
-            const response = await CourseEditorService.updateChaptersSortIndexes(updatedChapters);
+            const response = await CourseEditorService.editCourseUpdateChapterSortIndexes(course_id, chapters);
             if (response.status === 200 || response.status === 201) {
-                return response.data;
+                return response.data.data;
             } else {
                 return rejectWithValue(response.statusText);
             }
@@ -120,14 +136,13 @@ export const updateChaptersSortIndexes = createAsyncThunk<Chapter[], Chapter[], 
     }
 );
 
-// AsyncThunk для добавления модуля к главе
-export const addModuleToChapter = createAsyncThunk<Module, { chapter_id: string; module: Module }, { rejectValue: string }>(
-    'courseEditor/addModuleToChapter',
-    async ({ chapter_id, module }, { rejectWithValue }) => {
+export const addModuleToChapter = createAsyncThunk<Module, Module, { rejectValue: string }>(
+    'course/addModuleToChapter',
+    async (dataParams, { rejectWithValue }) => {
         try {
-            const response = await CourseEditorService.addModuleToChapter(chapter_id, module);
+            const response = await CourseEditorService.editCoursePageAddModule(dataParams);
             if (response.status === 200 || response.status === 201) {
-                return response.data;
+                return response.data.data;
             } else {
                 return rejectWithValue(response.statusText);
             }
@@ -137,14 +152,45 @@ export const addModuleToChapter = createAsyncThunk<Module, { chapter_id: string;
     }
 );
 
-// AsyncThunk для обновления индексов сортировки модулей
-export const updateModulesSortIndexes = createAsyncThunk<{ chapter_id: string; modules: Module[] }, { chapter_id: string; modules: Module[] }, { rejectValue: string }>(
-    'courseEditor/updateModulesSortIndexes',
+export const deleteModule = createAsyncThunk<number, number, { rejectValue: string }>(
+    'course/deleteModule',
+    async (module_id, { rejectWithValue }) => {
+        try {
+            const response = await CourseEditorService.editCoursePageDeleteModule(module_id);
+            if (response.status === 200 || response.status === 201) {
+                return module_id;
+            } else {
+                return rejectWithValue(response.statusText);
+            }
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const updateModule = createAsyncThunk<Module, { module_id: number; data: any }, { rejectValue: string }>(
+    'course/updateModule',
+    async ({ module_id, data }, { rejectWithValue }) => {
+        try {
+            const response = await CourseEditorService.editCoursePageUpdateModule(module_id, data);
+            if (response.status === 200 || response.status === 201) {
+                return response.data.data;
+            } else {
+                return rejectWithValue(response.statusText);
+            }
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const updateModulesSortIndexes = createAsyncThunk<{ chapter_id: number; modules: Module[] }, { chapter_id: number; modules: Module[] }, { rejectValue: string }>(
+    'course/updateModulesSortIndexes',
     async ({ chapter_id, modules }, { rejectWithValue }) => {
         try {
-            const response = await CourseEditorService.updateModulesSortIndexes(chapter_id, modules);
+            const response = await CourseEditorService.editCourseUpdateModuleSortIndexes(chapter_id, modules);
             if (response.status === 200 || response.status === 201) {
-                return { chapter_id, modules: response.data };
+                return response.data.data;
             } else {
                 return rejectWithValue(response.statusText);
             }
@@ -154,43 +200,9 @@ export const updateModulesSortIndexes = createAsyncThunk<{ chapter_id: string; m
     }
 );
 
-// AsyncThunk для обновления модуля
-export const updateModule = createAsyncThunk<Module, Module, { rejectValue: string }>(
-    'courseEditor/updateModule',
-    async (module, { rejectWithValue }) => {
-        try {
-            const response = await CourseEditorService.updateModule(module);
-            if (response.status === 200 || response.status === 201) {
-                return response.data;
-            } else {
-                return rejectWithValue(response.statusText);
-            }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
-// AsyncThunk для удаления модуля
-export const deleteModule = createAsyncThunk<string, string, { rejectValue: string }>(
-    'courseEditor/deleteModule',
-    async (moduleId, { rejectWithValue }) => {
-        try {
-            const response = await CourseEditorService.deleteModule(moduleId);
-            if (response.status === 200 || response.status === 204) {
-                return moduleId;
-            } else {
-                return rejectWithValue(response.statusText);
-            }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
-// Slice с логикой
+// Слайс
 const courseEditorChapterSlice = createSlice({
-    name: 'courseEditor',
+    name: 'course',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -204,15 +216,15 @@ const courseEditorChapterSlice = createSlice({
             })
             .addCase(fetchChapters.rejected, (state, action: PayloadAction<string | undefined>) => {
                 state.status = 'failed';
-                state.error = action.payload || 'Не удалось загрузить главы';
+                state.error = action.payload || null;
             })
             .addCase(addChapter.fulfilled, (state, action: PayloadAction<Chapter>) => {
                 state.chapters.push(action.payload);
             })
             .addCase(addChapter.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось добавить главу';
+                state.error = action.payload || null;
             })
-            .addCase(deleteChapter.fulfilled, (state, action: PayloadAction<string>) => {
+            .addCase(deleteChapter.fulfilled, (state, action: PayloadAction<number>) => {
                 state.chapters = state.chapters
                     .filter(chapter => chapter.id !== action.payload)
                     .map((chapter, index) => ({
@@ -221,7 +233,7 @@ const courseEditorChapterSlice = createSlice({
                     }));
             })
             .addCase(deleteChapter.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось удалить главу';
+                state.error = action.payload || null;
             })
             .addCase(updateChapter.fulfilled, (state, action: PayloadAction<Chapter>) => {
                 state.chapters = state.chapters.map(chapter =>
@@ -229,33 +241,26 @@ const courseEditorChapterSlice = createSlice({
                 );
             })
             .addCase(updateChapter.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось обновить главу';
+                state.error = action.payload || null;
             })
             .addCase(updateChaptersSortIndexes.fulfilled, (state, action: PayloadAction<Chapter[]>) => {
                 state.chapters = action.payload;
             })
             .addCase(updateChaptersSortIndexes.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось обновить индексы сортировки глав';
+                state.error = action.payload || null;
             })
             .addCase(addModuleToChapter.fulfilled, (state, action: PayloadAction<Module>) => {
-                state.chapters = state.chapters.map(chapter =>
-                    chapter.id === action.payload.id
+                state.chapters = state.chapters.map(chapter => 
+                    chapter.id === action.payload.chapter_id 
                         ? { ...chapter, modules: [...chapter.modules, action.payload] }
                         : chapter
                 );
             })
-            .addCase(addModuleToChapter.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось добавить модуль';
-            })
-            .addCase(updateModulesSortIndexes.fulfilled, (state, action: PayloadAction<{ chapter_id: string, modules: Module[] }>) => {
-                const { chapter_id, modules } = action.payload;
-                const chapter = state.chapters.find(chapter => chapter.id === chapter_id);
-                if (chapter) {
-                    chapter.modules = modules;
-                }
-            })
-            .addCase(updateModulesSortIndexes.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось обновить индексы сортировки модулей';
+            .addCase(deleteModule.fulfilled, (state, action: PayloadAction<number>) => {
+                state.chapters = state.chapters.map(chapter => ({
+                    ...chapter,
+                    modules: chapter.modules.filter(module => module.id !== action.payload),
+                }));
             })
             .addCase(updateModule.fulfilled, (state, action: PayloadAction<Module>) => {
                 state.chapters = state.chapters.map(chapter => ({
@@ -265,17 +270,12 @@ const courseEditorChapterSlice = createSlice({
                     ),
                 }));
             })
-            .addCase(updateModule.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось обновить модуль';
-            })
-            .addCase(deleteModule.fulfilled, (state, action: PayloadAction<string>) => {
-                state.chapters = state.chapters.map(chapter => ({
-                    ...chapter,
-                    modules: chapter.modules.filter(module => module.id !== action.payload),
-                }));
-            })
-            .addCase(deleteModule.rejected, (state, action: PayloadAction<string | undefined>) => {
-                state.error = action.payload || 'Не удалось удалить модуль';
+            .addCase(updateModulesSortIndexes.fulfilled, (state, action: PayloadAction<{ chapter_id: number; modules: Module[] }>) => {
+                state.chapters = state.chapters.map(chapter => 
+                    chapter.id === action.payload.chapter_id 
+                        ? { ...chapter, modules: action.payload.modules }
+                        : chapter
+                );
             });
     },
 });

@@ -1,7 +1,7 @@
-"use client";
-
+"use client"; // This directive must be at the top
 import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation"; // Используем useRouter вместо useNavigate
+import { useRouter } from "next/navigation"; // Correct useRouter import for app directory
+import { useParams } from "next/navigation"; // Fetch params using useParams from next/navigation
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
     DndContext,
@@ -10,65 +10,41 @@ import {
     closestCorners,
     useSensor,
     useSensors,
-    DragEndEvent,
 } from "@dnd-kit/core";
 import {
     SortableContext,
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import "./CourseEditor.scss";
 import LmsButton from "@/components/reUseComponents/Button";
 import EditModuleStage from "@/components/CourseEditorComponents/FullCourseEdit/EditModuleStage";
+import SortableChapter from "@/components/CourseEditorComponents/LeftBar/SortableChapter";
+import LmsModalBase from "@/components/reUseComponents/ModalBase";
+import AddChapterToCourse from "@/components/CourseEditorComponents/LeftBar/utils/AddChapterToCourse";
 import { useDispatch, useSelector } from "react-redux";
 import {
     fetchChapters,
     updateChaptersSortIndexes,
     updateModulesSortIndexes,
-} from "../../../store/slices/courseEditorChapterSlice";
-import SortableChapter from "@/components/CourseEditorComponents/components/LeftBar/SortableChapter";
-import LmsModalBase from "@/components/reUseComponents/ModalBase";
-import AddChapterToCourse from "@/components/CourseEditorComponents/components/LeftBar/utils/AddChapterToCourse";
-import SortableModules from "@/components/CourseEditorComponents/components/LeftBar/SortableModules";
+} from "@/store/slices/courseEditorChapterSlice";
+import "./CourseEditor.scss";
 
-// Define types
-interface Module {
-    id: string;
-    title: string;
-    sort_index: number;
-}
-
-interface Chapter {
-    id: string;
-    title: string;
-    sort_index: number;
-    modules: Module[];
-}
-
-interface CourseState {
-    chapters: Chapter[];
-}
-
-const CourseEditor: React.FC = () => {
+function CourseEditor() {
+    const router = useRouter(); // Correct usage
+    const params = useParams();
+    const course_id = params.id; // Getting course_id from dynamic params
+    
     const [moduleEditData, setModuleEditData] = useState([]);
+    const [activeChapterId, setActiveChapterId] = useState(null);
 
-    // const [moduleEditData, setModuleEditData] = useState<Module | null>(null);
-    const [activeChapterId, setActiveChapterId] = useState<string | null>(null);
-    const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
     const [openModal, setOpenModal] = useState(false);
-    const [draggingItemId, setDraggingItemId] = useState<string | null>(null);
+    const [draggingItemId, setDraggingItemId] = useState(null); // State for dragging item
 
-    const router = useRouter();
     const dispatch = useDispatch();
     const courseChapters = useSelector((state: { courseEditor: CourseState }) => state.courseEditor.chapters);
 
-
-    // Get course_id from the URL using useRouter hook
-    const params = useParams();
-    const course_id = params.id; // Получение course_id через useParams Next.js
-
-    const handleBackToProfile = () => {
-        router.push(`/teacher-profile`);
+    const handleBackToProfile = async () => {
+        router.push(`/teacher-profile`); // Using router.push for navigation
     };
 
     useEffect(() => {
@@ -89,26 +65,21 @@ const CourseEditor: React.FC = () => {
         })
     );
 
-    const moduleChange = (module) => {
-        setModuleEditData(module);
-    };
 
     const handleDragStart = (event) => {
-        setDraggingItemId(event.active.id); // Set the dragging item's id
-        // Optionally add a class or styling to indicate the drag start
+        setDraggingItemId(event.active.id);
     };
 
     const handleDragMove = (event) => {
         const { active, over } = event;
 
         if (active.id !== over?.id) {
-            // Optionally add visual feedback here
-            // For example: highlight the target position
+            // Optionally add visual feedback
         }
     };
 
     const handleDragEnd = (event) => {
-        setDraggingItemId(null); // Reset dragging item on drag end
+        setDraggingItemId(null);
         const { active, over } = event;
 
         if (active.id !== over?.id && courseChapters) {
@@ -130,9 +101,6 @@ const CourseEditor: React.FC = () => {
                 })
             );
 
-            // Debugging output
-            console.log("Updated chapters:", updatedChapters);
-
             dispatch(
                 updateChaptersSortIndexes({
                     course_id,
@@ -144,8 +112,6 @@ const CourseEditor: React.FC = () => {
             ).then(() => {
                 dispatch(fetchChapters(course_id));
             });
-        } else {
-            console.error("courseChapters is undefined or invalid");
         }
     };
 
@@ -181,80 +147,6 @@ const CourseEditor: React.FC = () => {
             dispatch(fetchChapters(course_id));
         });
     };
-    const handleMoveModule = async (chapterId, moduleId, direction) => {
-        const chapterIndex = courseChapters.findIndex((chapter) => chapter.id === chapterId);
-        if (chapterIndex === -1) return;
-    
-        // Create a new array for the chapters
-        const updatedChapters = [...courseChapters];
-        const modules = [...updatedChapters[chapterIndex].modules];
-        const moduleIndex = modules.findIndex((module) => module.id === moduleId);
-    
-        const newIndex = moduleIndex + direction;
-    
-        if (newIndex < 0 || newIndex >= modules.length) return;
-    
-        // Create a new array for modules and move the module
-        const newModules = [...modules];
-        const [movedModule] = newModules.splice(moduleIndex, 1);
-        newModules.splice(newIndex, 0, movedModule);
-    
-        // Update the modules in the specific chapter
-        updatedChapters[chapterIndex] = {
-            ...updatedChapters[chapterIndex],
-            modules: newModules.map((module, idx) => ({
-                ...module,
-                sort_index: idx + 1,
-            })),
-        };
-    
-        // Update the state to trigger a re-render
-        dispatch(updateModulesSortIndexes({
-            chapter_id: chapterId,
-            modules: updatedChapters[chapterIndex].modules.map(module => ({
-                id: module.id,
-                sort_index: module.sort_index,
-            })),
-        })).then(() => {
-            // Directly update the frontend state with the new order
-            dispatch(fetchChapters(course_id));  // Refresh the chapters from the backend
-        }).catch(error => {
-            console.error("Failed to update module sort indexes:", error);
-        });
-    };
-    const handleModuleDragEnd = (event, chapterId) => {
-        setDraggingItemId(null);
-        const { active, over } = event;
-        const chapterIndex = courseChapters.findIndex((chapter) => chapter.id === chapterId);
-        
-        if (chapterIndex === -1 || !over) return;
-        
-        const modules = [...courseChapters[chapterIndex].modules];
-        const activeIndex = modules.findIndex((module) => module.sort_index === active.id);
-        const overIndex = modules.findIndex((module) => module.sort_index === over.id);
-        
-        if (activeIndex !== overIndex) {
-            const [removedModule] = modules.splice(activeIndex, 1);
-            modules.splice(overIndex, 0, removedModule);
-
-            const updatedModules = modules.map((module, idx) => ({
-                ...module,
-                sort_index: idx + 1,
-            }));
-
-            dispatch(updateModulesSortIndexes({
-                chapter_id: chapterId,
-                modules: updatedModules.map(module => ({
-                    id: module.id,
-                    sort_index: module.sort_index,
-                })),
-            })).then(() => {
-                dispatch(fetchChapters(course_id));
-            }).catch(error => {
-                console.error("Failed to update module sort indexes:", error);
-            });
-        }
-    };
 
     const sortedChapters = courseChapters
         .map((chapter) => ({
@@ -282,8 +174,8 @@ const CourseEditor: React.FC = () => {
                 sensors={sensors}
                 collisionDetection={closestCorners}
                 onDragEnd={handleDragEnd}
-                onDragStart={handleDragStart} // Added handleDragStart
-                onDragMove={handleDragMove} // Added handleDragMove
+                onDragStart={handleDragStart}
+                onDragMove={handleDragMove}
                 modifiers={[restrictToVerticalAxis]}
             >
                 <SortableContext
@@ -301,74 +193,14 @@ const CourseEditor: React.FC = () => {
                                     id={chapter.sort_index}
                                     key={chapter.sort_index}
                                     chapter={chapter}
+                                    course_id={course_id}
+                                    setModuleEditData={setModuleEditData}
                                     activeChapterId={activeChapterId}
                                     setActiveChapterId={setActiveChapterId}
+                                    setDraggingItemId={setDraggingItemId}
                                     moveChapter={moveChapter}
                                     courseChapters={sortedChapters}
-                                >
-                                    <DndContext
-                                        sensors={sensors}
-                                        collisionDetection={closestCorners}
-                                        modifiers={[restrictToVerticalAxis]}
-                                        onDragEnd={(event) => handleModuleDragEnd(event, chapter.id)}
-
-                                    >
-                                        <SortableContext
-                                            items={chapter.modules.map(
-                                                (module) => module.sort_index
-                                            )}
-                                            strategy={
-                                                verticalListSortingStrategy
-                                            }
-                                        >
-                                            {chapter.modules
-                                                .slice()
-                                                .sort(
-                                                    (a, b) =>
-                                                        a.sort_index -
-                                                        b.sort_index
-                                                )
-                                                .map((module, index) => (
-                                                    <SortableModules
-                                                        title={module.title}
-                                                        moduleChange={
-                                                            moduleChange
-                                                        }
-                                                        id={module.sort_index}
-                                                        key={module.sort_index}
-                                                        module={module}
-                                                        activeModuleId={
-                                                            activeModuleId
-                                                        }
-                                                        setActiveModuleId={
-                                                            setActiveModuleId
-                                                        }
-                                                        onMoveUp={() =>
-                                                            handleMoveModule(
-                                                                chapter.id,
-                                                                module.id,
-                                                                -1
-                                                            )
-                                                        }
-                                                        onMoveDown={() =>
-                                                            handleMoveModule(
-                                                                chapter.id,
-                                                                module.id,
-                                                                1
-                                                            )
-                                                        }
-                                                        isFirst={index === 0} // First module in the list
-                                                        isLast={
-                                                            index ===
-                                                            chapter.modules
-                                                                .length -
-                                                                1
-                                                        } // Last module in the list
-                                                    />
-                                                ))}
-                                        </SortableContext>
-                                    </DndContext>
-                                </SortableChapter>
+                                />
                             ))}
                         </div>
                     </div>
@@ -391,6 +223,6 @@ const CourseEditor: React.FC = () => {
             </div>
         </div>
     );
-};
+}
 
 export default CourseEditor;

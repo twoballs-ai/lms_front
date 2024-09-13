@@ -25,7 +25,7 @@ import AddingQuizLesson from "./TypeLessonForm/QuizLesson";
 import "./FullCourseEdit.scss";
 import CourseEditorService from "@/services/course.editor.service";
 import { SettingOutlined } from "@ant-design/icons";
-import ModulePopupMenu from "../components/LeftBar/utils/ModulePopupMenu";
+import ModulePopupMenu from "../LeftBar/utils/ModulePopupMenu";
 import { DragVerticalIcon } from "@/components/icons/icons";
 
 function SortableItem({ tech, DotComponent, isActive }) {

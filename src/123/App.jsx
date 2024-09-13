@@ -25,7 +25,7 @@ const MainComponent = lazy(() => import('./components/pages/TeacherProfile/Cours
 const CourseDetail = lazy(() => import('./components/pages/Course/CourseDetail'));
 const StudentDashboard = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/Dashboard'));
 const StudentMyCourses = lazy(() => import('./components/pages/StudentProfile/ControlPanel/StudentCourseProfile/MyCourses'));
-const UserDashmain = lazy(() => import('./components/pages/StudentProfile/ControlPanel/components/DashMain'));
+const UserDashmain = lazy(() => import('../app/student-profile/DashMain.jsx'));
 const TeacherDashboard = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/Dashboard'));
 const MyTeacherCourses = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/TeacherCoursesProfile/MyTeacherCourses'));
 const TeacherDashMain = lazy(() => import('./components/pages/TeacherProfile/ControlPanel/components/DashMain'));
