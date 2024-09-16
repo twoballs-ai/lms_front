@@ -1,5 +1,4 @@
-import axios from "axios";
-import { apiLmsUrl,apiStudyUrl, apiUserUrl,  } from "../shared/config";
+import { apiStudyUrl, apiUserUrl,  } from "../shared/config";
 import api from "./api";
 // import authHeader from "./auth-header";
 

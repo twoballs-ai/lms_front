@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import useLessonData from "./useLessonData";
 import "./LessonsStyle.scss";
 import StudentService from "@/services/student.service";
@@ -12,14 +12,19 @@ function LearningQuizLesson({ selectedStage, onComplete }) {
     const [selectedAnswers, setSelectedAnswers] = useState([]);
     const [selectedRadioAnswer, setSelectedRadioAnswer] = useState(null);
 
+    // Define shuffleAndSetAnswers with useCallback
+    const shuffleAndSetAnswers = useCallback((answers) => {
+        const shuffled = shuffleArray(answers);
+        setShuffledAnswers(shuffled);
+    }, []);
+
     useEffect(() => {
-        // Shuffle the answers when stageData changes
         if (stageData && stageData.lesson && stageData.lesson.answers) {
             shuffleAndSetAnswers(stageData.lesson.answers);
             setSelectedAnswers([]);  // Reset selected answers when stageData changes
             setSelectedRadioAnswer(null); // Reset selected radio answer when stageData changes
         }
-    }, [stageData]);
+    }, [stageData, shuffleAndSetAnswers]);
 
     const shuffleArray = (array) => {
         const shuffledArray = [...array];
@@ -30,22 +35,16 @@ function LearningQuizLesson({ selectedStage, onComplete }) {
         return shuffledArray;
     };
 
-    const shuffleAndSetAnswers = (answers) => {
-        const shuffled = shuffleArray(answers);
-        setShuffledAnswers(shuffled);
-    };
-
     const handleCheckQuiz = async () => {
         const answersToCheck = stageData.lesson.quiz_type === "radio" ? [selectedRadioAnswer] : selectedAnswers;
-        // console.log(answersToCheck);
         try {
             const response = await StudentService.checkQuizLesson(selectedStage.id, answersToCheck);
             if (response.status === 200 || response.status === 201) {
                 if (response.data.status === false) {
                     setIsChecked(false);
                     setIsCorrect(false);
-                    setSelectedAnswers([])
-                    setSelectedRadioAnswer(null)
+                    setSelectedAnswers([]);
+                    setSelectedRadioAnswer(null);
                     shuffleAndSetAnswers(stageData.lesson.answers);  // Shuffle answers again on incorrect answer
                 } else {
                     setIsChecked(true);
