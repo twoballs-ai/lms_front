@@ -1,3 +1,5 @@
+'use client' // only in App Router
+
 import React, { Component } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
@@ -6,7 +8,13 @@ import {
 } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css'; // Importing CKEditor styles
 
-class Editor extends Component {
+// Определение типов для пропсов
+interface EditorProps {
+    data: string;
+    onChange: (data: string) => void;
+}
+
+class Editor extends Component<EditorProps> {
     render() {
         return (
             <div className="App">
@@ -36,10 +44,10 @@ class Editor extends Component {
                             ]
                         },
                         table: {
-                            contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
                         },
                         alignment: {
-                            options: [ 'left', 'center', 'right', 'justify' ]
+                            options: ['left', 'center', 'right', 'justify']
                         },
                         fontColor: {
                             colors: [
@@ -92,20 +100,20 @@ class Editor extends Component {
                     }}
                     data={this.props.data}
                     onReady={ editor => {
-                        // You can store the "editor" and use when needed
-                        // console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ ( event, editor ) => {
+                        // Вы можете сохранить "editor" и использовать его по мере необходимости
+                        // console.log('Editor is ready to use!', editor);
+                    }}
+                    onChange={(event, editor) => {
                         const data = editor.getData();
                         this.props.onChange(data);
-                        // console.log( data );
-                    } }
-                    onBlur={ ( event, editor ) => {
-                        // console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        // console.log( 'Focus.', editor );
-                    } }
+                        // console.log(data);
+                    }}
+                    onBlur={(event, editor) => {
+                        // console.log('Blur.', editor);
+                    }}
+                    onFocus={(event, editor) => {
+                        // console.log('Focus.', editor);
+                    }}
                 />
             </div>
         );
