@@ -51,7 +51,7 @@ function AddingQuizLesson(props) {
         setAnswers(newAnswers.map((q, i) => ({ ...q, order: i })));
     };
 
-    let stagePk = props.selectedStage ? props.selectedStage.id : null;
+    const stagePk = props.selectedStage ? props.selectedStage.id : null;
 
     useEffect(() => {
         if (stagePk) {

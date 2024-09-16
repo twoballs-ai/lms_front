@@ -14,9 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const course_id = params.id; 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onClick = (e: any) => {
-    console.log('click ', e);
-  };
 
   const handleUpdate = async () => {
     const response = await TeacherService.sentToPublish(course_id as string);
@@ -76,7 +73,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="course-settings__container">
         <div className="container__left-menu">
           <Menu
-            onClick={onClick}
             style={{ width: 320 }}
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}

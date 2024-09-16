@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Строим проект
-RUN npm run build:no-lint
+RUN npm run build
 
 # Используем официальный Node.js образ для финальной стадии
 FROM node:18

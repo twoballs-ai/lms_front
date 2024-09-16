@@ -1,12 +1,9 @@
 'use client'; // Указание на клиентский компонент
 
 import React, { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation"; // Используем useRouter вместо useNavigate
-import { Badge, Tooltip } from 'antd';
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { apiBaseUrl, apiUrl, serverUrl } from "../../../shared/config";
+import { useRouter, useParams } from "next/navigation";
+
+import { serverUrl } from "../../../shared/config";
 
 import SiteService from "../../../services/siteNoAuth.service";
 import ImageViewer from "../../../components/reUseComponents/ImageViewer";
@@ -17,33 +14,12 @@ import "./CourseDetail.scss"
 function CourseDetail() {
     const router = useRouter();
     const params = useParams();
-    const course_id = params.id; // Получение course_id через useParams Next.js
+    const course_id = params.id;
 
-    const [show, setShow] = useState(false);
-    const [showRate, setShowRate] = useState(false);
     const [courseData, setCourseData] = useState([]);
-    const [firstModuleData, setFirstModuleData] = useState([]);
-    const [relatedCourseData, setRelatedCourseData] = useState([]);
-    const [technologicalListData, setTechnologicalListData] = useState([]);
-    const [teacherData, setTeacherData] = useState([]);
-    const [chapterData, setChapterData] = useState([]);
     const [userLoggedStatus, setUserLoggedStatus] = useState("");
     const [enrollStatus, setEnrollStatus] = useState("");
-    const [courseViews, setCourseViews] = useState(0);
-    const [ratingStatus, setRatingStatus] = useState("");
-    const [avgRatingStatus, setAvgRatingStatus] = useState("");
-    const [favoriteStatus, setFavoriteStatus] = useState("");
-    const [studentId, setStudentId] = useState(null); // Добавляем состояние для studentId
-    const [ratingData, setRatingData] = useState({
-        rating: "1",
-        review: "",
-    });
 
-    // Получение studentId только на клиенте
-    useEffect(() => {
-        const storedStudentId = localStorage.getItem("studentId");
-        setStudentId(storedStudentId);
-    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -101,77 +77,7 @@ function CourseDetail() {
     };
 
     const handlePassingCourseClick = async () => {
-        router.push(`/course-learning/${course_id}/learning`); // Навигация через router.push
-    };
-
-    const handleChange = (event) => {
-        setRatingData({
-            ...ratingData,
-            [event.target.name]: event.target.value,
-        });
-    };
-
-    const ratingSubmit = (e) => {
-        e.preventDefault();
-        try {
-            axios
-                .post(
-                    `${apiUrl}course-rating/${course_id}`,
-                    {
-                        rating: ratingData.rating,
-                        review: ratingData.review,
-                        student: studentId, // Используем состояние studentId
-                        course: course_id,
-                    },
-                    { headers: { "Content-Type": "multipart/form-data" } }
-                )
-                .then((response) => {
-                    if (response.status === 200 || response.status === 201) {
-                        window.location.reload();
-                    }
-                });
-        } catch (error) {
-            console.error("Error submitting rating", error);
-        }
-    };
-
-    const addToFavorite = () => {
-        try {
-            axios
-                .post(
-                    `${apiUrl}add-favorite-courses/`,
-                    {
-                        student: studentId, // Используем состояние studentId
-                        course: course_id,
-                        is_favorite: true,
-                    },
-                    { headers: { "Content-Type": "multipart/form-data" } }
-                )
-                .then((response) => {
-                    if (response.status === 200 || response.status === 201) {
-                        setFavoriteStatus("success");
-                    }
-                });
-        } catch (error) {
-            console.error("Error adding to favorite", error);
-        }
-    };
-
-    const removeFromFavorite = () => {
-        try {
-            axios
-                .get(
-                    `${apiUrl}remove-favorite-courses/${studentId}/${course_id}`,
-                    { headers: { "Content-Type": "multipart/form-data" } }
-                )
-                .then((response) => {
-                    if (response.status === 200 || response.status === 201) {
-                        setFavoriteStatus("");
-                    }
-                });
-        } catch (error) {
-            console.error("Error removing from favorite", error);
-        }
+        router.push(`/course-learning/${course_id}/learning`);
     };
 
     return (

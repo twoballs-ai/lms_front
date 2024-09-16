@@ -1,13 +1,11 @@
 "use client"; // Для client-side рендеринга в Next.js
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
 import TeacherService from '@/services/teacher.service';
 import './MyTeacherCourses.scss';
 import LmsButton from '@/components/reUseComponents/Button';
 import { useRouter } from 'next/navigation'; // Используем useRouter вместо useNavigate в Next.js
-import { SettingOutlined } from '@ant-design/icons';
+
 
 // Определим тип данных курса
 interface Course {

@@ -1,6 +1,4 @@
-"use client"; // This directive must be at the top
-import React, { useEffect, useState } from "react";
-
+import React, { useCallback, useEffect, useState } from "react";
 import "./CourseLearning.scss";
 import StudentService from "@/services/student.service";
 import Chapter from "@/components/CourseLearningComponents/LeftBar/LearningChapter";
@@ -26,22 +24,18 @@ interface ChapterType {
 }
 
 const CourseLearning: React.FC = () => {
-    const params = useParams();
-    const course_id = params.id; 
+  const params = useParams();
+  const course_id = params.id;
   const [chapters, setChapters] = useState<ChapterType[]>([]);
-  const [moduleEditData, setModuleEditData] = useState<Module | {}>({});
+  const [moduleEditData, setModuleEditData] = useState<Module | Record<string, never>>({});
   const [activeChapterId, setActiveChapterId] = useState<number | null>(null);
   const [activeModuleId, setActiveModuleId] = useState<number | null>(null);
   const [showExamPrompt, setShowExamPrompt] = useState<boolean>(false);
   const [allCompleted, setAllCompleted] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (course_id) {
-      fetchChapters();
-    }
-  }, [course_id]);
+  const fetchChapters = useCallback(async () => {
+    if (!course_id) return;
 
-  const fetchChapters = async () => {
     try {
       const response = await StudentService.learnCoursePageGetChapterList(course_id);
       if (response.status === 200 || response.status === 201) {
@@ -60,13 +54,17 @@ const CourseLearning: React.FC = () => {
     } catch (error) {
       console.error("Error fetching chapters:", error);
     }
-  };
+  }, [course_id]);
+
+  useEffect(() => {
+    fetchChapters();
+  }, [fetchChapters]);
 
   const findFirstIncomplete = (chapters: ChapterType[]): [number | null, number | null] => {
     for (let i = 0; i < chapters.length; i++) {
       if (!chapters[i].chapter_is_completed && !chapters[i].is_locked) {
-        const module = chapters[i].modules.find(module => !module.is_completed);
-        if (module) return [chapters[i].id, module.id];
+        const incompleteModule = chapters[i].modules.find(mod => !mod.is_completed);
+        if (incompleteModule) return [chapters[i].id, incompleteModule.id];
       }
     }
     return [null, null];
@@ -110,7 +108,6 @@ const CourseLearning: React.FC = () => {
     }
   };
 
-  // Function to handle module data changes
   const moduleChange = (module: Module) => {
     setModuleEditData(module);
   };
@@ -137,7 +134,7 @@ const CourseLearning: React.FC = () => {
                   activeModuleId={activeModuleId}
                   setActiveModuleId={setActiveModuleId}
                   isLocked={module.is_locked}
-                  moduleChange={moduleChange} // Pass the moduleChange function
+                  moduleChange={moduleChange}
                 />
               ))}
             </Chapter>

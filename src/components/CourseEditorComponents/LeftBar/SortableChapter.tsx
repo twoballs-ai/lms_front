@@ -12,25 +12,32 @@ import { useDispatch } from "react-redux";
 import {
   fetchChapters,
   addModuleToChapter,
-  updateChaptersSortIndexes,
   updateModulesSortIndexes,
 } from "@/store/slices/courseEditorChapterSlice";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
-    DndContext,
-    KeyboardSensor,
-    PointerSensor,
-    closestCorners,
-    useSensor,
-    useSensors,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  closestCorners,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import {
-    SortableContext,
-    sortableKeyboardCoordinates,
-    verticalListSortingStrategy,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import SortableModules from "./SortableModules";
+
 interface Chapter {
+  id: string;
+  title: string;
+  sort_index: number;
+  modules: Module[]; // Make sure you define the Module interface if it's not defined elsewhere
+}
+
+interface Module {
   id: string;
   title: string;
   sort_index: number;
@@ -39,8 +46,10 @@ interface Chapter {
 interface SortableChapterProps {
   id: string;
   chapter: Chapter;
-  children: React.ReactNode;
+  setModuleEditData: (module: Module) => void;
+  course_id: string;
   activeChapterId: string | null;
+  setDraggingItemId: (id: string | null) => void;
   setActiveChapterId: (id: string) => void;
   moveChapter: (id: string, direction: "up" | "down") => void;
   courseChapters: Chapter[];
@@ -70,7 +79,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
       type: "container",
     },
   });
-  console.log(courseChapters);
+
   const dispatch = useDispatch();
   const [handlePopupOpen, setHandlePopupOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -81,16 +90,16 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
     inputDescrValue?: string;
   }>({});
 
-  const [activeModuleId, setActiveModuleId] = useState(null);
+  const [activeModuleId, setActiveModuleId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-        axis: "y",
+      axis: "y",
     }),
     useSensor(KeyboardSensor, {
-        coordinateGetter: sortableKeyboardCoordinates,
+      coordinateGetter: sortableKeyboardCoordinates,
     })
-);
+  );
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => {
@@ -115,26 +124,33 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
 
       await dispatch(addModuleToChapter(dataParams)).unwrap();
       handleCloseModal();
-    } catch (validationErrors: any) {
+    } catch (error) {
+      // Define a type for the validation error
+      type ValidationError = {
+        path: string;
+        message: string;
+      };
+
       const validationErrorsObj: { [key: string]: string } = {};
-      validationErrors.inner.forEach(
-        (error: { path: string; message: string }) => {
-          validationErrorsObj[error.path] = error.message;
-        }
-      );
+      if (error && error.inner) {
+        (error.inner as ValidationError[]).forEach(
+          (validationError: ValidationError) => {
+            validationErrorsObj[validationError.path] = validationError.message;
+          }
+        );
+      }
       setErrors(validationErrorsObj);
     }
   };
 
   const showPopupMenu = () => setHandlePopupOpen(true);
-  const handlePopupClose = () => setHandlePopupOpen(false);
+  const handlePopupClose = () => setHandlePopupClose(false);
 
-
-  const moduleChange = (module) => {
+  const moduleChange = (module: Module) => {
     setModuleEditData(module);
-};
+  };
 
-  const handleMoveModule = async (chapterId, moduleId, direction) => {
+  const handleMoveModule = async (chapterId: string, moduleId: string, direction: number) => {
     const chapterIndex = courseChapters.findIndex((chapter) => chapter.id === chapterId);
     if (chapterIndex === -1) return;
 
@@ -154,28 +170,29 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
 
     // Update the modules in the specific chapter
     updatedChapters[chapterIndex] = {
-        ...updatedChapters[chapterIndex],
-        modules: newModules.map((module, idx) => ({
-            ...module,
-            sort_index: idx + 1,
-        })),
+      ...updatedChapters[chapterIndex],
+      modules: newModules.map((module, idx) => ({
+        ...module,
+        sort_index: idx + 1,
+      })),
     };
 
     // Update the state to trigger a re-render
     dispatch(updateModulesSortIndexes({
-        chapter_id: chapterId,
-        modules: updatedChapters[chapterIndex].modules.map(module => ({
-            id: module.id,
-            sort_index: module.sort_index,
-        })),
+      chapter_id: chapterId,
+      modules: updatedChapters[chapterIndex].modules.map(module => ({
+        id: module.id,
+        sort_index: module.sort_index,
+      })),
     })).then(() => {
-        // Directly update the frontend state with the new order
-        dispatch(fetchChapters(course_id));  // Refresh the chapters from the backend
+      // Directly update the frontend state with the new order
+      dispatch(fetchChapters(course_id));  // Refresh the chapters from the backend
     }).catch(error => {
-        console.error("Failed to update module sort indexes:", error);
+      console.error("Failed to update module sort indexes:", error);
     });
-};
-const handleModuleDragEnd = (event, chapterId) => {
+  };
+
+  const handleModuleDragEnd = (event: { active: { id: string }; over: { id: string } }, chapterId: string) => {
     setDraggingItemId(null);
     const { active, over } = event;
     const chapterIndex = courseChapters.findIndex((chapter) => chapter.id === chapterId);
@@ -187,30 +204,27 @@ const handleModuleDragEnd = (event, chapterId) => {
     const overIndex = modules.findIndex((module) => module.sort_index === over.id);
     
     if (activeIndex !== overIndex) {
-        const [removedModule] = modules.splice(activeIndex, 1);
-        modules.splice(overIndex, 0, removedModule);
+      const [removedModule] = modules.splice(activeIndex, 1);
+      modules.splice(overIndex, 0, removedModule);
 
-        const updatedModules = modules.map((module, idx) => ({
-            ...module,
-            sort_index: idx + 1,
-        }));
+      const updatedModules = modules.map((module, idx) => ({
+        ...module,
+        sort_index: idx + 1,
+      }));
 
-        dispatch(updateModulesSortIndexes({
-            chapter_id: chapterId,
-            modules: updatedModules.map(module => ({
-                id: module.id,
-                sort_index: module.sort_index,
-            })),
-        })).then(() => {
-            dispatch(fetchChapters(course_id));
-        }).catch(error => {
-            console.error("Failed to update module sort indexes:", error);
-        });
+      dispatch(updateModulesSortIndexes({
+        chapter_id: chapterId,
+        modules: updatedModules.map(module => ({
+          id: module.id,
+          sort_index: module.sort_index,
+        })),
+      })).then(() => {
+        dispatch(fetchChapters(course_id));
+      }).catch(error => {
+        console.error("Failed to update module sort indexes:", error);
+      });
     }
-};
-
-
-
+  };
 
   return (
     <div

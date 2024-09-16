@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import * as Yup from 'yup';
 import TextInput from '@/components/reUseComponents/TextInput';
@@ -60,9 +58,9 @@ const ChangePassword: React.FC = () => {
                 console.error("Error changing password:", error);
             }
         } catch (error) {
-            if (error.inner) {
-                const formErrors = error.inner.reduce((acc: FormErrors, currentError: any) => {
-                    return { ...acc, [currentError.path]: currentError.message };
+            if (error instanceof Yup.ValidationError) {
+                const formErrors: FormErrors = error.inner.reduce((acc: FormErrors, currentError: Yup.ValidationError) => {
+                    return { ...acc, [currentError.path!]: currentError.message };
                 }, {});
                 setState(prevState => ({ ...prevState, errors: formErrors }));
             } else {

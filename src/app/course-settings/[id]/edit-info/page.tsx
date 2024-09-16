@@ -7,6 +7,7 @@ import LmsButton from '@/components/reUseComponents/Button';
 import TextInput from '@/components/reUseComponents/TextInput';
 import FileUpload from '@/components/reUseComponents/FileUpload';
 import { serverUrl } from '@/shared/config';
+import Image from 'next/image'; // Import Image component
 import './EditCourse.scss'; // Import SCSS styles
 
 // Define the validation schema using Yup
@@ -24,25 +25,23 @@ const validationSchema = Yup.object().shape({
 });
 
 function EditCourse() {
- 
     const params = useParams();
     const course_id = params.id;
-    const [chaptersData, setChaptersData] = useState([]);
     const [inputTitleValue, setInputTitleValue] = useState('');
     const [inputDescrValue, setInputDescrValue] = useState('');
-    const [uploadedFile, setUploadedFile] = useState(null);
-    const [courseImage, setCourseImage] = useState('');
-    const [errors, setErrors] = useState({});
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [courseImage, setCourseImage] = useState<string>('');
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputTitleValue(e.target.value);
     };
 
-    const handleInputDescrChange = (e) => {
+    const handleInputDescrChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputDescrValue(e.target.value);
     };
 
-    const handleFileChange = (files) => {
+    const handleFileChange = (files: { file: File }[]) => {
         if (files.length > 0) {
             setUploadedFile(files[0].file);
         }
@@ -50,22 +49,18 @@ function EditCourse() {
 
     useEffect(() => {
         const fetchData = async () => {
-
-
             const response = await TeacherService.getCourseById(course_id);
             if (response.status === 200 || response.status === 201) {
-                console.log("dddddddddddddddddddd")
                 const data = response.data.data;
-                setChaptersData(data.chapters);
                 setInputTitleValue(data.course.title); // Prefill title
                 setInputDescrValue(data.course.description); // Prefill description
                 setCourseImage(data.course.cover_path); // Prefill image
             }
         };
         fetchData();
-    }, []);
+    }, [course_id]); // Include course_id in dependency array
 
-    const handleUpdate = async (e) => {
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // Create a form data object
@@ -85,13 +80,13 @@ function EditCourse() {
             }, { abortEarly: false });
             setErrors({});
 
-            const response = await TeacherService.updateCourse(id, formDataObj);
+            const response = await TeacherService.updateCourse(course_id, formDataObj);
             if (response.status === 200 || response.status === 201) {
                 // Handle success response
             }
         } catch (validationErrors) {
-            const formattedErrors = validationErrors.inner.reduce((acc, error) => {
-                return { ...acc, [error.path]: error.message };
+            const formattedErrors = validationErrors.inner.reduce((acc: { [key: string]: string }, error: Yup.ValidationError) => {
+                return { ...acc, [error.path || '']: error.message };
             }, {});
             setErrors(formattedErrors);
         }
@@ -122,11 +117,12 @@ function EditCourse() {
                     {courseImage && (
                         <div className="current-image">
                             <p>Текущее изображение:</p>
-                            <img
+                            <Image
                                 src={`${serverUrl}/${courseImage}`}
                                 alt="Course Cover"
                                 className="course-image"
-                                style={{ maxWidth: '200px', maxHeight: '240px' }}
+                                width={200} // Set a specific width
+                                height={240} // Set a specific height
                             />
                         </div>
                     )}

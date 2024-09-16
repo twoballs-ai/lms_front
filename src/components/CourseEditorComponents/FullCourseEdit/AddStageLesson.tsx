@@ -2,8 +2,6 @@ import React from 'react';
 // import { FileTextOutlined, VideoCameraOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import LmsButton from '@/components/reUseComponents/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faGhost } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import { faFilm } from "@fortawesome/free-solid-svg-icons";
 import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
