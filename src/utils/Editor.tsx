@@ -99,20 +99,23 @@ class Editor extends Component<EditorProps> {
                         }
                     }}
                     data={this.props.data}
-                    onReady={ editor => {
-                        // Вы можете сохранить "editor" и использовать его по мере необходимости
-                        // console.log('Editor is ready to use!', editor);
+                    onReady={ () => {
+                        // Если вам не нужно использовать переменную "editor", уберите ее из обработчика
+                        // console.log('Editor is ready to use!');
                     }}
                     onChange={(event, editor) => {
                         const data = editor.getData();
                         this.props.onChange(data);
+                        // Если вам не нужно использовать переменную "event", уберите ее из обработчика
                         // console.log(data);
                     }}
-                    onBlur={(event, editor) => {
-                        // console.log('Blur.', editor);
+                    onBlur={() => {
+                        // Удалите переменные, если они не используются
+                        // console.log('Blur.');
                     }}
-                    onFocus={(event, editor) => {
-                        // console.log('Focus.', editor);
+                    onFocus={() => {
+                        // Удалите переменные, если они не используются
+                        // console.log('Focus.');
                     }}
                 />
             </div>

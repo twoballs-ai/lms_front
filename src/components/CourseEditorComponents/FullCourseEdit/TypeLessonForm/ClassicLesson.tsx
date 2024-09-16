@@ -21,7 +21,7 @@ function AddingClassicLesson(props) {
 
     const [stageEditorData, setStageEditorData] = useState('')
     const [showClassicLesson, setShowClassicLesson] = useState(false)
-    let stagePk = props.selectedStage ? props.selectedStage.id : null;
+    const stagePk = props.selectedStage ? props.selectedStage.id : null;
 
 
     useEffect(() => {

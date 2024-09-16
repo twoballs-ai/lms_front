@@ -7,7 +7,7 @@ import LearningVideoLesson from "./TypeLessonForm/VideoLesson";
 import LearningQuizLesson from "./TypeLessonForm/QuizLesson";
 import "./FullCourseLearn.scss";
 
-function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChapters, setNextModuleAndChapter, course_id, setShowExamPrompt, checkCompletionStatus }) {
+function ModuleStageLearn({ moduleEditData, chapters, setChapters, setNextModuleAndChapter, course_id, checkCompletionStatus }) {
     const [moduleData, setModuleData] = useState([]);
     const [selectedStage, setSelectedStage] = useState(null);
     const [lessonCompleted, setLessonCompleted] = useState(false);
@@ -125,7 +125,7 @@ function ModuleStageLearn({ moduleEditData, setModuleEditData, chapters, setChap
     return (
         <>
             <div className="learn-main__nav-block">
-                <p>Вы проходите модуль: "{moduleEditData.title}"</p>
+                <p>Вы проходите модуль:  &quot;{moduleEditData.title}&quot;</p>
                 <div className="nav-block__stages">
                     <div className="stages__case">
                         {moduleData.map((stage) => (

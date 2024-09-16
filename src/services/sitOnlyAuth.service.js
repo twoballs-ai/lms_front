@@ -1,5 +1,5 @@
-import axios from "axios";
-import { apiLmsUrl, apiUserUrl,  apiBaseUrl } from "../shared/config";
+
+import { apiUserUrl } from "../shared/config";
 import api from "./api";
 const getTeacherProfile = async () => {
     return await api

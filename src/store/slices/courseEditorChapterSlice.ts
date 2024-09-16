@@ -5,14 +5,14 @@ import CourseEditorService from '../../services/course.editor.service';
 interface Module {
     id: number;
     sort_index: number;
-    [key: string]: any;
+    key:number;
 }
 
 interface Chapter {
     id: number;
     sort_index: number;
     modules: Module[];
-    [key: string]: any;
+    key:number;
 }
 
 interface AddChapterParams {
@@ -55,8 +55,8 @@ export const fetchChapters = createAsyncThunk<Chapter[], number, { rejectValue: 
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -64,7 +64,7 @@ export const fetchChapters = createAsyncThunk<Chapter[], number, { rejectValue: 
 export const addChapter = createAsyncThunk<Chapter, AddChapterParams, { rejectValue: string }>(
     'course/addChapter',
     async ({ course_id, inputTitleValue, inputDescrValue, sortIndex, isExam, examDuration }, { rejectWithValue }) => {
-        let examDurationValue = isExam ? examDuration : null;
+        const examDurationValue = isExam ? examDuration : null;
 
         const dataParams = {
             course_id,
@@ -82,8 +82,8 @@ export const addChapter = createAsyncThunk<Chapter, AddChapterParams, { rejectVa
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -98,8 +98,8 @@ export const deleteChapter = createAsyncThunk<number, number, { rejectValue: str
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -114,8 +114,8 @@ export const updateChapter = createAsyncThunk<Chapter, Chapter, { rejectValue: s
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -130,8 +130,8 @@ export const updateChaptersSortIndexes = createAsyncThunk<Chapter[], { course_id
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -146,8 +146,8 @@ export const addModuleToChapter = createAsyncThunk<Module, Module, { rejectValue
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -162,13 +162,13 @@ export const deleteModule = createAsyncThunk<number, number, { rejectValue: stri
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
 
-export const updateModule = createAsyncThunk<Module, { module_id: number; data: any }, { rejectValue: string }>(
+export const updateModule = createAsyncThunk<Module, { module_id: number; data: UpdateModuleData }, { rejectValue: string }>(
     'course/updateModule',
     async ({ module_id, data }, { rejectWithValue }) => {
         try {
@@ -178,8 +178,8 @@ export const updateModule = createAsyncThunk<Module, { module_id: number; data: 
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );
@@ -194,8 +194,8 @@ export const updateModulesSortIndexes = createAsyncThunk<{ chapter_id: number; m
             } else {
                 return rejectWithValue(response.statusText);
             }
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error) {
+            return rejectWithValue((error as { message: string }).message || 'Unknown error');
         }
     }
 );

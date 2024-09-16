@@ -1,6 +1,4 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import './FileUpload.scss';
+import Image from 'next/image';
 
 const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesChange, errors }) => {
     const [files, setFiles] = useState([]);
@@ -36,12 +34,14 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
             </div>
             {errors && <div className="error-message">{errors}</div>}
             <div className="upload-preview">
-                {files.map(({ file, preview, name, size, type }, index) => (
+                {files.map(({ preview, name, size, type }, index) => (
                     <div key={index}>
-                        <img
+                        <Image
                             src={preview}
                             alt={name}
-                            style={{ width: '100px', margin: '10px' }}
+                            width={100}
+                            height={100}
+                            style={{ margin: '10px' }}
                         />
                         <p>Имя: {name}</p>
                         <p>Размер: {size} байт</p>

@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchChapters,
     updateChaptersSortIndexes,
-    updateModulesSortIndexes,
+    
 } from "@/store/slices/courseEditorChapterSlice";
 import "./CourseEditor.scss";
 
@@ -38,7 +38,7 @@ function CourseEditor() {
     const [activeChapterId, setActiveChapterId] = useState(null);
 
     const [openModal, setOpenModal] = useState(false);
-    const [draggingItemId, setDraggingItemId] = useState(null); // State for dragging item
+    // const [draggingItemId, setDraggingItemId] = useState(null); // State for dragging item
 
     const dispatch = useDispatch();
     const courseChapters = useSelector((state: { courseEditor: CourseState }) => state.courseEditor.chapters);
@@ -66,9 +66,9 @@ function CourseEditor() {
     );
 
 
-    const handleDragStart = (event) => {
-        setDraggingItemId(event.active.id);
-    };
+    // const handleDragStart = (event) => {
+    //     setDraggingItemId(event.active.id);
+    // };
 
     const handleDragMove = (event) => {
         const { active, over } = event;
@@ -79,7 +79,7 @@ function CourseEditor() {
     };
 
     const handleDragEnd = (event) => {
-        setDraggingItemId(null);
+        // setDraggingItemId(null);
         const { active, over } = event;
 
         if (active.id !== over?.id && courseChapters) {

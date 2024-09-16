@@ -8,7 +8,7 @@ function AddingVideoLesson(props) {
     const [inputTitleValue, setInputTitleValue] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
     const [showVideoLesson, setShowVideoLesson] = useState(false);
-    let stagePk = props.selectedStage ? props.selectedStage.id : null;
+    const stagePk = props.selectedStage ? props.selectedStage.id : null;
 
     useEffect(() => {
         if (stagePk) {

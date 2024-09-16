@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import AuthService from "../../../../services/auth.service";
 import TextInput from "../../../reUseComponents/TextInput";
-import LmsButton from "../../../reUseComponents/Button";
 import "./Register.scss";
 
 const RegisterForm = ({ userType }) => {

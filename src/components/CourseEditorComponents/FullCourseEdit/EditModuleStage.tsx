@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faPlus,
     faGhost,
     faChalkboardUser,
     faFilm,
@@ -239,8 +238,8 @@ function EditModuleStage({ course_id, moduleEditData, setModuleEditData }) {
             />
             <div className="main__nav-block">
                 <p>
-                    Вы перешли на страницу редактирования модуля: "
-                    {moduleEditData.title}"
+                    Вы перешли на страницу редактирования модуля: &quot;
+                    {moduleEditData.title}&quot;
                 </p>
                 <div className="nav-block__popup-menu">
                     <button

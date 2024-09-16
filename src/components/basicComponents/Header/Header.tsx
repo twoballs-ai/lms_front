@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link';
 import "./Header.scss"; // Import SCSS file
-import LmsButton from "../../../reUseComponents/Button";
 import TabsAuth from "../Auth/TabsLoginRegister/TabComponent/Tabs";
 import LmsModalBase from "../../reUseComponents/ModalBase";
 import { MenuOutlined } from '@ant-design/icons';
@@ -33,19 +32,8 @@ function Header() {
   const contentToModal = (<TabsAuth authState={authState} handleCloseModal={handleCloseModal} />);
 
   const [role, setRole] = useState<string | null>(null);
-  const [searchData, setSearchData] = useState({ search: "" });
 
-  const handleChange = (event) => {
-    setSearchData({
-      ...searchData,
-      [event.target.name]: event.target.value,
-    });
-  };
 
-  const searchByCourse = () => {
-    if (searchData.search !== "")
-      window.location.href = "/search/" + searchData.search;
-  };
 
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {

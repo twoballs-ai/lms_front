@@ -16,6 +16,13 @@ interface Category {
   name: string;
 }
 
+interface FormErrors {
+  selectedCategories?: string;
+  inputTitleValue?: string;
+  inputDescrValue?: string;
+  uploadedFile?: string;
+}
+
 const AddCourse: React.FC = () => {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -23,7 +30,7 @@ const AddCourse: React.FC = () => {
   const [inputTitleValue, setInputTitleValue] = useState<string>('');
   const [inputDescrValue, setInputDescrValue] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({}); // Хранение ошибок валидации
+  const [errors, setErrors] = useState<FormErrors>({}); // Хранение ошибок валидации
 
   useEffect(() => {
     document.title = 'Профиль учителя - добавление курса - coursero.ru';
@@ -96,12 +103,18 @@ const AddCourse: React.FC = () => {
       if (response.status === 200 || response.status === 201) {
         router.push("/teacher-profile/my-courses");
       }
-    } catch (validationErrors: any) {
-      const validationErrorsObj: { [key: string]: string } = {};
-      validationErrors.inner.forEach((error: Yup.ValidationError) => {
-        validationErrorsObj[error.path] = error.message;
-      });
-      setErrors(validationErrorsObj);
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const validationErrorsObj: FormErrors = {};
+        error.inner.forEach((err: Yup.ValidationError) => {
+          if (err.path) {
+            validationErrorsObj[err.path] = err.message;
+          }
+        });
+        setErrors(validationErrorsObj);
+      } else {
+        console.error("Error during form submission:", error);
+      }
     }
   };
 
