@@ -25,7 +25,8 @@ const validationSchema = Yup.object().shape({
 
 function EditCourse() {
  
-    const { id } = useParams;
+    const params = useParams();
+    const course_id = params.id;
     const [chaptersData, setChaptersData] = useState([]);
     const [inputTitleValue, setInputTitleValue] = useState('');
     const [inputDescrValue, setInputDescrValue] = useState('');
@@ -49,10 +50,11 @@ function EditCourse() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!id) return; // Ensure course_id is defined before making API call
 
-            const response = await TeacherService.getCourseById(id);
+
+            const response = await TeacherService.getCourseById(course_id);
             if (response.status === 200 || response.status === 201) {
+                console.log("dddddddddddddddddddd")
                 const data = response.data.data;
                 setChaptersData(data.chapters);
                 setInputTitleValue(data.course.title); // Prefill title
@@ -61,7 +63,7 @@ function EditCourse() {
             }
         };
         fetchData();
-    }, [id]);
+    }, []);
 
     const handleUpdate = async (e) => {
         e.preventDefault();
