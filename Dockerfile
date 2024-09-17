@@ -1,5 +1,5 @@
 # Используем официальный Node.js образ как базовый для сборки
-FROM node:18 AS builder
+FROM node:20 AS builder
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Используем минимальный образ Node.js для финальной стадии
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
