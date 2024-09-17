@@ -1,3 +1,4 @@
+"use client"; // Required for client-side rendering in Next.js
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import * as Yup from 'yup';
 import TextInput from '@/components/reUseComponents/TextInput';

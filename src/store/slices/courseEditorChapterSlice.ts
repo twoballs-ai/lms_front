@@ -263,19 +263,34 @@ const courseEditorChapterSlice = createSlice({
                 }));
             })
             .addCase(updateModule.fulfilled, (state, action: PayloadAction<Module>) => {
-                state.chapters = state.chapters.map(chapter => ({
-                    ...chapter,
-                    modules: chapter.modules.map(module =>
-                        module.id === action.payload.id ? action.payload : module
-                    ),
-                }));
-            })
-            .addCase(updateModulesSortIndexes.fulfilled, (state, action: PayloadAction<{ chapter_id: number; modules: Module[] }>) => {
-                state.chapters = state.chapters.map(chapter => 
-                    chapter.id === action.payload.chapter_id 
-                        ? { ...chapter, modules: action.payload.modules }
+                state.chapters = state.chapters.map(chapter =>
+                    chapter.id === action.payload.chapter_id
+                        ? {
+                              ...chapter,
+                              modules: chapter.modules.map(module =>
+                                  module.id === action.payload.id
+                                      ? action.payload
+                                      : module
+                              ),
+                          }
                         : chapter
                 );
+            })
+            .addCase(updateModule.rejected, (state, action: PayloadAction<string | undefined>) => {
+                state.error = action.payload || null;
+            })
+            .addCase(updateModulesSortIndexes.fulfilled, (state, action: PayloadAction<{ chapter_id: number; modules: Module[] }>) => {
+                state.chapters = state.chapters.map(chapter =>
+                    chapter.id === action.payload.chapter_id
+                        ? {
+                              ...chapter,
+                              modules: action.payload.modules,
+                          }
+                        : chapter
+                );
+            })
+            .addCase(updateModulesSortIndexes.rejected, (state, action: PayloadAction<string | undefined>) => {
+                state.error = action.payload || null;
             });
     },
 });

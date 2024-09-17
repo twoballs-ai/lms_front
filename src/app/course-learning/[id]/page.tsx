@@ -1,3 +1,4 @@
+"use client"; // Required for client-side rendering in Next.js
 import React, { useCallback, useEffect, useState } from "react";
 import "./CourseLearning.scss";
 import StudentService from "@/services/student.service";

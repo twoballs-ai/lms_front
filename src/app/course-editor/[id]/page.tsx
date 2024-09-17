@@ -25,31 +25,50 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     fetchChapters,
     updateChaptersSortIndexes,
-    
 } from "@/store/slices/courseEditorChapterSlice";
 import "./CourseEditor.scss";
+import {
+    DragEndEvent,
+    DragMoveEvent,
+} from '@dnd-kit/core';
+import { AppDispatch } from "@/store/store";
+// Types for the Redux state
+interface Module {
+    id: number;
+    sort_index: number;
+}
 
-function CourseEditor() {
-    const router = useRouter(); // Correct usage
+interface Chapter {
+    id: number;
+    sort_index: number;
+    modules: Module[];
+}
+
+interface CourseState {
+    chapters: Chapter[];
+}
+
+const CourseEditor: React.FC = () => {
+    const router = useRouter();
     const params = useParams();
-    const course_id = params.id; // Getting course_id from dynamic params
-    
-    const [moduleEditData, setModuleEditData] = useState([]);
-    const [activeChapterId, setActiveChapterId] = useState(null);
+    const course_id = params.id as string | number; // Ensure course_id is a string
 
+    const [moduleEditData, setModuleEditData] = useState<Module[]>([]);
+    const [activeChapterId, setActiveChapterId] = useState<string | null>(null);
     const [openModal, setOpenModal] = useState(false);
-    // const [draggingItemId, setDraggingItemId] = useState(null); // State for dragging item
 
-    const dispatch = useDispatch();
-    const courseChapters = useSelector((state: { courseEditor: CourseState }) => state.courseEditor.chapters);
+    const dispatch: AppDispatch = useDispatch(); 
+    const courseChapters = useSelector(
+        (state: { courseEditor: CourseState }) => state.courseEditor.chapters
+    );
 
     const handleBackToProfile = async () => {
-        router.push(`/teacher-profile`); // Using router.push for navigation
+        router.push(`/teacher-profile`);
     };
 
     useEffect(() => {
         if (course_id) {
-            dispatch(fetchChapters(course_id));
+            dispatch(fetchChapters(Number(course_id)));
         }
     }, [course_id, dispatch]);
 
@@ -65,23 +84,17 @@ function CourseEditor() {
         })
     );
 
-
-    // const handleDragStart = (event) => {
-    //     setDraggingItemId(event.active.id);
-    // };
-
-    const handleDragMove = (event) => {
+    const handleDragMove = (event: DragMoveEvent) => {
         const { active, over } = event;
-
+        
         if (active.id !== over?.id) {
             // Optionally add visual feedback
         }
     };
 
-    const handleDragEnd = (event) => {
-        // setDraggingItemId(null);
+    const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
-
+        console.log(event)
         if (active.id !== over?.id && courseChapters) {
             const sortedChaptersCopy = [...courseChapters];
             const activeIndex = sortedChaptersCopy.findIndex(
@@ -94,12 +107,10 @@ function CourseEditor() {
             const [removed] = sortedChaptersCopy.splice(activeIndex, 1);
             sortedChaptersCopy.splice(overIndex, 0, removed);
 
-            const updatedChapters = sortedChaptersCopy.map(
-                (chapter, index) => ({
-                    ...chapter,
-                    sort_index: index + 1,
-                })
-            );
+            const updatedChapters = sortedChaptersCopy.map((chapter, index) => ({
+                ...chapter,
+                sort_index: index + 1,
+            }));
 
             dispatch(
                 updateChaptersSortIndexes({
@@ -115,7 +126,7 @@ function CourseEditor() {
         }
     };
 
-    const moveChapter = (chapterId, direction) => {
+    const moveChapter = (chapterId: string, direction: "up" | "down") => {
         const currentIndex = courseChapters.findIndex(
             (chapter) => chapter.id === chapterId
         );
@@ -151,9 +162,7 @@ function CourseEditor() {
     const sortedChapters = courseChapters
         .map((chapter) => ({
             ...chapter,
-            modules: chapter.modules
-                .slice()
-                .sort((a, b) => a.sort_index - b.sort_index),
+            modules: chapter.modules.slice().sort((a, b) => a.sort_index - b.sort_index),
         }))
         .slice()
         .sort((a, b) => a.sort_index - b.sort_index);
@@ -174,7 +183,6 @@ function CourseEditor() {
                 sensors={sensors}
                 collisionDetection={closestCorners}
                 onDragEnd={handleDragEnd}
-                onDragStart={handleDragStart}
                 onDragMove={handleDragMove}
                 modifiers={[restrictToVerticalAxis]}
             >
@@ -197,7 +205,6 @@ function CourseEditor() {
                                     setModuleEditData={setModuleEditData}
                                     activeChapterId={activeChapterId}
                                     setActiveChapterId={setActiveChapterId}
-                                    setDraggingItemId={setDraggingItemId}
                                     moveChapter={moveChapter}
                                     courseChapters={sortedChapters}
                                 />
@@ -223,6 +230,6 @@ function CourseEditor() {
             </div>
         </div>
     );
-}
+};
 
 export default CourseEditor;

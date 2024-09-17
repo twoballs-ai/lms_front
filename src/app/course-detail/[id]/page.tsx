@@ -11,12 +11,26 @@ import LmsButton from "../../../components/reUseComponents/Button";
 import StudentService from "../../../services/student.service";
 import "./CourseDetail.scss"
 
+// Define the interface for course data
+interface CourseData {
+    title: string;
+    description: string;
+    cover_path: string;
+    cover_image_name: string;
+    teacher: {
+        id: number;
+        name: string;
+        lastname: string;
+    } | null;
+    course_subscription: number;
+}
+
 function CourseDetail() {
     const router = useRouter();
     const params = useParams();
     const course_id = params.id;
 
-    const [courseData, setCourseData] = useState([]);
+    const [courseData, setCourseData] = useState<CourseData | null>(null); // Use CourseData interface
     const [userLoggedStatus, setUserLoggedStatus] = useState("");
     const [enrollStatus, setEnrollStatus] = useState("");
 
@@ -35,7 +49,8 @@ function CourseDetail() {
 
         fetchData();
 
-        const studentLoginStatus = JSON.parse(localStorage.getItem("studentLoginStatus"));
+        const storedLoginStatus = localStorage.getItem("studentLoginStatus");
+        const studentLoginStatus = storedLoginStatus ? JSON.parse(storedLoginStatus) : null;
         if (studentLoginStatus === "true") {
             setUserLoggedStatus("success");
 
@@ -84,22 +99,24 @@ function CourseDetail() {
         <div className="main-container__course-detail">
             <div className="course-detail__course-info">
                 <div className="course-info__image_wrap">
-                    <ImageViewer
-                        src={`${serverUrl}/${courseData.cover_path}`}
-                        alt={courseData.cover_image_name}
-                        width={400}
-                    />
+                    {courseData && (
+                        <ImageViewer
+                            src={`${serverUrl}/${courseData.cover_path}`}
+                            alt={courseData.cover_image_name}
+                            width={400}
+                        />
+                    )}
                 </div>
                 <div className="course-info__info_wrap">
-                    <h1>Курс: {courseData.title}</h1>
-                    <h3>Описание: {courseData.description}</h3>
+                    <h1>Курс: {courseData?.title}</h1>
+                    <h3>Описание: {courseData?.description}</h3>
                     <p>
                         Автор курса:{" "}
-                        <a href={courseData.teacher ? `/teacher-detail/${courseData.teacher.id}` : '#'}>
-                            {courseData.teacher ? `${courseData.teacher.name} ${courseData.teacher.lastname}` : 'Loading...'}
+                        <a href={courseData?.teacher ? `/teacher-detail/${courseData.teacher.id}` : '#'}>
+                            {courseData?.teacher ? `${courseData.teacher.name} ${courseData.teacher.lastname}` : 'Loading...'}
                         </a>
                     </p>
-                    <p>Всего подписавшихся пользователей: {courseData.course_subscription}</p>
+                    <p>Всего подписавшихся пользователей: {courseData?.course_subscription}</p>
                     <div className="info-wrap__enrol-buttons">
                         {userLoggedStatus === "success" && (
                             <>

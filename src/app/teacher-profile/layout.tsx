@@ -1,4 +1,4 @@
-// app/teacher-profile/layout.tsx
+"use client"; // app/teacher-profile/layout.tsx
 import "./DashMain.scss";
 import SideBar from "../../components/teacherProfileComponents/SideBar"
 

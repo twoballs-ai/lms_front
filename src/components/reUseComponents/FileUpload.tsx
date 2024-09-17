@@ -1,8 +1,12 @@
-import Image from 'next/image';
+"use client"; // Обязательно для клиентского рендеринга
+import React, { useState, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone'; // Импорт useDropzone из библиотеки
+import Image from 'next/image'; // Для работы с изображениями в Next.js
 
 const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesChange, errors }) => {
     const [files, setFiles] = useState([]);
 
+    // Функция для обработки файлов
     const onDrop = useCallback(acceptedFiles => {
         const filesWithPreviews = acceptedFiles.map(file => ({
             file,
@@ -15,6 +19,7 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
         onFilesChange(filesWithPreviews);
     }, [onFilesChange]);
 
+    // Настройка dropzone
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: getFileAcceptType(fileType),
@@ -29,7 +34,7 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
                 {isDragActive ? (
                     <p>Отпустите {selectionMode === 'multiple' ? 'файлы' : 'файл'} здесь...</p>
                 ) : (
-                    <p>Вы можете загрузить {selectionMode === 'multiple' ? 'несколько файлов' : 'один файл'} </p>
+                    <p>Вы можете загрузить {selectionMode === 'multiple' ? 'несколько файлов' : 'один файл'}</p>
                 )}
             </div>
             {errors && <div className="error-message">{errors}</div>}
@@ -53,6 +58,7 @@ const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesCha
     );
 };
 
+// Функция для определения поддерживаемых форматов файлов
 const getFileAcceptType = (fileType) => {
     switch (fileType) {
         case 'image':

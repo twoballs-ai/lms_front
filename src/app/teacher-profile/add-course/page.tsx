@@ -1,4 +1,4 @@
-"use client"; // Для client-side рендеринга в Next.js
+"use client"; 
 import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup'; // Для валидации
 import SiteService from '@/services/siteNoAuth.service';
