@@ -10,8 +10,9 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-    volumes:
-      - .:/app
+    # Убираем том для продакшена, чтобы избежать перезаписи файлов контейнера
+    # volumes:
+    #   - .:/app
     command: npm start
     networks:
       - courserio_network

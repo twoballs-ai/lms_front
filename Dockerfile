@@ -1,14 +1,14 @@
-# Используем официальный Node.js образ как базовый
+# Используем официальный Node.js образ как базовый для сборки
 FROM node:18 AS builder
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и package-lock.json (или yarn.lock)
+# Копируем package.json и package-lock.json (или yarn.lock) перед основным кодом
 COPY package*.json ./
 
 # Устанавливаем зависимости
-RUN npm install
+RUN npm install --production
 
 # Копируем остальной код проекта
 COPY . .
@@ -16,22 +16,22 @@ COPY . .
 # Строим проект
 RUN npm run build
 
-# Используем официальный Node.js образ для финальной стадии
-FROM node:18
+# Используем минимальный образ Node.js для финальной стадии
+FROM node:18-alpine
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем только необходимые файлы из предыдущего этапа
+# Копируем необходимые файлы из стадии сборки
 COPY --from=builder /app/.next .next
 COPY --from=builder /app/node_modules node_modules
 COPY --from=builder /app/public public
 COPY --from=builder /app/package*.json ./
 
-# Устанавливаем переменную окружения для работы в продакшене
+# Устанавливаем переменную окружения для продакшена
 ENV NODE_ENV=production
 
-# Открываем порт, который будет использоваться приложением
+# Открываем порт для приложения
 EXPOSE 3000
 
 # Команда для запуска приложения
