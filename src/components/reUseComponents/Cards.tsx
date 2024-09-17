@@ -5,19 +5,22 @@ import ImageViewer from './ImageViewer';
 
 const { Meta } = Card;
 
-const CustomCard = ({ title, description, image }) => (
+interface CustomCardProps {
+  title: string;
+  description: string;
+  image: string;
+}
+
+const CustomCard: React.FC<CustomCardProps> = ({ title, description, image }) => (
   <Card
     hoverable
     className="custom-card"
     cover={
-
       <ImageViewer
-      alt={title}
-      src={image}
-      layout="responsive"
-      width={400} // Set appropriate width
-      height={250} // Set appropriate height
-  />
+        alt={title}
+        src={image}
+        className="card-image"
+      />
     }
   >
     <Meta title={title} description={description} className="card-meta" />
