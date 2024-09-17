@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://courserio.ru</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/about</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/category</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/license</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/news-blog</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/student-profile</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/teacher-profile</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/student-profile/courses</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/student-profile/dashboard</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/teacher-profile/add-course</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/teacher-profile/dashboard</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/teacher-profile/my-courses</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/teacher-profile/profile-settings</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/teacher-profile/reset-password</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-detail/1</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-detail/2</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-editor/1</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-editor/2</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-learning/1</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-learning/2</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-settings/1</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/course-settings/2</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/news-blog/1</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+<url><loc>https://courserio.ru/news-blog/2</loc><lastmod>2024-09-17T20:30:53.248Z</lastmod></url>
+</urlset>
