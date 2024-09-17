@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['127.0.0.1'], // Add your allowed hostnames here
+    domains: ['backend.courserio.ru','127.0.0.1'], // Add your allowed hostnames here
   },
   typescript: {
     ignoreBuildErrors: true, // Отключает проверку ошибок TypeScript при сборке
