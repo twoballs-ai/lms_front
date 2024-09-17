@@ -15,13 +15,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ title, description, image }) =>
   <Card
     hoverable
     className="custom-card"
-    cover={
-      <ImageViewer
-        alt={title}
-        src={image}
-        className="card-image"
-      />
-    }
+    cover={<ImageViewer alt={title} src={image} className="card-image" />}
   >
     <Meta title={title} description={description} className="card-meta" />
   </Card>
