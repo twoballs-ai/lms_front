@@ -1,22 +1,24 @@
 "use client";
-import Header from '@/components/basicComponents/Header/Header';
-import Footer from '@/components/basicComponents/Footer/Footer';
+import Header from "@/components/basicComponents/Header/Header";
+import Footer from "@/components/basicComponents/Footer/Footer";
 import "../styles/globals.css";
-import styles from '../styles/app.module.scss';
-import Providers from '@/store/StoreProvider';
-import { usePathname } from 'next/navigation'; // Import the hook
-import { Suspense } from "react";
+import styles from "../styles/app.module.scss";
+import Providers from "@/store/StoreProvider";
+import { usePathname } from "next/navigation";
 import { Metrika } from "@/components/metrika";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { ToastContainer } from "react-toastify"; // Добавлено
+import "react-toastify/dist/ReactToastify.css"; // Добавлено
+import { Suspense } from "react";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname();
 
-  // Check if the current path is the dynamic route
-  const shouldShowFooter = !pathname.startsWith('/course-editor/');
+  const shouldShowFooter = !pathname.startsWith("/course-editor/");
 
   return (
     <Providers>
@@ -25,11 +27,20 @@ export default function RootLayout({
           <div className={styles.container}>
             <Header />
             <div className={styles.mainСontainer}>{children}</div>
-            {shouldShowFooter && <Footer />} {/* Conditionally render the Footer */}
+            {shouldShowFooter && <Footer />}
           </div>
-          <Suspense>
           <Metrika />
-        </Suspense>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </body>
         <GoogleAnalytics gaId="G-TDTRH122R3" />
       </html>
