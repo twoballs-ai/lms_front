@@ -19,9 +19,9 @@ const TabsAuth = ({ authState, handleCloseModal  }) => {
     // };
     return (
         <div className="modal__tabs">
-
+   <CloseOutlined className="close-icon" onClick={handleCloseModal} />
             <div className="tabs">
-            <CloseOutlined className="close-icon" onClick={handleCloseModal} />
+         
                 {/* Tab nav */}
                 <ul className="nav tabsNav">
                     {/* <li className={activeTab === "login" ? "active" : "" } onClick={handleTab1}>Вход</li>

@@ -8,17 +8,7 @@ import { MenuOutlined } from '@ant-design/icons';
 import { useRouter } from "next/navigation";
 
 function Header() {
-  const customModalStyles = {
-    modal: {
-      maxWidth: '100vw',
-      width: '100vw',
-      height: '100vh',
-      padding: '0',
-      margin: '0',
-      overflow: 'none',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    }
-  };
+
 
   const [authState, setAuthState] = useState("");
   function handleShow(auth) {
@@ -101,7 +91,7 @@ function Header() {
                 open={openModal}
                 onClose={handleCloseModal}
                 content={contentToModal}
-                modalStyles={customModalStyles}
+
                 showCloseIcon={false}
               />
               <button className="nav-link__login-btn" onClick={() => handleShow("login")}>Войти</button>

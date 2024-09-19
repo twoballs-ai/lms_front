@@ -1,23 +1,21 @@
 .modal__tabs {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 0 1rem;
+  justify-content:end;
+  align-items:flex-end;
+
 
   .tabs {
     position: relative;
     width: 100%;
     max-width: 500px;
     min-height: 600px; // Ensure the container has a fixed minimum height
-    background: #007cc4;
     margin: auto;
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     padding: 2rem 1rem;
     color: #e8f0f2;
-    box-shadow: 1px 1px 20px 20px #e591556e;
+
     border-radius: 2rem;
 
     @media (max-width: 768px) {
@@ -78,7 +76,7 @@
   }
 
   ul.tabsNav li:hover {
-    background: rgba(50, 224, 196, 0.15);
+    background: rgba(0, 5, 4, 0.15);
   }
 
   ul.tabsNav li.active {
@@ -126,7 +124,7 @@
   }
 
   .react-tabs__tab--disabled {
-    color: gray;
+    color: rgb(155, 0, 0);
     cursor: default;
   }
 
