@@ -3,16 +3,21 @@ import * as Yup from "yup";
 import AuthService from "../../../../../services/auth.service";
 import TextInput from "../../../../reUseComponents/TextInput";
 import "./Login.scss";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
 function AllProfilesLogin() {
-  const [inputUsernameValue, setInputUsernameValue] = useState('');
-  const [inputPasswordValue, setInputPasswordValue] = useState('');
+  const [inputUsernameValue, setInputUsernameValue] = useState("");
+  const [inputPasswordValue, setInputPasswordValue] = useState("");
   const [errors, setErrors] = useState({});
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().email("Некорректный email, пожалуйста добавьте корректный").required("Обязательно"),
-    password: Yup.string().min(8, "Пароль должен содержать минимум 8 символов").required("Обязательно"),
+    username: Yup.string()
+      .email("Некорректный email, пожалуйста добавьте корректный")
+      .required("Обязательно"),
+    password: Yup.string()
+      .min(8, "Пароль должен содержать минимум 8 символов")
+      .required("Обязательно"),
   });
 
   const handleInputUsernameChange = (e) => {
@@ -25,10 +30,13 @@ function AllProfilesLogin() {
 
   const validateForm = async () => {
     try {
-      await validationSchema.validate({
-        username: inputUsernameValue,
-        password: inputPasswordValue,
-      }, { abortEarly: false });
+      await validationSchema.validate(
+        {
+          username: inputUsernameValue,
+          password: inputPasswordValue,
+        },
+        { abortEarly: false }
+      );
       setErrors({});
       return true;
     } catch (err) {
@@ -47,27 +55,35 @@ function AllProfilesLogin() {
     if (!isValid) return;
 
     const formData = new FormData();
-    formData.append('username', inputUsernameValue);
-    formData.append('password', inputPasswordValue);
+    formData.append("username", inputUsernameValue);
+    formData.append("password", inputPasswordValue);
 
-    await AuthService.login(formData).then((response) => {
-      if (response.status === 200 || response.status === 201) {
-        localStorage.clear();
-        localStorage.setItem("access_token", JSON.stringify(response?.data?.access_token));
-        localStorage.setItem("refresh_token", JSON.stringify(response?.data?.refresh_token));
-        if (response?.data?.type === "teacher_model") {
-          localStorage.setItem("role", JSON.stringify(response?.data?.type));
-          window.location.href = "/teacher-profile/";
+    await AuthService.login(formData)
+      .then((response) => {
+        if (response.status === 200 || response.status === 201) {
+          localStorage.clear();
+          localStorage.setItem(
+            "access_token",
+            JSON.stringify(response?.data?.access_token)
+          );
+          localStorage.setItem(
+            "refresh_token",
+            JSON.stringify(response?.data?.refresh_token)
+          );
+          if (response?.data?.type === "teacher_model") {
+            localStorage.setItem("role", JSON.stringify(response?.data?.type));
+            window.location.href = "/teacher-profile/";
+          }
+          if (response?.data?.type === "student_model") {
+            localStorage.setItem("role", JSON.stringify(response?.data?.type));
+            localStorage.setItem("studentLoginStatus", JSON.stringify("true"));
+            window.location.href = "/student-profile/";
+          }
         }
-        if (response?.data?.type === "student_model") {
-          localStorage.setItem("role", JSON.stringify(response?.data?.type));
-          localStorage.setItem("studentLoginStatus", JSON.stringify("true"));
-          window.location.href = "/student-profile/";
-        }
-      }
-    }).catch((error) => {
-      setErrorMsg(error.response.data.message);
-    });
+      })
+      .catch((error) => {
+        setErrorMsg(error.response.data.message);
+      });
   };
 
   return (
@@ -75,26 +91,31 @@ function AllProfilesLogin() {
       <form onSubmit={submitForm} className="auth-container__log-pass-block">
         <div className="form-group">
           <TextInput
-            type="text"
-            placeholder="Введите ваш email"
+            type="email"
+            placeholder="Введите email"
             value={inputUsernameValue}
+            prefix={<MailOutlined />}
             onChange={handleInputUsernameChange}
-            style={errors.username ? { borderColor: 'red' } : {}}
+            style={errors.username ? { borderColor: "red" } : {}}
           />
           {errors.username && <div className="error">{errors.username}</div>}
         </div>
         <div className="form-group">
-          <TextInput
-            type="password"
-            placeholder="Введите пароль"
-            value={inputPasswordValue}
-            onChange={handleInputPasswordChange}
-            style={errors.password ? { borderColor: 'red' } : {}}
-          />
+        <TextInput
+        type="password"
+        placeholder="Введите пароль"
+        value={inputPasswordValue}
+        prefix={<LockOutlined />}
+        onChange={handleInputPasswordChange}
+        style={errors.password ? { borderColor: "red" } : {}}
+      />
+
           {errors.password && <div className="error">{errors.password}</div>}
         </div>
         <div className="auth-container__button-confirm">
-          <button className="orange-button" type="submit">Войти</button>
+          <button className="orange-button" type="submit">
+            Войти
+          </button>
         </div>
         {errorMsg && <div className="error">{errorMsg}</div>}
       </form>

@@ -1,9 +1,8 @@
 .modal__tabs {
   display: flex;
   flex-direction: column;
-  justify-content:end;
-  align-items:flex-end;
-
+  justify-content: end;
+  align-items: flex-end;
 
   .tabs {
     position: relative;
@@ -63,7 +62,7 @@
     transition: all 0.7s;
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
-
+    color: #fa803a;
     @media (max-width: 768px) {
       font-size: 1.2rem;
     }
@@ -87,6 +86,7 @@
   .RegisterTab p {
     font-size: 1.6rem;
     text-align: center;
+    color: #fa803a;
 
     @media (max-width: 768px) {
       font-size: 1.4rem;
@@ -104,7 +104,7 @@
     align-items: center;
     justify-content: space-between;
     padding-left: 0px;
-
+    color: #ff7f50;
     @media (max-width: 768px) {
       width: 90%;
     }

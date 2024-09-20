@@ -6,7 +6,7 @@ export default function LmsModalBase({ open, onClose, content, modalStyles, show
     const basicModalStyles = {
         modal: {
             maxWidth: '40vw',
-            width: '40vw',
+            width: '45vw',
             height: 'auto',
             minHeight: '45vh',
             padding: '20px',

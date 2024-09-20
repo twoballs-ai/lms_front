@@ -1,0 +1,41 @@
+.custom-text-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background-color: #fff;
+  
+    &:focus-within {
+      border-color: #40a9ff;
+      box-shadow: 0 0 5px rgba(24, 144, 255, 0.2);
+    }
+  
+    .prefix-icon,
+    .suffix-icon {
+      margin: 0 8px;
+      font-size: 16px;
+      color: #8c8c8c;
+    }
+  
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 8px;
+      font-size: 14px;
+      color: #000;
+      
+      &::placeholder {
+        color: #bfbfbf;
+      }
+    }
+  
+    .input-error {
+      color: #ff4d4f;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+  
