@@ -1,21 +1,21 @@
 import axios from "axios";
-import TokenService from "./token.service";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import TokenService from "./token.service"; // Assuming TokenService is adapted for SSR
 import AuthService from "./auth.service";
 
 const instance = axios.create({
-  // baseURL: "http://localhost:8080/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+// Interceptor for requests
 instance.interceptors.request.use(
   (config) => {
-    const token = TokenService.getLocalAccessToken();
-    if (token) {
-      config.headers["Authorization"] = 'Bearer ' + token;
+    if (typeof window !== 'undefined') {
+      const token = TokenService.getLocalAccessToken();
+      if (token) {
+        config.headers["Authorization"] = 'Bearer ' + token;
+      }
     }
     return config;
   },
@@ -24,50 +24,45 @@ instance.interceptors.request.use(
   }
 );
 
+// Interceptor for responses
 instance.interceptors.response.use(
   (res) => {
-    // Check if response.data.message exists and show success toast
-    if (res.data && res.data.message) {
-      toast.success(res.data.message);
-    }
     return res;
   },
   async (err) => {
     const originalConfig = err.config;
 
     if (err.response) {
-      console.log(err.response)
-      // Show error toast if response contains an error message
-      if (Array.isArray(err.response.data.detail)) {
-       toast.error(`Ошибка с кодом: ${err.response.status}`);
-      } else if (typeof err.response.data.detail === 'string') {
-        toast.error(err.response.data.detail);
-      }
+      console.log(err.response);
 
+      // Handling 401 Unauthorized errors
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
         try {
           const rs = await AuthService.refreshToken();
           const accessToken = rs.access_token;
-          TokenService.updateLocalAccessToken(accessToken);
+          
+          if (typeof window !== 'undefined') {
+            TokenService.updateLocalAccessToken(accessToken);
+          }
+
           instance.defaults.headers.common["Authorization"] = 'Bearer ' + accessToken;
           return instance(originalConfig);
         } catch (_error) {
-          console.log("Error refreshing token");
-          // Show error toast for token refresh failure
-          toast.error("Failed to refresh token. Please log in again.");
-          // AuthService.logout();
+          console.log("Error refreshing token. Please log in again.");
+          // You can redirect to the login page or return a custom error message here
           return Promise.reject(_error);
         }
       }
 
+      // Handle 403 Forbidden errors
       if (err.response.status === 403) {
-        toast.error("You do not have permission to perform this action.");
+        console.error("You do not have permission to perform this action.");
         return Promise.reject(err.response.data);
       }
     } else {
-      // Show a generic error toast if no response is received from the server
-      toast.error("Произошла странная ошибка");
+      // Generic error handling
+      console.error("An unexpected error occurred.");
     }
 
     return Promise.reject(err);

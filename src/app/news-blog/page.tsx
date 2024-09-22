@@ -1,11 +1,9 @@
-"use client"; // Required for client-side rendering in Next.js
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link'; // Import Next.js Link
 import parse from 'html-react-parser';
-import SiteService from '../../services/siteNoAuth.service';
 import Head from 'next/head'; // Use Head for setting the title
 import './ViewBlogs.scss';
+import SiteService from '@/services/siteNoAuth.service';
 
 // Define blog data type
 interface Blog {
@@ -18,20 +16,11 @@ interface Blog {
   updated_at?: string;
 }
 
-const ViewBlogs: React.FC = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]); // Type the blogs state
-
-  // Set page title using Next.js Head
-  useEffect(() => {
-    const fetchData = async () => {
-      await SiteService.getNewsBlog().then((response) => {
-        if (response.status === 200 || response.status === 201) {
-          setBlogs(response.data.data);
-        }
-      });
-    };
-    fetchData();
-  }, []);
+// This is an async component
+const ViewBlogs = async () => {
+  // Fetch the blog data
+  const response = await SiteService.getNewsBlog();
+  const blogs: Blog[] = response.status === 200 || response.status === 201 ? response.data.data : [];
 
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return null;

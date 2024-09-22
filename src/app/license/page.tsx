@@ -1,6 +1,3 @@
-"use client"; // Required for client-side rendering in Next.js
-
-import React from "react";
 import Head from 'next/head'; // Import Head for managing document head
 import "./License.scss"; // Import SCSS styles
 

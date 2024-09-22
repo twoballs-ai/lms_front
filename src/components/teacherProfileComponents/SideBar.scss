@@ -1,31 +1,82 @@
-.teacher-sidebar {
-  width: 100%;
-
-  .ant-menu {
-      background: #fff;
-      border-right: none;
-  }
-
-  .ant-menu-item {
-    //   font-size: 1.2rem;
-      &:hover {
-          background-color: #f0f0f0 !important;
+.custom-sidebar {
+    background-color: #fff; // Sidebar with white background
+    width: 250px;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    height: 100%; // Take up full height of the parent container
+    overflow-y: auto; // Allow scrolling if content overflows
+  
+    .menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+  
+      .menu-item {
+        padding: 15px; // Increased padding for larger items
+        font-size: 18px; // Increased font size
+        font-weight: 500;
+        color: #333;
+        display: block;
+        transition: color 0.3s ease, background-color 0.3s ease;
+  
+        .menu-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between; // Space between text and submenu icon
+          gap: 15px; // Space between icon and text
+          cursor: pointer;
+        }
+  
+        .menu-icon {
+          font-size: 24px; // Larger icon size
+        }
+  
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+  
+        &:hover {
+          color: var(--hover-color);
+        }
+  
+        &.active {
+          color: var(--active-color);
+  
+          a {
+            color: var(--active-color);
+          }
+        }
+  
+        .submenu-toggle {
+          font-size: 16px;
+        }
+  
+        // Submenu will be positioned vertically under the parent
+        .submenu-vertical {
+          padding-left: 20px; // Slight indent for submenu items
+          margin-top: 10px; // Spacing below the parent item
+          display: block;
+  
+          .submenu-item {
+            padding: 10px 0;
+            font-size: 16px;
+            color: #666;
+            transition: color 0.3s ease;
+  
+            .menu-icon {
+              font-size: 16px; // Smaller icon size for submenu items
+            }
+  
+            &:hover {
+              color: var(--hover-color);
+            }
+  
+            &.active {
+              color: var(--active-color);
+            }
+          }
+        }
       }
-  }
-
-  .ant-menu-item a {
-      color: #333;
-  }
-
-  @media (max-width: 768px) {
-      .ant-menu-item {
-          font-size: 1rem;
-      }
-  }
-
-  @media (max-width: 480px) {
-      .ant-menu-item {
-          font-size: 0.9rem;
-      }
-  }
+    }
 }
