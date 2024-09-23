@@ -34,19 +34,14 @@ interface Chapter {
   id: string;
   title: string;
   sort_index: number;
-  modules: Module[]; // Make sure you define the Module interface if it's not defined elsewhere
-}
-
-interface Module {
-  id: string;
-  title: string;
-  sort_index: number;
+  key:number;
+// Make sure you define the Module interface if it's not defined elsewhere
 }
 
 interface SortableChapterProps {
   id: string;
   chapter: Chapter;
-  setModuleEditData: (module: Module) => void;
+  setModuleEditData: () => void;
   course_id: string;
   activeChapterId: string | null;
   setDraggingItemId: (id: string | null) => void;
@@ -82,6 +77,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
 
   const dispatch = useDispatch();
   const [handlePopupOpen, setHandlePopupOpen] = useState(false);
+  
   const [openModal, setOpenModal] = useState(false);
   const [inputTitleValue, setInputTitleValue] = useState<string>("");
   const [inputDescrValue, setInputDescrValue] = useState<string>("");
@@ -144,7 +140,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
   };
 
   const showPopupMenu = () => setHandlePopupOpen(true);
-  const handlePopupClose = () => setHandlePopupClose(false);
+  const handlePopupClose = () => setHandlePopupOpen(false);
 
   const moduleChange = (module: Module) => {
     setModuleEditData(module);
@@ -238,7 +234,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
       className={`chapters__block ${
         activeChapterId === chapter.id ? "active" : ""
       } ${isDragging ? "opacity-50" : ""}`}
-      key={chapter.sort_index}
+      key={key}
       onClick={() => setActiveChapterId(chapter.id)}
     >
       <LmsModalBase
@@ -282,7 +278,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
         </div>
         <LmsButton buttonText="Добавить модуль" handleClick={handleOpenModal} />
         <div className="chapters__modules">
-          <DndContext
+          {/* <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
             modifiers={[restrictToVerticalAxis]}
@@ -313,7 +309,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
                   />
                 ))}
             </SortableContext>
-          </DndContext>
+          </DndContext> */}
         </div>
       </div>
       <div className="block-menu">

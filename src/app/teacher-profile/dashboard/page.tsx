@@ -1,48 +1,64 @@
-// import { PrivateRoute } from '@/components/PrivateRoute';
-// import Header from '@/components/Header';
-// import TeacherDashMain from '@/components/TeacherDashMain';
-// import TeacherDashboard from '@/components/TeacherDashboard';
+import React from 'react';
+import { FaBook, FaListAlt, FaChalkboardTeacher, FaUserGraduate, FaBookOpen } from 'react-icons/fa'; // Иконки
+import './TeacherDash.scss'; // Подключение стилей
 
-export default function TeacherProfilePage() {
-    return (
-      <>
-       <p>Dashboard в разработке</p>
-              {/* <div className="row">
-                  <div className="col-4">
-                      <div border="primary" style={{ width: "18rem" }}>
-                          <div>Всего курсов</div>
-                          <div>
-                              <div>
-                                  {dashboardData.total_teacher_courses}
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div className="col-4">
-                      <div border="success" style={{ width: "18rem" }}>
-                          <div>Всего студентов</div>
-                          <div>
-                              <div>
-                                  {dashboardData.total_teacher_students}
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div className="col-4">
-                      <div border="info" style={{ width: "18rem" }}>
-                          <div>Создано глав</div>
-                          <div>
-                              <div>
-                                  {dashboardData.total_teacher_chapters}
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div> */}</>
-      // <PrivateRoute requiredRole="teacher_model">
-      //   <Header />
-      //   <TeacherDashMain />
-      //   <TeacherDashboard />
-      // </PrivateRoute>
-    );
-  }
+const TeacherDashboard: React.FC = () => {
+  // Моки для отображаемых данных
+  const stats = {
+    courses: 0,
+    modules: 0,
+    chapters: 0,
+    lessons: 0,
+    students: 0,
+  };
+
+  return (
+    <div className="dashboard-container">
+      <div className="dashboard-title">Учительский дашборд</div>
+
+      <div className="dashboard-stats">
+        <div className="stat-item">
+          <FaBook className="stat-icon" />
+          <div className="stat-info">
+            <span className="stat-number">{stats.courses}</span>
+            <span className="stat-label">Курсы</span>
+          </div>
+        </div>
+
+        <div className="stat-item">
+          <FaListAlt className="stat-icon" />
+          <div className="stat-info">
+            <span className="stat-number">{stats.modules}</span>
+            <span className="stat-label">Модули</span>
+          </div>
+        </div>
+
+        <div className="stat-item">
+          <FaBookOpen className="stat-icon" />
+          <div className="stat-info">
+            <span className="stat-number">{stats.chapters}</span>
+            <span className="stat-label">Главы</span>
+          </div>
+        </div>
+
+        <div className="stat-item">
+          <FaChalkboardTeacher className="stat-icon" />
+          <div className="stat-info">
+            <span className="stat-number">{stats.lessons}</span>
+            <span className="stat-label">Уроки</span>
+          </div>
+        </div>
+
+        <div className="stat-item">
+          <FaUserGraduate className="stat-icon" />
+          <div className="stat-info">
+            <span className="stat-number">{stats.students}</span>
+            <span className="stat-label">Ученики</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TeacherDashboard;

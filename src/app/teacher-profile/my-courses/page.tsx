@@ -5,6 +5,8 @@ import TeacherService from '@/services/teacher.service';
 import './MyTeacherCourses.scss';
 import LmsButton from '@/components/reUseComponents/Button';
 import { useRouter } from 'next/navigation'; // Используем useRouter вместо useNavigate в Next.js
+import ImageViewer from '@/components/reUseComponents/ImageViewer';
+import { serverUrl } from '@/shared/config';
 
 
 // Определим тип данных курса
@@ -13,6 +15,8 @@ interface Course {
   title: string;
   status: string;
   moderation_status: string | null;
+  cover_path:string;
+  cover_image_name:string;
 }
 
 const MyTeacherCourses: React.FC = () => {
@@ -28,8 +32,7 @@ const MyTeacherCourses: React.FC = () => {
     try {
       const response = await TeacherService.teacherCourses();
       if (response.status === 200 || response.status === 201) {
-        setCourseData(response.data.data);
-      }
+        setCourseData(response.data.data);      }
     } catch (error) {
       console.error("Ошибка при получении данных курсов:", error);
     }
@@ -61,7 +64,13 @@ const MyTeacherCourses: React.FC = () => {
       <div className="my-courses-container__title">Мои курсы</div>
 
       {courseData.map((course) => (
+        
         <div key={course.id} className="my-courses-container__course-item">
+                         <ImageViewer
+                            src={`${serverUrl}/${course.cover_path}`}
+                            alt={course.cover_image_name}
+                            width={150}
+                        />
           <div className="course-item__course-title">
             {course.title}
             <p>Статус курса: {course.status}</p>

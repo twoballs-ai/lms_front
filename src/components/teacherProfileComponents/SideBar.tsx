@@ -1,6 +1,7 @@
 "use client"; // Required for client-side rendering in Next.js
 import React, { useState } from 'react';
-import { FaUser, FaPlusCircle, FaCog, FaChevronDown, FaChevronRight, FaKey } from 'react-icons/fa'; // Using icons from react-icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faPlusCircle, faCog, faChevronDown, faChalkboardUser, faChevronUp, faKey } from '@fortawesome/free-solid-svg-icons'; // Import solid icons
 import Link from 'next/link'; // For routing
 import "./SideBar.scss";
 
@@ -27,7 +28,7 @@ const SideBar: React.FC = () => {
       href: '/teacher-profile/dashboard',
       hoverColor: '#00796b',
       activeColor: '#004d40',
-      icon: <FaUser size={24} />, // Larger icon size
+      icon: <FontAwesomeIcon icon={faUser} size="lg" />, // FontAwesome icon
     },
     {
       key: '2',
@@ -35,7 +36,7 @@ const SideBar: React.FC = () => {
       href: '/teacher-profile/my-courses',
       hoverColor: '#ff9800',
       activeColor: '#f57c00',
-      icon: <FaPlusCircle size={24} />,
+      icon: <FontAwesomeIcon icon={faChalkboardUser} size="lg" />, // FontAwesome icon
     },
     {
       key: '3',
@@ -43,7 +44,7 @@ const SideBar: React.FC = () => {
       href: '/teacher-profile/add-course',
       hoverColor: '#8e24aa',
       activeColor: '#6a1b9a',
-      icon: <FaPlusCircle size={24} />,
+      icon: <FontAwesomeIcon icon={faPlusCircle} size="lg" />, // FontAwesome icon
     },
     {
       key: '4',
@@ -51,7 +52,7 @@ const SideBar: React.FC = () => {
       href: '#',
       hoverColor: '#3949ab',
       activeColor: '#303f9f',
-      icon: <FaCog size={24} />,
+      icon: <FontAwesomeIcon icon={faCog} size="lg" />, // FontAwesome icon
       children: [
         {
           key: '5',
@@ -59,7 +60,7 @@ const SideBar: React.FC = () => {
           href: '/teacher-profile/profile-settings',
           hoverColor: '#e64a19',
           activeColor: '#d84315',
-          icon: <FaUser size={16} /> // Icon for submenu item
+          icon: <FontAwesomeIcon icon={faUser} size="sm" />, // FontAwesome icon for submenu item
         },
         {
           key: '6',
@@ -67,7 +68,7 @@ const SideBar: React.FC = () => {
           href: '/teacher-profile/reset-password',
           hoverColor: '#43a047',
           activeColor: '#2e7d32',
-          icon: <FaKey size={16} /> // Icon for submenu item
+          icon: <FontAwesomeIcon icon={faKey} size="sm" />, // FontAwesome icon for submenu item
         },
       ],
     },
@@ -100,7 +101,7 @@ const SideBar: React.FC = () => {
               <Link href={item.href}>{item.label}</Link>
               {item.children && (
                 <span className="submenu-toggle">
-                  {openKey === item.key ? <FaChevronDown size={16} /> : <FaChevronRight size={16} />}
+                  {openKey === item.key ? <FontAwesomeIcon icon={faChevronUp} size="sm" /> : <FontAwesomeIcon icon={faChevronDown} size="sm" />}
                 </span>
               )}
             </div>

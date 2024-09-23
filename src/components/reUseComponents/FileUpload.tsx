@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone'; // Импорт useDropzone из библиотеки
 import Image from 'next/image'; // Для работы с изображениями в Next.js
-
+import "./FileUpload.scss"
 const FileUpload = ({ fileType = 'image', selectionMode = 'multiple', onFilesChange, errors }) => {
     const [files, setFiles] = useState([]);
 

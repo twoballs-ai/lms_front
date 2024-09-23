@@ -16,7 +16,6 @@ const ChapterSchema = Yup.object().shape({
 });
 
 const AddChapterToCourse = ({ course_id, handleCloseModal }) => {
-    console.log()
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const [inputTitleValue, setInputTitleValue] = useState('');

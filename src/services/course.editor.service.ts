@@ -15,7 +15,7 @@ const editCoursePageGetModuleStage = async (module_id) => {
 //     return await api
 //         .get(apiLmsUrl + "course-detail/" + course_id)
 // }
-const editCoursePageGetChapterList = async (course_id) => {
+const editCoursePageGetChapterList = async (course_id: number) => {
     return await api
         .get(apiLmsUrl + "course-chapter-list/" + course_id)
 }

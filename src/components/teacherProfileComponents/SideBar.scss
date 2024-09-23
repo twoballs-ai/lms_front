@@ -28,6 +28,7 @@
         }
 
         .menu-icon {
+          width: 30px;
           font-size: 24px; // Larger icon size
         }
 
@@ -54,18 +55,22 @@
 
         // Submenu will be positioned vertically under the parent
         .submenu-vertical {
+          
           padding-left: 20px; // Slight indent for submenu items
           margin-top: 10px; // Spacing below the parent item
           display: block;
 
           .submenu-item {
+            display: flex;
             padding: 10px 0;
-            font-size: 16px;
+            font-size: 18px;
+            gap:20px;
             color: #666;
             transition: color 0.3s ease;
 
             .menu-icon {
-              font-size: 16px; // Smaller icon size for submenu items
+              width: 30px;
+              font-size: 24px; // Smaller icon size for submenu items
             }
 
             &:hover {

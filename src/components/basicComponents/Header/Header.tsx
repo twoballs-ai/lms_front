@@ -72,10 +72,10 @@ function Header() {
               <div className="nav-dropdown-toggle">Профиль</div>
               <div className="nav-dropdown-menu">
                 {role === "teacher_model" && (
-                  <Link href="/teacher-profile" className="nav-dropdown-item">Личный кабинет учителя</Link>
+                  <Link href="/teacher-profile/dashboard" className="nav-dropdown-item">Личный кабинет учителя</Link>
                 )}
                 {role === "student_model" && (
-                  <Link href="/student-profile" className="nav-dropdown-item">Личный кабинет ученика</Link>
+                  <Link href="/student-profile/dashboard" className="nav-dropdown-item">Личный кабинет ученика</Link>
                 )}
                 <Link href="/" className="nav-dropdown-item" onClick={(e) => {
   e.preventDefault(); // Prevent the default link behavior

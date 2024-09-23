@@ -72,12 +72,12 @@ function AllProfilesLogin() {
           );
           if (response?.data?.type === "teacher_model") {
             localStorage.setItem("role", JSON.stringify(response?.data?.type));
-            window.location.href = "/teacher-profile/";
+            window.location.href = "/teacher-profile/dashboard";
           }
           if (response?.data?.type === "student_model") {
             localStorage.setItem("role", JSON.stringify(response?.data?.type));
             localStorage.setItem("studentLoginStatus", JSON.stringify("true"));
-            window.location.href = "/student-profile/";
+            window.location.href = "/student-profile/dashboard";
           }
         }
       })

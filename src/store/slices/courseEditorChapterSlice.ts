@@ -3,16 +3,16 @@ import CourseEditorService from '../../services/course.editor.service';
 
 // Определение типов для данных
 interface Module {
-    id: number;
-    sort_index: number;
-    key:number;
+    id: string;
+    sort_index: number; // Изменено на number
+    key: number;
 }
 
 interface Chapter {
-    id: number;
-    sort_index: number;
+    id: string;
+    sort_index: number; // Изменено на number
     modules: Module[];
-    key:number;
+    key: number;
 }
 
 interface AddChapterParams {
@@ -49,14 +49,19 @@ export const fetchChapters = createAsyncThunk<Chapter[], number, { rejectValue: 
                         const sortedModules = chapter.modules.sort((a, b) => a.sort_index - b.sort_index);
                         return { ...chapter, modules: sortedModules };
                     })
-                    .sort((a, b) => a.sort_index - b.sort_index);
-
+                    .sort((a:Chapter,b:Chapter) => a.sort_index - b.sort_index);
+                    console.log(sortedChapters)
                 return sortedChapters;
             } else {
                 return rejectWithValue(response.statusText);
             }
         } catch (error) {
-            return rejectWithValue((error as { message: string }).message || 'Unknown error');
+            // Обрабатываем возможные ошибки, если они не в формате {message: string}
+            if (error instanceof Error) {
+                return rejectWithValue(error.message);
+            } else {
+                return rejectWithValue('Unknown error occurred');
+            }
         }
     }
 );
