@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import hljs from 'highlight.js';  // Import highlight.js
 import 'highlight.js/styles/default.css';  // Import default highlight.js styles
 import "./LessonsStyle.scss";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 
 function LearningClassicLesson({ selectedStage, onComplete }) {
     const { stageData, showClassicLesson } = useLessonData(selectedStage ? selectedStage.id : null);

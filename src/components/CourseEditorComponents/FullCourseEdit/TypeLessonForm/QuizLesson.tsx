@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import CourseEditorService from "@/services/course.editor.service";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import TextInput from "@/components/reUseComponents/TextInput";
 import { Radio, Button } from 'antd';
 import { DeleteOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';

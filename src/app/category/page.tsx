@@ -31,7 +31,7 @@ const CategoryPage: React.FC = () => {
 
     const handleCardClick = (courseId: number) => {
         if (isMounted) {
-            router.push(`/detail/${courseId}`);
+            router.push(`/course-detail/${courseId}`);
         }
     };
 

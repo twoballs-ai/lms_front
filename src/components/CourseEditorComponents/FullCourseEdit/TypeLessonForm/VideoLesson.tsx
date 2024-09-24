@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import CourseEditorService from "@/services/course.editor.service";
 import TextInput from "@/components/reUseComponents/TextInput";
 import VideoLinkForm from "@/components/reUseComponents/VideoLinkForm"; // Update to VideoLinkForm

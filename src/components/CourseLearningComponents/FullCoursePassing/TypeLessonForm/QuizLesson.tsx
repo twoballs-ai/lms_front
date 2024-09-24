@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import useLessonData from "./useLessonData";
 import "./LessonsStyle.scss";
 import StudentService from "@/services/student.service";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 
 function LearningQuizLesson({ selectedStage, onComplete }) {
     const { stageData, showQuizLesson } = useLessonData(selectedStage ? selectedStage.id : null);

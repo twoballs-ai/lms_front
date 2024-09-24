@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import * as Yup from 'yup';
 import TeacherService from '@/services/teacher.service';
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import TextInput from '@/components/reUseComponents/TextInput';
 import FileUpload from '@/components/reUseComponents/FileUpload';
 import { serverUrl } from '@/shared/config';

@@ -4,7 +4,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import TextInput from '@/components/reUseComponents/TextInput';
 import './ProfileSettings.scss'; // Import CSS file for styling
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import TeacherService from '@/services/teacher.service';
 
 interface TeacherProfile {
@@ -76,6 +76,7 @@ const ProfileSettings: React.FC = () => {
                 <div className="form_row">
                     <div className="col">
                         <TextInput
+                        label="Email" 
                             type="text"
                             placeholder="Имя"
                             value={name}

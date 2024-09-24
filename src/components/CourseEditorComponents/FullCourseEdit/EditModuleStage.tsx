@@ -15,7 +15,7 @@ import {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import LmsModalBase from "@/components/reUseComponents/ModalBase";
 import AddStageLesson from "./AddStageLesson";
 import AddingClassicLesson from "./TypeLessonForm/ClassicLesson";

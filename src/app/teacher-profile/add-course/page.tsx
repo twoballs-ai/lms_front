@@ -4,7 +4,7 @@ import * as Yup from 'yup'; // Для валидации
 import SiteService from '@/services/siteNoAuth.service';
 import TeacherService from '@/services/teacher.service';
 import "./AddCourse.scss"; // Импорт стилей
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import CustomSelect from '@/components/reUseComponents/Select';
 import TextInput from '@/components/reUseComponents/TextInput';
 import FileUpload from '@/components/reUseComponents/FileUpload';

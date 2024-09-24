@@ -1,0 +1,95 @@
+// _LmsButton.scss
+
+// Основные стили
+.lms-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    // Цветовые схемы (варианты)
+    &.primary {
+      background-color: #6fcaff;
+      color: white;
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  
+    &.secondary {
+      background-color: #6c757d;
+      color: white;
+      &:hover {
+        background-color: #5a6268;
+      }
+    }
+  
+    &.success {
+      background-color: #28a745;
+      color: white;
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  
+    &.danger {
+      background-color: #dc3545;
+      color: white;
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+  
+    // Стили (default, inline, outline)
+    &.default {
+      border: none;
+    }
+  
+    &.outline {
+      background-color: transparent;
+      border: 2px solid;
+      &.primary {
+        color: #007bff;
+        border-color: #007bff;
+        &:hover {
+          background-color: #007bff;
+          color: white;
+        }
+      }
+      &.secondary {
+        color: #6c757d;
+        border-color: #6c757d;
+        &:hover {
+          background-color: #6c757d;
+          color: white;
+        }
+      }
+    }
+  
+    &.inline {
+      display: inline-block;
+    }
+  
+    // Размеры (small, medium, large)
+    &.small {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      height: 2rem; // Установка высоты для маленького размера
+    }
+  
+    &.medium {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      height: 2.5rem; // Установка высоты для среднего размера
+    }
+  
+    &.large {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.25rem;
+      height: 3rem; // Установка высоты для большого размера
+    }
+}

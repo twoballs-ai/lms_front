@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PopupMenu from "@/components/reUseComponents/PopupMenu";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import TextInput from "@/components/reUseComponents/TextInput";
 
 import { useDispatch } from 'react-redux';

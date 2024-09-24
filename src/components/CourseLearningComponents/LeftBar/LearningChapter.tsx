@@ -7,7 +7,6 @@ const Chapter = ({
   children,
   activeChapterId,
   setActiveChapterId,
-  isLocked,
   chapter_is_completed,
 }) => {
   const handleChapterClick = () => {
@@ -16,18 +15,18 @@ const Chapter = ({
 
   return (
     <div
-      className={`chapters__block ${activeChapterId === chapter.id ? "active" : ""} ${chapter_is_completed ? "completed" : isLocked ? "locked" : ""}`}
+      className={`chapters__block ${activeChapterId === chapter.id ? "active" : ""} ${chapter_is_completed ? "completed" : ""}`}
       onClick={handleChapterClick}
     >
       <div className="block-left">
         <div className="block__title">
           <p>
             {chapter.title}
-            {isLocked && !chapter_is_completed && <span><LockOutlined /></span>}
+            {chapter.is_locked && !chapter_is_completed && <span><LockOutlined /></span>}
           </p>
         </div>
 
-        <div className={`chapters__modules ${isLocked ? "locked" : ""}`}>
+        <div className={`chapters__modules ${chapter.is_locked ? "locked" : ""}`}>
           {children}
         </div>
       </div>
@@ -36,11 +35,14 @@ const Chapter = ({
 };
 
 Chapter.propTypes = {
-  chapter: PropTypes.object.isRequired,
+  chapter: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    is_locked: PropTypes.bool.isRequired, // Keep this in case you still need it
+  }).isRequired,
   children: PropTypes.node,
   activeChapterId: PropTypes.number,
   setActiveChapterId: PropTypes.func.isRequired,
-  isLocked: PropTypes.bool.isRequired,
   chapter_is_completed: PropTypes.bool.isRequired,
 };
 

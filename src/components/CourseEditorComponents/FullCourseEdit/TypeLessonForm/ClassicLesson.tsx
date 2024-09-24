@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Editor from "@/utils/Editor";
 import CourseEditorService from "@/services/course.editor.service";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import TextInput from "@/components/reUseComponents/TextInput";
 
 import "./LessonsStyle.scss"

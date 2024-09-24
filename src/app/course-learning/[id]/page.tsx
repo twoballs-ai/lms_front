@@ -6,7 +6,8 @@ import Chapter from "@/components/CourseLearningComponents/LeftBar/LearningChapt
 import Modules from "@/components/CourseLearningComponents/LeftBar/LearningModules";
 import ModuleStageLearn from "@/components/CourseLearningComponents/FullCoursePassing/ModuleStageLearn";
 import { useParams } from "next/navigation";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 // Define types for your chapter and module data
 interface Module {
   id: number;
@@ -115,6 +116,7 @@ const CourseLearning: React.FC = () => {
 
   return (
     <div className="course-learn__container">
+      
       <div className="container__leftbar">
         <div className="leftbar__chapters">
           {chapters.map((chapter) => (
@@ -142,8 +144,15 @@ const CourseLearning: React.FC = () => {
           ))}
         </div>
       </div>
+      
       <div className="container__learn-main">
-        {Object.keys(moduleEditData).length > 0 && !allCompleted && (
+      {allCompleted && (
+          <div className="congratulations">
+            <p>Поздравляем! Вы прошли все уроки курса.</p>
+            <FontAwesomeIcon icon={faCheckCircle} />
+          </div>
+        )}
+        {Object.keys(moduleEditData).length > 0 && (
           <ModuleStageLearn
             moduleEditData={moduleEditData as Module}
             setModuleEditData={setModuleEditData}
@@ -156,18 +165,8 @@ const CourseLearning: React.FC = () => {
           />
         )}
 
-        {showExamPrompt && !allCompleted && (
-          <div className="exam-prompt">
-            <p>Все предыдущие главы завершены. Готовы начать экзамен?</p>
-            <button onClick={handleStartExam}>Начать экзамен</button>
-          </div>
-        )}
+  
 
-        {allCompleted && (
-          <div className="congratulations">
-            <p>Поздравляем! Вы прошли все уроки курса.</p>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import TextInput from '@/components/reUseComponents/TextInput';
 import ReusableSwitch from '@/components/reUseComponents/Switcher';
 import ReusableSliderWithInput from '@/components/reUseComponents/Slider';
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import { addChapter } from '@/store/slices/courseEditorChapterSlice';
 
 // Yup validation schema

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import TeacherService from '@/services/teacher.service';
 import './MyTeacherCourses.scss';
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import { useRouter } from 'next/navigation'; // Используем useRouter вместо useNavigate в Next.js
 import ImageViewer from '@/components/reUseComponents/ImageViewer';
 import { serverUrl } from '@/shared/config';

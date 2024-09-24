@@ -2,7 +2,7 @@ import React from "react";
 import useLessonData from "./useLessonData";
 import "./LessonsStyle.scss";
 import ReactPlayer from 'react-player';
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 
 function LearningVideoLesson({ selectedStage, onComplete }) {
     const { stageData, showVideoLesson } = useLessonData(selectedStage ? selectedStage.id : null);

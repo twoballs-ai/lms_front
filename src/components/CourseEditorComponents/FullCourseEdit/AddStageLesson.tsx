@@ -1,6 +1,6 @@
 import React from 'react';
 // import { FileTextOutlined, VideoCameraOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import { faFilm } from "@fortawesome/free-solid-svg-icons";

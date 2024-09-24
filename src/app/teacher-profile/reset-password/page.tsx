@@ -2,7 +2,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import * as Yup from 'yup';
 import TextInput from '@/components/reUseComponents/TextInput';
-import LmsButton from '@/components/reUseComponents/Button';
+import LmsButton from '@/components/reUseComponents/LmsButton';
 import './ChangePassword.scss';
 import TeacherService from '@/services/teacher.service';
 

@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
 import StudentService from "@/services/student.service";
-import LmsButton from "@/components/reUseComponents/Button";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import "./StudentMyCourses.scss";
-
+import ImageViewer from "@/components/reUseComponents/ImageViewer";
+import { serverUrl } from '@/shared/config';
 interface Course {
   id: string;
   title: string;
@@ -38,6 +39,11 @@ const StudentMyCourses: React.FC = () => {
       <div className="my-courses-container__title">Мои курсы</div>
       {courseData.map((course) => (
         <div key={course.id} className="my-courses-container__course-item">
+                                   <ImageViewer
+                            src={`${serverUrl}/${course.cover_path}`}
+                            alt={course.cover_image_name}
+                            width={150}
+                        />
           <div className="course-item__course-title">{course.title}</div>
           <div className="course-item__course-actions">
             <LmsButton 

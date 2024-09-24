@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Button } from "antd";
-import { SettingOutlined, UpOutlined, DownOutlined } from "@ant-design/icons";
-import LmsButton from "@/components/reUseComponents/Button";
+import { SettingOutlined, UpOutlined, DownOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 import { DragVerticalIcon } from "@/components/icons/icons";
 import LmsModalBase from "@/components/reUseComponents/ModalBase";
 import TextInput from "@/components/reUseComponents/TextInput";
@@ -33,6 +33,7 @@ import SortableModules from "./SortableModules";
 interface Chapter {
   id: string;
   title: string;
+  is_exam:string;
   sort_index: number;
   key:number;
 // Make sure you define the Module interface if it's not defined elsewhere
@@ -43,6 +44,7 @@ interface SortableChapterProps {
   chapter: Chapter;
   setModuleEditData: () => void;
   course_id: string;
+
   activeChapterId: string | null;
   setDraggingItemId: (id: string | null) => void;
   setActiveChapterId: (id: string) => void;
@@ -104,7 +106,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
     setInputDescrValue("");
     setErrors({});
   };
-
+console.log(chapter)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputTitleValue(e.target.value);
   const handleInputDescrChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -234,7 +236,6 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
       className={`chapters__block ${
         activeChapterId === chapter.id ? "active" : ""
       } ${isDragging ? "opacity-50" : ""}`}
-      key={key}
       onClick={() => setActiveChapterId(chapter.id)}
     >
       <LmsModalBase
@@ -274,11 +275,14 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
       />
       <div className="block-left">
         <div className="block__title">
-          <p>{chapter.title}</p>
+        <p>
+    {chapter.title} 
+    {chapter.is_exam && <ClockCircleOutlined style={{ marginLeft: 8 }} />} 
+  </p>
         </div>
         <LmsButton buttonText="Добавить модуль" handleClick={handleOpenModal} />
         <div className="chapters__modules">
-          {/* <DndContext
+          <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
             modifiers={[restrictToVerticalAxis]}
@@ -309,7 +313,7 @@ const SortableChapter: React.FC<SortableChapterProps> = ({
                   />
                 ))}
             </SortableContext>
-          </DndContext> */}
+          </DndContext>
         </div>
       </div>
       <div className="block-menu">
