@@ -203,6 +203,7 @@ const CourseEditor: React.FC = () => {
                                     setActiveChapterId={setActiveChapterId}
                                     moveChapter={moveChapter}
                                     courseChapters={courseChapters}
+                                    draggingItemId={draggingItemId}
                                 />
                             ))}
                         </div>

@@ -127,6 +127,8 @@ const CourseLearning: React.FC = () => {
               setActiveChapterId={setActiveChapterId}
               isLocked={chapter.is_locked}
               chapter_is_completed={chapter.chapter_is_completed}
+              handleStartExam={handleStartExam}
+              showExamPrompt={showExamPrompt}
             >
               {chapter.modules.map((module) => (
                 <Modules

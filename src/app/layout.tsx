@@ -9,7 +9,6 @@ import { Metrika } from "@/components/metrika";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ToastContainer } from "react-toastify"; // Добавлено
 import "react-toastify/dist/ReactToastify.css"; // Добавлено
-import { Suspense } from "react";
 
 export default function RootLayout({
   children,

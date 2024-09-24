@@ -1,7 +1,7 @@
 "use client"; // Required for client-side rendering in Next.js
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBookOpen, faTasks, faStar } from '@fortawesome/free-solid-svg-icons'; // FontAwesome icons
+import { faUser, faBookOpen} from '@fortawesome/free-solid-svg-icons'; // FontAwesome icons
 import Link from 'next/link'; // For routing
 import "./StudentSideBar.scss"; // Import the updated SCSS file
 

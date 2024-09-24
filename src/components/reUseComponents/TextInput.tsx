@@ -1,6 +1,5 @@
 import React from 'react';
 import './TextInput.scss';  // Подключение кастомных стилей
-import { MailOutlined, LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 
 const TextInput = ({ 
   type = 'text', 
