@@ -9,6 +9,7 @@ import { Metrika } from "@/components/metrika";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ToastContainer } from "react-toastify"; // Добавлено
 import "react-toastify/dist/ReactToastify.css"; // Добавлено
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -28,7 +29,9 @@ export default function RootLayout({
             <div className={styles.mainСontainer}>{children}</div>
             {shouldShowFooter && <Footer />}
           </div>
-          <Metrika />
+          <Suspense>
+            <Metrika />
+          </Suspense>
           <ToastContainer
             position="top-right"
             autoClose={5000}
