@@ -73,6 +73,10 @@ const completeExam = async (chapter_id) => {
     return await api
         .post(`${apiStudyUrl}complete_exam/${chapter_id}`)
 }
+const chapterStart = async (chapter_id) => {
+    return await api
+        .patch(`${apiStudyUrl}chapter_start/${chapter_id}`)
+}
 
 const updateUserPass = async (data) => {
     return await api
@@ -94,6 +98,7 @@ const StudentService = {
     checkQuizLesson,
     learnCoursePageGetChapterList,
     updateUserPass,
+    chapterStart,
     // deleteTeacherCourse,
     // addCourse,
     // teacherStudents,

@@ -61,6 +61,7 @@ function AllProfilesLogin() {
     await AuthService.login(formData)
       .then((response) => {
         if (response.status === 200 || response.status === 201) {
+          console.log(response.data)
           localStorage.clear();
           localStorage.setItem(
             "access_token",

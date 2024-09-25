@@ -7,8 +7,8 @@ import Modules from "@/components/CourseLearningComponents/LeftBar/LearningModul
 import ModuleStageLearn from "@/components/CourseLearningComponents/FullCoursePassing/ModuleStageLearn";
 import { useParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle} from "@fortawesome/free-solid-svg-icons";
-// Define types for your chapter and module data
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+
 interface Module {
   id: number;
   title: string;
@@ -114,9 +114,28 @@ const CourseLearning: React.FC = () => {
     setModuleEditData(module);
   };
 
+  // New useEffect to send request on activeChapterId change
+  useEffect(() => {
+    const sendChapterChangeRequest = async () => {
+      if (activeChapterId !== null) {
+        try {
+          const response = await StudentService.chapterStart(activeChapterId);
+          if (response.status === 200 || response.status === 201) {
+            console.log("Chapter change request successful", response.data);
+          } else {
+            console.error("Failed to change chapter:", response.data.message);
+          }
+        } catch (error) {
+          console.error("Error changing chapter:", error.message);
+        }
+      }
+    };
+
+    sendChapterChangeRequest();
+  }, [activeChapterId]); // Trigger when activeChapterId changes
+
   return (
     <div className="course-learn__container">
-      
       <div className="container__leftbar">
         <div className="leftbar__chapters">
           {chapters.map((chapter) => (
@@ -125,7 +144,6 @@ const CourseLearning: React.FC = () => {
               chapter={chapter}
               activeChapterId={activeChapterId}
               setActiveChapterId={setActiveChapterId}
-              isLocked={chapter.is_locked}
               chapter_is_completed={chapter.chapter_is_completed}
               handleStartExam={handleStartExam}
               showExamPrompt={showExamPrompt}
@@ -146,9 +164,9 @@ const CourseLearning: React.FC = () => {
           ))}
         </div>
       </div>
-      
+
       <div className="container__learn-main">
-      {allCompleted && (
+        {allCompleted && (
           <div className="congratulations">
             <p>Поздравляем! Вы прошли все уроки курса.</p>
             <FontAwesomeIcon icon={faCheckCircle} />
@@ -166,9 +184,6 @@ const CourseLearning: React.FC = () => {
             checkCompletionStatus={checkCompletionStatus}
           />
         )}
-
-  
-
       </div>
     </div>
   );

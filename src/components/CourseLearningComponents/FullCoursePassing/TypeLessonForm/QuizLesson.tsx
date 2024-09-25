@@ -20,9 +20,12 @@ function LearningQuizLesson({ selectedStage, onComplete }) {
 
     useEffect(() => {
         if (stageData && stageData.lesson && stageData.lesson.answers) {
-            shuffleAndSetAnswers(stageData.lesson.answers);
-            setSelectedAnswers([]);  // Reset selected answers when stageData changes
-            setSelectedRadioAnswer(null); // Reset selected radio answer when stageData changes
+            // Reset the quiz state when stageData changes
+            setIsChecked(false);  // Reset the check state
+            setIsCorrect(true);  // Reset correctness state
+            setSelectedAnswers([]);  // Reset selected answers
+            setSelectedRadioAnswer(null);  // Reset selected radio answer
+            shuffleAndSetAnswers(stageData.lesson.answers);  // Shuffle answers
         }
     }, [stageData, shuffleAndSetAnswers]);
 
@@ -113,7 +116,6 @@ function LearningQuizLesson({ selectedStage, onComplete }) {
                             <LmsButton buttonText={"Следующий этап"} handleClick={onComplete} />
                         </div>
                     )}
-
                 </div>
             )}
         </>

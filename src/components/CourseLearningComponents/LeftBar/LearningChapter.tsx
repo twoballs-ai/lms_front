@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LockOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined } from '@ant-design/icons'; // Иконка таймера
 
 const Chapter = ({
   chapter,
@@ -22,11 +22,12 @@ const Chapter = ({
         <div className="block__title">
           <p>
             {chapter.title}
-            {chapter.is_locked && !chapter_is_completed && <span><LockOutlined /></span>}
+            {/* Если это экзамен, отображаем иконку таймера */}
+            {chapter.is_exam &&  <span><ClockCircleOutlined /></span>}
           </p>
         </div>
 
-        <div className={`chapters__modules ${chapter.is_locked ? "locked" : ""}`}>
+        <div className="chapters__modules">
           {children}
         </div>
       </div>
@@ -38,7 +39,7 @@ Chapter.propTypes = {
   chapter: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    is_locked: PropTypes.bool.isRequired, // Keep this in case you still need it
+    is_exam: PropTypes.bool.isRequired, // Новое поле для проверки экзамена
   }).isRequired,
   children: PropTypes.node,
   activeChapterId: PropTypes.number,
