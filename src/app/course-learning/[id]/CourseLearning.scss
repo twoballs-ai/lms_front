@@ -7,10 +7,12 @@
         display: flex;
         flex-direction: column;
         padding: 10px;
-        width: 15vw;
-        flex: 1;
-        height: 100vh;
-        overflow-y: auto;
+        width: 350px; /* Фиксированная ширина для левого меню */
+        min-width: 350px; /* Минимальная ширина, чтобы зафиксировать размер */
+        max-width: 350px; /* Максимальная ширина, чтобы зафиксировать размер */
+        height: calc(95vh - 50px); /* Высота leftbar минус высота settings-panel */
+        overflow-y: auto; /* Вертикальная прокрутка, если контент не помещается */
+        padding-bottom: 50px; 
 
         .leftbar__chapters {
             display: flex;
@@ -213,3 +215,29 @@
         }
     }
 }
+.exam-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; // Полная высота экрана для центрирования
+    text-align: center; // Выравнивание текста по центру
+  
+    p {
+      font-size: 1.5rem; // Размер текста
+      color: #333; // Цвет текста
+      margin-top: 20px; // Отступ между иконкой и текстом
+    }
+  
+    .exam-icon {
+      font-size: 5rem; // Большая иконка
+      color: #4CAF50; // Зеленый цвет
+      margin-bottom: 20px; // Отступ между иконкой и текстом
+    }
+  
+    button {
+      margin-top: 20px; // Отступ между текстом и кнопкой
+      padding: 10px 20px;
+      font-size: 1.2rem; // Увеличение размера текста кнопки
+    }
+  }

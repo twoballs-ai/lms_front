@@ -11,6 +11,7 @@ function ModuleStageLearn({ moduleEditData, chapters, setChapters, setNextModule
     const [moduleData, setModuleData] = useState([]);
     const [selectedStage, setSelectedStage] = useState(null);
     const [lessonCompleted, setLessonCompleted] = useState(false);
+
     useLayoutEffect(() => {
         const fetchModuleData = async () => {
             const response = await StudentService.learnGetModuleStages(moduleEditData.id);

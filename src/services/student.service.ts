@@ -75,7 +75,7 @@ const completeExam = async (chapter_id) => {
 }
 const chapterStart = async (chapter_id) => {
     return await api
-        .patch(`${apiStudyUrl}chapter_start/${chapter_id}`)
+        .patch(`${apiStudyUrl}chapter_patch/${chapter_id}`)
 }
 
 const updateUserPass = async (data) => {

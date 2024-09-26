@@ -7,7 +7,8 @@ import Modules from "@/components/CourseLearningComponents/LeftBar/LearningModul
 import ModuleStageLearn from "@/components/CourseLearningComponents/FullCoursePassing/ModuleStageLearn";
 import { useParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faClock } from "@fortawesome/free-solid-svg-icons";
+import LmsButton from "@/components/reUseComponents/LmsButton";
 
 interface Module {
   id: number;
@@ -42,7 +43,7 @@ const CourseLearning: React.FC = () => {
       const response = await StudentService.learnCoursePageGetChapterList(course_id);
       if (response.status === 200 || response.status === 201) {
         const fetchedChapters: ChapterType[] = response.data.data;
-        console.log(fetchedChapters);
+
         setChapters(fetchedChapters);
         const [firstIncompleteChapter, firstIncompleteModule] = findFirstIncomplete(fetchedChapters);
         setActiveChapterId(firstIncompleteChapter);
@@ -64,6 +65,11 @@ const CourseLearning: React.FC = () => {
 
   const findFirstIncomplete = (chapters: ChapterType[]): [number | null, number | null] => {
     for (let i = 0; i < chapters.length; i++) {
+      if (chapters[i].is_exam) {
+        // Возвращаем главу экзамена и первый модуль
+        return [chapters[i].id, chapters[i].modules[0].id];
+      }
+      
       if (!chapters[i].chapter_is_completed && !chapters[i].is_locked) {
         const incompleteModule = chapters[i].modules.find(mod => !mod.is_completed);
         if (incompleteModule) return [chapters[i].id, incompleteModule.id];
@@ -93,46 +99,74 @@ const CourseLearning: React.FC = () => {
     setModuleEditData(nextModule || {});
   };
 
-  const handleStartExam = async () => {
-    const examChapter = chapters.find(ch => ch.is_exam);
-    if (examChapter) {
-      try {
-        const response = await StudentService.startExam(examChapter.id);
-        if (response.status === 200 || response.status === 201) {
-          fetchChapters();
-          setShowExamPrompt(false);
-        } else {
-          console.error("Failed to start exam:", response.data.message);
-        }
-      } catch (error) {
-        console.error("Error starting exam:", error.message);
+  const handleStartExam = async (chapterId: number) => {
+    const currentExam = chapters.find(ch => ch.is_exam && ch.id === chapterId);
+  
+    if (!currentExam) return;
+  
+    // Проверка на наличие другого активного незавершенного экзамена
+    const previousExam = chapters.find(ch => ch.is_exam && ch.id !== chapterId && ch.exam_status?.exam_in_progress);
+  
+    if (previousExam && !previousExam.exam_status?.exam_completed) {
+      alert("Вы еще не завершили предыдущий экзамен.");
+      return;
+    }
+  
+    try {
+      const response = await StudentService.startExam(currentExam.id);
+      if (response.status === 200 || response.status === 201) {
+        // Обновляем главы после старта экзамена
+        await fetchChapters();
+  
+        // Устанавливаем текущую экзаменационную главу и модуль только после завершения fetchChapters
+        const updatedExam = chapters.find(ch => ch.is_exam && ch.id === chapterId);
+        setActiveChapterId(updatedExam?.id || null);
+        setActiveModuleId(updatedExam?.modules.length ? updatedExam.modules[0].id : null);
+        setModuleEditData(updatedExam?.modules[0] || {});
+  
+        setShowExamPrompt(false); // Скрываем сообщение о начале экзамена
+      } else {
+        console.error("Не удалось начать экзамен:", response.data.message);
       }
+    } catch (error) {
+      console.error("Ошибка при начале экзамена:", error.message);
     }
   };
+  
 
   const moduleChange = (module: Module) => {
     setModuleEditData(module);
   };
-
   // New useEffect to send request on activeChapterId change
   useEffect(() => {
     const sendChapterChangeRequest = async () => {
+      // Найти активную главу по ее id
+      const activeChapter = chapters.find(chapter => chapter.id === activeChapterId);
+
+      // Проверка, что активная глава не заблокирована
+      if (activeChapter && activeChapter.is_locked) {
+        console.log("Глава заблокирована, запрос не отправляется.");
+        return; // Если глава заблокирована, выходим из функции
+      }
       if (activeChapterId !== null) {
         try {
           const response = await StudentService.chapterStart(activeChapterId);
           if (response.status === 200 || response.status === 201) {
-            console.log("Chapter change request successful", response.data);
+            console.log("Запрос на смену главы выполнен успешно", response.data);
           } else {
-            console.error("Failed to change chapter:", response.data.message);
+            console.error("Не удалось сменить главу:", response.data.message);
           }
         } catch (error) {
-          console.error("Error changing chapter:", error.message);
+          console.error("Ошибка при смене главы:", error.message);
         }
       }
     };
-
+  
     sendChapterChangeRequest();
-  }, [activeChapterId]); // Trigger when activeChapterId changes
+  }, [activeChapterId, chapters]); 
+
+  // Get the active chapter based on activeChapterId
+  const activeChapter = chapters.find(chapter => chapter.id === activeChapterId);
 
   return (
     <div className="course-learn__container">
@@ -172,18 +206,32 @@ const CourseLearning: React.FC = () => {
             <FontAwesomeIcon icon={faCheckCircle} />
           </div>
         )}
-        {Object.keys(moduleEditData).length > 0 && (
-          <ModuleStageLearn
-            moduleEditData={moduleEditData as Module}
-            setModuleEditData={setModuleEditData}
-            chapters={chapters}
-            setChapters={setChapters}
-            setNextModuleAndChapter={setNextModuleAndChapter}
-            course_id={course_id}
-            setShowExamPrompt={setShowExamPrompt}
-            checkCompletionStatus={checkCompletionStatus}
-          />
-        )}
+
+        {/* If the active chapter is locked and it's an exam, show the exam start prompt */}
+        {activeChapter && activeChapter.is_locked && activeChapter.is_exam && (
+  <div className="exam-prompt">
+    <FontAwesomeIcon icon={faClock} className="exam-icon" />
+    {chapters.some(ch => ch.is_exam && ch.exam_status?.exam_in_progress && !ch.exam_status?.exam_completed) ? (
+      <p>Вы еще не закончили предыдущий экзамен.</p>
+    ) : (
+      <LmsButton buttonText={"Начать экзамен"} handleClick={() => handleStartExam(activeChapter.id)} />
+    )}
+  </div>
+)}
+
+        {/* If there is module edit data, show the ModuleStageLearn */}
+{Object.keys(moduleEditData).length > 0 && activeModuleId && activeChapterId && !activeChapter?.is_locked && (
+  <ModuleStageLearn
+    moduleEditData={moduleEditData as Module}
+    setModuleEditData={setModuleEditData}
+    chapters={chapters}
+    setChapters={setChapters}
+    setNextModuleAndChapter={setNextModuleAndChapter}
+    course_id={course_id}
+    setShowExamPrompt={setShowExamPrompt}
+    checkCompletionStatus={checkCompletionStatus}
+  />
+)}
       </div>
     </div>
   );
