@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useRouter } from "next/navigation"; // Use Next.js router
-import CustomCard from "../reUseComponents/Cards";
 import { serverUrl } from "../../shared/config";
+import CustomCourseCard from "../reUseComponents/CustomCardNew";
 
 // Define the type for course
 interface Course {
@@ -34,7 +34,7 @@ const NewAddedCourse: React.FC<NewAddedCourseProps> = ({ lastAddedCourses }) => 
             className="card-wrapper"
             onClick={() => handleCardClick(course.id)}
           >
-            <CustomCard
+            <CustomCourseCard
               title={course.title}
               description={course.description}
               image={`${serverUrl}/${course.cover_path}`} // Replace with actual image URL if available

@@ -4,19 +4,20 @@
   gap: 10px;
   padding: 10px;
   p{
-      color:#00c3ff;
+      color:#474747;
       font-size: 2rem;
   }
   .home-container__last-added-course {
-      margin: 20px auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   
-      .card-wrapper {
-          flex: 1 0 21%; // This allows four cards per row with some spacing
-          margin: 10px;
-          max-width: 23%; // Ensure that the cards don't exceed 23% of the container width
-      }
+    .card-wrapper {
+      flex: 1 0 21%; // Это позволяет показывать 4 карточки в ряд с промежутками
+      margin: 10px;
+      max-width: 23%;
+    }
   }
+  
 }
