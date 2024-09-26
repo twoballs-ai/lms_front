@@ -91,6 +91,85 @@
 }
 
 
-// //   .content__quiz-lesson {
-// //     // Добавьте стили для урока-викторины по вашему выбору
-// //   }
+.content__quiz-lesson {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; // Отступ между элементами квиза
+    padding: 20px;
+    background-color: #ffffff; // Фон для контейнера квиза
+    border-radius: 8px; // Закругленные углы
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Тень для контейнера
+    margin-bottom: 20px; // Отступ снизу
+
+    &__title {
+        font-size: 2rem; // Размер шрифта для заголовка
+        color: #333; // Цвет заголовка
+        margin-bottom: 10px; // Отступ снизу
+    }
+
+    &__question {
+        font-size: 1.5rem; // Размер шрифта для вопроса
+        color: #555; // Цвет вопроса
+        margin-bottom: 15px; // Отступ снизу
+    }
+
+    .question-item {
+        display: flex;
+        align-items: center;
+        padding: 10px; // Отступ внутри элемента ответа
+        border: 1px solid #ccc; // Рамка вокруг элемента ответа
+        border-radius: 6px; // Закругленные углы
+        background-color: #f9f9f9; // Фон для элемента ответа
+        margin-bottom: 10px; // Отступ снизу
+        transition: background-color 0.3s ease; // Плавный переход цвета фона
+
+        &:hover {
+            background-color: #e6f7ff; // Цвет фона при наведении
+        }
+
+        input {
+            margin-right: 10px; // Отступ между радио/чекбоксом и текстом
+        }
+
+        span {
+            font-size: 1.2rem; // Размер шрифта для текста ответа
+            color: #333; // Цвет текста ответа
+        }
+        .item_style{
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    .error-message {
+        color: #d9534f; // Цвет текста для сообщения об ошибке
+        font-size: 1.2rem; // Размер шрифта
+        padding: 10px; // Отступ внутри сообщения
+        border: 1px solid #d9534f; // Рамка вокруг сообщения
+        border-radius: 6px; // Закругленные углы
+        background-color: #f2dede; // Фон для сообщения об ошибке
+        margin-bottom: 20px; // Отступ снизу
+    }
+
+    .content__quiz-buttons,
+    .content__learn-buttons {
+        display: flex;
+        justify-content: center; // Центрируем кнопки
+        margin-top: 20px; // Отступ сверху
+
+        button {
+            background-color: #4CAF50; // Цвет фона кнопки
+            color: white; // Цвет текста кнопки
+            padding: 10px 20px; // Отступ внутри кнопки
+            font-size: 16px; // Размер шрифта
+            border: none; // Без рамки
+            border-radius: 4px; // Закругленные углы
+            cursor: pointer; // Курсор при наведении
+            transition: background-color 0.3s ease; // Плавный переход цвета фона
+
+            &:hover {
+                background-color: #45a049; // Цвет фона кнопки при наведении
+            }
+        }
+    }
+}

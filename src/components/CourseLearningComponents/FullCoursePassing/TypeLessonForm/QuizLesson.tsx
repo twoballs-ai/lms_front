@@ -89,6 +89,7 @@ function LearningQuizLesson({ selectedStage, onComplete }) {
                                     <input
                                         type={stageData.lesson.quiz_type === "radio" ? "radio" : "checkbox"}
                                         name="quizAnswer"
+                                        className="item_style"
                                         checked={
                                             stageData.lesson.quiz_type === "radio"
                                                 ? selectedRadioAnswer === answer.id

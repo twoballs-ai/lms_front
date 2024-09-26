@@ -6,8 +6,6 @@ import "./Footer.scss";
 import Link from 'next/link'
 
 function Footer() {
-
-
   return (
     <footer>
       <div className="footer__container">
@@ -17,10 +15,10 @@ function Footer() {
         <div className="container__links">
           <p>Ссылки</p>
           <Link href="/license" className="nav-link">Пользовательское соглашение</Link>
+          {/* Добавляем ссылку на Flowbyte */}
         </div>
         <div className="container__contacts">
-        <p>Контакты</p>
-          {/* Добавляем контактный адрес электронной почты */}
+          <p>Контакты</p>
           <p>Email: <a href="mailto:manage@courserio.ru">manage@courserio.ru</a></p>
         </div>
         <div className="container__social-links">
@@ -32,6 +30,8 @@ function Footer() {
             <FontAwesomeIcon icon={faTelegramPlane} className="social-icon" />
           </a>
         </div>
+        <p>Разработано веб студией <Link href="https://flowbyte.ru" className="nav-link" target="_blank" rel="noopener noreferrer">Flowbyte</Link></p>
+
       </div>
     </footer>
   );
