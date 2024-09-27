@@ -1,7 +1,7 @@
 import React from "react";
-import "./CustomCardNew.scss"; // Импорт стилей без использования CSS-модулей
+import ImageViewer from "./ImageViewer"; // Импорт компонента ImageViewer
+import "./CustomCardNew.scss";
 
-// Интерфейс для свойств карточки
 interface CustomCourseCardProps {
   title: string;
   description: string;
@@ -12,11 +12,11 @@ const CustomCourseCard: React.FC<CustomCourseCardProps> = ({ title, description,
   return (
     <div className="custom-course-card">
       <div className="custom-course-card__image">
-        <img src={image} alt={title} />
+        <ImageViewer src={image} alt={title}/> {/* Использование ImageViewer */}
       </div>
       <div className="custom-course-card__body">
         <h3 className="body__title">{title}</h3>
-        <p className="body__description">{description}</p> {/* Изолированный стиль для p */}
+        <p className="body__description">{description}</p>
       </div>
     </div>
   );

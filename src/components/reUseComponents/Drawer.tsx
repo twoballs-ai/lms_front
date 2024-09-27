@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, Button, Space } from 'antd';
+import { Drawer} from 'antd';
 
 export default function LmsDrawerBase({ open, onClose, content }) {
   return (
