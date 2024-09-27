@@ -3,21 +3,56 @@
   flex-direction: column;
   gap: 10px;
   padding: 10px;
-  p{
-      color:#474747;
-      font-size: 2rem;
+
+  p {
+    color: #474747;
+    font-size: 1.3rem;
   }
+
   .home-container__last-added-course {
     margin: 20px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  
+
     .card-wrapper {
-      flex: 1 0 21%; // Это позволяет показывать 4 карточки в ряд с промежутками
+      flex: 1 0 21%; // Показывает 4 карточки в ряд с промежутками
       margin: 10px;
       max-width: 23%;
     }
   }
-  
+
+  // Стили для планшетов (до 768px)
+  @media (max-width: 768px) {
+    p {
+      font-size: 1.2rem;
+    }
+
+    .home-container__last-added-course {
+      justify-content: space-around; // Более плотное расположение карточек
+
+      .card-wrapper {
+        flex: 1 0 45%; // Показывает 2 карточки в ряд
+        max-width: 45%;
+      }
+    }
+  }
+
+  // Стили для мобильных устройств (до 480px)
+  @media (max-width: 480px) {
+    p {
+      font-size: 1.1rem;
+    }
+
+    .home-container__last-added-course {
+      flex-direction: column; // В мобильном виде карточки идут по одной в ряд
+      justify-content: center;
+
+      .card-wrapper {
+        flex: 1 0 100%; // Каждая карточка занимает всю ширину
+        max-width: 100%;
+        margin: 10px 0; // Убираем боковые отступы
+      }
+    }
+  }
 }

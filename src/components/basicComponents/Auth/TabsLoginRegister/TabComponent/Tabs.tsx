@@ -19,7 +19,7 @@ const TabsAuth = ({ authState, handleCloseModal  }) => {
     // };
     return (
         <div className="modal__tabs">
-   <CloseOutlined className="close-icon" onClick={handleCloseModal} />
+
             <div className="tabs">
          
                 {/* Tab nav */}
