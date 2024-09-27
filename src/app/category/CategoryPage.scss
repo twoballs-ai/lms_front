@@ -1,73 +1,15 @@
 .category-page {
     padding: 20px;
-}
 
-.category-filter {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.category-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #00c3ff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: #0056b3;
-    }
-
-    &:focus {
-        outline: none;
-    }
-}
-
-.courses-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.course-card {
-    padding: 20px;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    width: calc(33.333% - 20px);
-    box-sizing: border-box;
-    transition: box-shadow 0.3s ease;
-
-    h3 {
-        margin-top: 0;
-    }
-
-    &:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    a {
+    p {
         color: #00c3ff;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}.category-page {
-    padding: 20px;
-    p{
-        color:#00c3ff;
         font-size: 2rem;
     }
 }
 
 .category-filter {
     display: flex;
+    flex-wrap: wrap; // Позволяет кнопкам переноситься на новую строку
     gap: 10px;
     margin-bottom: 20px;
 }
@@ -91,14 +33,58 @@
     }
 }
 
+// Планшетные стили (до 768px)
+@media (max-width: 768px) {
+    .category-filter {
+        justify-content: center; // Центрируем кнопки на планшетах
+    }
+
+    .category-button {
+        width: 45%; // Уменьшаем ширину кнопок для планшетов
+    }
+}
+
+// Мобильные стили (до 480px)
+@media (max-width: 480px) {
+    .category-filter {
+        justify-content: center; // Центрируем кнопки на мобильных устройствах
+    }
+
+    .category-button {
+        width: 45%; // Кнопки занимают всю ширину на мобильных устройствах
+        margin-bottom: 10px; // Добавляем отступ между кнопками
+    }
+}
+
 .courses-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-            .card-wrapper {
-            flex: 1 0 21%; // This allows four cards per row with some spacing
-            margin: 10px;
-            max-width: 23%; // Ensure that the cards don't exceed 23% of the container width
-        }
+
+    .card-wrapper {
+        flex: 1 0 21%; // Четыре карточки в ряд
+        margin: 10px;
+        max-width: 23%;
+    }
 }
 
+// Планшетные стили (до 768px)
+@media (max-width: 768px) {
+    .courses-list {
+        .card-wrapper {
+            flex: 1 0 45%; // Две карточки в ряд
+            max-width: 45%;
+        }
+    }
+}
+
+// Мобильные стили (до 480px)
+@media (max-width: 480px) {
+    .courses-list {
+        .card-wrapper {
+            flex: 1 0 100%; // Одна карточка в ряд
+            max-width: 100%;
+            margin: 10px 0;
+        }
+    }
+}
