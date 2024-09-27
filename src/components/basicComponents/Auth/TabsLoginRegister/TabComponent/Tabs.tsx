@@ -1,22 +1,15 @@
 import React, { useState } from "react";
 import LoginTab from "./AllTabs/LoginTab";
 import RegisterTab from "./AllTabs/RegisterTab";
-import { CloseOutlined } from '@ant-design/icons';
+
 import "./Tabs.scss";
 import TabNavItem from "./TabNavItem";
 import TabContent from "./TabContent";
 
-const TabsAuth = ({ authState, handleCloseModal  }) => {
+const TabsAuth = ({ authState }) => {
     const [activeTab, setActiveTab] = useState(authState);
 
-    // const handleTab1 = () => {
-    //   // update the state to tab1
-    //   setActiveTab("login");
-    // };
-    // const handleTab2 = () => {
-    //   // update the state to tab2
-    //   setActiveTab("register");
-    // };
+
     return (
         <div className="modal__tabs">
 
