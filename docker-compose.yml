@@ -7,16 +7,19 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-    # Убираем том для продакшена, чтобы избежать перезаписи файлов контейнера
-    # volumes:
-    #   - .:/app
-    command: npm start
+      - "3000" # Только для локальной отладки, Traefik берет порт из labels
     networks:
-      - courserio_network
+      - traefik_network
+    command: npm start
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend-router.rule=Host(`courserio.ru`)"
+      - "traefik.http.routers.frontend-router.entryPoints=websecure"
+      - "traefik.http.routers.frontend-router.tls.certresolver=letsencrypt"
+      - "traefik.http.services.frontend-service.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
 
 networks:
-  courserio_network:
+  traefik_network:
     external: true
