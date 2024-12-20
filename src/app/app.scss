@@ -1,12 +1,136 @@
 .main-container__home-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   padding: 10px;
 
   p {
-    color: #474747;
+    color: #ff8c00;
     font-size: 1.3rem;
+  }
+
+  .home-container__hero-block {
+    background: linear-gradient(135deg, #ff8c00 0%, #00bfff 100%);
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    .hero-block__hero-title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-block__hero-subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #ffffff;
+      font-size: 1.3rem;
+
+    }
+
+    .hero-block__hero-cta {
+      background: #fff;
+      color: #333;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+
+      &:hover {
+        background: #f0f0f0;
+      }
+    }
+  }
+
+  .home-container__why-us {
+    text-align: center;
+    margin-bottom: 20px;
+
+    .why-us__section-title {
+      font-size: 1.8rem;
+      color: #ff8c00;
+      margin-bottom: 20px;
+    }
+
+    .why-us__features-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+
+      .features-list__feature-item {
+        background: #fff;
+        border-radius: 10px;
+        flex: 1 1 200px;
+        max-width: 220px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+        .feature-item__feature-icon {
+          font-size: 2rem;
+          margin-bottom: 10px;
+          display: block;
+        }
+
+        .feature-item__feature-title {
+          font-size: 1.2rem;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        .feature-item__feature-desc {
+          font-size: 0.9rem;
+          color: #555;
+        }
+      }
+    }
+  }
+
+  .home-container__custom-hr {
+    border-top: 3px solid #ff8c00;
+    border-bottom: 3px solid #00bfff;
+    border-left: none;
+    border-right: none;
+    width: 60vw;
+    margin: 40px auto;
+  }
+
+  .home-container__community-info {
+    text-align: center;
+    background: #fff;
+    padding: 40px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    .community-info__section-title{
+      font-size: 2rem;
+      color: #242424;
+    }
+    .community-info__community-desc {
+      font-size: 1rem;
+      color: #555;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .community-info__secondary-btn {
+      background: #ff8c00;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+
+      &:hover {
+        background: #e67e00;
+      }
+    }
   }
 
   .home-container__last-added-course {
@@ -15,43 +139,41 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
-    .card-wrapper {
-      flex: 1 0 21%; // Показывает 4 карточки в ряд с промежутками
+    .home-container__card-wrapper {
+      flex: 1 0 21%;
       margin: 10px;
       max-width: 23%;
     }
   }
 
-  // Стили для планшетов (до 768px)
   @media (max-width: 768px) {
     p {
       font-size: 1.2rem;
     }
 
-    .home-container__last-added-course {
-      justify-content: space-around; // Более плотное расположение карточек
+    .ome-container__last-added-course {
+      justify-content: space-around;
 
-      .card-wrapper {
-        flex: 1 0 45%; // Показывает 2 карточки в ряд
+      .home-container__card-wrapper {
+        flex: 1 0 45%;
         max-width: 45%;
       }
     }
   }
 
-  // Стили для мобильных устройств (до 480px)
   @media (max-width: 480px) {
     p {
       font-size: 1.1rem;
     }
 
-    .home-container__last-added-course {
-      flex-direction: column; // В мобильном виде карточки идут по одной в ряд
+    .main-container__home-container__last-added-course {
+      flex-direction: column;
       justify-content: center;
 
-      .card-wrapper {
-        flex: 1 0 100%; // Каждая карточка занимает всю ширину
+      .main-container__home-container__card-wrapper {
+        flex: 1 0 100%;
         max-width: 100%;
-        margin: 10px 0; // Убираем боковые отступы
+        margin: 10px 0;
       }
     }
   }
