@@ -1,48 +1,43 @@
 import axios from "axios";
 import { apiUrl, apiUserUrl } from "../shared/config";
 import api from "./api";
-import { toast } from 'react-toastify';
-// const API_URL = "http://localhost:8080/api/auth/";
+import { toast } from "react-toastify";
 import TokenService from "./token.service";
 
-const teacherRegister = async (data) => {
-  console.log(data)
-  return await api
-    .post(apiUserUrl + "teacher-register/",
-      data
-      // ,{ headers: { Authorization: `Token da0d550bcc813a1b1cc6b905551cb11e3bf95046` } }
-    )
-}
-const studentRegister = async (data) => {
-  return await api
-    .post(apiUserUrl + "student-register/",
-      data
-    )
-}
-const login = async (formData) => {
-  const response = await api.post(apiUrl + "v1/user/token", formData, {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  });
-  return response;
+type Payload = Record<string, unknown>;
+
+const teacherRegister = async (data: Payload) => {
+  return await api.post(`${apiUserUrl}teacher-register/`, data);
 };
 
+const studentRegister = async (data: Payload) => {
+  return await api.post(`${apiUserUrl}student-register/`, data);
+};
+
+const login = async (formData: URLSearchParams | string) => {
+  return await api.post(`${apiUrl}v1/user/token`, formData, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+};
 
 const refreshToken = async () => {
-  const refresh_token = TokenService.getLocalRefreshToken();
+  const refreshTokenValue = TokenService.getLocalRefreshToken();
+  if (!refreshTokenValue) {
+    throw new Error("Missing refresh token");
+  }
+
   const formData = new URLSearchParams();
-  formData.append('refresh_token', refresh_token);
+  formData.append("refresh_token", refreshTokenValue);
+
   try {
-    const response = await axios.post(apiUrl + "v1/user/token/refresh/", formData, {
+    const response = await axios.post(`${apiUrl}v1/user/token/refresh/`, formData, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    // if (jwtDecode(refreshToken).exp < currentTime / 1000) {
-    //   logout();
-    //   return Promise.reject("Token expired");
-    // }
+
     return response.data;
   } catch (error) {
     toast.error("Error refreshing token!");
@@ -51,12 +46,18 @@ const refreshToken = async () => {
   }
 };
 
-
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  const rawUser = localStorage.getItem("user");
+  if (!rawUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(rawUser);
+  } catch {
+    return null;
+  }
 };
-
-
 
 const AuthService = {
   teacherRegister,
@@ -64,7 +65,6 @@ const AuthService = {
   login,
   getCurrentUser,
   refreshToken,
-
 };
 
 export default AuthService;

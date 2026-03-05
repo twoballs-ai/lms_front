@@ -1,30 +1,43 @@
-'use client';
-import { createContext, useState, useEffect } from 'react';
+"use client";
+import { createContext, useEffect, useMemo, useState } from "react";
 
-export const AuthContext = createContext(null);
+type Role = "teacher_model" | "student_model" | null;
 
-export const AuthProvider = ({ children }) => {
+type AuthContextValue = {
+  authenticated: boolean;
+  role: Role;
+  toggleAuthentication: () => void;
+};
+
+export const AuthContext = createContext<AuthContextValue>({
+  authenticated: false,
+  role: null,
+  toggleAuthentication: () => {},
+});
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState<Role>(null);
 
   useEffect(() => {
-    const storedRole = localStorage.getItem('role');
-    if (storedRole) {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole === "teacher_model" || storedRole === "student_model") {
       setRole(storedRole);
       setAuthenticated(true);
     }
   }, []);
 
   const toggleAuthentication = () => {
-    const currentRole = localStorage.getItem('role');
-    if (currentRole === 'teacher_model' || currentRole === 'student_model') {
-      setAuthenticated(!authenticated);
+    const currentRole = localStorage.getItem("role");
+    if (currentRole === "teacher_model" || currentRole === "student_model") {
+      setAuthenticated((prev) => !prev);
     }
   };
 
-  return (
-    <AuthContext.Provider value={{ authenticated, role, toggleAuthentication }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ authenticated, role, toggleAuthentication }),
+    [authenticated, role],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
