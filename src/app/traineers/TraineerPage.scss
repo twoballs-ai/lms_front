@@ -1,0 +1,77 @@
+.trainer-page {
+    padding: 20px;
+
+    p {
+        color: #00c3ff;
+        font-size: 2rem;
+    }
+}
+
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.category-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #00c3ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-filter {
+        justify-content: center;
+    }
+    .category-button {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+.trainers-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .card-wrapper {
+        flex: 1 0 21%;
+        margin: 10px;
+        max-width: 23%;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-wrapper {
+        flex: 1 0 45%;
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-wrapper {
+        flex: 1 0 100%;
+        max-width: 100%;
+        margin: 10px 0;
+    }
+}

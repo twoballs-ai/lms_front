@@ -9,6 +9,13 @@ const getCategory = async ({ toSelect }) => {
         }
     });
 }
+const getTraineerCategory = async ({ toSelect }) => {
+    return await api.get(apiBaseUrl + "traineer_category/", {
+        params: {
+            to_select: toSelect
+        }
+    });
+}
 const getCourse = async (course_id) => {
     return await api.get(apiBaseUrl + `course/?course_id=${course_id}`, );
 }
@@ -16,7 +23,10 @@ const getCourses = async (params) => {
     console.log(params)
     return await api.get(apiBaseUrl + `courses-by-cat/`,{params} );
 }
-
+const getTrainers = async (params) => {
+    console.log(params)
+    return await api.get(apiBaseUrl + `trainers_by_cat/`,{params} );
+}
 const homePageLastAddedCourses = async ({ items }) => {
     return await api
     .get(apiBaseUrl + `recent_courses/?items=${items}`)
@@ -49,8 +59,10 @@ const getBlogById = (id) => {
   };
 const SiteService = {
     getCategory,
+    getTraineerCategory,
     getCourse,
     getCourses,
+    getTrainers,
     homePageLastAddedCourses,
     homePagePopularCourses,
     homePagePopularTeachers,
