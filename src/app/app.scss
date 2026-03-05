@@ -1,22 +1,228 @@
 .main-container__home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  p{
-      color:#00c3ff;
-      font-size: 2rem;
+  gap: 30px;
+  padding: 20px;
+  background-color: #f8f9fa; // лёгкий фон всей страницы
+
+  p {
+    color: #343a40;
+    font-size: 1.3rem;
   }
-  .home-container__last-added-course {
-      margin: 20px auto;
+
+  /* Hero-блок */
+  .home-container__hero-block {
+    background: linear-gradient(135deg, #00bfff 0%, #ff8c00 100%);
+    color: #fff;
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+    .hero-block__hero-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero-block__hero-subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .hero-block__hero-cta {
+      background: #fff;
+      color: #00bfff;
+      font-weight: 600;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255,255,255,0.9);
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  /* Блок "Почему мы?" */
+  .home-container__why-us {
+    text-align: center;
+
+    .why-us__section-title {
+      font-size: 2rem;
+      color: #00bfff;
+      margin-bottom: 30px;
+    }
+
+    .why-us__features-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-  
-      .card-wrapper {
-          flex: 1 0 21%; // This allows four cards per row with some spacing
-          margin: 10px;
-          max-width: 23%; // Ensure that the cards don't exceed 23% of the container width
+      justify-content: center;
+      gap: 25px;
+
+      .features-list__feature-item {
+        background: #fff;
+        border-radius: 15px;
+        flex: 1 1 220px;
+        max-width: 240px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .feature-item__feature-icon {
+          font-size: 2.5rem;
+          margin-bottom: 12px;
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+
+        .feature-item__feature-title {
+          font-size: 1.3rem;
+          margin-bottom: 10px;
+          color: #343a40;
+        }
+
+        .feature-item__feature-desc {
+          font-size: 0.95rem;
+          color: #6c757d;
+          line-height: 1.5;
+        }
       }
+    }
+  }
+
+  /* Раздел недавно добавленных курсов */
+  .home-container__last-added-course {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+
+    .home-container__card-wrapper {
+      flex: 1 0 21%;
+      max-width: 23%;
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+      }
+    }
+  }
+
+  /* Последние новости */
+  .main-container__section-subtitle {
+    font-size: 1.8rem;
+    color: #00bfff;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  /* Раздел сообщества */
+  .home-container__community-info {
+    text-align: center;
+    background: #fff;
+    padding: 50px 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
+    .community-info__section-title {
+      font-size: 2rem;
+      color: #343a40;
+      margin-bottom: 20px;
+    }
+
+    .community-info__community-desc {
+      font-size: 1rem;
+      color: #6c757d;
+      max-width: 650px;
+      margin: 0 auto 25px;
+      line-height: 1.6;
+    }
+
+    .community-info__secondary-btn {
+      background: #00bfff;
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1.05rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #0095d1;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .home-container__custom-hr {
+    border: 0;
+    height: 3px;
+    background: linear-gradient(to right, #00bfff, #ff8c00);
+    width: 60vw;
+    margin: 50px auto;
+    border-radius: 5px;
+  }
+
+  /* Мобильные и планшетные стили */
+  @media (max-width: 992px) {
+    .home-container__hero-block {
+      padding: 60px 20px;
+      .hero-block__hero-title {
+        font-size: 2.2rem;
+      }
+      .hero-block__hero-subtitle {
+        font-size: 1.2rem;
+      }
+    }
+
+    .home-container__last-added-course .home-container__card-wrapper {
+      flex: 1 0 45%;
+      max-width: 45%;
+    }
+
+    .home-container__why-us .features-list__feature-item {
+      flex: 1 1 45%;
+      max-width: 45%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .home-container__hero-block {
+      padding: 40px 15px;
+      .hero-block__hero-title {
+        font-size: 1.8rem;
+      }
+      .hero-block__hero-subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    .home-container__last-added-course .home-container__card-wrapper,
+    .home-container__why-us .features-list__feature-item {
+      flex: 1 0 100%;
+      max-width: 100%;
+    }
   }
 }

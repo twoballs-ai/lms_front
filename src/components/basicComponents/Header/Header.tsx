@@ -4,28 +4,45 @@ import Link from 'next/link';
 import "./Header.scss"; // Import SCSS file
 import TabsAuth from "../Auth/TabsLoginRegister/TabComponent/Tabs";
 import LmsModalBase from "../../reUseComponents/ModalBase";
+import LmsDrawerBase from "../../reUseComponents/Drawer"; // Новый компонент Drawer
 import { MenuOutlined } from '@ant-design/icons';
 import { useRouter } from "next/navigation";
 
 function Header() {
-
-
-  const [authState, setAuthState] = useState("");
-  function handleShow(auth) {
-    handleOpenModal();
-    setAuthState(auth);
-  }
-
+  const [authState, setAuthState] = useState<AuthMode>("login");
   const [openModal, setOpenModal] = useState(false);
-  const handleOpenModal = () => setOpenModal(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [role, setRole] = useState<UserRole>(null);
+  const [isAuth, setIsAuth] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleShow = (auth: AuthMode) => {
+    setOpenModal(true);
+    setAuthState(auth);
+  };
+
   const handleCloseModal = () => setOpenModal(false);
   const contentToModal = (<TabsAuth authState={authState} handleCloseModal={handleCloseModal} />);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    handleResize(); // Проверка при первой загрузке
+    
+    window.addEventListener('resize', handleResize); // Отслеживание изменения размера
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const [role, setRole] = useState<string | null>(null);
-
-
-
   const [isAuth, setIsAuth] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
@@ -36,28 +53,41 @@ function Header() {
   useEffect(() => {
     const storedRole = localStorage.getItem('role');
     if (storedRole) {
-      setRole(JSON.parse(storedRole));
+      setRole(JSON.parse(storedRole) as UserRole);
     }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => setMenuOpen(!menuOpen);
-
-  const router = useRouter();
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const handleLogout = () => {
-    localStorage.clear(); // Clear all local storage items
+    localStorage.clear();
     setIsAuth(false);
     router.push('/'); // Redirect to home page
   };
 
+  const contentToModal = useMemo(
+    () => <TabsAuth authState={authState} handleCloseModal={handleCloseModal} />,
+    [authState],
+  );
+
   return (
-    <div className="container__header-container">
+    <header className="container__header-container">
       <div className="header-container__logo-and-menu">
         <Link href="/" className="logo-an-menu__logo">
-          Courserio
+          <Image
+            src="/logo.png"
+            alt="Courserio Logo"
+            width={230}
+            height={70}
+            priority
+          />
         </Link>
-        <button className="menu-toggle" onClick={toggleMenu}>
+        <button className="menu-toggle" onClick={toggleMenu} aria-label="Открыть меню">
           <MenuOutlined />
         </button>
       </div>
@@ -87,20 +117,18 @@ function Header() {
             </div>
           ) : (
             <>
-              <LmsModalBase
-                open={openModal}
-                onClose={handleCloseModal}
-                content={contentToModal}
-
-                showCloseIcon={false}
-              />
+              {isMobile ? (
+                <LmsDrawerBase open={openModal} onClose={handleCloseModal} content={contentToModal} />
+              ) : (
+                <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal} showCloseIcon />
+              )}
               <button className="nav-link__login-btn" onClick={() => handleShow("login")}>Войти</button>
               <button className="nav-link__register-btn" onClick={() => handleShow("register")}>Зарегистрироваться</button>
             </>
           )}
         </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 }
 
