@@ -1,5 +1,5 @@
 "use client"; // Для клиентской отрисовки в Next.js
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SiteService from "@/services/siteNoAuth.service";
 import NewAddedCourse from "@/components/HomeComponents/NewAddedCourse";
 import LatestNews from "@/components/HomeComponents/LatestNews";
@@ -14,18 +14,12 @@ interface Course {
 
 export default function Home() {
   const [lastAddedCourses, setLastAddedCourses] = useState<Course[]>([]);
-  const [teacherId, setTeacherId] = useState<boolean>(false);
-  const items = "8";
+  const items = 8;
 
   useEffect(() => {
     document.title = "Courserio - Lms - цифровая платформа обучения";
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined" && localStorage.getItem("access_token")) {
-      setTeacherId(true);
-    }
-  }, [teacherId]);
 
   useEffect(() => {
     const fetchData = async () => {
