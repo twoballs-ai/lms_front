@@ -7,7 +7,7 @@ import LmsModalBase from "../../reUseComponents/ModalBase";
 import LmsDrawerBase from "../../reUseComponents/Drawer";
 import { MenuOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-
+import Image from 'next/image';
 type AuthMode = "login" | "register";
 type UserRole = "teacher_model" | "student_model" | null;
 
