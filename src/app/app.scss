@@ -6,6 +6,7 @@
   flex-direction: column;
   gap: 1.8rem;
 
+  /* Hero-блок */
   .home-container__hero-block {
     background: radial-gradient(circle at top left, #1d4ed8, #312e81 52%, #111827);
     color: #fff;
@@ -88,6 +89,16 @@
     background: linear-gradient(to right, transparent, #cbd5e1, transparent);
   }
 
+  /* Последние новости */
+  .main-container__section-subtitle {
+    font-size: 1.8rem;
+    color: #00bfff;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  /* Раздел сообщества */
   .home-container__community-info {
     text-align: center;
     background: #fff;

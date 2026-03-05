@@ -66,7 +66,13 @@ function Header() {
     <header className="container__header-container">
       <div className="header-container__logo-and-menu">
         <Link href="/" className="logo-an-menu__logo">
-          Courserio
+          <Image
+            src="/logo.png"
+            alt="Courserio Logo"
+            width={230}
+            height={70}
+            priority
+          />
         </Link>
         <button className="menu-toggle" onClick={toggleMenu} aria-label="Открыть меню">
           <MenuOutlined />
