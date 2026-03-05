@@ -1,56 +1,73 @@
+footer {
+  margin-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  background: #0f172a;
+  color: #cbd5e1;
+}
+
 .footer__container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  padding: 20px;
-  background-color: #f8f8f8;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.2rem;
+
+  p {
+    margin: 0;
+  }
 
   .container__logo {
-    font-size: 1.2rem;
+    color: #e2e8f0;
+    line-height: 1.4;
   }
 
-  .container__links {
-    // Ваши стили для блока ссылок
-    display: flex;
-    flex-direction: column;
-  }
-
+  .container__links,
+  .container__contacts,
   .container__social-links {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 0.5rem;
 
-    .social-icon {
-      font-size: 1.5rem;
-      color: #000;
-      transition: color 0.3s;
-
-      &:hover {
-        color: #007bff;
-      }
+    > p:first-child {
+      font-weight: 700;
+      color: #f8fafc;
     }
   }
-}
 
-// Медиа-запрос для мобильных устройств
-@media (max-width: 768px) {
-  .footer__container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
+  a {
+    color: #cbd5e1;
+    text-decoration: none;
+
+    &:hover {
+      color: #93c5fd;
+    }
   }
 
   .container__social-links {
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+
+    .social-icon {
+      font-size: 1.2rem;
+    }
+  }
+
+  .footer__credit {
+    grid-column: 1 / -1;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(203, 213, 225, 0.2);
   }
 }
-a {
-  color: rgb(99, 99, 99); /* Измените цвет на серый */
-  text-decoration: none; /* Убираем подчеркивание */
-  transition: color 0.3s; /* Добавим плавный переход для изменения цвета при наведении */
 
-  &:hover {
-    color: rgb(53, 53, 53); /* Цвет ссылки при наведении (можно изменить по желанию) */
+@media (max-width: 900px) {
+  .footer__container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .footer__container {
+    grid-template-columns: 1fr;
   }
 }
