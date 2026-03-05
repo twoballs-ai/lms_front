@@ -1,12 +1,15 @@
-"use client"; // This directive must be at the top
-import React, { useState, useEffect } from "react";
-import Link from 'next/link';
-import "./Header.scss"; // Import SCSS file
+"use client";
+import React, { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import "./Header.scss";
 import TabsAuth from "../Auth/TabsLoginRegister/TabComponent/Tabs";
 import LmsModalBase from "../../reUseComponents/ModalBase";
-import LmsDrawerBase from "../../reUseComponents/Drawer"; // Новый компонент Drawer
-import { MenuOutlined } from '@ant-design/icons';
+import LmsDrawerBase from "../../reUseComponents/Drawer";
+import { MenuOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
+
+type AuthMode = "login" | "register";
+type UserRole = "teacher_model" | "student_model" | null;
 
 function Header() {
   const [authState, setAuthState] = useState<AuthMode>("login");
@@ -23,35 +26,18 @@ function Header() {
   };
 
   const handleCloseModal = () => setOpenModal(false);
-  const contentToModal = (<TabsAuth authState={authState} handleCloseModal={handleCloseModal} />);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    handleResize(); // Проверка при первой загрузке
-    
-    window.addEventListener('resize', handleResize); // Отслеживание изменения размера
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const [role, setRole] = useState<string | null>(null);
-  const [isAuth, setIsAuth] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      setIsAuth(true);
+    if (typeof window === "undefined") {
+      return;
     }
-  }, [isAuth]);
 
-  useEffect(() => {
-    const storedRole = localStorage.getItem('role');
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+
+    const token = localStorage.getItem("access_token");
+    const storedRole = localStorage.getItem("role");
+
+    setIsAuth(Boolean(token));
     if (storedRole) {
       setRole(JSON.parse(storedRole) as UserRole);
     }
@@ -67,7 +53,8 @@ function Header() {
   const handleLogout = () => {
     localStorage.clear();
     setIsAuth(false);
-    router.push('/'); // Redirect to home page
+    setRole(null);
+    router.push("/");
   };
 
   const contentToModal = useMemo(
@@ -92,27 +79,41 @@ function Header() {
         </button>
       </div>
 
-      <div className={`header-container__navbar ${menuOpen ? 'open' : ''}`}>
+      <nav className={`header-container__navbar ${menuOpen ? "open" : ""}`}>
         <div className="navbar__buttons">
-          <Link href="/category" className="nav-link">Курсы</Link>
-          <Link href="/news-blog" className="nav-link">Новости</Link>   
-          <Link href="/about" className="nav-link">О нас</Link>
+          <Link href="/category" className="nav-link">
+            Курсы
+          </Link>
+          <Link href="/news-blog" className="nav-link">
+            Новости
+          </Link>
+          <Link href="/about" className="nav-link">
+            О нас
+          </Link>
           {isAuth ? (
             <div className="nav-dropdown">
               <div className="nav-dropdown-toggle">Профиль</div>
               <div className="nav-dropdown-menu">
                 {role === "teacher_model" && (
-                  <Link href="/teacher-profile/dashboard" className="nav-dropdown-item">Личный кабинет учителя</Link>
+                  <Link href="/teacher-profile/dashboard" className="nav-dropdown-item">
+                    Личный кабинет учителя
+                  </Link>
                 )}
                 {role === "student_model" && (
-                  <Link href="/student-profile/dashboard" className="nav-dropdown-item">Личный кабинет ученика</Link>
+                  <Link href="/student-profile/dashboard" className="nav-dropdown-item">
+                    Личный кабинет ученика
+                  </Link>
                 )}
-                <Link href="/" className="nav-dropdown-item" onClick={(e) => {
-  e.preventDefault(); // Prevent the default link behavior
-  handleLogout(); // Call the logout function
-}}>
-  Выход
-</Link>
+                <Link
+                  href="/"
+                  className="nav-dropdown-item"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLogout();
+                  }}
+                >
+                  Выход
+                </Link>
               </div>
             </div>
           ) : (
@@ -122,8 +123,12 @@ function Header() {
               ) : (
                 <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal} showCloseIcon />
               )}
-              <button className="nav-link__login-btn" onClick={() => handleShow("login")}>Войти</button>
-              <button className="nav-link__register-btn" onClick={() => handleShow("register")}>Зарегистрироваться</button>
+              <button className="nav-link__login-btn" onClick={() => handleShow("login")}>
+                Войти
+              </button>
+              <button className="nav-link__register-btn" onClick={() => handleShow("register")}>
+                Регистрация
+              </button>
             </>
           )}
         </div>

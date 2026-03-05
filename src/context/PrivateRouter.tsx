@@ -1,19 +1,19 @@
-'use client';
-import { useContext } from 'react';
-import { useRouter } from 'next/navigation';
-import { AuthContext } from '@/context/AuthProvider';
+"use client";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/AuthProvider";
 
-const PrivateRoute = ({ children, requiredRole }: { children: React.ReactNode, requiredRole: string }) => {
+const PrivateRoute = ({ children, requiredRole }: { children: React.ReactNode; requiredRole: string }) => {
   const { authenticated, role } = useContext(AuthContext);
   const router = useRouter();
 
   if (!authenticated) {
-    router.push('/');
+    router.push("/");
     return null;
   }
 
   if (requiredRole && role !== requiredRole) {
-    router.push('/');
+    router.push("/");
     return null;
   }
 
