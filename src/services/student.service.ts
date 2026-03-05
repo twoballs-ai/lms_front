@@ -1,107 +1,80 @@
-import { apiStudyUrl, apiUserUrl,  } from "../shared/config";
+import { apiStudyUrl, apiUserUrl } from "../shared/config";
 import api from "./api";
-// import authHeader from "./auth-header";
+
+type Id = number | string | string[];
+type Payload = unknown;
 
 const studentCourses = async () => {
-    return await api
-        .get(apiStudyUrl + "student/courses/"
-        )
-}
-const checkEnrollment = async (course_id) => {
-    return await api
-        .get(apiStudyUrl + "check-enrollment/?course_id="+course_id
-        )
-}
-const learnCoursePageGetChapterList = async (course_id) => {
-    return await api
-        .get(apiStudyUrl + "learning-course-chapter-list/" + course_id)
-}
-const getLearnLesson = async (stagePk) => {
-    return await api
-        .get(`${apiStudyUrl}stage/${stagePk}`)
-}
-const enrollToCourse = async (course_id) => {
-    return await api
-        .post(`${apiStudyUrl}enroll/${course_id}`,
+  return await api.get(`${apiStudyUrl}student/courses/`);
+};
 
-            // {headers: { "Content-Type": "multipart/form-data" }}
-        )
-}
-const unenrollStudent = async (course_id) => {
-    return await api.delete(`${apiStudyUrl}unenroll/${course_id}`);
-}
+const checkEnrollment = async (courseId: Id) => {
+  return await api.get(`${apiStudyUrl}check-enrollment/?course_id=${courseId}`);
+};
 
-const unenrollStudentLight = async (course_id) => {
-    return await api.patch(`${apiStudyUrl}unenroll/light/${course_id}`);
-}
-const learnGetModuleStages = async (module_id) => {
-    // console.log(course_id)
-    return await api
-        .get(apiStudyUrl + "module-stage-list/" + module_id)
-}
-const updateStage = async (stageId, isCompleted) => {
-    return await api
-        .post(`${apiStudyUrl}update_stage_progress/${stageId}/?is_completed=${isCompleted}`,
+const learnCoursePageGetChapterList = async (courseId: Id) => {
+  return await api.get(`${apiStudyUrl}learning-course-chapter-list/${courseId}`);
+};
 
-            // {headers: { "Content-Type": "multipart/form-data" }}
-        )
-}
+const getLearnLesson = async (stagePk: Id) => {
+  return await api.get(`${apiStudyUrl}stage/${stagePk}`);
+};
 
-const checkQuizLesson = async (stageId, answers) => {
-    return await api
-        .post(`${apiStudyUrl}check_quiz_answers/${stageId}`, answers
+const enrollToCourse = async (courseId: Id) => {
+  return await api.post(`${apiStudyUrl}enroll/${courseId}`);
+};
 
-            // {headers: { "Content-Type": "multipart/form-data" }}
-        )
-}
-// const deleteTeacherCourse = async (courseId) => {
-//     return await api
-//         .delete(apiLmsUrl + "teacher-courses-detail/" + courseId
-//         )
-// }
+const unenrollStudent = async (courseId: Id) => {
+  return await api.delete(`${apiStudyUrl}unenroll/${courseId}`);
+};
 
-// const teacherStudents = async (teacherId) => {
-//     return await api
-//         .get(apiLmsUrl + "teacher-students/" + teacherId
-//         )
-// }
-const startExam = async (chapter_id) => {
-    return await api
-        .post(`${apiStudyUrl}start_exam/${chapter_id}`)
-}
-const completeExam = async (chapter_id) => {
-    return await api
-        .post(`${apiStudyUrl}complete_exam/${chapter_id}`)
-}
-const chapterStart = async (chapter_id) => {
-    return await api
-        .patch(`${apiStudyUrl}chapter_patch/${chapter_id}`)
-}
+const unenrollStudentLight = async (courseId: Id) => {
+  return await api.patch(`${apiStudyUrl}unenroll/light/${courseId}`);
+};
 
-const updateUserPass = async (data) => {
-    return await api
-        .put(apiUserUrl + "reset-password",data
-        )
-}
+const learnGetModuleStages = async (moduleId: Id) => {
+  return await api.get(`${apiStudyUrl}module-stage-list/${moduleId}`);
+};
+
+const updateStage = async (stageId: Id, isCompleted: boolean) => {
+  return await api.post(`${apiStudyUrl}update_stage_progress/${stageId}/?is_completed=${isCompleted}`);
+};
+
+const checkQuizLesson = async (stageId: Id, answers: Payload) => {
+  return await api.post(`${apiStudyUrl}check_quiz_answers/${stageId}`, answers);
+};
+
+const startExam = async (chapterId: Id) => {
+  return await api.post(`${apiStudyUrl}start_exam/${chapterId}`);
+};
+
+const completeExam = async (chapterId: Id) => {
+  return await api.post(`${apiStudyUrl}complete_exam/${chapterId}`);
+};
+
+const chapterStart = async (chapterId: Id) => {
+  return await api.patch(`${apiStudyUrl}chapter_patch/${chapterId}`);
+};
+
+const updateUserPass = async (data: Payload) => {
+  return await api.put(`${apiUserUrl}reset-password`, data);
+};
 
 const StudentService = {
-    studentCourses,
-    updateStage,
-    getLearnLesson,
-    checkEnrollment,
-    enrollToCourse,
-    unenrollStudent,
-    unenrollStudentLight,
-    startExam,
-    completeExam,
-    learnGetModuleStages,
-    checkQuizLesson,
-    learnCoursePageGetChapterList,
-    updateUserPass,
-    chapterStart,
-    // deleteTeacherCourse,
-    // addCourse,
-    // teacherStudents,
+  studentCourses,
+  updateStage,
+  getLearnLesson,
+  checkEnrollment,
+  enrollToCourse,
+  unenrollStudent,
+  unenrollStudentLight,
+  startExam,
+  completeExam,
+  learnGetModuleStages,
+  checkQuizLesson,
+  learnCoursePageGetChapterList,
+  updateUserPass,
+  chapterStart,
 };
 
 export default StudentService;
