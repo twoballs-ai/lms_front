@@ -35,7 +35,7 @@ const getCourses = async (params?: CoursesParams) => {
 
 const getTrainers = async (params?: CoursesParams) => {
   console.log(params);
-  return await api.get(`${apiBaseUrl}trainers_by_cat/`, { params });
+  return await api.get(`${apiBaseUrl}trainers-by-cat/`, { params });
 };
 
 const homePageLastAddedCourses = async ({

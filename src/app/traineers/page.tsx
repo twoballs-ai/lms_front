@@ -7,8 +7,8 @@ import { serverUrl } from "../../shared/config";
 import "./TraineerPage.scss";
 
 interface TrainerCategory {
-    id: number;
-    title: string;
+    value: number;
+    label: string;
 }
 
 interface Trainer {
@@ -38,11 +38,12 @@ const TrainerPage: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const categoryResponse = await SiteService.getTraineerCategory({ toSelect: false });
+                const categoryResponse = await SiteService.getTraineerCategory({ toSelect: true });
                 if (categoryResponse.status === 200 || categoryResponse.status === 201) {
+                    console.log(categoryResponse.data.data)
                     setCategories(categoryResponse.data.data);
                 }
-                fetchTrainers();
+                // fetchTrainers();
             } catch (error) {
                 console.error("Error fetching categories", error);
             }
@@ -52,7 +53,7 @@ const TrainerPage: React.FC = () => {
 
     useEffect(() => {
         document.title = selectedCategory
-            ? `Тренажеры - ${selectedCategory.title}`
+            ? `Тренажеры - ${selectedCategory.label}`
             : "Тренажеры - Все категории";
     }, [selectedCategory]);
 
@@ -72,7 +73,7 @@ const TrainerPage: React.FC = () => {
 
     const handleCategorySelect = (category: TrainerCategory | null) => {
         setSelectedCategory(category);
-        fetchTrainers(category ? category.id : null);
+        fetchTrainers(category ? category.value : null);
     };
 
     if (!isMounted) return null;
@@ -85,11 +86,11 @@ const TrainerPage: React.FC = () => {
                 </button>
                 {categories.map((cat) => (
                     <button
-                        key={cat.id}
+                        key={cat.value}
                         className="category-button"
                         onClick={() => handleCategorySelect(cat)}
                     >
-                        {cat.title}
+                        {cat.label}
                     </button>
                 ))}
             </div>

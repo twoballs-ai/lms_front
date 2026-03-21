@@ -84,6 +84,9 @@ function Header() {
           <Link href="/category" className="nav-link">
             Курсы
           </Link>
+          <Link href="/traineers" className="nav-link">
+            Тренажеры
+          </Link>
           <Link href="/news-blog" className="nav-link">
             Новости
           </Link>
