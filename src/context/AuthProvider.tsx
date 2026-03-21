@@ -20,17 +20,65 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [role, setRole] = useState<Role>(null);
 
   useEffect(() => {
-    const storedRole = localStorage.getItem("role");
-    if (storedRole === "teacher_model" || storedRole === "student_model") {
-      setRole(storedRole);
-      setAuthenticated(true);
-    }
+    const syncAuth = () => {
+      const storedRole = localStorage.getItem("role");
+
+      if (!storedRole) {
+        setRole(null);
+        setAuthenticated(false);
+        return;
+      }
+
+      try {
+        const parsedRole = JSON.parse(storedRole) as Role;
+
+        if (parsedRole === "teacher_model" || parsedRole === "student_model") {
+          setRole(parsedRole);
+          setAuthenticated(true);
+          return;
+        }
+      } catch {
+        if (storedRole === "teacher_model" || storedRole === "student_model") {
+          setRole(storedRole);
+          setAuthenticated(true);
+          return;
+        }
+      }
+
+      setRole(null);
+      setAuthenticated(false);
+    };
+
+    syncAuth();
+    window.addEventListener("storage", syncAuth);
+    window.addEventListener("auth:changed", syncAuth);
+
+    return () => {
+      window.removeEventListener("storage", syncAuth);
+      window.removeEventListener("auth:changed", syncAuth);
+    };
   }, []);
 
   const toggleAuthentication = () => {
     const currentRole = localStorage.getItem("role");
-    if (currentRole === "teacher_model" || currentRole === "student_model") {
-      setAuthenticated((prev) => !prev);
+
+    if (!currentRole) {
+      setAuthenticated(false);
+      setRole(null);
+      return;
+    }
+
+    try {
+      const parsedRole = JSON.parse(currentRole) as Role;
+      if (parsedRole === "teacher_model" || parsedRole === "student_model") {
+        setRole(parsedRole);
+        setAuthenticated((prev) => !prev);
+      }
+    } catch {
+      if (currentRole === "teacher_model" || currentRole === "student_model") {
+        setRole(currentRole);
+        setAuthenticated((prev) => !prev);
+      }
     }
   };
 
