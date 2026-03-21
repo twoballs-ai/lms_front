@@ -34,24 +34,43 @@ function Header() {
 
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
 
-    const token = localStorage.getItem("access_token");
-    const storedRole = localStorage.getItem("role");
+    const syncAuthState = () => {
+      const token = localStorage.getItem("access_token");
+      const storedRole = localStorage.getItem("role");
 
-    setIsAuth(Boolean(token));
-    if (storedRole) {
-      setRole(JSON.parse(storedRole) as UserRole);
-    }
+      setIsAuth(Boolean(token));
 
+      if (!storedRole) {
+        setRole(null);
+        return;
+      }
+
+      try {
+        setRole(JSON.parse(storedRole) as UserRole);
+      } catch {
+        setRole(storedRole as UserRole);
+      }
+    };
+
+    syncAuthState();
     handleResize();
-    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("storage", syncAuthState);
+    window.addEventListener("auth:changed", syncAuthState);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("storage", syncAuthState);
+      window.removeEventListener("auth:changed", syncAuthState);
+    };
   }, []);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const handleLogout = () => {
     localStorage.clear();
+    window.dispatchEvent(new Event("auth:changed"));
     setIsAuth(false);
     setRole(null);
     router.push("/");

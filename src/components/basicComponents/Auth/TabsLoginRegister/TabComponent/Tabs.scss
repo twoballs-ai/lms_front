@@ -1,95 +1,78 @@
 .modal__tabs {
   display: flex;
   flex-direction: column;
-  // justify-content: end;
-  // align-items: flex-end;
 
   .tabs {
     position: relative;
     width: 100%;
-    max-width: 500px;
-    min-height: 600px; // Ensure the container has a fixed minimum height
+    max-width: 640px;
+    min-height: 600px;
     margin: auto;
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    padding: 2rem 1rem;
-    color: #e8f0f2;
-
-    border-radius: 2rem;
+    padding: 1rem 0 0.5rem;
+    color: #16324f;
 
     @media (max-width: 768px) {
-      padding: 1.5rem 1rem;
-      min-height: 500px; // Adjust for smaller screens if necessary
-    }
-
-    .close-icon {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 24px;
-      cursor: pointer;
-      color: #e8f0f2;
-
-      @media (max-width: 768px) {
-        font-size: 20px;
-      }
+      min-height: auto;
+      padding-top: 0.25rem;
     }
   }
 
   ul.tabsNav {
     width: 100%;
-    max-width: 400px;
-    margin: 0 auto 2rem;
+    max-width: 420px;
+    margin: 0 auto 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #39a2db;
-    border-radius: 2rem;
-    padding-left: 0px;
+    gap: 0.25rem;
+    background: #eef6fb;
+    border: 1px solid rgba(57, 162, 219, 0.18);
+    border-radius: 20px;
+    padding: 0.35rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
     @media (max-width: 768px) {
-      width: 90%;
+      width: 100%;
+      max-width: none;
     }
   }
 
   ul.tabsNav li {
     width: 50%;
-    padding: 0.5em;
+    padding: 0.85rem 1rem;
     list-style: none;
     text-align: center;
     cursor: pointer;
-    font-size: 1.6rem;
-    transition: all 0.7s;
-    border-bottom-left-radius: 2rem;
-    border-top-left-radius: 2rem;
-    color: #fa803a;
-    @media (max-width: 768px) {
-      font-size: 1.2rem;
-    }
-  }
-
-  ul.tabsNav li:nth-child(2) {
-    border-radius: 0;
-    border-bottom-right-radius: 2rem;
-    border-top-right-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    border-radius: 16px;
+    color: #5d7288;
   }
 
   ul.tabsNav li:hover {
-    background: rgba(0, 5, 4, 0.15);
+    color: #16324f;
+    background: rgba(255, 255, 255, 0.75);
   }
 
   ul.tabsNav li.active {
-    background: #39a2db;
+    color: #ffffff;
+    background: linear-gradient(135deg, #39a2db 0%, #176baf 100%);
+    box-shadow: 0 14px 28px rgba(23, 107, 175, 0.22);
   }
 
-  .LoginTab p,a
-  .RegisterTab p {
-    font-size: 1.6rem;
-    text-align: center;
-    color: #fa803a;
+  .LoginTab,
+  .RegisterTab {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
-    @media (max-width: 768px) {
-      font-size: 1.4rem;
+    > p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: center;
+      color: #5d7288;
     }
   }
 
@@ -98,29 +81,31 @@
   }
 
   .react-tabs__tab-list {
-    width: 40%;
-    margin: 0 auto 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 0px;
-    color: #ff7f50;
-    @media (max-width: 768px) {
-      width: 90%;
-    }
+    width: 100%;
+    margin: 0 auto 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    padding-left: 0;
   }
 
   .react-tabs__tab {
-    width: 50%;
-    padding: 0.5rem;
+    padding: 0.85rem 1rem;
     list-style: none;
     text-align: center;
     cursor: pointer;
-    transition: all 0.7s;
+    transition: all 0.25s ease;
+    border-radius: 14px;
+    border: 1px solid rgba(57, 162, 219, 0.18);
+    background: #f7fbff;
+    color: #4e647a;
+    font-weight: 600;
   }
 
   .react-tabs__tab--selected {
-    background: #39a2db;
+    background: rgba(57, 162, 219, 0.12);
+    border-color: rgba(57, 162, 219, 0.34);
+    color: #176baf;
   }
 
   .react-tabs__tab--disabled {
@@ -129,17 +114,7 @@
   }
 
   .react-tabs__tab:hover {
-    background: rgba(50, 224, 196, 0.15);
-  }
-
-  .react-tabs__tab:first-child {
-    border-bottom-left-radius: 2rem;
-    border-top-left-radius: 2rem;
-  }
-
-  .react-tabs__tab:last-child {
-    border-bottom-right-radius: 2rem;
-    border-top-right-radius: 2rem;
+    background: rgba(57, 162, 219, 0.08);
   }
 
   .react-tabs__tab-panel {
@@ -148,10 +123,5 @@
 
   .react-tabs__tab-panel--selected {
     display: block;
-    font-size: 1.6rem;
-
-    @media (max-width: 768px) {
-      font-size: 1.4rem;
-    }
   }
 }
