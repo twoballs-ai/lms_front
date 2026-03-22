@@ -1,3 +1,4 @@
+@import "./design-system.scss";
 /* index.css или App.css */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');

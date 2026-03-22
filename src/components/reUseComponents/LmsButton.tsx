@@ -1,5 +1,5 @@
 import React from "react";
-import "./LmsButton.scss"; // Импортируем стили
+import "./LmsButton.scss";
 
 interface LmsButtonProps {
   buttonText: string;
@@ -7,20 +7,27 @@ interface LmsButtonProps {
   variant?: "primary" | "secondary" | "success" | "danger";
   size?: "small" | "medium" | "large";
   styleType?: "default" | "inline" | "outline";
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  className?: string;
 }
 
 export default function LmsButton({
   buttonText,
   handleClick,
-  variant = "primary", // Цветовые схемы: primary, secondary, success, danger
-  size = "medium",     // Размеры: small, medium, large
-  styleType = "default", // Стили: default, inline, outline
+  variant = "primary",
+  size = "medium",
+  styleType = "default",
+  type = "button",
+  disabled = false,
+  className = "",
 }: LmsButtonProps) {
-  // Объединяем классы для кнопки
-  const buttonClass = `lms-button ${variant} ${size} ${styleType}`;
+  const buttonClass = ["lms-button", variant, size, styleType, className]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <button onClick={handleClick} className={buttonClass}>
+    <button type={type} onClick={handleClick} className={buttonClass} disabled={disabled}>
       {buttonText}
     </button>
   );

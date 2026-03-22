@@ -124,7 +124,7 @@ const RegisterForm = ({ userType }) => {
               value={email}
               prefix={<MailOutlined />}
               onChange={handleEmailChange}
-              style={errors.email ? { borderColor: "#ff6b6b" } : {}}
+              error={errors.email}
             />
             {errors.email && <div className="error">{errors.email}</div>}
           </div>
@@ -137,7 +137,7 @@ const RegisterForm = ({ userType }) => {
               value={password}
               prefix={<LockOutlined />}
               onChange={handlePasswordChange}
-              style={errors.password ? { borderColor: "#ff6b6b" } : {}}
+              error={errors.password}
             />
             {errors.password && <div className="error">{errors.password}</div>}
           </div>

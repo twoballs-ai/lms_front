@@ -6,28 +6,32 @@
   width: 100%;
 
   .ant-select-selector {
-    font-size: 14px;
-    min-height: 40px !important;
-    border-radius: 6px !important;
-    border: 1px solid #d9d9d9 !important;
+    min-height: 48px !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid #d5dfeb !important;
+    padding: 0.35rem 0.75rem !important;
+    box-shadow: none !important;
     display: flex;
     align-items: center;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base) !important;
   }
 
-  &:hover .ant-select-selector {
-    border-color: #1890ff !important;
+  &:hover .ant-select-selector,
+  &.ant-select-focused .ant-select-selector {
+    border-color: var(--color-primary-soft) !important;
   }
 
   &.ant-select-focused .ant-select-selector {
-    border-color: #1890ff !important;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+    box-shadow: var(--shadow-focus) !important;
   }
 
-  .ant-select-selection-placeholder {
-    color: #999;
+  .ant-select-selection-placeholder,
+  .ant-select-selection-item {
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
   }
 
   .ant-select-arrow {
-    color: #1890ff;
+    color: var(--color-primary);
   }
 }
