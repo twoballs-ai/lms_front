@@ -7,17 +7,18 @@ import LmsModalBase from "../../reUseComponents/ModalBase";
 import LmsDrawerBase from "../../reUseComponents/Drawer";
 import { MenuOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import Image from 'next/image';
+import Image from "next/image";
 type AuthMode = "login" | "register";
-type UserRole = "teacher_model" | "student_model" | null;
+type UserRole = ("teacher" | "student" | "site_user")[];
 
 function Header() {
   const [authState, setAuthState] = useState<AuthMode>("login");
   const [openModal, setOpenModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [role, setRole] = useState<UserRole>(null);
+  const [roles, setRoles] = useState<UserRole>([]);
   const [isAuth, setIsAuth] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const router = useRouter();
 
   const handleShow = (auth: AuthMode) => {
@@ -36,19 +37,19 @@ function Header() {
 
     const syncAuthState = () => {
       const token = localStorage.getItem("access_token");
-      const storedRole = localStorage.getItem("role");
+      const storedRoles = localStorage.getItem("roles");
 
       setIsAuth(Boolean(token));
 
-      if (!storedRole) {
-        setRole(null);
+      if (!storedRoles) {
+        setRoles([]);
         return;
       }
 
       try {
-        setRole(JSON.parse(storedRole) as UserRole);
+        setRoles(JSON.parse(storedRoles));
       } catch {
-        setRole(storedRole as UserRole);
+        setRoles([]);
       }
     };
 
@@ -72,12 +73,14 @@ function Header() {
     localStorage.clear();
     window.dispatchEvent(new Event("auth:changed"));
     setIsAuth(false);
-    setRole(null);
+    setRoles([]);
     router.push("/");
   };
 
   const contentToModal = useMemo(
-    () => <TabsAuth authState={authState} handleCloseModal={handleCloseModal} />,
+    () => (
+      <TabsAuth authState={authState} handleCloseModal={handleCloseModal} />
+    ),
     [authState],
   );
 
@@ -93,7 +96,11 @@ function Header() {
             priority
           />
         </Link>
-        <button className="menu-toggle" onClick={toggleMenu} aria-label="Открыть меню">
+        <button
+          className="menu-toggle"
+          onClick={toggleMenu}
+          aria-label="Открыть меню"
+        >
           <MenuOutlined />
         </button>
       </div>
@@ -113,42 +120,72 @@ function Header() {
             О нас
           </Link>
           {isAuth ? (
-            <div className="nav-dropdown">
+            <div
+              className="nav-dropdown"
+              onMouseEnter={() => setProfileOpen(true)}
+              onMouseLeave={() => setProfileOpen(false)}
+            >
               <div className="nav-dropdown-toggle">Профиль</div>
-              <div className="nav-dropdown-menu">
-                {role === "teacher_model" && (
-                  <Link href="/teacher-profile/dashboard" className="nav-dropdown-item">
-                    Личный кабинет учителя
+
+              {profileOpen && (
+                <div className={`nav-dropdown-menu ${profileOpen ? "open" : ""}`}>
+                  {roles.includes("teacher") && (
+                    <Link
+                      href="/teacher-profile/dashboard"
+                      className="nav-dropdown-item"
+                    >
+                      Личный кабинет учителя
+                    </Link>
+                  )}
+
+                  {roles.includes("student") && (
+                    <Link
+                      href="/student-profile/dashboard"
+                      className="nav-dropdown-item"
+                    >
+                      Личный кабинет ученика
+                    </Link>
+                  )}
+
+                  <Link
+                    href="/"
+                    className="nav-dropdown-item"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogout();
+                    }}
+                  >
+                    Выход
                   </Link>
-                )}
-                {role === "student_model" && (
-                  <Link href="/student-profile/dashboard" className="nav-dropdown-item">
-                    Личный кабинет ученика
-                  </Link>
-                )}
-                <Link
-                  href="/"
-                  className="nav-dropdown-item"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLogout();
-                  }}
-                >
-                  Выход
-                </Link>
-              </div>
+                </div>
+              )}
             </div>
           ) : (
             <>
               {isMobile ? (
-                <LmsDrawerBase open={openModal} onClose={handleCloseModal} content={contentToModal} />
+                <LmsDrawerBase
+                  open={openModal}
+                  onClose={handleCloseModal}
+                  content={contentToModal}
+                />
               ) : (
-                <LmsModalBase open={openModal} onClose={handleCloseModal} content={contentToModal} showCloseIcon />
+                <LmsModalBase
+                  open={openModal}
+                  onClose={handleCloseModal}
+                  content={contentToModal}
+                  showCloseIcon
+                />
               )}
-              <button className="nav-link__login-btn" onClick={() => handleShow("login")}>
+              <button
+                className="nav-link__login-btn"
+                onClick={() => handleShow("login")}
+              >
                 Войти
               </button>
-              <button className="nav-link__register-btn" onClick={() => handleShow("register")}>
+              <button
+                className="nav-link__register-btn"
+                onClick={() => handleShow("register")}
+              >
                 Регистрация
               </button>
             </>

@@ -1,31 +1,42 @@
-import React from 'react';
-import './TextInput.scss';  // Подключение кастомных стилей
+import React from "react";
+import "./TextInput.scss";
 
-const TextInput = ({ 
-  type = 'text', 
-  placeholder, 
-  value, 
-  onChange, 
-  style = {}, 
-  error, 
-  prefix, 
-  suffix 
+interface TextInputProps {
+  type?: "text" | "textarea";
+  placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  style?: React.CSSProperties;
+  error?: string;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+}
+
+const TextInput: React.FC<TextInputProps> = ({
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  style = {},
+  error,
+  prefix,
+  suffix,
 }) => {
   const defaultStyle = {
-    padding: '8px 12px',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    border: '1px solid #d9d9d9',
-    borderRadius: '4px',
-    boxSizing: 'border-box',
+    padding: "8px 12px",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    border: "1px solid #d9d9d9",
+    borderRadius: "4px",
+    boxSizing: "border-box",
   };
 
   const inputStyle = {
     flex: 1,
-    border: 'none',
-    outline: 'none',
-    padding: '8px',
+    border: "none",
+    outline: "none",
+    padding: "8px",
   };
 
   const combinedStyle = { ...defaultStyle, ...style };
@@ -33,13 +44,24 @@ const TextInput = ({
   return (
     <div className="custom-text-input" style={combinedStyle}>
       {prefix && <div className="prefix-icon">{prefix}</div>}
-      <input
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        style={inputStyle}
-      />
+
+      {type === "textarea" ? (
+        <textarea
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          style={inputStyle}
+        />
+      ) : (
+        <input
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          style={inputStyle}
+        />
+      )}
+
       {suffix && <div className="suffix-icon">{suffix}</div>}
       {error && <div className="input-error">{error}</div>}
     </div>

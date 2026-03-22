@@ -1,4 +1,4 @@
-import { apiLmsUrl, apiUserUrl } from "../shared/config";
+import { apiLmsUrl, apiUrl, apiUserUrl } from "../shared/config";
 import api from "./api";
 
 type Id = number | string | string[];
@@ -55,6 +55,12 @@ const updateTeacherProfile = async (data: Payload) => {
 const updateTeacherPass = async (data: Payload) => {
   return await api.put(`${apiUserUrl}reset-password`, data);
 };
+const addTrainer = async (data: Payload) => {
+  return await api.post(`${apiUrl}v1/trainer/tasks`, data);
+};
+const getTeacherTasks = async () => {
+  return await api.get(`${apiUrl}v1/trainer/teacher-tasks/`);
+};
 
 const TeacherService = {
   teacherDashboard,
@@ -69,6 +75,8 @@ const TeacherService = {
   sentToPublish,
   teacherStudents,
   getCourseById,
+  addTrainer,
+  getTeacherTasks,
 };
 
 export default TeacherService;

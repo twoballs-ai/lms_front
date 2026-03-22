@@ -1,34 +1,33 @@
+.custom-select-wrapper {
+  width: 100%;
+}
+
 .custom-select {
-    font-size: 1.6rem;
-    font-weight: normal;
-    // border: 0.1rem solid #d9d9d9; // Тонкая граница
-    // border-radius: 5px;
-    width: 100%;
-    // padding: 8px;
-  
-    &:hover,
-    &:focus {
-      border-color: #1890ff;
-      outline: none;
-    }
-  
-    > .ant-select-selector {
-      border: none;
-      background-color: transparent;
-  
-      &:hover,
-      &:focus {
-        border-color: transparent;
-        box-shadow: none;
-      }
-    }
-  
-    .ant-select-selection-placeholder {
-      color: #999;
-    }
-  
-    .ant-select-arrow {
-      color: #1890ff;
-    }
+  width: 100%;
+
+  .ant-select-selector {
+    font-size: 14px;
+    min-height: 40px !important;
+    border-radius: 6px !important;
+    border: 1px solid #d9d9d9 !important;
+    display: flex;
+    align-items: center;
   }
- 
+
+  &:hover .ant-select-selector {
+    border-color: #1890ff !important;
+  }
+
+  &.ant-select-focused .ant-select-selector {
+    border-color: #1890ff !important;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+  }
+
+  .ant-select-selection-placeholder {
+    color: #999;
+  }
+
+  .ant-select-arrow {
+    color: #1890ff;
+  }
+}

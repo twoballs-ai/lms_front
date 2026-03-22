@@ -30,22 +30,38 @@ const SideBar: React.FC = () => {
       activeColor: '#004d40',
       icon: <FontAwesomeIcon icon={faUser} size="lg" />, // FontAwesome icon
     },
-    {
+      {
       key: '2',
-      label: 'Мои курсы',
-      href: '/teacher-profile/my-courses',
+      label: 'Добавить тренажер',
+      href: '/teacher-profile/add-traineer',
       hoverColor: '#ff9800',
       activeColor: '#f57c00',
       icon: <FontAwesomeIcon icon={faChalkboardUser} size="lg" />, // FontAwesome icon
     },
-    {
+      {
       key: '3',
-      label: 'Добавить курс',
-      href: '/teacher-profile/add-course',
-      hoverColor: '#8e24aa',
-      activeColor: '#6a1b9a',
-      icon: <FontAwesomeIcon icon={faPlusCircle} size="lg" />, // FontAwesome icon
+      label: 'Мои задачи',
+      href: '/teacher-profile/my-trainers',
+      hoverColor: '#ff9800',
+      activeColor: '#f57c00',
+      icon: <FontAwesomeIcon icon={faChalkboardUser} size="lg" />, // FontAwesome icon
     },
+    // {
+    //   key: '2',
+    //   label: 'Мои курсы',
+    //   href: '/teacher-profile/my-courses',
+    //   hoverColor: '#ff9800',
+    //   activeColor: '#f57c00',
+    //   icon: <FontAwesomeIcon icon={faChalkboardUser} size="lg" />, // FontAwesome icon
+    // },
+    // {
+    //   key: '3',
+    //   label: 'Добавить курс',
+    //   href: '/teacher-profile/add-course',
+    //   hoverColor: '#8e24aa',
+    //   activeColor: '#6a1b9a',
+    //   icon: <FontAwesomeIcon icon={faPlusCircle} size="lg" />, // FontAwesome icon
+    // },
     {
       key: '4',
       label: 'Настройки',

@@ -1,17 +1,37 @@
-import React from 'react';
-import { Select } from 'antd';
-import './Select.scss';
+import React from "react";
+import { Select } from "antd";
+import type { SelectProps } from "antd";
+import "./Select.scss";
 
-const CustomSelect = ({ mode, options, placeholder, onChange }) => (
-  <div className="">
-    <p>Выберите нужный вариант:</p>
-    <Select mode={mode} placeholder={placeholder} onChange={onChange} className="custom-select">
-      {options.map(option => (
-        <Select.Option key={option.value} value={option.value}>
-          {option.label}
-        </Select.Option>
-      ))}
-    </Select>
+interface OptionType {
+  value: string | number;
+  label: string;
+}
+
+interface CustomSelectProps {
+  mode?: "multiple" | "tags";
+  options: OptionType[];
+  placeholder?: string;
+  onChange?: (value: string | number | (string | number)[]) => void;
+  value?: string | number | (string | number)[];
+}
+
+const CustomSelect: React.FC<CustomSelectProps> = ({
+  mode,
+  options,
+  placeholder,
+  onChange,
+  value
+}) => (
+  <div className="custom-select-wrapper">
+    <Select
+      mode={mode}
+      placeholder={placeholder}
+      onChange={onChange}
+      value={value}
+      className="custom-select"
+      options={options}
+    />
   </div>
 );
 

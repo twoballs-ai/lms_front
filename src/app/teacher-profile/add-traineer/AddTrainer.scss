@@ -1,0 +1,39 @@
+.add-trainer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  &__add-form {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    gap: 15px;
+  }
+
+  .test-case-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    input, textarea {
+      flex: 1;
+    }
+    button {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+  }
+
+  .error {
+    color: #ef4444;
+    font-size: 0.85rem;
+  }
+}

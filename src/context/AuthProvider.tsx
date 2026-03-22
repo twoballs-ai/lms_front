@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useEffect, useMemo, useState } from "react";
 
-type Role = "teacher_model" | "student_model" | null;
+type Role = "teacher" | "student" | "site_user" | null;
 
 type AuthContextValue = {
   authenticated: boolean;
@@ -21,32 +21,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const syncAuth = () => {
-      const storedRole = localStorage.getItem("role");
+      const storedRoles = localStorage.getItem("roles");
+      const token = localStorage.getItem("access_token");
 
-      if (!storedRole) {
+      if (!storedRoles || !token) {
         setRole(null);
         setAuthenticated(false);
         return;
       }
 
       try {
-        const parsedRole = JSON.parse(storedRole) as Role;
+        const parsedRoles = JSON.parse(storedRoles) as Role[];
 
-        if (parsedRole === "teacher_model" || parsedRole === "student_model") {
-          setRole(parsedRole);
-          setAuthenticated(true);
-          return;
+        if (parsedRoles.includes("teacher")) {
+          setRole("teacher");
+        } else if (parsedRoles.includes("student")) {
+          setRole("student");
+        } else if (parsedRoles.includes("site_user")) {
+          setRole("site_user");
         }
+
+        setAuthenticated(true);
       } catch {
-        if (storedRole === "teacher_model" || storedRole === "student_model") {
-          setRole(storedRole);
-          setAuthenticated(true);
-          return;
-        }
+        setRole(null);
+        setAuthenticated(false);
       }
-
-      setRole(null);
-      setAuthenticated(false);
     };
 
     syncAuth();
@@ -60,32 +59,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const toggleAuthentication = () => {
-    const currentRole = localStorage.getItem("role");
-
-    if (!currentRole) {
-      setAuthenticated(false);
-      setRole(null);
-      return;
-    }
-
-    try {
-      const parsedRole = JSON.parse(currentRole) as Role;
-      if (parsedRole === "teacher_model" || parsedRole === "student_model") {
-        setRole(parsedRole);
-        setAuthenticated((prev) => !prev);
-      }
-    } catch {
-      if (currentRole === "teacher_model" || currentRole === "student_model") {
-        setRole(currentRole);
-        setAuthenticated((prev) => !prev);
-      }
-    }
+    const token = localStorage.getItem("access_token");
+    setAuthenticated(Boolean(token));
   };
 
   const value = useMemo(
     () => ({ authenticated, role, toggleAuthentication }),
-    [authenticated, role],
+    [authenticated, role]
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

@@ -1,28 +1,38 @@
-// import Editor from "@monaco-editor/react";
-// import React, { Component } from 'react';
-// function CodeEditor(props) {
+"use client";
 
-  
-//   function handleChange(value, event) {
-//     props.onChange(value);
-//     console.log('here is the current model value:', value);
-//   }
-//   return (
-//     <Editor
-//       height="100px"
-//       language="python"
-//       theme="light"
-//       defaultValue = "# некоторый комментарий"
-//       options={{
-//         inlineSuggest: true,
-//         fontSize: "16px",
-//         formatOnType: true,
-//         autoClosingBrackets: true,
-//         minimap: { scale: 10 }
-//       }}
-//       onChange = { handleChange } 
-      
-//     />
-//   );
-// }
-// export default CodeEditor;
+import Editor from "@monaco-editor/react";
+import React from "react";
+
+interface CodeEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  language?: string;
+  height?: string;
+}
+
+const CodeEditor: React.FC<CodeEditorProps> = ({
+  value,
+  onChange,
+  language = "python",
+  height = "200px"
+}) => {
+  return (
+    <Editor
+      height={height}
+      language={language}
+      theme="vs-dark"
+      value={value}
+      options={{
+        fontSize: 14,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        tabSize: 4
+      }}
+      onChange={(value) => onChange(value || "")}
+    />
+  );
+};
+
+export default CodeEditor;

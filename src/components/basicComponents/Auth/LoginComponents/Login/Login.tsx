@@ -55,23 +55,30 @@ function AllProfilesLogin() {
     }
   };
 
-  const persistAuthState = ({ access_token, refresh_token, type }) => {
+  // сохраняем токены + роли
+  const persistAuthState = ({ access_token, refresh_token, types }) => {
     localStorage.setItem("access_token", JSON.stringify(access_token));
     localStorage.setItem("refresh_token", JSON.stringify(refresh_token));
-    localStorage.setItem("role", JSON.stringify(type));
+    localStorage.setItem("roles", JSON.stringify(types || []));
+
     localStorage.setItem(
       "studentLoginStatus",
-      JSON.stringify(type === "student_model")
+      JSON.stringify(types?.includes("student"))
     );
+
     window.dispatchEvent(new Event("auth:changed"));
   };
 
-  const resolveProfileRoute = (role) => {
-    if (role === "teacher_model") {
+  // определяем куда редиректить
+  const resolveProfileRoute = (types) => {
+    if (!types) return null;
+
+    // учитель имеет приоритет
+    if (types.includes("teacher")) {
       return "/teacher-profile/dashboard";
     }
 
-    if (role === "student_model") {
+    if (types.includes("student")) {
       return "/student-profile/dashboard";
     }
 
@@ -94,7 +101,9 @@ function AllProfilesLogin() {
       const response = await AuthService.login(formData);
 
       if (response.status === 200 || response.status === 201) {
-        const nextRoute = resolveProfileRoute(response?.data?.type);
+        console.log(response.data);
+
+        const nextRoute = resolveProfileRoute(response?.data?.types);
 
         persistAuthState(response.data);
 
@@ -107,7 +116,9 @@ function AllProfilesLogin() {
         setErrorMsg("Не удалось определить тип профиля для перехода.");
       }
     } catch (error) {
-      setErrorMsg(error?.response?.data?.message || "Не удалось выполнить вход.");
+      setErrorMsg(
+        error?.response?.data?.message || "Не удалось выполнить вход."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -152,12 +163,18 @@ function AllProfilesLogin() {
         </div>
 
         <div className="auth-container__button-confirm">
-          <button className="orange-button" type="submit" disabled={isSubmitting}>
+          <button
+            className="orange-button"
+            type="submit"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Входим..." : "Войти"}
           </button>
         </div>
 
-        {errorMsg && <div className="error auth-form__server-error">{errorMsg}</div>}
+        {errorMsg && (
+          <div className="error auth-form__server-error">{errorMsg}</div>
+        )}
       </form>
     </div>
   );
