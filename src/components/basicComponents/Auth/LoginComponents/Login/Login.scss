@@ -4,28 +4,19 @@
   width: 100%;
 
   .auth-container__log-pass-block {
+    @extend .ui-auth-card;
     width: 100%;
     max-width: 540px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 1.75rem;
-    border-radius: 28px;
-    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
-    box-shadow: 0 24px 80px rgba(20, 60, 120, 0.12);
-    border: 1px solid rgba(57, 162, 219, 0.16);
-
-    @media (max-width: 768px) {
-      padding: 1.25rem;
-      border-radius: 24px;
-    }
   }
 
   .auth-form__header {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    color: #16324f;
+    color: var(--color-text);
 
     h3 {
       margin: 0;
@@ -35,34 +26,22 @@
 
     p {
       margin: 0;
-      color: #5d7288;
+      color: var(--color-text-soft);
       font-size: 1rem;
       line-height: 1.5;
     }
   }
 
   .auth-form__badge {
-    display: inline-flex;
-    align-self: flex-start;
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-    background: rgba(57, 162, 219, 0.12);
-    color: #0f6ea8;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    @extend .ui-badge;
   }
 
   .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
+    @extend .ui-form-group;
   }
 
   .auth-form__label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #23405f;
+    @extend .ui-form-label;
   }
 
   .auth-container__button-confirm {
@@ -76,11 +55,11 @@
       font-size: 1.05rem;
       font-weight: 700;
       color: #ffffff;
-      background: linear-gradient(135deg, #ff8a4c 0%, #ff6b4a 100%);
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
       border: none;
-      border-radius: 16px;
+      border-radius: var(--radius-md);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), opacity var(--transition-base);
       box-shadow: 0 14px 32px rgba(255, 122, 76, 0.28);
 
       &:hover:not(:disabled) {
@@ -97,18 +76,12 @@
 }
 
 .error {
-  color: #d64545;
+  color: var(--color-danger);
   font-size: 0.875rem;
   margin-top: 0.1rem;
 }
 
 .auth-form__server-error {
   text-align: center;
-  padding: 0.75rem 1rem;
-  border-radius: 14px;
-  background: rgba(214, 69, 69, 0.08);
-}
-
-.input-error {
-  border: 1px solid #d64545;
+  @extend .ui-error;
 }
