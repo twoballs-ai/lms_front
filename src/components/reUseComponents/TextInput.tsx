@@ -2,7 +2,7 @@ import React from "react";
 import "./TextInput.scss";
 
 interface TextInputProps {
-  type?: "text" | "textarea";
+  type?: string;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -10,6 +10,8 @@ interface TextInputProps {
   error?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
+  className?: string;
+  isTextArea?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -21,45 +23,24 @@ const TextInput: React.FC<TextInputProps> = ({
   error,
   prefix,
   suffix,
+  className = "",
+  isTextArea = false,
 }) => {
-  const defaultStyle = {
-    padding: "8px 12px",
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    border: "1px solid #d9d9d9",
-    borderRadius: "4px",
-    boxSizing: "border-box",
-  };
-
-  const inputStyle = {
-    flex: 1,
-    border: "none",
-    outline: "none",
-    padding: "8px",
-  };
-
-  const combinedStyle = { ...defaultStyle, ...style };
+  const isArea = isTextArea || type === "textarea";
 
   return (
-    <div className="custom-text-input" style={combinedStyle}>
+    <div
+      className={["custom-text-input", error ? "ui-input-shell--error" : "", className]
+        .filter(Boolean)
+        .join(" ")}
+      style={style}
+    >
       {prefix && <div className="prefix-icon">{prefix}</div>}
 
-      {type === "textarea" ? (
-        <textarea
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          style={inputStyle}
-        />
+      {isArea ? (
+        <textarea value={value} placeholder={placeholder} onChange={onChange} />
       ) : (
-        <input
-          type={type}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          style={inputStyle}
-        />
+        <input type={type} value={value} placeholder={placeholder} onChange={onChange} />
       )}
 
       {suffix && <div className="suffix-icon">{suffix}</div>}

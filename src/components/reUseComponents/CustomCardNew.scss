@@ -1,21 +1,26 @@
 .custom-course-card {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 400px;
-  height: 120px;
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  width: min(100%, 420px);
+  min-height: 132px;
   overflow: hidden;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  border: 1px solid rgba(57, 162, 219, 0.14);
+  border-radius: 22px;
+  background: linear-gradient(180deg, var(--color-surface) 0%, #f9fbff 100%);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 
   &:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(57, 162, 219, 0.28);
   }
 
   &__image {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    height: 100%;
+    min-height: 132px;
     overflow: hidden;
 
     img {
@@ -26,73 +31,35 @@
   }
 
   .custom-course-card__body {
-    width: 280px;
-    height: 120px;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 1rem 1.1rem;
 
     .body__title {
-      font-size: 0.7em;
-      margin-bottom: 0.5em;
-      font-weight: bold;
+      font-size: 1rem;
+      line-height: 1.35;
+      font-weight: 700;
+      color: var(--color-text);
     }
 
     .body__description {
-      font-size: 0.9em;
-      color: #555;
-      font-weight: bold;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--color-text-soft);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
 
-  // Стили для планшетов
-  @media (max-width: 768px) {
-    width: 350px;
-    height: 100px;
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
 
     &__image {
-      width: 100px;
-      height: 100px;
-    }
-
-    .custom-course-card__body {
-      width: 250px;
-      height: 100px;
-      padding: 8px;
-
-      .body__title {
-        font-size: 0.8em;
-      }
-
-      .body__description {
-        font-size: 0.85em;
-      }
-    }
-  }
-
-  // Стили для мобильных устройств
-  @media (max-width: 480px) {
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-
-    &__image {
-      width: 50%;
-      height: 120px; // Увеличим высоту изображения, чтобы оно лучше смотрелось на мобильных
-    }
-
-    .custom-course-card__body {
-      width: 100%;
-      height: auto;
-      padding: 12px;
-
-      .body__title {
-        font-size: 0.7em;
-      }
-
-      .body__description {
-        font-size: 0.7em;
-      }
+      min-height: 190px;
     }
   }
 }
