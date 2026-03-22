@@ -4,6 +4,7 @@
   width: 100%;
 
   .auth-container__log-pass-block {
+    @extend .ui-auth-card;
     width: 100%;
     max-width: 540px;
     display: flex;
@@ -49,15 +50,11 @@
   }
 
   .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
+    @extend .ui-form-group;
   }
 
   .auth-form__label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #23405f;
+    @extend .ui-form-label;
   }
 
   .auth-container__button-confirm {
