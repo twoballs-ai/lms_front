@@ -144,7 +144,7 @@ function AllProfilesLogin() {
             value={inputUsernameValue}
             prefix={<MailOutlined />}
             onChange={handleInputUsernameChange}
-            style={errors.username ? { borderColor: "#ff6b6b" } : {}}
+            error={errors.username}
           />
           {errors.username && <div className="error">{errors.username}</div>}
         </div>
@@ -157,7 +157,7 @@ function AllProfilesLogin() {
             value={inputPasswordValue}
             prefix={<LockOutlined />}
             onChange={handleInputPasswordChange}
-            style={errors.password ? { borderColor: "#ff6b6b" } : {}}
+            error={errors.password}
           />
           {errors.password && <div className="error">{errors.password}</div>}
         </div>

@@ -1,8 +1,29 @@
 .custom-text-input {
-  @extend .ui-input-shell;
-  flex-wrap: wrap;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
   min-height: 3rem;
   padding: 0.3rem 0.65rem;
+  border: 1px solid #d5dfeb;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+  flex-wrap: wrap;
+
+  &:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  &:focus-within {
+    border-color: var(--color-primary-soft);
+    box-shadow: var(--shadow-focus);
+  }
+
+  &.ui-input-shell--error {
+    border-color: rgba(214, 69, 69, 0.65);
+  }
 
   .prefix-icon,
   .suffix-icon {
